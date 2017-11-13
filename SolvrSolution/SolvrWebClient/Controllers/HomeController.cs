@@ -26,5 +26,14 @@ namespace SolvrWebClient.Controllers
 
             return View();
         }
+
+        public ActionResult NotImplementedYet()
+        {
+            ViewBag.Message = "This page is under construction.";
+
+            return View();
+        }
+
+
     }
 }
