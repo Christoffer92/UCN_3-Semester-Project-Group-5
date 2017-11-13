@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace SolvrLibrary
 {
-    public class Class1
+    public class Vote
     {
+        public User UserVote { get; set; }
+        public int VoteID { get; set; }
+        public bool IsUpvoted { get; set; }
     }
 }
