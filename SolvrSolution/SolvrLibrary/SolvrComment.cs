@@ -9,7 +9,6 @@ namespace SolvrLibrary
     public class SolvrComment : Comment
     {
         public PhysicalPost PPComment { get; set; }
-        public int SolvrCommentID { get; set; }
         public DateTime TimeAccepted { get; set; }
         public bool IsAccepted { get; set; }
     }
