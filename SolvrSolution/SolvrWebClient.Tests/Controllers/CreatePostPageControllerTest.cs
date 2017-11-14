@@ -10,14 +10,6 @@ using SolvrLibrary;
 
 namespace SolvrWebClient.Tests.Controllers
 {
-    //Hvilke tests skal med
-    //Opret en postering = Opret title, tekst, kategori, tags og send til DB, Modtage en oprettet dato
-    //Opret en fysiskpostering???? = Opret title, tekst, hemmelig tekst, kategori, tags og send til DB, Modtage en dato
-    //View state = Er det der står på siden rigtigt
-    //Tilføj en tag / Kategori
-    //Skift til fysisk problem    
-
-
     [TestClass]
     public class CreatePostPageControllerTest
     {        
