@@ -89,6 +89,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\PostPageControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
   </ItemGroup>
@@ -99,6 +100,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SolvrLibrary\SolvrLibrary.csproj">
+      <Project>{7A512B96-B646-4E04-B9F5-6C9658209C1B}</Project>
+      <Name>SolvrLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SolvrWebClient\SolvrWebClient.csproj">
       <Project>{36427826-98CF-49DA-8D00-91BE3C82ECAE}</Project>
       <Name>SolvrWebClient</Name>
