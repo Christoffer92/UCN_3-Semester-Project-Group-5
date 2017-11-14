@@ -14,13 +14,13 @@ namespace SolvrLibrary
         {
 
         }
-        DbSet<Category> Categories { get; set; }
-        DbSet<Comment> Comments { get; set; }
-        DbSet<PhysicalPost> PhysicalPosts { get; set; }
-        DbSet<Post> Posts { get; set; }
-        DbSet<Report> Reports { get; set; }
-        DbSet<SolvrComment> SolvrComments { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<PhysicalPost> PhysicalPosts { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Report> Reports { get; set; }
+        public DbSet<SolvrComment> SolvrComments { get; set; }
         public DbSet<User> Users { get; set; }
-        DbSet<Vote> Votes { get; set; }
+        public DbSet<Vote> Votes { get; set; }
     }
 }
