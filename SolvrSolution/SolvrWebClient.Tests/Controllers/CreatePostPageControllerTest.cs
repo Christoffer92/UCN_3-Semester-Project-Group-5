@@ -7,347 +7,331 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SolvrWebClient;
 using SolvrWebClient.Controllers;
 using SolvrLibrary;
+using SolvrLibrary.DB;
 
 namespace SolvrWebClient.Tests.Controllers
 {
     [TestClass]
     public class CreatePostPageControllerTest
-    {        
-        #region Create Physical post test
+    {
+        private const string fiveHundredCharacters = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet dictum purus. Morbi at vestibulum est, non porttitor ante. Ut in erat quis felis sodales varius. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In facilisis sem non purus auctor molestie. Curabitur dictum ante eu turpis volutpat pretium. Proin dui tortor, viverra ut felis vel, condimentum ornare massa. Duis dapibus, dui vel blandit vestibulum, massa ex iaculis ipsum, id posuere.";
+        private const string fiveHundredCharactersMinusOne = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet dictum purus. Morbi at vestibulum est, non porttitor ante. Ut in erat quis felis sodales varius. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In facilisis sem non purus auctor molestie. Curabitur dictum ante eu turpis volutpat pretium. Proin dui tortor, viverra ut felis vel, condimentum ornare massa. Duis dapibus, dui vel blandit vestibulum, massa ex iaculis ipsum, id posuere";
+
+
+        private MockDataContext _DBcontext;
+
+        //[TestInitialize] and[TestCleanup] at the individual test level, [ClassInitialize] and[ClassCleanup] at the class level.
+        [TestInitialize]
+        public void Initialize()
+        {
+            _DBcontext = new MockDataContext();
+        }
+
+
+        #region Create Physical post tests
+
         [TestMethod]
-        [DataRow(1, "Gardening", null, 1, "Help planting a garden", "I have 70 acres of garden that needs planting", "GreenFingers", "TreeHugger", false, "I have beer", "6900", "Vestergade 14, Skjern")]
-        [DataRow(10, "Electrical", null, 2, "Help installing lamp", "I need help with installing a new lamp", "Amplify", "PassMeLeftHandedPhillipsHead", false, "I have wine", "9000", "Borgergade 16, Aalborg")]
-        [DataRow(23, "Moving", null, 4, "I need help!", "I need help moving a couch!", "WishIWasStronger", "SOS", false, "I have cola", "1100", "Svenskervej 2, København K")]
-        public void CreatePhysicalPostTest(int expectedPostCategoryID, string expectedPostCategoryName, List<Comment> expectedPostComments,
-                                        int expectedPostID, string expectedPostTitle, string expectedPostDescription, string tag1, string tag2, bool expectedPostIsLocked,
-                                        string expectedPostAltDescription, string expectedPostZipCode, string expectedPostAddress)
+
+        //AltDescription min nr of characters
+        [DataRow(1, "Lorem", "9000", "Solskinsvej 5")]
+        //AltDescription min+1 nr of characters
+        [DataRow(2, "Lorem.", "9210", "Blåbærvej 10")]
+        //AltDescription max   nr of characters
+        [DataRow(3, fiveHundredCharacters+fiveHundredCharacters, "7700", "Gedesvinget 2, 2 TV")]
+        //AltDescription max-1 nr of characters
+        [DataRow(4, fiveHundredCharacters+fiveHundredCharactersMinusOne, "8865", "Fugl Allé 5A")]
+
+        //Zipcode min   nr of characters
+        [DataRow(5, "Lorem ipsum dolor sit amet.", "DEN", "Solskinsvej 5")]
+        //Zipcode min+1 nr of characters
+        [DataRow(6, "Consectetur adipiscing elit.", "1234", "Blåbærvej 10")]
+        //Zipcode max   nr of characters
+        [DataRow(7, "Donec sit amet dictum purus.", "ORE 005487", "Gedesvinget 2, 2 TV")]
+        //Zipcode max-1 nr of characters
+        [DataRow(8, "Morbi at vestibulum est, non porttitor ante.", "UK 645827", "Fugl Allé 5A")]
+
+        //Address min   nr of characters
+        [DataRow(9, "Lorem ipsum dolor sit amet.", "9000", "Ø 1")]
+        //Address min+1 nr of characters
+        [DataRow(10, "Consectetur adipiscing elit.", "9210", "Gade")]
+        //Address max   nr of characters
+        [DataRow(11, "Donec sit amet dictum purus.", "7700", "Phasellus viverra ullamcorper metus et massa nunc.")]
+        //Address max-1 nr of characters
+        [DataRow(12, "Morbi at vestibulum est, non porttitor ante.", "8865", "Phasellus viverra ullamcorper metus et massa nunc")]
+
+        public void CreatePhysicalPostTest(int nrOfTags, string expectedAltDescription, string expectedZipcode, string expectedAddress)
         {
             // Arrange
-            CreatePostCtr CPCtr = new CreatePostCtr();
-            Category expectedPostCategory = new Category(expectedPostCategoryID, expectedPostCategoryName);
-            DateTime expectedPostBumpTime = new DateTime();
-            List<String> expectedPostTagsList = new List<String>();
-            expectedPostTagsList.Add(tag1 + tag2);
-            DateTime expectedPostDateCreated = new DateTime();
+            string expectedTitle = "Morbi cursus.";
 
-            PhysicalPost actualPhysicalPost = CPCtr.CreatePhysicalPost(expectedPostCategory, expectedPostComments, expectedPostID,
-                                                 expectedPostTitle, expectedPostDescription, expectedPostBumpTime,
-                                                 expectedPostTagsList, expectedPostDateCreated, expectedPostIsLocked,
-                                                 expectedPostAltDescription, expectedPostZipCode, expectedPostAddress);
+            string expectedDescription = "Lorem ipsum dolor sit amet.";
+
+            List<string> expectedTagsList = new List<string>() { "Hardware", "Hot", "Dead", "RipFlowers", "Jewels", "Bland", "AlienNoises", "Fridge", "MomsSpaghetti", "EminemCantFixThis", "FutureWaifu", "TeknologiIsTheFuture" };
+            for (int i = 0; nrOfTags < expectedTagsList.Count; i++)
+            {
+                expectedTagsList.Remove(expectedTagsList.First());
+            }
+
+            User expectedUser = new User("Tester", "TT@DD.SS", "TestUser123", "TestPass");
+
+            Category expectedCategory = new Category("Name");
+
+            var controller = new CreatePostPageCtr(_DBcontext);
 
             // Act 
-            int actualPostCategoryID = actualPhysicalPost.PostCategory.CategoryID;
-            string actualPostCategoryName = actualPhysicalPost.PostCategory.CategoryName;
-            List<Comment> actualPostComments = actualPhysicalPost.CommentsList;
-            int actualPostID = actualPhysicalPost.PostID;
-            string actualPostTitle = actualPhysicalPost.Title;
-            string actualPostDescription = actualPhysicalPost.Description;
-            DateTime actualPostBumpTime = actualPhysicalPost.BumpTime;
-            List<String> actualPostTagsList = actualPhysicalPost.TagsList;
-            DateTime actualPostDateCreated = actualPhysicalPost.DateCreated;
 
-            bool actualPostIsLocked = actualPhysicalPost.IsLocked;
-            string actualPostAltDescription = actualPhysicalPost.AltDescription;
-            string actualPostZipCode = actualPhysicalPost.ZipCode;
-            string actualPostAddress = actualPhysicalPost.Address;
+            PhysicalPost actualPost = controller.CreatePhysicalPost(expectedUser, expectedTitle, expectedDescription, expectedCategory, expectedTagsList, expectedAltDescription, expectedZipcode, expectedAddress); // this method has to return the newly created object after its ID is set from the DB
+
+            DateTime expectedBumpTime = new DateTime();
+
+            DateTime expectedDateCreated = new DateTime();
+
 
             // Assert
-            string msg = "Expected that post category ID was: " + expectedPostCategoryID + " But actual post category ID was: " + actualPostCategoryID;
-            Assert.AreEqual(expectedPostCategoryID, actualPostCategoryID, msg);
 
-            msg = "Expected that post category Name was: " + expectedPostCategoryName + " But actual post category Name was: " + actualPostCategoryName;
-            Assert.AreEqual(expectedPostCategoryName, actualPostCategoryName, msg);
+            //PostID should be 1 as there is already 0 test posts in the Mock DB.
+            string msg = "Expected that post ID was: 1 But actual post ID was: " + actualPost.PostID;
+            Assert.AreEqual(1, actualPost.PostID, msg);
 
-            msg = "Expected that post Comments was: " + expectedPostComments + " But actual post category Comment was: " + actualPostComments;
-            Assert.AreEqual(expectedPostComments, actualPostComments, msg);
+            //TItle Assert
+            msg = "Expected that post Title was: " + expectedTitle + " But actual post Title was: " + actualPost.Title;
+            Assert.AreEqual(expectedTitle, actualPost.Title, msg);
 
-            msg = "Expected that post ID was: " + expectedPostID + " But actual post ID was: " + actualPostID;
-            Assert.AreEqual(expectedPostID, actualPostID, msg);
+            //Description Assert
+            msg = "Expected that post Description was: " + expectedDescription + " But actual post Description was: " + actualPost.Description;
+            Assert.AreEqual(expectedDescription, actualPost.Description, msg);
 
-            msg = "Expected that post Title was: " + expectedPostTitle + " But actual post Title was: " + actualPostTitle;
-            Assert.AreEqual(expectedPostTitle, actualPostTitle, msg);
+            //Tags assert. Number of tags defined in the Datarow, tags are predefined.
+            msg = "Expected that post TagsList was: " + expectedTagsList + " But actual post TagsList was: " + actualPost.TagsList;
+            Assert.AreEqual(expectedTagsList, actualPost.TagsList, msg);
 
-            msg = "Expected that post Description was: " + expectedPostDescription + " But actual post Description was: " + actualPostDescription;
-            Assert.AreEqual(expectedPostDescription, actualPostDescription, msg);
+            //BumpTime Assert, check if theres a better way to test this
+            msg = "Expected that post BumpTime.TimeOfDay was around: " + expectedBumpTime.TimeOfDay + " But actual post BumpTime was: " + actualPost.BumpTime.TimeOfDay;
+            Assert.AreEqual(expectedBumpTime.TimeOfDay, actualPost.BumpTime.TimeOfDay, msg);
 
-            msg = "Expected that post BumpTime was: " + expectedPostBumpTime + " But actual post BumpTime was: " + actualPostBumpTime;
-            Assert.AreEqual(expectedPostBumpTime, actualPostBumpTime, msg);
+            //DateCreated Assert,  check if theres a better way to test this
+            msg = "Expected that post DateCreated.TimeOfDay was around: " + expectedDateCreated.TimeOfDay + " But actual post DateCreated was: " + actualPost.DateCreated.TimeOfDay;
+            Assert.AreEqual(expectedDateCreated.TimeOfDay, actualPost.DateCreated.TimeOfDay, msg);
 
-            msg = "Expected that post TagsList was: " + expectedPostTagsList + " But actual post TagsList was: " + actualPostTagsList;
-            Assert.AreEqual(expectedPostTagsList, actualPostTagsList, msg);
+            //Owner Assert
+            msg = "Expected that post Owner was around: " + expectedUser + " But actual post Owner was: " + actualPost.Owner;
+            Assert.AreEqual(expectedUser, actualPost.Owner, msg);
 
-            msg = "Expected that post DateCreated was: " + expectedPostDateCreated + " But actual post DateCreated was: " + actualPostDateCreated;
-            Assert.AreEqual(expectedPostDateCreated, actualPostDateCreated, msg);
+            //Category Assert
+            msg = "Expected that post Category was: " + expectedCategory + " But actual post category Name was: " + actualPost.PostCategory;
+            Assert.AreEqual(expectedCategory, actualPost.PostCategory, msg);
 
-            msg = "Expected that post IsLocked was: " + expectedPostIsLocked + " But actual post IsLocked was: " + actualPostIsLocked;
-            Assert.AreEqual(expectedPostIsLocked, actualPostIsLocked, msg);
+            //Comments Assert
+            msg = "Expected that post CommentsList was empty. But actual post category Comment was: " + actualPost.CommentsList.Count;
+            Assert.AreEqual(0, actualPost.CommentsList.Count, msg);
 
-            msg = "Expected that post AltDescription was: " + expectedPostAltDescription + " But actual post AltDescription was: " + actualPostAltDescription;
-            Assert.AreEqual(expectedPostAltDescription, actualPostAltDescription, msg);
+            //PhysicalID should be 1 as there is already 0 test posts in the Mock DB.
+            msg = "Expected that post ID was: 1 But actual post ID was: " + actualPost.ID;
+            Assert.AreEqual(1, actualPost.ID, msg);
 
-            msg = "Expected that post ZipCode was: " + expectedPostZipCode + " But actual post ZipCode was: " + actualPostZipCode;
-            Assert.AreEqual(expectedPostZipCode, actualPostZipCode, msg);
+            //IsLocked Assert
+            msg = "Expected that post Islocked was False. But actual post IsLocked was: " + actualPost.IsLocked;
+            Assert.AreEqual(0, actualPost.IsLocked, msg);
 
-            msg = "Expected that post Address was: " + expectedPostAddress + " But actual post Address was: " + actualPostAddress;
-            Assert.AreEqual(expectedPostAddress, actualPostDateCreated, msg);
-        }
-        #endregion
+            //AltDescription Assert
+            msg = "Expected that post AltDescription was: " + expectedAltDescription + " But actual post AltDescription was: " + actualPost.AltDescription;
+            Assert.AreEqual(expectedAltDescription, actualPost.AltDescription, msg);
 
-        #region Add physical post test
-        [TestMethod]
-        [DataRow(1, "Computer", null, 1, "Overheated Processor", "My Processor has overheated help!", "Hardware", "Hot")]
-        [DataRow(10, "Garden", null, 2, "Dead flowers", "My flowers have died help! what do?!", "Dead", "RipFlowers")]
-        [DataRow(20, "Accessories", null, 3, "Bland jewels", "My jewels have become bland overtime. Any tips on shining them up?", "Jewels", "Bland")]
-        [DataRow(23, "Moving", null, 4, "I need help!", "I need help moving a couch!", "WishIWasStronger", "SOS")]
-        [DataRow(900, "Kitchen", null, 5, "Fridge noise!", "My Processor has overheated help!", "AlienNoises", "Fridge")]
-        [DataRow(50, "Food", null, 6, "Burnt spaghetti", "I have burnt my spaghetti and my arms are heavy!", "MomsSpaghetti", "EminemCantFixThis")]
-        [DataRow(60, "DIY handywork", null, 7, "3D hologram", "What angle does my inverted pyramid need to be in order to obtain 3d hologram", "FutureWaifu", "TeknologiIsTheFuture")]
-        public void AddNonPhysicalPostTest(int expectedPostCategoryID, string expectedPostCategoryName, List<Comment> expectedPostComments,
-                                        int expectedPostID, string expectedPostTitle, string expectedPostDescription, string tag1, string tag2, bool expectedPostIsLocked,
-                                        string expectedPostAltDescription, string expectedPostZipCode, string expectedPostAddress)
-        {
-            // Arrange
-            CreatePostCtr CPCtr = new CreatePostCtr();
-            Category expectedPostCategory = new Category(expectedPostCategoryID, expectedPostCategoryName);
-            DateTime expectedPostBumpTime = new DateTime();
-            List<String> expectedPostTagsList = new List<String>();
-            expectedPostTagsList.Add(tag1 + tag2);
-            DateTime expectedPostDateCreated = new DateTime();
+            //Zipcode Assert
+            msg = "Expected that post Zipcode was " + expectedZipcode + ". But actual post Zipcode Comment was: " + actualPost.ZipCode;
+            Assert.AreEqual(expectedZipcode, actualPost.ZipCode, msg);
 
-            PhysicalPost expectedPhysicalPost = CPCtr.CreatePhysicalPost(expectedPostCategory, expectedPostComments, expectedPostID,
-                                                 expectedPostTitle, expectedPostDescription, expectedPostBumpTime,
-                                                 expectedPostTagsList, expectedPostDateCreated, expectedPostIsLocked,
-                                                 expectedPostAltDescription, expectedPostZipCode, expectedPostAddress);
-
-            // Act         
-            CPCtr.AddPost(expectedPhysicalPost);
-            Post actualPhysicalPost = CPCtr.GetPostByID(expectedPostID);
-
-            //Assert
-            AssertTwoPostsAreEqual(expectedPhysicalPost, actualPhysicalPost);
+            //Address Assert
+            msg = "Expected that post Address was " + expectedAddress + ". But actual post category Comment was: " + actualPost.Address;
+            Assert.AreEqual(expectedAddress, actualPost.Address, msg);
         }
 
-
-
-        #endregion
-
-        #region Create non physical post test
         [TestMethod]
-        [DataRow(1, "Computer", null, 1, "Overheated Processor", "My Processor has overheated help!", "Hardware", "Hot")]
-        [DataRow(10, "Garden", null, 2, "Dead flowers", "My flowers have died help! what do?!", "Dead", "RipFlowers")]
-        [DataRow(20, "Accessories", null, 3, "Bland jewels", "My jewels have become bland overtime. Any tips on shining them up?", "Jewels", "Bland")]
-        [DataRow(900, "Kitchen", null, 5, "Fridge noise!", "My Processor has overheated help!", "AlienNoises", "Fridge")]
-        [DataRow(50, "Food", null, 6, "Burnt spaghetti", "I have burnt my spaghetti and my arms are heavy!", "MomsSpaghetti", "EminemCantFixThis")]
-        [DataRow(60, "DIY handywork", null, 7, "3D hologram", "What angle does my inverted pyramid need to be in order to obtain 3d hologram", "FutureWaifu", "TeknologiIsTheFuture")]
-        public void CreateNonPhysicalPostTest(int expectedPostCategoryID, string expectedPostCategoryName, List<Comment> expectedPostComments,
-                                        int expectedPostID, string expectedPostTitle, string expectedPostDescription, string tag1, string tag2)
+        //AltDescription min-1 nr of characters
+        [DataRow(2, "Lore", "9210", "Blåbærvej 10")]
+        //AltDescription max+1 nr of characters
+        [DataRow(4, "1"+fiveHundredCharacters + fiveHundredCharactersMinusOne, "8865", "Fugl Allé 5A")]
+        
+        //Zipcode min-1 nr of characters
+        [DataRow(6, "Consectetur adipiscing elit.", "12", "Blåbærvej 10")]
+        //Zipcode max+1 nr of characters
+        [DataRow(8, "Morbi at vestibulum est, non porttitor ante.", "USA 6458273", "Fugl Allé 5A")]
+        
+        //Address min-1 nr of characters
+        [DataRow(10, "Consectetur adipiscing elit.", "9210", "Ål")]
+        //Address max+1 nr of characters
+        [DataRow(12, "Morbi at vestibulum est, non porttitor ante.", "8865", "Phasellus viverra ullamcorper metus et massa nunc..")]
+        public void CreatePhysicalPostNegativeTest(int nrOfTags, string expectedAltDescription, string expectedZipcode, string expectedAddress)
         {
             // Arrange
-            CreatePostCtr CPCtr = new CreatePostCtr();
-            Category expectedPostCategory = new Category(expectedPostCategoryID, expectedPostCategoryName);
-            DateTime expectedPostBumpTime = new DateTime();
-            List<String> expectedPostTagsList = new List<String>();
-            expectedPostTagsList.Add(tag1 + tag2);
-            DateTime expectedPostDateCreated = new DateTime();
+            string expectedTitle = "Morbi cursus.";
 
-            Post actualPost = CPCtr.CreatePost(expectedPostCategory, expectedPostComments, expectedPostID,
-                                                 expectedPostTitle, expectedPostDescription, expectedPostBumpTime,
-                                                 expectedPostTagsList, expectedPostDateCreated);
+            string expectedDescription = "Lorem ipsum dolor sit amet.";
+
+            List<string> expectedTagsList = new List<string>() { "Hardware", "Hot", "Dead", "RipFlowers", "Jewels", "Bland", "AlienNoises", "Fridge", "MomsSpaghetti", "EminemCantFixThis", "FutureWaifu", "TeknologiIsTheFuture" };
+            for (int i = 0; nrOfTags < expectedTagsList.Count; i++)
+            {
+                expectedTagsList.Remove(expectedTagsList.First());
+            }
+
+            User expectedUser = new User("Tester", "TT@DD.SS", "TestUser123", "TestPass");
+
+            Category expectedCategory = new Category("Name");
+
+            var controller = new CreatePostPageCtr(_DBcontext);
+
+            bool success = true;
+
 
             // Act 
-            int actualPostCategoryID = actualPost.PostCategory.CategoryID;
-            string actualPostCategoryName = actualPost.PostCategory.CategoryName;
-            List<Comment> actualPostComments = actualPost.CommentsList;
-            int actualPostID = actualPost.PostID;
-            string actualPostTitle = actualPost.Title;
-            string actualPostDescription = actualPost.Description;
-            DateTime actualPostBumpTime = actualPost.BumpTime;
-            List<String> actualPostTagsList = actualPost.TagsList;
-            DateTime actualPostDateCreated = actualPost.DateCreated;
+
+            try
+            {
+                controller.CreatePhysicalPost(expectedUser, expectedTitle, expectedDescription, expectedCategory, expectedTagsList, expectedAltDescription, expectedZipcode, expectedAddress); // this method has to return the newly created object after its ID is set from the DB
+
+            }
+            catch (Exception)
+            {
+                success = false;
+            }
+
 
             // Assert
-            string msg = "Expected that post category ID was: " + expectedPostCategoryID + " But actual post category ID was: " + actualPostCategoryID;
-            Assert.AreEqual(expectedPostCategoryID, actualPostCategoryID, msg);
 
-            msg = "Expected that post category Name was: " + expectedPostCategoryName + " But actual post category Name was: " + actualPostCategoryName;
-            Assert.AreEqual(expectedPostCategoryName, actualPostCategoryName, msg);
-
-            msg = "Expected that post Comments was: " + expectedPostComments + " But actual post category Comment was: " + actualPostComments;
-            Assert.AreEqual(expectedPostComments, actualPostComments, msg);
-
-            msg = "Expected that post ID was: " + expectedPostID + " But actual post ID was: " + actualPostID;
-            Assert.AreEqual(expectedPostID, actualPostID, msg);
-
-            msg = "Expected that post Title was: " + expectedPostTitle + " But actual post Title was: " + actualPostTitle;
-            Assert.AreEqual(expectedPostTitle, actualPostTitle, msg);
-
-            msg = "Expected that post Description was: " + expectedPostDescription + " But actual post Description was: " + actualPostDescription;
-            Assert.AreEqual(expectedPostDescription, actualPostDescription, msg);
-
-            msg = "Expected that post BumpTime was: " + expectedPostBumpTime + " But actual post BumpTime was: " + actualPostBumpTime;
-            Assert.AreEqual(expectedPostBumpTime, actualPostBumpTime, msg);
-
-            msg = "Expected that post TagsList was: " + expectedPostTagsList + " But actual post TagsList was: " + actualPostTagsList;
-            Assert.AreEqual(expectedPostTagsList, actualPostTagsList, msg);
-
-            msg = "Expected that post DateCreated was: " + expectedPostDateCreated + " But actual post DateCreated was: " + actualPostDateCreated;
-            Assert.AreEqual(expectedPostDateCreated, actualPostDateCreated, msg);
+            Assert.IsFalse(success);
         }
         #endregion
 
-        #region Add non physical post test
+        #region Create post test
+
         [TestMethod]
-        [DataRow(1, "Computer", null, 1, "Overheated Processor", "My Processor has overheated help!", "Hardware", "Hot")]
-        [DataRow(10, "Garden", null, 2, "Dead flowers", "My flowers have died help! what do?!", "Dead", "RipFlowers")]
-        [DataRow(20, "Accessories", null, 3, "Bland jewels", "My jewels have become bland overtime. Any tips on shining them up?", "Jewels", "Bland")]
-        [DataRow(23, "Moving", null, 4, "I need help!", "I need help moving a couch!", "WishIWasStronger", "SOS")]
-        [DataRow(900, "Kitchen", null, 5, "Fridge noise!", "My Processor has overheated help!", "AlienNoises", "Fridge")]
-        [DataRow(50, "Food", null, 6, "Burnt spaghetti", "I have burnt my spaghetti and my arms are heavy!", "MomsSpaghetti", "EminemCantFixThis")]
-        [DataRow(60, "DIY handywork", null, 7, "3D hologram", "What angle does my inverted pyramid need to be in order to obtain 3d hologram", "FutureWaifu", "TeknologiIsTheFuture")]
-        public void AddNonPhysicalPostTest(int expectedPostCategoryID, string expectedPostCategoryName, List<Comment> expectedPostComments, 
-                                        int expectedPostID, string expectedPostTitle, string expectedPostDescription, string tag1, string tag2)
+
+        //Title min nr of characters
+        [DataRow("Car", "Lorem ipsum dolor sit amet.", 1)]
+        //Title min+1 nr of characters
+        [DataRow("Bird", "Consectetur adipiscing elit.", 2)]
+        //Title max nr of characters
+        [DataRow("Lorem ipsum dolor sit amet, consectetur cras amet.", "Donec sit amet dictum purus.", 3)]
+        //Title max-1 nr of characters
+        [DataRow("Lorem ipsum dolor sit amet, consectetur volutpat.", "Morbi at vestibulum est, non porttitor ante.", 4)]
+
+
+        //Description min nr of characters
+        [DataRow("Ut mauris.", "Lorum", 5)]
+        //Description min+1 nr of characters
+        [DataRow("Morbi cursus.", "Semper", 6)]
+        //Description max nr of characters
+        [DataRow("Nam quis.", fiveHundredCharacters+fiveHundredCharacters+fiveHundredCharacters, 7)]
+        //Description max-1 nr of characters
+        [DataRow("Lorem ipsum.", fiveHundredCharacters+fiveHundredCharacters+fiveHundredCharactersMinusOne, 8)]  
+        
+        public void CreatePostTest(string expectedPostTitle, string expectedPostDescription, int nrOfTags)
         {
             // Arrange
-            CreatePostCtr CPCtr = new CreatePostCtr();
-            Category expectedPostCategory = new Category(expectedPostCategoryID, expectedPostCategoryName);
-            DateTime expectedPostBumpTime = new DateTime();
-            List<String> expectedPostTagsList = new List<String>();
-            expectedPostTagsList.Add(tag1 + tag2);
-            DateTime expectedPostDateCreated = new DateTime();
-            
-            Post expectedPost = CPCtr.CreatePost(expectedPostCategory, expectedPostComments, expectedPostID,
-                                                 expectedPostTitle, expectedPostDescription, expectedPostBumpTime,
-                                                 expectedPostTagsList, expectedPostDateCreated);
-            
-            // Act         
-            CPCtr.AddPost(expectedPost);
-            Post actualPost = CPCtr.GetPostByID(expectedPostID);
+            List<string> expectedTagsList = new List<string>() { "Hardware", "Hot", "Dead", "RipFlowers", "Jewels", "Bland", "AlienNoises", "Fridge", "MomsSpaghetti", "EminemCantFixThis", "FutureWaifu", "TeknologiIsTheFuture" };
+            for (int i = 0; nrOfTags < expectedTagsList.Count; i++)
+            {
+                expectedTagsList.Remove(expectedTagsList.First());
+            }
 
-            //Assert
-            AssertTwoPostsAreEqual(expectedPost, actualPost);
-        }
-#endregion
+            User expectedUser = new User("Tester", "TT@DD.SS", "TestUser123", "TestPass");
 
-        private void AssertTwoPostsAreEqual(Post expectedPost, Post actualPost)
-        {
-            int expectedPostCategoryID = expectedPost.PostCategory.CategoryID;
-            string expectedPostCategoryName = expectedPost.PostCategory.CategoryName;
-            List<Comment> expectedPostComments = expectedPost.CommentsList;
-            int expectedPostID = expectedPost.PostID;
-            string expectedPostTitle = expectedPost.Title;
-            string expectedPostDescription = expectedPost.Description;
-            DateTime expectedPostBumpTime = expectedPost.BumpTime;
-            List<String> expectedPostTagsList = expectedPost.TagsList;
-            DateTime expectedPostDateCreated = expectedPost.DateCreated;
+            Category expectedCategory = new Category("Name");
 
-            int actualPostCategoryID = actualPost.PostCategory.CategoryID;
-            string actualPostCategoryName = actualPost.PostCategory.CategoryName;
-            List<Comment> actualPostComments = actualPost.CommentsList;
-            int actualPostID = actualPost.PostID;
-            string actualPostTitle = actualPost.Title;
-            string actualPostDescription = actualPost.Description;
-            DateTime actualPostBumpTime = actualPost.BumpTime;
-            List<String> actualPostTagsList = actualPost.TagsList;
-            DateTime actualPostDateCreated = actualPost.DateCreated;
+            var controller = new CreatePostPageCtr(_DBcontext);
+
+            // Act 
+
+            Post actualPost = controller.CreatePost(expectedUser, expectedPostTitle, expectedPostDescription, expectedCategory, expectedTagsList); // this method has to return the newly created object after its ID is set from the DB
+
+            DateTime expectedBumpTime = new DateTime();
+
+            DateTime expectedDateCreated = new DateTime();
+
 
             // Assert
-            string msg = "Expected that post category ID was: " + expectedPostCategoryID + " But actual post category ID was: " + actualPostCategoryID;
-            Assert.AreEqual(expectedPostCategoryID, actualPostCategoryID, msg);
 
-            msg = "Expected that post category Name was: " + expectedPostCategoryName + " But actual post category Name was: " + actualPostCategoryName;
-            Assert.AreEqual(expectedPostCategoryName, actualPostCategoryName, msg);
+            //ID should be 1 as there is already 0 test posts in the Mock DB.
+            string msg = "Expected that post ID was: 1 But actual post ID was: " + actualPost.PostID;
+            Assert.AreEqual(1, actualPost.PostID, msg);
 
-            msg = "Expected that post Comments was: " + expectedPostComments + " But actual post category Comment was: " + actualPostComments;
-            Assert.AreEqual(expectedPostComments, actualPostComments, msg);
+            //TItle Assert
+            msg = "Expected that post Title was: " + expectedPostTitle + " But actual post Title was: " + actualPost.Title;
+            Assert.AreEqual(expectedPostTitle, actualPost.Title, msg);
 
-            msg = "Expected that post ID was: " + expectedPostID + " But actual post ID was: " + actualPostID;
-            Assert.AreEqual(expectedPostID, actualPostID, msg);
+            //Description Assert
+            msg = "Expected that post Description was: " + expectedPostDescription + " But actual post Description was: " + actualPost.Description;
+            Assert.AreEqual(expectedPostDescription, actualPost.Description, msg);
 
-            msg = "Expected that post Title was: " + expectedPostTitle + " But actual post Title was: " + actualPostTitle;
-            Assert.AreEqual(expectedPostTitle, actualPostTitle, msg);
+            //Tags assert. Number of tags defined in the Datarow, tags are predefined.
+            msg = "Expected that post TagsList was: " + expectedTagsList + " But actual post TagsList was: " + actualPost.TagsList;
+            Assert.AreEqual(expectedTagsList, actualPost.TagsList, msg);
 
-            msg = "Expected that post Description was: " + expectedPostDescription + " But actual post Description was: " + actualPostDescription;
-            Assert.AreEqual(expectedPostDescription, actualPostDescription, msg);
+            //BumpTime Assert, check if theres a better way to test this
+            msg = "Expected that post BumpTime.TimeOfDay was around: " + expectedBumpTime.TimeOfDay + " But actual post BumpTime was: " + actualPost.BumpTime.TimeOfDay;
+            Assert.AreEqual(expectedBumpTime.TimeOfDay, actualPost.BumpTime.TimeOfDay, msg);
 
-            msg = "Expected that post BumpTime was: " + expectedPostBumpTime + " But actual post BumpTime was: " + actualPostBumpTime;
-            Assert.AreEqual(expectedPostBumpTime, actualPostBumpTime, msg);
+            //DateCreated Assert,  check if theres a better way to test this
+            msg = "Expected that post DateCreated.TimeOfDay was around: " + expectedDateCreated.TimeOfDay + " But actual post DateCreated was: " + actualPost.DateCreated.TimeOfDay;
+            Assert.AreEqual(expectedDateCreated.TimeOfDay, actualPost.DateCreated.TimeOfDay, msg);
 
-            msg = "Expected that post TagsList was: " + expectedPostTagsList + " But actual post TagsList was: " + actualPostTagsList;
-            Assert.AreEqual(expectedPostTagsList, actualPostTagsList, msg);
+            //Owner Assert
+            msg = "Expected that post Owner was around: " + expectedUser + " But actual post Owner was: " + actualPost.Owner;
+            Assert.AreEqual(expectedUser, actualPost.Owner, msg);
 
-            msg = "Expected that post DateCreated was: " + expectedPostDateCreated + " But actual post DateCreated was: " + actualPostDateCreated;
-            Assert.AreEqual(expectedPostDateCreated, actualPostDateCreated, msg);
+            //Category Assert
+            msg = "Expected that post Category was: " + expectedCategory + " But actual post category Name was: " + actualPost.PostCategory;
+            Assert.AreEqual(expectedCategory, actualPost.PostCategory, msg);
+
+            //Comments Assert
+            msg = "Expected that post CommentsList was empty. But actual post category Comment was: " + actualPost.CommentsList;
+            Assert.AreEqual(0, actualPost.CommentsList, msg);
         }
 
-        private void AssertTwoPhysicalPostAreEqual(PhysicalPost expectedPhysicalPost, PhysicalPost actualPhysicalPost)
-        {
-            int expectedPhysicalPostCategoryID = expectedPhysicalPost.PostCategory.CategoryID;
-            string expectedPhysicalPostCategoryName = expectedPhysicalPost.PostCategory.CategoryName;
-            List<Comment> expectedPhysicalPostComments = expectedPhysicalPost.CommentsList;
-            int expectedPhysicalPostID = expectedPhysicalPost.PostID;
-            string expectedPhysicalPostTitle = expectedPhysicalPost.Title;
-            string expectedPhysicalPostDescription = expectedPhysicalPost.Description;
-            DateTime expectedPhysicalPostBumpTime = expectedPhysicalPost.BumpTime;
-            List<String> expectedPhysicalPostTagsList = expectedPhysicalPost.TagsList;
-            DateTime expectedPhysicalPostDateCreated = expectedPhysicalPost.DateCreated;
-            bool expectedPhysicalPostIsLocked = expectedPhysicalPost.IsLocked;
-            string expectedPhysicalPostAltDescription = expectedPhysicalPost.AltDescription;
-            string expectedPhysicalPostZipCode = expectedPhysicalPost.ZipCode;
-            string expectedPhysicalPostAddress = expectedPhysicalPost.Address;
+        [TestMethod]
+        //Title min-1 nr of characters
+        [DataRow("Ca", "Lorem ipsum dolor sit amet.", 1)]
+        //Title max+1 nr of characters
+        [DataRow("Lorem ipsum dolor sit amet, consectetur cras amet..", "Consectetur adipiscing elit.", 2)]
 
-            int actualPostCategoryID = actualPhysicalPost.PostCategory.CategoryID;
-            string actualPostCategoryName = actualPhysicalPost.PostCategory.CategoryName;
-            List<Comment> actualPostComments = actualPhysicalPost.CommentsList;
-            int actualPostID = actualPhysicalPost.PostID;
-            string actualPostTitle = actualPhysicalPost.Title;
-            string actualPostDescription = actualPhysicalPost.Description;
-            DateTime actualPostBumpTime = actualPhysicalPost.BumpTime;
-            List<String> actualPostTagsList = actualPhysicalPost.TagsList;
-            DateTime actualPostDateCreated = actualPhysicalPost.DateCreated;
-            bool actualPostIsLocked = actualPhysicalPost.IsLocked;
-            string actualPostAltDescription = actualPhysicalPost.AltDescription;
-            string actualPostZipCode = actualPhysicalPost.ZipCode;
-            string actualPostAddress = actualPhysicalPost.Address;
+        //Description min-1 nr of characters
+        [DataRow("Ut mauris.", "Loru", 3)]
+        //Description max+1 nr of characters
+        [DataRow("Nam quis.", "1"+fiveHundredCharacters + fiveHundredCharacters + fiveHundredCharacters, 4)]
+        public void CreatePostNegativeTest(string expectedPostTitle, string expectedPostDescription, int nrOfTags)
+        {
+            // Arrange
+            List<string> expectedTagsList = new List<string>() { "Hardware", "Hot", "Dead", "RipFlowers", "Jewels", "Bland", "AlienNoises", "Fridge", "MomsSpaghetti", "EminemCantFixThis", "FutureWaifu", "TeknologiIsTheFuture" };
+            for (int i = 0; nrOfTags < expectedTagsList.Count; i++)
+            {
+                expectedTagsList.Remove(expectedTagsList.First());
+            }
+
+            User expectedUser = new User("Tester", "TT@DD.SS", "TestUser123", "TestPass");
+
+            Category expectedCategory = new Category("Name");
+
+            var controller = new CreatePostPageCtr(_DBcontext);
+
+            bool success = true;
+
+            // Act 
+
+            try
+            {
+                controller.CreatePost(expectedUser, expectedPostTitle, expectedPostDescription, expectedCategory, expectedTagsList); // this method has to return the newly created object after its ID is set from the DB
+            }
+            catch (Exception)
+            {
+                success = false;
+            }
+
 
             // Assert
-            string msg = "Expected that post category ID was: " + expectedPhysicalPostCategoryID + " But actual post category ID was: " + actualPostCategoryID;
-            Assert.AreEqual(expectedPhysicalPostCategoryID, actualPostCategoryID, msg);
 
-            msg = "Expected that post category Name was: " + expectedPhysicalPostCategoryName + " But actual post category Name was: " + actualPostCategoryName;
-            Assert.AreEqual(expectedPhysicalPostCategoryName, actualPostCategoryName, msg);
-
-            msg = "Expected that post Comments was: " + expectedPhysicalPostComments + " But actual post category Comment was: " + actualPostComments;
-            Assert.AreEqual(expectedPhysicalPostComments, actualPostComments, msg);
-
-            msg = "Expected that post ID was: " + expectedPhysicalPostID + " But actual post ID was: " + actualPostID;
-            Assert.AreEqual(expectedPhysicalPostID, actualPostID, msg);
-
-            msg = "Expected that post Title was: " + expectedPhysicalPostTitle + " But actual post Title was: " + actualPostTitle;
-            Assert.AreEqual(expectedPhysicalPostTitle, actualPostTitle, msg);
-
-            msg = "Expected that post Description was: " + expectedPhysicalPostDescription + " But actual post Description was: " + actualPostDescription;
-            Assert.AreEqual(expectedPhysicalPostDescription, actualPostDescription, msg);
-
-            msg = "Expected that post BumpTime was: " + expectedPhysicalPostBumpTime + " But actual post BumpTime was: " + actualPostBumpTime;
-            Assert.AreEqual(expectedPhysicalPostBumpTime, actualPostBumpTime, msg);
-
-            msg = "Expected that post TagsList was: " + expectedPhysicalPostTagsList + " But actual post TagsList was: " + actualPostTagsList;
-            Assert.AreEqual(expectedPhysicalPostTagsList, actualPostTagsList, msg);
-
-            msg = "Expected that post DateCreated was: " + expectedPhysicalPostDateCreated + " But actual post DateCreated was: " + actualPostDateCreated;
-            Assert.AreEqual(expectedPhysicalPostDateCreated, actualPostDateCreated, msg);
-
-            msg = "Expected that post IsLocked was: " + expectedPhysicalPostIsLocked + " But actual post IsLocked was: " + actualPostIsLocked;
-            Assert.AreEqual(expectedPhysicalPostIsLocked, actualPostIsLocked, msg);
-
-            msg = "Expected that post AltDescription was: " + expectedPhysicalPostAltDescription + " But actual post AltDescription was: " + actualPostAltDescription;
-            Assert.AreEqual(expectedPhysicalPostAltDescription, actualPostAltDescription, msg);
-
-            msg = "Expected that post ZipCode was: " + expectedPhysicalPostZipCode + " But actual post ZipCode was: " + actualPostZipCode;
-            Assert.AreEqual(expectedPhysicalPostZipCode, actualPostZipCode, msg);
-
-            msg = "Expected that post Address was: " + expectedPhysicalPostAddress + " But actual post Address was: " + actualPostAddress;
-            Assert.AreEqual(expectedPhysicalPostAddress, actualPostDateCreated, msg);
+            Assert.IsFalse(success);
         }
+
+        #endregion
     }
 }
