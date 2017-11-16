@@ -9,7 +9,7 @@ namespace SolvrLibrary
 {
     class SolvrDB : DataContext
     {
-        //Here is the tables for the project. These tables are in the database.
+        //Here are the tables for the project. These tables are in the database.
         public Table<Post> Posts;
         public Table<User> Users;
         public Table<Comment> Comments;
