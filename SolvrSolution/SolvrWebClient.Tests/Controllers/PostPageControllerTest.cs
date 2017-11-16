@@ -31,14 +31,14 @@ namespace SolvrWebClient.Tests.Controllers
         //ChooseAplicants();        ?
         //UnChooseAplicant();       ?
 
-        #region UpdateTests
+        #region UpdatePostDescriptionTest
         [TestMethod]
         [DataRow(1, "Description1")]
         [DataRow(2, "Description2")]
         [DataRow(3, "Description3")]
         [DataRow(4, "Description4")]
         [DataRow(5, "Description5")]
-        public void UpdatePostDesciptionTest(int postID, string newDescriptionString)
+        public void UpdatePostTest(int postID, string newDescriptionString)
         {
             //Arrange
             PostCtr postCtr = new PostCtr();
@@ -52,11 +52,15 @@ namespace SolvrWebClient.Tests.Controllers
             Post updatedPost = postCtr.getPostById(postID);
             string actualDescription = updatedPost.Description;
 
+            DateTime dt = new DateTime(year month day hour minute second millisecond)
+
             //Assert
             string msg = "Expected that post Description was: " + expectedDescription + " But actual post Description was: " + actualDescription;
             Assert.AreEqual(expectedDescription, actualDescription, msg);
         }
+        #endregion
 
+        #region UpdatePostTitleTest(...)
         [TestMethod]
         [DataRow(1, "Title1")]
         [DataRow(2, "Title2")]
@@ -80,7 +84,9 @@ namespace SolvrWebClient.Tests.Controllers
             string msg = "Expected that post Title was: " + expectedTitle + " But actual post Title was: " + actualTitle;
             Assert.AreEqual(expectedTitle, actualTitle, msg);
         }
-        
+        #endregion
+
+        #region UpdatePostBumpTimeTest(...)
         /*I programmet vil vi kun sende DateTime.Now med, men regner også med vi vil brue postUpdate på ctr til dette.
           Men for at kunne teste at fremtidige datoer virker sender vi en DateTime med*/
         [TestMethod]
@@ -89,7 +95,7 @@ namespace SolvrWebClient.Tests.Controllers
         [DataRow(3, 2035, 4, 2, 14, 23, 55)]
         [DataRow(4, 2090, 5, 6, 12, 52, 44)]
         [DataRow(5, 2150, 5, 4, 23, 35, 24)]
-        public void UpdatePostBumpTime(int postID, int year, int mounth, int day, int hour, int minute, int second)
+        public void UpdatePostBumpTimeTest(int postID, int year, int mounth, int day, int hour, int minute, int second)
         {
             //Arrange
             PostCtr postCtr = new PostCtr();
@@ -106,7 +112,9 @@ namespace SolvrWebClient.Tests.Controllers
             string msg = "Expected that post BumpTime was: " + expectedBumpTime + " But actual post BumpTime was: " + actualBumpTime;
             Assert.AreEqual(expectedBumpTime, actualBumpTime, msg);
         }
+        #endregion
 
+        #region UpdatePostCategoryTest(...)
         [TestMethod]
         [DataRow(1, 2)]
         [DataRow(2, 3)]
@@ -132,9 +140,9 @@ namespace SolvrWebClient.Tests.Controllers
             string msg = "Expected that post Category was: " + expectedCategory + " But actual post Category was: " + actualCategory;
             Assert.AreEqual(expectedCategory, actualCategory, msg);
         }
+        #endregion(...)
 
-        #endregion
-
+        #region ReportPostTest(...)
         [TestMethod]
         [DataRow(1, true)]
         [DataRow(2, false)]
@@ -157,7 +165,9 @@ namespace SolvrWebClient.Tests.Controllers
             string msg = "Expected that post isReported was: " + expectedIsReported + " But actual post isReported was: " + actualIsReported;
             Assert.IsTrue(expectedIsReported == actualIsReported);
         }
+        #endregion
 
+        #region LockPostTest(...)
         [TestMethod]
         [DataRow(1, true)]
         [DataRow(2, false)]
@@ -180,70 +190,29 @@ namespace SolvrWebClient.Tests.Controllers
             string msg = "Expected that post isLocked was: " + expectedIsLocked + " But actual post isLocked was: " + actualIsLocked;
             Assert.IsTrue(expectedIsLocked == actualIsLocked);
         }
+        #endregion
 
-
+        #region AddAplicantToPhysicalPostTest(...)
         [TestMethod]
-        [DataRow(1, 2, -1, -1, -1, -1)]
-        [DataRow(2, 1, 2, -1, -1, -1)]
-        [DataRow(3, 1, 2, 3 ,-1, -1)]
-        [DataRow(3, 1, 2, 3, 4, -1)]
-        [DataRow(3, 1, 2, 3, 4, 5)]
-        public void ChooseAplicantsTest(int physicalPostId, int userId1, int userId2, int userId3, int userId4, int userId5)
+        [DataRow(1, 1)]
+        [DataRow(1, 2)]
+        [DataRow(1, 3)]
+        [DataRow(1, 4)]
+        [DataRow(1, 5)]
+        public void AddAplicantToPhysicalPostTest(int physicalPostId, int userId)
         {
             //Arrange
             PostCtr postCtr = new PostCtr();
-            UserCtr userCtr = new UserCtr();
-            List<User> expectedAplicants = new List<User>();
+            DatabaseCtr dbCtr = new DatabaseCtr();                   //Database line, idk how yet.
+
+            User expetedAplicant = dbPersonCtr.FindUserById(userId); //Database line, idk how yet.
 
             //Act
-            if (userId1 != -1)
-            {
-                User aplicant1 = userCtr.FindUserById(userId1);
-                postCtr.AddAplicantToPhysicalPost(aplicant1, physicalPostId);
-                expectedAplicants.Add(aplicant1);
-            }
-
-            if (userId2 != -1)
-            {
-                User aplicant2 = userCtr.FindUserById(userId2);
-                postCtr.AddAplicantToPhysicalPost(aplicant2, physicalPostId);
-                expectedAplicants.Add(aplicant2);
-            }
-
-            if (userId3 != -1)
-            {
-                User aplicant3 = userCtr.FindUserById(userId3);
-                postCtr.AddAplicantToPhysicalPost(aplicant3, physicalPostId);
-                expectedAplicants.Add(aplicant3);
-            }
-
-            if (userId4 != -1)
-            {
-                User aplicant4 = userCtr.FindUserById(userId4);
-                postCtr.AddAplicantToPhysicalPost(aplicant4, physicalPostId);
-                expectedAplicants.Add(aplicant4);
-            }
-
-            if (userId5 != -1)
-            {
-                User aplicant5 = userCtr.FindUserById(userId5);
-                postCtr.AddAplicantToPhysicalPost(aplicant5, physicalPostId);
-                expectedAplicants.Add(aplicant5);
-            }
-
-            PhysicalPost physicalPost = postCtr.FindPostById(physicalPostId);
-            
-            List<User> actualAplicants = physicalPost.Aplicants;
-
-            foreach(User actualAplicant in actualAplicants)
-            {   
-                
-            }
-
-
+            postCtr.AddAplicantToPhysicalPost(userId, physicalPostId);
 
             //Assert
-            Assert.AreEqual(actualAplicant expectedAplicant);
+            Assert.AreEqual(actualAplicants, expectedAplicants);
         }
+        #endregion
     }
 }
