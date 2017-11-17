@@ -10,6 +10,13 @@ namespace SolvrLibrary
     [Table(Name = "categories")]
     public class Category
     {
+
+        public Category(string _name)
+        {
+            Id = 0;
+            Name = _name;
+        }
+
         [Column(IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }
 

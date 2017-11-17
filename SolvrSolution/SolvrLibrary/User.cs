@@ -7,9 +7,22 @@ using System.Threading.Tasks;
 
 namespace SolvrLibrary
 {
+   
     [Table(Name = "users")]
     public class User
     {
+        public User(string _name, string _email, string _username, string _password)
+        {
+            Id = 0;
+            Name = _name;
+            Email = _email;
+            UserName = _username;
+            Password = _password;
+            IsAdmin = false;
+            DateCreated = new DateTime();
+            Posts = new List<Post>();
+        }
+
         [Column(IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }
 
