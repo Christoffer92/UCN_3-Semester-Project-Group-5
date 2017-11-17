@@ -22,3 +22,66 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+/* Change the color of the navigation bar (Header) */
+.navbar {
+    background-color: #ffffff
+}
+
+/* Change the bacground color of the toggle bar in the navigation bar, (Header) */
+.navbar-toggle {
+    background-color: black;
+}
+
+/* Change the color of the brand text, the one in the top right corner in the navigation bar, (Header)*/
+.navbar-inverse .navbar-brand {
+    color: #ff0808;
+}
+
+    /* Change the focus color of the brand text, the one in the top right corner in the navigation bar, (Header)*/
+.navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
+    color: rgba(253, 0, 0, 0.50);
+}
+
+/* Text color on the header */
+.navbar-inverse .navbar-nav > li > a {
+    color: #a10000;
+}
+
+/* Text color on the header when hover on it */
+.navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+    color: rgba(160, 0, 16, 0.47);
+}
+
+/* our own Solvr logo in the navigation bar, (Header)*/
+.site-title {
+    color: #c8c8c8;
+    font-family: Rockwell, Consolas, "Courier New", Courier, monospace;
+    font-size: 2.3em;
+    margin: 0;
+    background: url("../images/logo.png") no-repeat center left;
+    display: block;
+    height: auto;
+    width: 130px;
+}
+ /*Positions the create Post button on the navbar, (header) */
+.button-createPost {
+    height: 50px;
+    width: 100px;
+    margin-left: 120px;
+    padding-bottom: 20px;
+}
+
+/* Moves the body down by 60px and etc. */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 60px;
+}
+
+.btnCreatePost{
+    width: 250px;
+}
+
+
