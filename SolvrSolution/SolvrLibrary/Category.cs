@@ -12,6 +12,7 @@ namespace SolvrLibrary
     {
         [Column(IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }
+
         [Column(Name = "category")]
         public string Name { get; set; }
     }

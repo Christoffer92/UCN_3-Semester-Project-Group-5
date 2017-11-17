@@ -12,16 +12,22 @@ namespace SolvrLibrary
     {
         [Column(IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }
+
         [Column()]
         public string Name { get; set; }
+
         [Column()]
         public string Email { get; set; }
+
         [Column()]
         public string UserName { get; set; }
+
         [Column()]
         public string Password { get; set; }
+
         [Column()]
         public bool IsAdmin { get; set; }
+
         [Column()]
         public DateTime DateCreated { get; set; }
 

@@ -12,10 +12,13 @@ namespace SolvrLibrary
     {
         [Column(IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }
+
         [Column()]
         public bool IsUpvoted { get; set; }
 
-        public User UserVote { get; set; }
-        
+        public User User { get; set; }
+
+        public Comment Comment { get; set; }
+
     }
 }

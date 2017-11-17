@@ -21,7 +21,7 @@ namespace SolvrLibrary
 
         /// <summary>
         /// Used to create a connection to the database through a connection string.
-        /// Base is an inheritance that createse a new instance of the datacontext class (In here SolvrDB)
+        /// Base is an inheritance that creates a new instance of the datacontext class (In here SolvrDB)
         /// </summary>
         /// <param name="connection"></param>
         public SolvrDB(string connection) : base(connection){ }
