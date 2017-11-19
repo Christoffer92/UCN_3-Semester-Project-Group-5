@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 namespace SolvrLibrary
 {
     [Table(Name = "physicalposts")]
-    public class PhysicalPost : Post
+    public class PhysicalPost
     {
-
-        [Column(IsPrimaryKey = true, IsDbGenerated = true)]
+    [Column(IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }
 
         [Column()]
         public bool IsLocked { get; set; }
 
+        
         [Column()]
         public string AltDescription { get; set; }
 
-        [Column()]
+[Column()]
         public string Zipcode { get; set; }
 
         [Column()]

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace SolvrLibrary
 {
     [Table(Name = "solvrcomments")]
-    public class SolvrComment : Comment
+    public class SolvrComment
     {
         [Column(IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }

@@ -37,7 +37,7 @@ namespace DbHandler.Models
 
         public static void InsertPost(SolvrDB context)
         {
-            Post post = new Post { Title = "Print On Demand", Description = "Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit.", BumpTime = new DateTime(2025, 09, 26, 11, 56, 51), DateCreated = new DateTime(2025, 09, 26, 11, 56, 51), CategoryId = 1, UserId = 1 };
+            Post post = new Post { Title = "Print On Demand", Description = "Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit.", BumpTime = new DateTime(2025, 09, 26, 11, 56, 51), DateCreated = new DateTime(2025, 09, 26, 11, 56, 51), IsPhysicalPost = true, CategoryId = 1, UserId = 1 };
             context.Posts.InsertOnSubmit(post);
             context.SubmitChanges();
         }

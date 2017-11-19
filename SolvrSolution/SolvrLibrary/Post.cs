@@ -31,6 +31,11 @@ namespace SolvrLibrary
 
         [Column()]
         public DateTime DateCreated { get; set; }
+
+
+        [Column()]
+        public bool IsPhysicalPost { get; set; }
+
         [Column()]
         public int CategoryId { get; set; }
         [Column()]

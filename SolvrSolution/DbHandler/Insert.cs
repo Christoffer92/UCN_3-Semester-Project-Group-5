@@ -26,7 +26,7 @@ namespace DbHandler
 
         public void InserSimpleData()
         {
-            SolvrDB context = new SolvrDB(@"Data Source=X1CARBON\SQLEXPRESS;Initial Catalog=SolvrDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            SolvrDB context = new SolvrDB(@"Data Source=CHRISLAPTOP\SQLEXPRESS;Initial Catalog=SolvrDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             Models.SimpleInsert.InsertDataIntoDB(context);
         }
 

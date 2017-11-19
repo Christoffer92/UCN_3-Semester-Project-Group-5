@@ -1049,6 +1049,7 @@ namespace DbHandler.Models
             InsertData(context, physicalPosts1);
         }
 
+        /*
         public static void InsertPhysicalPostsNew1(SolvrDB context) {
             var physicalPosts = new List<PhysicalPost>
             {
@@ -1567,7 +1568,7 @@ new PhysicalPost { Title = "Sports Coaching", Description = "Aenean lectus.", Bu
 
              InsertData(context, physicalPosts1);
         }
-
+        */
         public static void InsertData(SolvrDB context, List<PhysicalPost> data)
         {
             foreach(var physicalPosts in data)
