@@ -22,6 +22,15 @@ namespace SolvrLibrary
         [Column()]
         public DateTime DateCreated { get; set; }
 
+        [Column()]
+        public int UserId { get; set; }
+
+        [Column()]
+        public int CommentId { get; set; }
+
+        [Column()]
+        public int PostId { get; set; }
+
         public User User { get; set; }
 
         public Comment Comment { get; set; }

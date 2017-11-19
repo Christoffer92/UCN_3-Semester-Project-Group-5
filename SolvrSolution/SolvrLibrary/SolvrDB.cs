@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SolvrLibrary
 {
-    class SolvrDB : DataContext
+    public class SolvrDB : DataContext
     {
         //Here are the tables for the project. These tables are in the database.
         public Table<Post> Posts;

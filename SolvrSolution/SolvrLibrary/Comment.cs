@@ -19,11 +19,11 @@ namespace SolvrLibrary
         [Column()]
         public string Text { get; set; }
 
-        //[Column()]
-        //public int UserId { get; set; }
+        [Column()]
+        public int UserId { get; set; }
 
-        //[Column()]        
-        //public int PostId { get; set; }
+        [Column()]        
+        public int PostId { get; set; }
 
         public Post Post { get; set; }
 

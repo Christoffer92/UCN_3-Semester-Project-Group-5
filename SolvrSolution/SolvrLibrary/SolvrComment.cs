@@ -10,8 +10,8 @@ namespace SolvrLibrary
     [Table(Name = "solvrcomments")]
     public class SolvrComment : Comment
     {
-        [Column(Name = "Id", IsPrimaryKey = true, IsDbGenerated = true)]
-        public int SolvrId { get; set; }
+        [Column(IsPrimaryKey = true, IsDbGenerated = true)]
+        public int Id { get; set; }
 
         [Column()]
         public DateTime TimeAccepted { get; set; }
@@ -19,11 +19,11 @@ namespace SolvrLibrary
         [Column()]        
         public bool IsAccepted { get; set; }
 
-        //[Column()]        
-        //public int CommentId { get; set; }
+        [Column()]        
+        public int CommentId { get; set; }
 
-        //[Column()]        
-        //public int PhysicalPostId { get; set; }
+        [Column()]        
+        public int PhysicalPostId { get; set; }
 
         public PhysicalPost PhysicalPost { get; set; }
     }
