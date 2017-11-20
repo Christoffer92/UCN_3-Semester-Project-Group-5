@@ -9,7 +9,11 @@ namespace DbHandler.Models
 {
     public static class PhysicalPostInsert
     {
-        public static void InsertPhysicalPostIntoDb(SolvrDB context)
+
+        //IMPORTANT THIS CLASS IS NEVER USED AND CONTAINS A PLETHORA OF ERRORS
+
+
+        /*public static void InsertPhysicalPostIntoDb(SolvrDB context)
         {
             InsertPhysicalPosts1(context);
             InsertPhysicalPosts2(context);
@@ -1570,11 +1574,11 @@ new PhysicalPost { Title = "Sports Coaching", Description = "Aenean lectus.", Bu
 
         public static void InsertData(SolvrDB context, List<PhysicalPost> data)
         {
-            foreach(var physicalPosts in data)
+            /*foreach(var physicalPosts in data)
             {
                 context.PhysicalPosts.InsertOnSubmit(physicalPosts);
             }
-            context.SubmitChanges();
-        }
+            context.SubmitChanges();*/
+        //}
     }
 }

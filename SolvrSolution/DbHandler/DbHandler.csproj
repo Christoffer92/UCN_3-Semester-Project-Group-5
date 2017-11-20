@@ -65,5 +65,9 @@
       <Name>SolvrLibrary</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="DB Scripts\Create Tables.sql" />
+    <Content Include="DB Scripts\Drop Tables.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

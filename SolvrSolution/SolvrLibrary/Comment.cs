@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 namespace SolvrLibrary
 {
     [Table(Name = "comments")]
+    [InheritanceMapping(Code = "Solvr", Type = typeof(SolvrComment))]
+    [InheritanceMapping(Code = "Comment", Type = typeof(Comment), IsDefault = true)]
     public class Comment
     {
         [Column(IsPrimaryKey = true, IsDbGenerated = true)]
@@ -24,6 +26,9 @@ namespace SolvrLibrary
 
         [Column()]        
         public int PostId { get; set; }
+
+        [Column(IsDiscriminator = true)]
+        public int CommentType { get; set; }
 
         public Post Post { get; set; }
 

@@ -9,6 +9,11 @@ namespace DbHandler.Models
 {
     public static class SolvrCommentInsert
     {
+        /*
+         * 
+         * //IMPORTANT THIS CLASS IS NEVER USED AND CONTAINS A PLETHORA OF ERRORS
+         * 
+         * 
         public static void InsertSolvrCommentIntoDb(SolvrDB context)
         {
             var SolvrComments = new List<SolvrComment>
@@ -1019,6 +1024,6 @@ namespace DbHandler.Models
                 context.SolvrComments.InsertOnSubmit(SolvrComment);
             }
             context.SubmitChanges();
-        }
+        }*/
     }
 }

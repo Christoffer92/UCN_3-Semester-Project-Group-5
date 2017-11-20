@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace SolvrLibrary
 {
-    [Table(Name = "solvrcomments")]
+    //[Table(Name = "solvrcomments")]
     public class SolvrComment : Comment
     {
-        [Column(IsPrimaryKey = true, IsDbGenerated = true)]
-        public int Id { get; set; }
+        /*[Column(IsPrimaryKey = true, IsDbGenerated = true)]
+        public int Id { get; set; }*/
 
         [Column()]
         public DateTime TimeAccepted { get; set; }
@@ -19,11 +19,11 @@ namespace SolvrLibrary
         [Column()]        
         public bool IsAccepted { get; set; }
 
-        [Column()]        
-        public int CommentId { get; set; }
+        /*[Column()]        
+        public int CommentId { get; set; }*/
 
-        [Column()]        
-        public int PhysicalPostId { get; set; }
+        /*[Column()]        
+        public int PostId { get; set; }*/
 
         public PhysicalPost PhysicalPost { get; set; }
     }

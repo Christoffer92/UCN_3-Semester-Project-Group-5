@@ -13,8 +13,8 @@ namespace DbHandler
         {
             
             Console.WriteLine("Populating db...");
-            //new Insert().InsertData();
-            new Insert().InserSimpleData();
+            //new Insert().SimpleData();
+            new Insert().InsertData();
             Console.WriteLine("db populated");
             Console.ReadLine();
 

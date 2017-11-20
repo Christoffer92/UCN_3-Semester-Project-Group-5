@@ -8,7 +8,10 @@ using SolvrLibrary;
 namespace DbHandler.Models
 {
     public static class SimpleInsert
-    {
+    {/*
+
+        //IMPORTANT THIS CLASS IS NEVER USED AND CONTAINS A PLETHORA OF ERRORS
+
         public static void InsertDataIntoDB(SolvrDB context)
         {
             InsertUser(context);
@@ -52,9 +55,9 @@ namespace DbHandler.Models
         public static void InsertPhysicalPost(SolvrDB context)
         {
             PhysicalPost physicalPost = new PhysicalPost { IsLocked = false, AltDescription = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus. Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis. Duis consequat dui nec nisi volutpat eleifend.", Zipcode = "555", Address = "atvej 15", PostId = 1 };
-            context.PhysicalPosts.InsertOnSubmit(physicalPost);
-            context.SubmitChanges();
-        }
+           /* context.PhysicalPosts.InsertOnSubmit(physicalPost);
+            context.SubmitChanges();*/
+        /*}
 
         public static void InsertSolvrComment(SolvrDB context)
         {
@@ -75,7 +78,7 @@ namespace DbHandler.Models
             Report report = new Report { Title = "massa tempor convallis nulla neque", Description = "Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique.", DateCreated = new DateTime(2019, 07, 24, 21, 48, 58), UserId = 1, CommentId = 1, PostId = 1 };
             context.Reports.InsertOnSubmit(report);
             context.SubmitChanges();
-        }
+        }*/
     }
 }
 

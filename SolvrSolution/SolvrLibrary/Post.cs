@@ -8,13 +8,18 @@ using System.Threading.Tasks;
 namespace SolvrLibrary
 {
     [Table(Name = "posts")]
+    [InheritanceMapping(Code = "Physical", Type = typeof(PhysicalPost))]
+    [InheritanceMapping(Code = "Post", Type = typeof(Post), IsDefault = true)]
     public class Post
     {
 
         public Post()
         {
-            DateCreated = new DateTime();
-            BumpTime = new DateTime();
+            //DateCreated = new DateTime(2017, 11, 20, 05, 56, 20);
+            //BumpTime = new DateTime(2017, 11, 25, 22, 36, 10);
+
+            BumpTime = DateTime.Now;
+            DateCreated = DateTime.Now;
         }
 
         [Column(IsPrimaryKey = true, IsDbGenerated = true)]
@@ -31,10 +36,15 @@ namespace SolvrLibrary
 
         [Column()]
         public DateTime DateCreated { get; set; }
+
         [Column()]
         public int CategoryId { get; set; }
+
         [Column()]
         public int UserId { get; set; }
+
+        [Column(IsDiscriminator = true)]
+        public string PostType;
 
         public List<string> Tags { get; set; }
 
