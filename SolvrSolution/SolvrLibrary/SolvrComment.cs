@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace SolvrLibrary
 {
     [Table(Name = "solvrcomments")]
-    public class SolvrComment : Comment
+    public class SolvrComment : CommentSuper
     {
         [Column(IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }
@@ -18,9 +18,6 @@ namespace SolvrLibrary
 
         [Column()]        
         public bool IsAccepted { get; set; }
-
-        [Column()]        
-        public int CommentId { get; set; }
 
         [Column()]        
         public int PhysicalPostId { get; set; }

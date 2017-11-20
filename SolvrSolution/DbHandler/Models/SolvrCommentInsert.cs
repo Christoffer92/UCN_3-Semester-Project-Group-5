@@ -11,6 +11,7 @@ namespace DbHandler.Models
     {
         public static void InsertSolvrCommentIntoDb(SolvrDB context)
         {
+            /*
             var SolvrComments = new List<SolvrComment>
             {
                 new SolvrComment { TimeAccepted = new DateTime(2019, 06, 15, 15, 02, 42), IsAccepted = false, PhysicalPostId = 752, CommentId = 217},
@@ -1019,6 +1020,7 @@ namespace DbHandler.Models
                 context.SolvrComments.InsertOnSubmit(SolvrComment);
             }
             context.SubmitChanges();
+            */
         }
     }
 }

@@ -10,10 +10,10 @@ namespace SolvrLibrary
     [Table(Name = "physicalposts")]
     public class PhysicalPost : Post
     {
-
+        
         [Column(IsPrimaryKey = true, IsDbGenerated = true)]
-        public int Id { get; set; }
-
+        public new int Id { get; set; }
+        
         [Column()]
         public bool IsLocked { get; set; }
 
@@ -28,7 +28,9 @@ namespace SolvrLibrary
 
         public List<SolvrComment> SolvrComments { get; set; }
 
+        /*
         [Column()]
         public int PostId { get; set; }
+    */
     }
 }

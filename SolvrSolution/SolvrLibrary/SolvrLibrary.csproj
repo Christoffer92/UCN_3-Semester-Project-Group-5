@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Category.cs" />
     <Compile Include="Comment.cs" />
+    <Compile Include="CommentSuper.cs" />
     <Compile Include="PhysicalPost.cs" />
     <Compile Include="Post.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

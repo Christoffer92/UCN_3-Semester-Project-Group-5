@@ -51,14 +51,14 @@ namespace DbHandler.Models
 
         public static void InsertPhysicalPost(SolvrDB context)
         {
-            PhysicalPost physicalPost = new PhysicalPost { IsLocked = false, AltDescription = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus. Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis. Duis consequat dui nec nisi volutpat eleifend.", Zipcode = "555", Address = "atvej 15", PostId = 1 };
+            PhysicalPost physicalPost = new PhysicalPost { Title = "Print On Demand", Description = "Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit.", BumpTime = new DateTime(2025, 09, 26, 11, 56, 51), DateCreated = new DateTime(2025, 09, 26, 11, 56, 51), CategoryId = 1, UserId = 1, IsLocked = false, AltDescription = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus. Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis. Duis consequat dui nec nisi volutpat eleifend.", Zipcode = "555", Address = "atvej 15" };
             context.PhysicalPosts.InsertOnSubmit(physicalPost);
             context.SubmitChanges();
         }
 
         public static void InsertSolvrComment(SolvrDB context)
         {
-            SolvrComment solvrComment = new SolvrComment { TimeAccepted = new DateTime(2019, 06, 15, 15, 02, 42), IsAccepted = false, PhysicalPostId = 1, CommentId = 1 };
+            SolvrComment solvrComment = new SolvrComment { DateCreated = new DateTime(2036, 11, 09, 11, 21, 23), Text = "Donec quis orci eget orci vehicula condimentum. Curabitur in libero ut massa volutpat convallis.", UserId = 1, TimeAccepted = new DateTime(2019, 06, 15, 15, 02, 42), IsAccepted = false, PhysicalPostId = 1};
             context.SolvrComments.InsertOnSubmit(solvrComment);
             context.SubmitChanges();
         }
