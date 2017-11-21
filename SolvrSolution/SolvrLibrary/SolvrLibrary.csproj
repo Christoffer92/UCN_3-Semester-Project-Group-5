@@ -43,14 +43,14 @@
   <ItemGroup>
     <Compile Include="Category.cs" />
     <Compile Include="Comment.cs" />
-    <Compile Include="ISolvrDB.cs" />
-    <Compile Include="MockDB.cs" />
+    <Compile Include="DAL\ISolvrDB.cs" />
+    <Compile Include="DAL\MockDB.cs" />
     <Compile Include="PhysicalPost.cs" />
     <Compile Include="Post.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Report.cs" />
     <Compile Include="SolvrComment.cs" />
-    <Compile Include="SolvrDB.cs" />
+    <Compile Include="DAL\SolvrDB.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Vote.cs" />
   </ItemGroup>
