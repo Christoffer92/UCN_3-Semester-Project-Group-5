@@ -15,9 +15,6 @@ namespace SolvrLibrary
 
         public Post()
         {
-            //DateCreated = new DateTime(2017, 11, 20, 05, 56, 20);
-            //BumpTime = new DateTime(2017, 11, 25, 22, 36, 10);
-
             BumpTime = DateTime.Now;
             DateCreated = DateTime.Now;
         }

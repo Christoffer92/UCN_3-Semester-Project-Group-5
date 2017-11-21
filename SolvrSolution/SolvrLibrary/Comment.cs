@@ -8,10 +8,15 @@ using System.Threading.Tasks;
 namespace SolvrLibrary
 {
     [Table(Name = "comments")]
-    [InheritanceMapping(Code = "Solvr", Type = typeof(SolvrComment))]
+    [InheritanceMapping(Code = "Solvr", Type = typeof(SolvrComment))] //expects the Descriminator is a stype of string
     [InheritanceMapping(Code = "Comment", Type = typeof(Comment), IsDefault = true)]
     public class Comment
     {
+        public Comment()
+        {
+            DateCreated = DateTime.Now;
+        }
+
         [Column(IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }
 
@@ -27,8 +32,9 @@ namespace SolvrLibrary
         [Column()]        
         public int PostId { get; set; }
 
+        //this wasnt af string but an int..... fixed it
         [Column(IsDiscriminator = true)]
-        public int CommentType { get; set; }
+        public string CommentType { get; set; }
 
         public Post Post { get; set; }
 

@@ -4,7 +4,9 @@ EXEC sp_msforeachtable "ALTER TABLE ? NOCHECK CONSTRAINT all"
 --EXEC sp_MSforeachtable @command1 = "DROP TABLE ?"
 
 DROP TABLE taglists;
+/*DROP TABLE solvrcomments;*/
 DROP TABLE reports;
+/*DROP TABLE physicalposts;*/
 DROP TABLE votes;
 DROP TABLE comments;
 DROP TABLE posts;

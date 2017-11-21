@@ -10,6 +10,11 @@ namespace SolvrLibrary
     //[Table(Name = "solvrcomments")]
     public class SolvrComment : Comment
     {
+        public SolvrComment()
+        {
+            DateCreated = DateTime.Now;
+        }
+
         /*[Column(IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }*/
 

@@ -1,4 +1,4 @@
-﻿Use SolvrDB;
+﻿Use SolvrDB
 
 create table users	 (
 	id int identity(1,1)primary key ,
@@ -12,7 +12,7 @@ create table users	 (
 
 create table categories(
 	id int identity(1,1)primary key ,
-	category varchar(30)
+	category varchar(30),
 );
 
 create table tags(
@@ -20,13 +20,14 @@ create table tags(
 );
 
 create table posts (
-	id int identity(1,1)primary key ,
-	title varchar(50),
-	description varchar(1500),
-	bumpTime datetime, 
-	dateCreated datetime,
+	id INT IDENTITY(1,1)PRIMARY KEY ,
+	title VARCHAR(50),
+	description VARCHAR(1500),
+	bumpTime DATETIME, 
+	dateCreated DATETIME,
 
-	postype VARCHAR(20),
+	postType VARCHAR(20),
+
 	isLocked BIT,
 	altDescription varchar(1000),
 	zipcode varchar (10),
@@ -40,11 +41,9 @@ create table comments (
 	id int identity(1,1)primary key ,
 	dateCreated datetime,
 	text varchar(255),
-
-	commenttype VARCHAR(20),
+	commentType varchar(20),
 	timeAccepted datetime,
 	isAccepted BIT,
-
 	userid int FOREIGN KEY REFERENCES users(id),
 	postid int FOREIGN KEY REFERENCES posts(id)
 );
@@ -56,6 +55,15 @@ create table votes (
 	commentid int FOREIGN KEY REFERENCES comments(id)
 );
 
+/*create table physicalposts(
+	id int identity(1,1)primary key ,
+	isLocked BIT,
+	altDescription varchar(1000),
+	zipcode varchar (10),
+	address varchar(50),
+	postid int FOREIGN KEY REFERENCES posts(id)
+);*/
+
 create table reports(
 	id int identity(1,1)primary key ,
 	title varchar(30),
@@ -63,8 +71,16 @@ create table reports(
 	dateCreated datetime,
 	userid int FOREIGN KEY REFERENCES users(id),
 	postid int FOREIGN KEY REFERENCES posts(id),
-	coomentid int FOREIGN KEY REFERENCES comments(id)
+	commentid int FOREIGN KEY REFERENCES comments(id)
 );
+
+/*create table solvrcomments(
+	id int identity(1,1)primary key ,
+	timeAccepted datetime,
+	isAccepted BIT,
+	commentid int FOREIGN KEY REFERENCES comments(id),
+	physcialpostid int FOREIGN KEY REFERENCES posts(id)
+);*/
 
 create table taglists(
 	id int identity(1,1)primary key ,

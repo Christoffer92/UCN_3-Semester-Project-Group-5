@@ -10,6 +10,11 @@ namespace SolvrLibrary
     [Table(Name = "reports")]
     public class Report
     {
+        public Report()
+        {
+            DateCreated = DateTime.Now;
+        }
+
         [Column(IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }
 
