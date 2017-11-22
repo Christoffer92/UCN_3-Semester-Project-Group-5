@@ -36,6 +36,9 @@ namespace SolvrLibrary
         [Column()]
         public int PostId { get; set; }
 
+        [Column()]
+        public string ReportType { get; set; }
+
         public User User { get; set; }
 
         public Comment Comment { get; set; }

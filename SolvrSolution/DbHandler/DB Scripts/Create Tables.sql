@@ -41,9 +41,12 @@ create table comments (
 	id int identity(1,1)primary key ,
 	dateCreated datetime,
 	text varchar(255),
+
 	commentType varchar(20),
+
 	timeAccepted datetime,
 	isAccepted BIT,
+
 	userid int FOREIGN KEY REFERENCES users(id),
 	postid int FOREIGN KEY REFERENCES posts(id)
 );
@@ -69,6 +72,7 @@ create table reports(
 	title varchar(30),
 	description varchar(255),
 	dateCreated datetime,
+	reporttype VARCHAR(15),
 	userid int FOREIGN KEY REFERENCES users(id),
 	postid int FOREIGN KEY REFERENCES posts(id),
 	commentid int FOREIGN KEY REFERENCES comments(id)

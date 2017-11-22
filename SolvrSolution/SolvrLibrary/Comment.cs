@@ -36,8 +36,6 @@ namespace SolvrLibrary
         [Column(IsDiscriminator = true)]
         public string CommentType { get; set; }
 
-        public Post Post { get; set; }
-
         public User User { get; set; }
 
         public List<Vote> Votes { get; set; }

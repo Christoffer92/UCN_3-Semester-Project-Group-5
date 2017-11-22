@@ -10,10 +10,10 @@ namespace SolvrLibrary
     public class SolvrDB : DataContext
     {
         //Anders' Connection String
-        private const string ConnectionString = @"Data Source=LAPTOP-DVO5DQRO\SQLEXPRESS;Initial Catalog=SolvrDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        //private const string ConnectionString = @"Data Source=LAPTOP-DVO5DQRO\SQLEXPRESS;Initial Catalog=SolvrDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         
         //Tims Connection String
-        //private const string ConnectionString = @"Data Source=X1CARBON\SQLEXPRESS;Initial Catalog=SolvrDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        private const string ConnectionString = @"Data Source=X1CARBON\SQLEXPRESS;Initial Catalog=SolvrDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         //Christoffers ConnectionString
         //private const string ConnectionString = @"Data Source=CHRISLAPTOP\SQLEXPRESS;Initial Catalog=SolvrDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
