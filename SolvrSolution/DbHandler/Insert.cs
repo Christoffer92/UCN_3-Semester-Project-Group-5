@@ -12,23 +12,30 @@ namespace DbHandler
 
         public void InsertData()
         {
-            SolvrDB context = new SolvrDB(@"Data Source=X1CARBON\SQLEXPRESS;Initial Catalog=SolvrDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-            
-            Models.UserInsert.InsertUsersIntoDB(context);
-            Models.CategoryInsert.InsertCategoriesIntoDb(context);
-            Models.PostInsert.InsertPostsIntoDb(context);
-            Models.CommentInsert.CommentInsertIntoDb(context);
-            Models.PhysicalPostInsert.InsertPhysicalPostIntoDb(context);
-            Models.SolvrCommentInsert.InsertSolvrCommentIntoDb(context);
-            Models.VoteInsert.InsertVoteIntoDb(context);
-            Models.ReportInsert.InsertReportIntoDb(context);
+            //Models.UserInsert.InsertUsersIntoDB();
+
+            Models.InsertHelper<Category>.InsertObjectsIntoDB();
+            Models.InsertHelper<User>.InsertObjectsIntoDB();
+            Models.InsertHelper<Post>.InsertObjectsIntoDB();
+            Models.InsertHelper<PhysicalPost>.InsertObjectsIntoDB();
+            Models.InsertHelper<Comment>.InsertObjectsIntoDB();
+            Models.InsertHelper<SolvrComment>.InsertObjectsIntoDB();
+            Models.InsertHelper<Vote>.InsertObjectsIntoDB();
+            Models.InsertHelper<Report>.InsertObjectsIntoDB();
+
+
+            //Models.CategoryInsert.InsertCategoriesIntoDb();
+            //Models.PostInsert.InsertPostsIntoDb(context);
+            //Models.CommentInsert.CommentInsertIntoDb(context);
+            //Models.PhysicalPostInsert.InsertPhysicalPostIntoDb(context);
+            //Models.SolvrCommentInsert.InsertSolvrCommentIntoDb(context);
+            //Models.VoteInsert.InsertVoteIntoDb(context);
+            //Models.ReportInsert.InsertReportIntoDb(context);
         }
 
         public void InserSimpleData()
         {
-            SolvrDB context = new SolvrDB(@"Data Source=X1CARBON\SQLEXPRESS;Initial Catalog=SolvrDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-            Models.SimpleInsert.InsertDataIntoDB(context);
+            Models.SimpleInsert.InsertDataIntoDB();
         }
-
     }
 }

@@ -10,6 +10,11 @@ namespace SolvrLibrary
     [Table(Name = "users")]
     public class User
     {
+        public User()
+        {
+            DateCreated = DateTime.Now;
+        }
+
         [Column(IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }
 
