@@ -1,6 +1,6 @@
 ﻿Use SolvrDB
 
-create table users	 (
+create table users (
 	id int identity(1,1)primary key ,
 	name varchar(100),
 	email varchar(100),
@@ -10,7 +10,7 @@ create table users	 (
 	dateCreated datetime
 );
 
-create table categories(
+create table categories (
 	id int identity(1,1)primary key ,
 	category varchar(30),
 );
@@ -55,38 +55,19 @@ create table votes (
 	commentid int FOREIGN KEY REFERENCES comments(id)
 );
 
-/*create table physicalposts(
-	id int identity(1,1)primary key ,
-	isLocked BIT,
-	altDescription varchar(1000),
-	zipcode varchar (10),
-	address varchar(50),
-	postid int FOREIGN KEY REFERENCES posts(id)
-);*/
-
-create table reports(
+create table reports (
 	id int identity(1,1)primary key ,
 	title varchar(300),
 	description varchar(2000),
 	dateCreated datetime,
+	reporttype VARCHAR(15),
 	userid int FOREIGN KEY REFERENCES users(id),
 	postid int FOREIGN KEY REFERENCES posts(id),
 	commentid int FOREIGN KEY REFERENCES comments(id)
 );
 
-/*create table solvrcomments(
-	id int identity(1,1)primary key ,
-	timeAccepted datetime,
-	isAccepted BIT,
-	commentid int FOREIGN KEY REFERENCES comments(id),
-	physcialpostid int FOREIGN KEY REFERENCES posts(id)
-);*/
-
-create table taglists(
+create table taglists (
 	id int identity(1,1)primary key ,
 	postid int FOREIGN KEY REFERENCES posts(id),
 	tagsid varchar(20) FOREIGN KEY REFERENCES tags(id)
 );
-
-
-

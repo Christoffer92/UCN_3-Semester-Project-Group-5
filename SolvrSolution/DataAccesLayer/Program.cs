@@ -4,19 +4,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SolvrLibrary;
+using DataAccesLayer.ModelBuilds;
 
 namespace DataAccesLayer
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            using (var Context = new SolvrDB())
-            {
-                var Query = (from post in Context.Posts.OfType<PhysicalPost>() select post).First();
-                Console.WriteLine(Query);
-                Console.ReadLine();
-            }
+            TestPost();
+            Console.ReadLine();
+        }
+
+        public static void TestUser()
+        {
+            ModelBuilder modelBuilder = new ModelBuilder();
+            User user = modelBuilder.BuildUser(1);
+
+            Console.WriteLine(user.Name + user.Email + user.DateCreated + user.IsAdmin + user.Password);
+        }
+        public static void TestPost()
+        {
+            ModelBuilder modelBuilder = new ModelBuilder();
+            Post post = modelBuilder.BuildPost<Post>(16);
+
+            Console.WriteLine(post.Title + post.Comments[0].Text);
         }
     }
 }

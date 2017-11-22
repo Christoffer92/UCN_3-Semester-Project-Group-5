@@ -8,7 +8,7 @@ using SolvrLibrary;
 
 namespace DataAccesLayer.ModelBuilds
 {
-    class ModelBuilder
+    public class ModelBuilder
     {
         public User BuildUser(int PrimaryKey)
         {
@@ -52,7 +52,7 @@ namespace DataAccesLayer.ModelBuilds
             {
                 if (typeof(T) == typeof(Post))
                 {
-                    var Query = (from post in Context.Posts where post.Id == PrimaryKey && post.PostType == "Post" select post).First();
+                    var Query = (from post in Context.Posts where post.Id == PrimaryKey select post).First();
                     var CommentQuery = from comment in Context.Comments where comment.PostId == PrimaryKey && comment.CommentType == "Comment" select comment;
                     List<string> Tags = new List<string>();
                     Tags.Add("TODO");
@@ -121,7 +121,7 @@ namespace DataAccesLayer.ModelBuilds
                 {
                     var Query = (from comment in context.Comments.OfType<Comment>() where comment.Id == PrimaryKey select comment).First();
                     var VoteQuery = from vote in context.Votes where vote.CommentId == PrimaryKey select vote;
-                    var Votes = new List<Vote>;
+                    var Votes = new List<Vote>();
                     foreach(var vote in VoteQuery)
                     {
                         Votes.Add(BuildVote(Query.Id));
