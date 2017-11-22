@@ -46,5 +46,15 @@ namespace SolvrLibrary
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Category> GetAllCategories()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreatePost(Post post)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

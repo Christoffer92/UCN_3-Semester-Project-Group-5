@@ -15,5 +15,8 @@ namespace SolvrLibrary
         void CreatePost(User expectedUser, string expectedPostTitle, string expectedPostDescription, Category expectedCategory, List<string> expectedTagsList);
 
         Post GetLastPost();
+
+        IEnumerable<Category> GetAllCategories();
+        void CreatePost(Post post);
     }
 }

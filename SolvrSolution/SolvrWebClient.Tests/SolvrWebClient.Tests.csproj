@@ -101,7 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SolvrLibrary\SolvrLibrary.csproj">
-      <Project>{7A512B96-B646-4E04-B9F5-6C9658209C1B}</Project>
+      <Project>{7a512b96-b646-4e04-b9f5-6c9658209c1b}</Project>
       <Name>SolvrLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="..\SolvrWebClient\SolvrWebClient.csproj">

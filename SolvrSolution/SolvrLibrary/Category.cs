@@ -11,10 +11,9 @@ namespace SolvrLibrary
     public class Category
     {
 
-        public Category(string _name)
+        public Category()
         {
-            Id = 0;
-            Name = _name;
+
         }
 
         [Column(IsPrimaryKey = true, IsDbGenerated = true)]
