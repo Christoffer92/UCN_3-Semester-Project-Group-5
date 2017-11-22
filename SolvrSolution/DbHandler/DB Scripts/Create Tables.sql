@@ -40,7 +40,7 @@ create table posts (
 create table comments (
 	id int identity(1,1)primary key ,
 	dateCreated datetime,
-	text varchar(255),
+	text varchar(1500),
 	commentType varchar(20),
 	timeAccepted datetime,
 	isAccepted BIT,
@@ -66,8 +66,8 @@ create table votes (
 
 create table reports(
 	id int identity(1,1)primary key ,
-	title varchar(30),
-	description varchar(255),
+	title varchar(300),
+	description varchar(2000),
 	dateCreated datetime,
 	userid int FOREIGN KEY REFERENCES users(id),
 	postid int FOREIGN KEY REFERENCES posts(id),

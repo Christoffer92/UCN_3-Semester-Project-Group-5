@@ -44,15 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Insert.cs" />
-    <Compile Include="Models\CategoryInsert.cs" />
-    <Compile Include="Models\PhysicalPostInsert.cs" />
-    <Compile Include="Models\ReportInsert.cs" />
+    <Compile Include="Models\InsertHelper.cs" />
     <Compile Include="Models\SimpleInsert.cs" />
-    <Compile Include="Models\SolvrCommentInsert.cs" />
-    <Compile Include="Models\VoteInsert.cs" />
-    <Compile Include="Models\CommentInsert.cs" />
-    <Compile Include="Models\PostInsert.cs" />
-    <Compile Include="Models\UserInsert.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -68,6 +61,14 @@
   <ItemGroup>
     <Content Include="DB Scripts\Create Tables.sql" />
     <Content Include="DB Scripts\Drop Tables.sql" />
+    <Content Include="InsertData\Category.txt" />
+    <Content Include="InsertData\Comment.txt" />
+    <Content Include="InsertData\PhysicalPost.txt" />
+    <Content Include="InsertData\Post.txt" />
+    <Content Include="InsertData\Report.txt" />
+    <Content Include="InsertData\SolvrComment.txt" />
+    <Content Include="InsertData\User.txt" />
+    <Content Include="InsertData\Vote.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
