@@ -84,4 +84,63 @@ textarea {
     width: 250px;
 }
 
+.vertical {
+    padding: 0;
+    margin: 0;
+    background-color: green;
+}
+
+.body {
+    font: 16px/1 sans-serif
+}
+
+
+/*VERTICAL MENU*/
+.nav.vertical {
+    position: relative;
+    width: 150px;
+    background-color: black;
+}
+
+    /* ALL UL */
+    .nav.vertical ul {
+        list-style: none;
+    }
+    /* ALL LI */
+    .nav.vertical li {
+        position: relative;
+    }
+    /* ALL A */
+    .nav.vertical a {
+        display: block;
+        color: #eee;
+        text-decoration: none;
+        padding: 10px 15px;
+        background: #667;
+        transition: 0.2s;
+    }
+    /* ALL A HOVER */
+    .nav.vertical li:hover > a {
+        background: #778;
+    }
+
+    /* INNER UL HIDE */
+    .nav.vertical ul ul {
+        position: absolute;
+        left: 0%;
+        top: 0;
+        width: 100%;
+        visibility: hidden;
+        opacity: 0;
+        transition: transform 0.2s;
+        transform: translateX(50px);
+    }
+    /* INNER UL SHOW */
+    .nav.vertical li:hover > ul {
+        left: 100%;
+        visibility: visible;
+        opacity: 1;
+        transform: translateX(0px);
+    }
+
 

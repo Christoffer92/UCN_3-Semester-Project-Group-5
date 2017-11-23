@@ -1,16 +1,62 @@
-﻿@{
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+@{
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+<div>
+    <h2>Welcome to Solvr</h2>
+    <p class="lead">
+        Solvr is a universal forum designed to help people with their everyday problem,
+        is it done with physcially help or by simply answering the questions you might have? we've got it!
+    </p>
 </div>
 
+
+<head>
+    <meta charset="utf-8">
+    <title>Problem Category</title>
+</head>
+<body>
+    <div class="vertical">
+        <ul>
+            <li><a href="">placeholder</a></li>
+            <li>
+                <a href="#">Catagory &darr;</a>
+                <ul>
+                    <li><a href="#">Kitchen hardware</a></li>
+                    <li>
+                        <a href="#">Computer Hardware +</a>
+                        <ul>
+                            <li><a href="#">Motherboard</a></li>
+                            <li><a href="#">CPU</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">People you hate +</a>
+                        <ul>
+                            <li><a href="#">Assassins</a></li>
+                            <li><a href="#">How to brew poison</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="">Solved problems</a></li>
+        </ul>
+    </div>
+</body>
+<!----
 <div class="row">
     <div class="col-md-4">
-        <h2>Getting started</h2>
+        <h3>Getting started</h3>
         <p>
             ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
             enables a clean separation of concerns and gives you full control over markup
@@ -19,13 +65,15 @@
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Get more libraries</h2>
+        <h3>Get more libraries</h3>
         <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Web Hosting</h2>
+        <h3>Web Hosting</h3>
         <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
     </div>
-</div>
+</!div>
+    </!--->
+</html>
