@@ -1,180 +1,154 @@
-﻿using System;
+﻿using SolvrLibrary;
+using SolvrWebClient.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using SolvrLibrary;
-using System.Web.ModelBinding;
-using SolvrWebClient.Models;
 
 namespace SolvrWebClient.Controllers
 {
     public class CreatePostController : Controller
     {
-        private ISolvrDB DB = null;
-
+        //Overloaded constructors for connecting to either SolvrDB or MockDB
+        ISolvrDB DB;
         public CreatePostController()
         {
-            // TODO : Revert tilbage til dette når du comitter
-            //DB = new SolvrDB();
-            DB = new MockDB();
+            DB = new SolvrDB();
         }
+        //public CreatePostController(ISolvrDB _DB)
+        //{
+        //    DB = _DB;
+        //}
 
-        public CreatePostController(ISolvrDB _DB)
+        //CreatePost:
+        //  Create a post with the following attributes from PostViewModel model.
+        //  Also add the logged in user as the owner of the post.
+        //  Tags:
+        //      Adds an array of strings to the tag list by seperating them with the split function
+        //      Space, hashtags, commas, and full stop will split the tag string up.
+        public void CreatePost(PostViewModel model)
         {
-            DB = _DB;
-        }
-
-        public PhysicalPost CreatePhysicalPostModel(User expectedUser, string expectedTitle, string expectedDescription, Category expectedCategory, List<string> expectedTagsList, string expectedAltDescription, string expectedZipcode, string expectedAddress)
-        {
-            DB.CreatePhysicalPost(expectedUser, expectedTitle, expectedDescription, expectedCategory, expectedTagsList, expectedAltDescription, expectedZipcode, expectedAddress);
-            return DB.GetLastPhysicalPost();
-        }
-        public Post CreatePostModel(User expectedUser, string expectedPostTitle, string expectedPostDescription, Category expectedCategory, List<string> expectedTagsList)
-        {
-            DB.CreatePost(expectedUser, expectedPostTitle, expectedPostDescription, expectedCategory, expectedTagsList);
-            return DB.GetLastPost();
-        }
-
-        // GET: CreatePost/CreatePostView
-        public ActionResult CreatePostView(CreatePostViewModel model)
-        {
-            //List<Category> CategoryList = new List<Category>();
-
-            //CategoryList.AddRange(DB.GetAllCategories());
-
-            //ViewBag.SelectCategory = new SelectList(CategoryList);
-
+            Post p = new Post();
+            p.Title = model.Title;
+            p.Description = model.Description;
+            p.Category = DB.GetCategory(model.CategoryId);
             
-
-            if (true)
+            foreach (string item in model.TagsString.Split(' ', '#', ',', '.'))
             {
-                List<string> CategoryList = new List<string>();
-
-                foreach (var item in DB.GetAllCategories())
+                if (!item.Equals("") && !item.Equals("#") && !item.Equals(",") && !item.Equals("."))
                 {
-                    CategoryList.Add(item.Name);
+                   p.Tags.Add(item);
                 }
-
-                ViewBag.SelectCategory = new SelectList(CategoryList);
             }
-            else
+            //TODO: Connect a user to this method
+            //p.User = something goes here
+            
+            DB.CreatePost(p);
+        }
+
+        //CreatePhysicalPost:
+        //  Create a physical post with the following attributes from PhysicalPostViewModel model.
+        //  Also add the logged in user as the owner of the post.
+        //  Tags:
+        //      Adds an array of strings to the tag list by seperating them with the split function
+        //      Space, hashtags, commas, and full stop will split the tag string up.
+        public void CreatePhysicalPost(PhysicalPostViewModel model)
+        {
+            PhysicalPost p = new PhysicalPost();
+            p.Title = model.Title;
+            p.Description = model.Description;
+            p.Category = DB.GetCategory(model.CategoryId);
+
+            foreach (string item in model.TagsString.Split(' ', '#', ',', '.'))
             {
-                List<string> CategoryList = new List<string>();
-
-                foreach (var item in DB.GetAllCategories())
+                if (!item.Equals("") && !item.Equals("#") && !item.Equals(",") && !item.Equals("."))
                 {
-                    CategoryList.Add(item.Name + "Aids");
+                    p.Tags.Add(item);
                 }
-
-                ViewBag.SelectCategory = new SelectList(CategoryList);
             }
+            p.AltDescription = model.AltDescription;
+            p.ZipCode = model.Zipcode;
+            p.Address = model.Address;
+            //TODO: Connect a user to this method
+            //p.User = something goes here
+
+            DB.CreatePhysicalPost(p);
+        }
+
+        //Main View for Create post
+        // GET: CreatePost
+        public ActionResult Index()
+        {
+            ViewBag.DropDownList = new SelectList(DB.GetAllCategories(), "Id", "Name");
             return View();
         }
 
-        // POST: /Manage/ChangePassword
+        // POST: CreatePost/Create
         [HttpPost]
-        public ActionResult CreatePostView2(CreatePostViewModel model)
+        public ActionResult Create(PostViewModel model)
         {
-            Console.WriteLine(model.NewPassword);
-            return View(model);
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    CreatePost(model);
+                }
+            }
+            catch
+            {
+                //TODO: Print error message
+                return View();
+            }
+            return RedirectToAction("Index", "Post", model);
         }
 
-        // post: createpost/createpostview
-        [HttpPost]
-        public ActionResult CreatePostView3([Bind(Include = "Title,Category,Description,Tags")] Post post)
+        // GET: CreatePost/CreatePhysical
+        public ActionResult CreatePhysical()
         {
-            if (ModelState.IsValid)
-            {
-                DB.CreatePost(post);
-            }
-
+            ViewBag.DropDownList = new SelectList(DB.GetAllCategories(), "Id", "Name");
             return View();
         }
+
+        // POST: CreatePost/CreatePhysical
+        [HttpPost]
+        public ActionResult CreatePhysical(PhysicalPostViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    CreatePhysicalPost(model);
+                }
+            }
+            catch
+            {
+                //TODO: Print error message
+                return View();
+            }
+            return RedirectToAction("Index", "Post", model);
+        }
+
+        //// GET: CreatePost/Edit/id
+        //public ActionResult Edit(int id)
+        //{
+        //    return View();
+        //}
+
+        //// POST: CreatePost/Edit/id
+        //[HttpPost]
+        //public ActionResult Edit(int id, FormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add update logic here
+
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
-
-
-
-
-
-
-    //// GET: CreatePost
-    //public ActionResult Index()
-    //{
-    //    return View();
-    //}
-
-    //// GET: CreatePost/Details/5
-    //public ActionResult Details(int id)
-    //{
-    //    return View();
-    //}
-
-    //// GET: CreatePost/Create
-    //public ActionResult Create()
-    //{
-    //    return View();
-    //}
-
-    //// POST: CreatePost/Create
-    //[HttpPost]
-    //public ActionResult Create(FormCollection collection)
-    //{
-    //    try
-    //    {
-    //        // TODO: Add insert logic here
-
-    //        return RedirectToAction("Index");
-    //    }
-    //    catch
-    //    {
-    //        return View();
-    //    }
-    //}
-
-    //// GET: CreatePost/Edit/5
-    //public ActionResult Edit(int id)
-    //{
-    //    return View();
-    //}
-
-    //// POST: CreatePost/Edit/5
-    //[HttpPost]
-    //public ActionResult Edit(int id, FormCollection collection)
-    //{
-    //    try
-    //    {
-    //        // TODO: Add update logic here
-
-    //        return RedirectToAction("Index");
-    //    }
-    //    catch
-    //    {
-    //        return View();
-    //    }
-    //}
-
-    //// GET: CreatePost/Delete/5
-    //public ActionResult Delete(int id)
-    //{
-    //    return View();
-    //}
-
-    //// POST: CreatePost/Delete/5
-    //[HttpPost]
-    //public ActionResult Delete(int id, FormCollection collection)
-    //{
-    //    try
-    //    {
-    //        // TODO: Add delete logic here
-
-    //        return RedirectToAction("Index");
-    //    }
-    //    catch
-    //    {
-    //        return View();
-    //    }
-    //}
-
-
 }
