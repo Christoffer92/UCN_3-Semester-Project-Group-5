@@ -49,10 +49,36 @@ namespace SolvrLibrary
 
         public IEnumerable<Category> GetAllCategories()
         {
-            throw new NotImplementedException();
+            //TODO: Remake this
+            return new List<Category>() { new Category() { Id = 1, Name = "Computer" }, new Category() { Id = 2, Name = "Garden" } };
         }
 
         public void CreatePost(Post post)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreatePhysicalPost(PhysicalPost pPost)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Category GetCategory(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Category GetCategory(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Post GetPost(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Post GetPost()
         {
             throw new NotImplementedException();
         }

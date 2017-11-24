@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SolvrLibrary
 {
-    public class MockDB : ISolvrDB
+    public class MockDB /*: ISolvrDB*/
     {
         public void CloseDB()
         {
@@ -49,6 +49,26 @@ namespace SolvrLibrary
         public Post GetLastPost()
         {
             return MockDBContainer.Instance.GetLastPost();
+        }
+
+        public Category GetCategory(int id)
+        {
+            return MockDBContainer.Instance.GetCategory(id);
+        }
+
+        public Category GetCategory(string name)
+        {
+            return MockDBContainer.Instance.GetCategory(name);
+        }
+
+        public Post GetPost(int id)
+        {
+            return MockDBContainer.Instance.GetPost(id);
+        }
+
+        public Post GetPost()
+        {
+            return MockDBContainer.Instance.GetPost();
         }
 
         public IEnumerable<Category> GetAllCategories()
@@ -259,6 +279,26 @@ namespace SolvrLibrary
             CatList.Add(cat2);
 
             return CatList;
+        }
+        
+        public Category GetCategory(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Category GetCategory(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Post GetPost(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Post GetPost()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
