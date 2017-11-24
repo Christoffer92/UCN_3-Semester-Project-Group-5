@@ -44,6 +44,42 @@ namespace DataAccesLayer.ModelBuilds
             return CreatedCategory;
         }
 
+        public List<Comment> BuildCommentList(int postId, SolvrDB context)
+        {
+            var CommentQuery = from comment in context.Comments where comment.PostId == postId && comment.CommentType == "Comment" select comment;
+            var CommentList = new List<Comment>();
+            foreach (var comment in CommentQuery)
+            {
+                CommentList.Add(BuildComment<Comment>(comment.Id));
+            }
+            return CommentList;
+        }
+
+        public List<SolvrComment> BuildSolvrCommentList(int postId, SolvrDB context)
+        {
+            var SolvrCommentQuery = from comment in context.Comments where comment.PostId == postId select comment;
+            var solvrCommentList = new List<SolvrComment>();
+
+            foreach (var comment in SolvrCommentQuery)
+            {
+                solvrCommentList.Add(BuildComment<SolvrComment>(comment.Id));
+            }
+
+            return solvrCommentList;
+        }
+
+        public List<Vote> BuildVoteList(int commentId, SolvrDB context)
+        {
+            var voteQuery = from vote in context.Votes where vote.CommentId == commentId select vote;
+            var votes = new List<Vote>();
+            foreach (var vote in voteQuery)
+            {
+                votes.Add(BuildVote(commentId));
+            }
+            return votes;
+        }
+
+
         public T BuildPost<T>(int PrimaryKey)
         {
             T CreatedPost;
@@ -53,14 +89,9 @@ namespace DataAccesLayer.ModelBuilds
                 if (typeof(T) == typeof(Post))
                 {
                     var Query = (from post in Context.Posts where post.Id == PrimaryKey select post).First();
-                    var CommentQuery = from comment in Context.Comments where comment.PostId == PrimaryKey && comment.CommentType == "Comment" select comment;
                     List<string> Tags = new List<string>();
                     Tags.Add("TODO");
-                    var CommentList = new List<Comment>();
-                    foreach (var comment in CommentQuery)
-                    {
-                        CommentList.Add(BuildComment<Comment>(comment.Id));
-                    }
+                    
 
                     CreatedPost = (T)(object)new Post
                     {
@@ -68,7 +99,7 @@ namespace DataAccesLayer.ModelBuilds
                         Title = Query.Title,
                         DateCreated = Query.DateCreated,
                         BumpTime = Query.BumpTime,
-                        Comments = CommentList,
+                        Comments = BuildCommentList(PrimaryKey, Context),
                         CategoryId = Query.CategoryId,
                         Category = BuildCategory(Query.CategoryId),
                         Description = Query.Description,
@@ -78,21 +109,16 @@ namespace DataAccesLayer.ModelBuilds
                 else if(typeof(T) == typeof(PhysicalPost))
                 {
                     var Query = (from post in Context.Posts.OfType<PhysicalPost>() where post.Id == PrimaryKey select post).First();
-                    var SolvrCommentQuery = from comment in Context.Comments where comment.PostId == PrimaryKey select comment;
                     List<string> Tags = new List<string>();
                     Tags.Add("TODO");
-                    var CommentList = new List<SolvrComment>();
-                    foreach (var comment in SolvrCommentQuery)
-                    {
-                        CommentList.Add(BuildComment<SolvrComment>(comment.Id));
-                    }
+                    
                     CreatedPost = (T)(object) new PhysicalPost
                     {
                         Id = Query.Id,
                         Title = Query.Title,
                         DateCreated = Query.DateCreated,
                         BumpTime = Query.BumpTime,
-                        SolvrComments = CommentList,
+                        SolvrComments = BuildSolvrCommentList(PrimaryKey, Context),
                         CategoryId = Query.CategoryId,
                         Category = BuildCategory(Query.CategoryId),
                         Description = Query.Description,
@@ -120,12 +146,7 @@ namespace DataAccesLayer.ModelBuilds
                 if (typeof(T) == typeof(Comment))
                 {
                     var Query = (from comment in context.Comments.OfType<Comment>() where comment.Id == PrimaryKey select comment).First();
-                    var VoteQuery = from vote in context.Votes where vote.CommentId == PrimaryKey select vote;
-                    var Votes = new List<Vote>();
-                    foreach(var vote in VoteQuery)
-                    {
-                        Votes.Add(BuildVote(Query.Id));
-                    }
+                   
                     CreatedComment = (T)(object)new Comment
                     {
                         Id = Query.Id,
@@ -133,8 +154,7 @@ namespace DataAccesLayer.ModelBuilds
                         Text = Query.Text,
                         UserId = Query.UserId,
                         User = BuildUser(Query.UserId),
-                        Votes = Votes
-
+                        Votes = BuildVoteList(PrimaryKey, context)
                     }; 
                 }
                 else if(typeof(T) == typeof(SolvrComment))
