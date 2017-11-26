@@ -150,12 +150,18 @@ namespace Solvr.Test.DataAccesLayer
         }
 
         [TestMethod]
+        //Testing +1 to id.
+        [DataRow(2, "Berte Chason", "bchason0@theglobeandmail.com", "ehinrichsen0", "uvLWXF", false, 2028, 06, 30, 15, 07, 52)]
         //Testing -1 to id.
         [DataRow(0, "Berte Chason", "bchason0@theglobeandmail.com", "ehinrichsen0", "uvLWXF", false, 2028, 06, 30, 15, 07, 52)]
         //Testing +1 to all values, except id. Also changed the strings and flipped the bool.
         [DataRow(573, "Leona Croc", "Lcrockfw@altervista.org", "Gupstellfw", "gA27D5lL", true, 2034, 06, 17, 20, 26, 40)]
+        //Testing -1 to all values, except id. Also changed the strings and flipped the bool.
+        [DataRow(573, "Leona Croc", "Lcrockfw@altervista.org", "Gupstellfw", "gA27D5lL", true, 2032, 04, 15, 18, 24, 38)]
         //Testing +1 to id.
         [DataRow(1001, "Brigitta Munt", "bmuntrr@cmu.edu", "bguagerr", "L22rm38Aoxn0", false, 2034, 09, 29, 06, 31, 09)]
+        //Testing -1 to id.
+        [DataRow(999, "Brigitta Munt", "bmuntrr@cmu.edu", "bguagerr", "L22rm38Aoxn0", false, 2034, 09, 29, 06, 31, 09)]
         public void BuildUserTestNegative(int expectedId, string expectedName, string expectedEmail, string expectedUsername,
                                          string expectedPassword, Boolean expectedIsAdmin, int expectedYear, int expectedMonth,
                                          int expectedDay, int expectedHour, int expectedMinutes, int expectedSeconds)
@@ -175,13 +181,20 @@ namespace Solvr.Test.DataAccesLayer
             string actualPassword = actualUser.Password;
 
             //Assert
-            AssertAreNotEqualWithMsg(expectedId, actualId, "id");
+            if (expectedId != 0 || expectedId != 2 || expectedId != 1001 || expectedId != 999)
+            {
+                AssertAreNotEqualWithMsg(expectedId, actualId, "id");
+            }
             AssertAreNotEqualWithMsg(expectedDateCreated, actualDateCreated, "datedCreated");
             AssertAreNotEqualWithMsg(expectedEmail, actualEmail, "email");
             AssertAreNotEqualWithMsg(expectedIsAdmin, actualIsAdmin, "isAdmin");
             AssertAreNotEqualWithMsg(expectedName, actualName, "name");
             AssertAreNotEqualWithMsg(expectedUsername, actualUsername, "username");
             AssertAreNotEqualWithMsg(expectedPassword, actualPassword, "password");
+
+
+
+
         }
 
 
