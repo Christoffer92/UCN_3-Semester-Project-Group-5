@@ -854,9 +854,132 @@ namespace Solvr.Test.DataAccesLayer
             AssertAreEqualWithMsg(expectedTimeAccepted, actualTimeAccepted, "timeAccepted");
         }
 
+        [TestMethod]
+        [DataRow(1, false, 275, 70, 412, false, 219, 70)]
+        [DataRow(509, true, 155, 766, 323, false, 46, 766)]
+        [DataRow(1000, false, 47, 540, 406, true, 149, 540, 666, false, 292, 540)]
+        public void BuildVoteListTestPosetive(int expectedId, bool expectedIsUpvoted, int expectedUserId, 
+                                              int expectedCommentId, int expectedId2, bool expectedIsUpvoted2, 
+                                              int expectedUserId2, int expectedCommentId2, int expectedId3, 
+                                              bool expectedIsUpvoted3, int expectedUserId3, int expectedCommentId3)
+        {
+            //Prepare
+            ModelBuilder modelBuilder = new ModelBuilder();
+
+            //Act
+            Comment comment = modelBuilder.BuildComment<Comment>(expectedCommentId);
+            List<Vote> actualVoteList = comment.Votes;
+            Vote actualVote = actualVoteList[0];
+            int actualId = actualVote.Id;
+            bool actualIsUpvoted = actualVote.IsUpvoted;
+            int actualUserId = actualVote.UserId;
+            int actualCommentId = actualVote.CommentId;
+
+            if (expectedId2 != 0)
+            {
+                //Act
+                Vote actualVote2 = actualVoteList[1];
+                int actualId2 = actualVote2.Id;
+                bool actualIsUpvoted2 = actualVote2.IsUpvoted;
+                int actualUserId2 = actualVote2.UserId;
+                int actualCommentId2 = actualVote2.CommentId;
+
+                //Assert
+                AssertAreEqualWithMsg(expectedId2, actualId2, "id");
+                AssertAreEqualWithMsg(expectedIsUpvoted2, actualIsUpvoted2, "isUpvoted");
+                AssertAreEqualWithMsg(expectedUserId2, actualUserId2, "userId");
+                AssertAreEqualWithMsg(expectedCommentId2, actualCommentId2, "commentId");
+            }
+
+            if (expectedId3 != 0)
+            {
+                //Act
+                Vote actualVote3 = actualVoteList[2];
+                int actualId3 = actualVote3.Id;
+                bool actualIsUpvoted3 = actualVote3.IsUpvoted;
+                int actualUserId3 = actualVote3.UserId;
+                int actualCommentId3 = actualVote3.CommentId;
+
+                //Assert
+                AssertAreEqualWithMsg(expectedId3, actualId3, "id");
+                AssertAreEqualWithMsg(expectedIsUpvoted3, actualIsUpvoted3, "isUpvoted");
+                AssertAreEqualWithMsg(expectedUserId3, actualUserId3, "userId");
+                AssertAreEqualWithMsg(expectedCommentId3, actualCommentId3, "commentId");
+            }
+
+            //Assert
+            AssertAreEqualWithMsg(expectedId, actualId, "id");
+            AssertAreEqualWithMsg(expectedIsUpvoted, actualIsUpvoted, "isUpvoted");
+            AssertAreEqualWithMsg(expectedUserId, actualUserId, "userId");
+            AssertAreEqualWithMsg(expectedCommentId, actualCommentId, "commentId");
+        }
+
+        [TestMethod]
+        //Testing +1 to all values except commentId. Also flipped bools values.
+        [DataRow(2, true, 276, 71, 413, true, 220, 70)]
+        //Testing -1 to all values except commentId. Also flipped bools values.
+        [DataRow(508, false, 154, 765, 322, true, 45, 769)]
+        //Testing -1 to commentId.
+        [DataRow(1000, false, 47, 539, 406, true, 149, 539, 666, false, 292, 539)]
+        public void BuildVoteListTestNegative(int expectedId, bool expectedIsUpvoted, int expectedUserId,
+                                              int expectedCommentId, int expectedId2, bool expectedIsUpvoted2,
+                                              int expectedUserId2, int expectedCommentId2, int expectedId3,
+                                              bool expectedIsUpvoted3, int expectedUserId3, int expectedCommentId3)
+        {
+            //Prepare
+            ModelBuilder modelBuilder = new ModelBuilder();
+
+            //Act
+            Comment comment = modelBuilder.BuildComment<Comment>(expectedCommentId);
+            List<Vote> actualVoteList = comment.Votes;
+            Vote actualVote = actualVoteList[0];
+            int actualId = actualVote.Id;
+            bool actualIsUpvoted = actualVote.IsUpvoted;
+            int actualUserId = actualVote.UserId;
+            int actualCommentId = actualVote.CommentId;
+
+            if (expectedId2 != 0)
+            {
+                //Act
+                Vote actualVote2 = actualVoteList[1];
+                int actualId2 = actualVote2.Id;
+                bool actualIsUpvoted2 = actualVote2.IsUpvoted;
+                int actualUserId2 = actualVote2.UserId;
+                int actualCommentId2 = actualVote2.CommentId;
+
+                //Assert
+                AssertAreEqualWithMsg(expectedId2, actualId2, "id");
+                AssertAreEqualWithMsg(expectedIsUpvoted2, actualIsUpvoted2, "isUpvoted");
+                AssertAreEqualWithMsg(expectedUserId2, actualUserId2, "userId");
+                AssertAreEqualWithMsg(expectedCommentId2, actualCommentId2, "commentId");
+            }
+
+            if (expectedId3 != 0)
+            {
+                //Act
+                Vote actualVote3 = actualVoteList[2];
+                int actualId3 = actualVote3.Id;
+                bool actualIsUpvoted3 = actualVote3.IsUpvoted;
+                int actualUserId3 = actualVote3.UserId;
+                int actualCommentId3 = actualVote3.CommentId;
+
+                //Assert
+                AssertAreEqualWithMsg(expectedId3, actualId3, "id");
+                AssertAreEqualWithMsg(expectedIsUpvoted3, actualIsUpvoted3, "isUpvoted");
+                AssertAreEqualWithMsg(expectedUserId3, actualUserId3, "userId");
+                AssertAreEqualWithMsg(expectedCommentId3, actualCommentId3, "commentId");
+            }
+
+            //Assert
+            AssertAreEqualWithMsg(expectedId, actualId, "id");
+            AssertAreEqualWithMsg(expectedIsUpvoted, actualIsUpvoted, "isUpvoted");
+            AssertAreEqualWithMsg(expectedUserId, actualUserId, "userId");
+            AssertAreEqualWithMsg(expectedCommentId, actualCommentId, "commentId");
+        }
+
         #region AssertAreEqualWithMsg methods
 
-            public void AssertAreEqualWithMsg(string expected, string actual, string name)
+        public void AssertAreEqualWithMsg(string expected, string actual, string name)
         {
             string msg = "expected " + name + " was: " + expected +
                          ". Actual " + name + " is: " + actual;
