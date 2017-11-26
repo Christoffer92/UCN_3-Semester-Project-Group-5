@@ -608,6 +608,132 @@ namespace Solvr.Test.DataAccesLayer
                                         AssertAreNotEqualWithMsg(expectedReportType, actualReportType, "reportType");
                                     }
 
+        [TestMethod]
+        [DataRow(1, 2036, 11, 09, 11, 21, 23, "Donec quis orci eget orci vehicula condimentum.Curabitur in libero ut massa volutpat convallis.", 714, 16, 142, "Etiam pretium iaculis justo.In hac habitasse platea dictumst.Etiam faucibus cursus urna.Ut tellus.Nulla ut erat id mauris vulputate elementum.Nullam varius.Nulla facilisi.", 714, 166)]
+        [DataRow(350, 2036, 05, 05, 21, 27, 25, "Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh. In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet. Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam.", 65, 825)]
+        [DataRow(500, 2020, 09, 11, 14, 53, 18, "Nulla nisl. Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo. Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros.", 226, 347)]
+        public void BuildCommentListTestPositive(int expectedId, int expectedDateCreatedYear, int expectedDateCreatedMonth,
+                                                 int expectedDateCreatedDay, int expectedDateCreatedHour, int expectedDateCreatedMinute,
+                                                 int expectedDateCreatedSecond, string expectedText, int expectedPostId, int expectedUserId,
+                                                 int expectedId2, int expectedDateCreatedYear2, int expectedDateCreatedMonth2,
+                                                 int expectedDateCreatedDay2, int expectedDateCreatedHour2, int expectedDateCreatedMinute2,
+                                                 int expectedDateCreatedSecond2, string expectedText2, int expectedPostId2, int expectedUserId2)
+        {
+            //Prepare
+            ModelBuilder modelBuilder = new ModelBuilder();
+            DateTime expectedDateCreated = new DateTime(expectedDateCreatedYear, expectedDateCreatedMonth, expectedDateCreatedDay, expectedDateCreatedHour, expectedDateCreatedMinute, expectedDateCreatedSecond);
+            DateTime expectedDateCreated2 = new DateTime(expectedDateCreatedYear2, expectedDateCreatedMonth2, expectedDateCreatedDay2, expectedDateCreatedHour2, expectedDateCreatedMinute2, expectedDateCreatedSecond2);
+            Post post = modelBuilder.BuildPost<Post>(expectedPostId);
+            
+            //Set to false data because it has to be asigned to something outside the if sentence.
+            int actualId2 = -1;
+            DateTime actualDateCreated2 = new DateTime(0, 0, 0, 0, 0, 0, 0);
+            Comment actualComment2 = null;
+            string actualText2 = null;
+            int actualPostId2 = -1;
+            int actualUserId2 = -1;
+        
+            //Act
+            List <Comment> actualComments = post.Comments;
+            Comment actualComment = actualComments[0];
+            int actualId = actualComment.Id;
+            DateTime actualDateCreated = actualComment.DateCreated;
+            string actualText = actualComment.Text;
+            int actualPostId = actualComment.PostId;
+            int actualUserId = actualComment.UserId;
+
+            if (expectedText2 != null)
+            {
+                actualComment2 = actualComments[1];
+                actualId2 = actualComment2.Id;
+                actualDateCreated2 = actualComment2.DateCreated;
+                actualText2 = actualComment2.Text;
+                actualPostId2 = actualComment2.PostId;
+                actualUserId2 = actualComment2.UserId;
+            }
+
+            //Assert
+            AssertAreEqualWithMsg(expectedId, actualId, "id");
+            AssertAreEqualWithMsg(expectedDateCreated, actualDateCreated, "dateCreated");
+            AssertAreEqualWithMsg(expectedText, actualText, "text");
+            AssertAreEqualWithMsg(expectedPostId, actualPostId, "postId");
+            AssertAreEqualWithMsg(expectedUserId, actualUserId, "userId");
+
+            if (expectedText2 != null)
+            {
+                AssertAreEqualWithMsg(expectedId2, actualId2, "id");
+                AssertAreEqualWithMsg(expectedDateCreated2, actualDateCreated2, "dateCreated");
+                AssertAreEqualWithMsg(expectedText2, actualText2, "text");
+                AssertAreEqualWithMsg(expectedPostId2, actualPostId2, "postId");
+                AssertAreEqualWithMsg(expectedUserId2, actualUserId2, "userId");
+            }
+        }
+
+        [TestMethod]
+        //Wrong day, right one is 09
+        [DataRow(1, 2036, 11, 08, 11, 21, 23, "Donec quis orci eget orci vehicula condimentum.Curabitur in libero ut massa volutpat convallis.", 714, 16, 142, "Etiam pretium iaculis justo.In hac habitasse platea dictumst.Etiam faucibus cursus urna.Ut tellus.Nulla ut erat id mauris vulputate elementum.Nullam varius.Nulla facilisi.", 714, 166)]
+        //Wrong text, right one starts with capital M
+        [DataRow(350, 2036, 05, 05, 21, 27, 25, "mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh. In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet. Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam.", 65, 825)]
+        //Wrong userId, right one is 347
+        [DataRow(500, 2020, 09, 11, 14, 53, 18, "Nulla nisl. Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo. Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros.", 226, 346)]
+        public void BuildCommentListTestNegative(int expectedId, int expectedDateCreatedYear, int expectedDateCreatedMonth,
+                                                 int expectedDateCreatedDay, int expectedDateCreatedHour, int expectedDateCreatedMinute,
+                                                 int expectedDateCreatedSecond, string expectedText, int expectedPostId, int expectedUserId,
+                                                 int expectedId2, int expectedDateCreatedYear2, int expectedDateCreatedMonth2,
+                                                 int expectedDateCreatedDay2, int expectedDateCreatedHour2, int expectedDateCreatedMinute2,
+                                                 int expectedDateCreatedSecond2, string expectedText2, int expectedPostId2, int expectedUserId2)
+        {
+            //Prepare
+            ModelBuilder modelBuilder = new ModelBuilder();
+            DateTime expectedDateCreated = new DateTime(expectedDateCreatedYear, expectedDateCreatedMonth, expectedDateCreatedDay, expectedDateCreatedHour, expectedDateCreatedMinute, expectedDateCreatedSecond);
+            DateTime expectedDateCreated2 = new DateTime(expectedDateCreatedYear2, expectedDateCreatedMonth2, expectedDateCreatedDay2, expectedDateCreatedHour2, expectedDateCreatedMinute2, expectedDateCreatedSecond2);
+            Post post = modelBuilder.BuildPost<Post>(expectedPostId);
+
+            //Set to false data because it has to be asigned to something outside the if sentence.
+            int actualId2 = -1;
+            DateTime actualDateCreated2 = new DateTime(0, 0, 0, 0, 0, 0, 0);
+            Comment actualComment2 = null;
+            string actualText2 = null;
+            int actualPostId2 = -1;
+            int actualUserId2 = -1;
+
+            //Act
+            List<Comment> actualComments = post.Comments;
+            Comment actualComment = actualComments[0];
+            int actualId = actualComment.Id;
+            DateTime actualDateCreated = actualComment.DateCreated;
+            string actualText = actualComment.Text;
+            int actualPostId = actualComment.PostId;
+            int actualUserId = actualComment.UserId;
+
+            if (expectedText2 != null)
+            {
+                actualComment2 = actualComments[1];
+                actualId2 = actualComment2.Id;
+                actualDateCreated2 = actualComment2.DateCreated;
+                actualText2 = actualComment2.Text;
+                actualPostId2 = actualComment2.PostId;
+                actualUserId2 = actualComment2.UserId;
+            }
+
+            //Assert
+            AssertAreEqualWithMsg(expectedId, actualId, "id");
+            AssertAreEqualWithMsg(expectedDateCreated, actualDateCreated, "dateCreated");
+            AssertAreEqualWithMsg(expectedText, actualText, "text");
+            AssertAreEqualWithMsg(expectedPostId, actualPostId, "postId");
+            AssertAreEqualWithMsg(expectedUserId, actualUserId, "userId");
+
+            if (expectedText2 != null)
+            {
+                AssertAreEqualWithMsg(expectedId2, actualId2, "id");
+                AssertAreEqualWithMsg(expectedDateCreated2, actualDateCreated2, "dateCreated");
+                AssertAreEqualWithMsg(expectedText2, actualText2, "text");
+                AssertAreEqualWithMsg(expectedPostId2, actualPostId2, "postId");
+                AssertAreEqualWithMsg(expectedUserId2, actualUserId2, "userId");
+            }
+        }
+
+
         #region AssertAreEqualWithMsg methods
 
         public void AssertAreEqualWithMsg(string expected, string actual, string name)
