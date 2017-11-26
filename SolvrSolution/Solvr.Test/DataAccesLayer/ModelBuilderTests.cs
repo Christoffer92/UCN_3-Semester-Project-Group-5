@@ -150,12 +150,12 @@ namespace Solvr.Test.DataAccesLayer
         }
 
         [TestMethod]
-        //Wrong isAdmin, right one is false
-        [DataRow(1, "Berte Chason", "bchason0@theglobeandmail.com", "ehinrichsen0", "uvLWXF", true, 2028, 06, 30, 15, 07, 52)]
-        //Wrong userName, right one is Leona Crock
-        [DataRow(573, "Leona COll", "lcrockfw@altervista.org", "gupstellfw", "GA27D5lL", false, 2033, 05, 16, 19, 25, 39)]
-        //Wrong id, rigt one is 1000
-        [DataRow(999, "Brigitta Munt", "bmuntrr@cmu.edu", "bguagerr", "L22rm38Aoxn0", false, 2034, 09, 29, 06, 31, 09)]
+        //Testing -1 to id.
+        [DataRow(0, "Berte Chason", "bchason0@theglobeandmail.com", "ehinrichsen0", "uvLWXF", false, 2028, 06, 30, 15, 07, 52)]
+        //Testing +1 to all values, except id. Also changed the strings and flipped the bool.
+        [DataRow(573, "Leona Croc", "Lcrockfw@altervista.org", "Gupstellfw", "gA27D5lL", true, 2034, 06, 17, 20, 26, 40)]
+        //Testing +1 to id.
+        [DataRow(1001, "Brigitta Munt", "bmuntrr@cmu.edu", "bguagerr", "L22rm38Aoxn0", false, 2034, 09, 29, 06, 31, 09)]
         public void BuildUserTestNegative(int expectedId, string expectedName, string expectedEmail, string expectedUsername,
                                          string expectedPassword, Boolean expectedIsAdmin, int expectedYear, int expectedMonth,
                                          int expectedDay, int expectedHour, int expectedMinutes, int expectedSeconds)
