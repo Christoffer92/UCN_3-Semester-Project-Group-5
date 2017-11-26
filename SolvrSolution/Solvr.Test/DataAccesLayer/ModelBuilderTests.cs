@@ -8,7 +8,7 @@ using SolvrLibrary;
 namespace Solvr.Test.DataAccesLayer
 {
     /// <summary>
-    /// Summary description for ModelBuilderTests
+    /// This TestClass is for testing all the methods in the ModelBuilder.
     /// </summary>
     [TestClass]
     public class ModelBuilderTests
@@ -60,11 +60,11 @@ namespace Solvr.Test.DataAccesLayer
         //
         #endregion
         [TestMethod]
-        [DataRow("philosophy", 1)]
-        [DataRow("soup", 736)]
-        [DataRow("tree", 3)]
-        [DataRow("test", 1000)]
-        public void BuildCategoryTestPositive(string expectedName, int expectedId)
+        [DataRow(1, "philosophy")]
+        [DataRow(736, "soup")]
+        [DataRow(3, "tree")]
+        [DataRow(1000, "test")]
+        public void BuildCategoryTestPositive(int expectedId, string expectedName)
         {
             //Prepare
             ModelBuilder modelBuilder = new ModelBuilder();
@@ -85,11 +85,15 @@ namespace Solvr.Test.DataAccesLayer
         }
 
         [TestMethod]
-        [DataRow("philosophy ", 1)]
-        [DataRow("soup£", 736)]
-        [DataRow("tree", 4)]
-        [DataRow("test", 1001)]
-        public void BuildCategoryTestNegative(string expectedName, int expectedId)
+        //Wrong title, right one is "philosophy"
+        [DataRow(1, "philosophy ")]
+        //Wrong title, right one is "soup"
+        [DataRow(736, "soup£")]
+        //Wrong id, right one is 3
+        [DataRow(4, "tree")]
+        //Wrong id, right one is 1000
+        [DataRow(1001, "test")]
+        public void BuildCategoryTestNegative(int expectedId, string expectedName)
         {
             //Prepare
             ModelBuilder modelBuilder = new ModelBuilder();
@@ -109,14 +113,13 @@ namespace Solvr.Test.DataAccesLayer
             AssertAreEqualWithMsg(expectedId, actualId, "id");
         }
 
-        //DateTime(2028, 06, 30, 15, 07, 52)
         [TestMethod]
-        [DataRow(1, 2028, 6, 30, 15, 7, 52, "bchason0@attheglobe.com", false, "Berte Chason", "ehinrishsen0", "uvLWXF")]
-        [DataRow(573, 2033, 05, 16, 19, 25, 39, "lcrockfw@altervista.org", false, "Leona Crock", "gupstellfw", "GA27D5lL")]
-        [DataRow(1000, 2034, 09, 29, 06, 31, 09, "bmuntrr@cmu.edu", false, "bguagerr", "L22rm38Aoxn0")]
-        public void BuildUserTestPostive(int expectedId, int expectedYear, int expectedMonth, int expectedDay, int expectedHour, int expectedMinutes, int expectedSeconds, string expectedEmail,
-                                  Boolean expectedIsAdmin, string expectedName, string expectedUsername,
-                                  string expectedPassword)
+        [DataRow(1, "Berte Chason", "bchason0@theglobeandmail.com", "ehinrichsen0", "uvLWXF", false, 2028, 06, 30, 15, 07, 52)]
+        [DataRow(573, "Leona Crock", "lcrockfw@altervista.org", "gupstellfw", "GA27D5lL", false, 2033, 05, 16, 19, 25, 39)]
+        [DataRow(1000, "Brigitta Munt", "bmuntrr@cmu.edu", "bguagerr", "L22rm38Aoxn0", false, 2034, 09, 29, 06, 31, 09)]
+        public void BuildUserTestPostive(int expectedId, string expectedName, string expectedEmail, string expectedUsername,
+                                         string expectedPassword, Boolean expectedIsAdmin, int expectedYear, int expectedMonth, 
+                                         int expectedDay, int expectedHour, int expectedMinutes, int expectedSeconds)
         {
             //Prepare
             ModelBuilder modelBuilder = new ModelBuilder();
@@ -143,12 +146,15 @@ namespace Solvr.Test.DataAccesLayer
         }
 
         [TestMethod]
-        [DataRow(1, 2028, 6, 30, 15, 7, 52, "bchason0@attheglobe.com", true, "Berte Chason", "ehinrishsen0", "uvLWXF")] //Testing IsAdmin
-        [DataRow(573, 2033, 05, 16, 19, 25, 39, "lcrockfw@altervista.org", false, "Leona COll", "gupstellfw", "GA27D5lL")] //Testing Username
-        [DataRow(999, 2034, 09, 29, 06, 31, 09, "bmuntrr@cmu.edu", false, "bguagerr", "L22rm38Aoxn0")] //Testing ID
-        public void BuildUserTestNegative(int expectedId, int expectedYear, int expectedMonth, int expectedDay, int expectedHour, int expectedMinutes, int expectedSeconds, string expectedEmail,
-                                  Boolean expectedIsAdmin, string expectedName, string expectedUsername,
-                                  string expectedPassword)
+        //Wrong isAdmin, right one is false
+        [DataRow(1, "Berte Chason", "bchason0@theglobeandmail.com", "ehinrichsen0", "uvLWXF", true, 2028, 06, 30, 15, 07, 52)]
+        //Wrong userName, right one is Leona Crock
+        [DataRow(573, "Leona COll", "lcrockfw@altervista.org", "gupstellfw", "GA27D5lL", false, 2033, 05, 16, 19, 25, 39)]
+        //Wrong id, rigt one is 1000
+        [DataRow(999, "Brigitta Munt", "bmuntrr@cmu.edu", "bguagerr", "L22rm38Aoxn0", false, 2034, 09, 29, 06, 31, 09)]
+        public void BuildUserTestNegative(int expectedId, string expectedName, string expectedEmail, string expectedUsername,
+                                         string expectedPassword, Boolean expectedIsAdmin, int expectedYear, int expectedMonth,
+                                         int expectedDay, int expectedHour, int expectedMinutes, int expectedSeconds)
         {
             //Prepare
             ModelBuilder modelBuilder = new ModelBuilder();
@@ -165,7 +171,6 @@ namespace Solvr.Test.DataAccesLayer
             string actualPassword = actualUser.Password;
 
             //Assert
-
             AssertAreNotEqualWithMsg(expectedId, actualId, "id");
             AssertAreNotEqualWithMsg(expectedDateCreated, actualDateCreated, "datedCreated");
             AssertAreNotEqualWithMsg(expectedEmail, actualEmail, "email");
@@ -180,9 +185,11 @@ namespace Solvr.Test.DataAccesLayer
         [DataRow(1, "JCIDS", "Maecenas pulvinar lobortis est. Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum. Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc.", 2028, 01, 29, 09, 23, 28, 2028, 01, 29, 09, 23, 28, 103, 504)]
         [DataRow(420, "OAS Gold", "Etiam justo. Etiam pretium iaculis justo. In hac habitasse platea dictumst.", 2021, 07, 25, 02, 47, 33, 2021, 07, 25, 02, 47, 33, 22, 187)]
         [DataRow(500, "Zero Waste", "Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.", 2030, 09, 01, 18, 00, 38, 2030, 09, 01, 18, 00, 38, 791, 109)]
-        public void BuildPostTestPositive(int expectedId, string expectedTitle, string expectedDescription, int expectedDateCreatedYear, int expectedDateCreatedMonth, int expectedDateCreatedDay, int expectedDateCreatedHour, int expectedDateCreatedMinutes, int expectedDateCreatedSeconds,
-                                          int expectedBumpTimeYear, int expectedBumpTimeMonth, int expectedBumpTimeDay, int expectedBumpTimeHour, int expectedBumpTimeMinute, int expectedBumpTimeSecond, 
-                                          int expectedCategoryId, int expectedUserId)
+        public void BuildPostTestPositive(int expectedId, string expectedTitle, string expectedDescription, int expectedDateCreatedYear, 
+                                          int expectedDateCreatedMonth, int expectedDateCreatedDay, int expectedDateCreatedHour, 
+                                          int expectedDateCreatedMinutes, int expectedDateCreatedSeconds, int expectedBumpTimeYear, 
+                                          int expectedBumpTimeMonth, int expectedBumpTimeDay, int expectedBumpTimeHour, 
+                                          int expectedBumpTimeMinute, int expectedBumpTimeSecond, int expectedCategoryId, int expectedUserId)
         {
             //Prepare
             ModelBuilder modelBuilder = new ModelBuilder();
@@ -210,15 +217,18 @@ namespace Solvr.Test.DataAccesLayer
         }
 
         [TestMethod]
-        //Forkert primaryKey
+        //Wrong primaryKey, right one is 1
         [DataRow(3, "JCIDS", "Maecenas pulvinar lobortis est. Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum. Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc.", 2028, 01, 29, 09, 23, 28, 2028, 01, 29, 09, 23, 28, 103, 504)]
-        //Forkert Title og årstal
+        //Wrong title and bumpTimeYear, right one is "OAS Gold" and 2021
         [DataRow(420, "Osa Gold", "Etiam justo. Etiam pretium iaculis justo. In hac habitasse platea dictumst.", 2021, 07, 25, 02, 47, 33, 2031, 07, 25, 02, 47, 33, 22, 187)]
-        //Forkerte foreign keys
+        //wrong foreign keys, right one is 721 and 109
         [DataRow(500, "Zero Waste", "Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.", 2030, 09, 01, 18, 00, 38, 2030, 09, 01, 18, 00, 38, 721, 139)]
-        public void BuildPostTestNegative(int expectedId, string expectedTitle, int expectedDateCreatedYear, int expectedDateCreatedMonth, int expectedDateCreatedDay, int expectedDateCreatedHour, int expectedDateCreatedMinutes, int expectedDateCreatedSeconds,
-                                         int expectedBumpTimeYear, int expectedBumpTimeMonth, int expectedBumpTimeDay, int expectedBumpTimeHour, int expectedBumpTimeMinute, int expectedBumpTimeSecond,
-                                         int expectedCategoryId, string expectedDescription, int expectedUserId)
+        public void BuildPostTestNegative(int expectedId, string expectedTitle, int expectedDateCreatedYear, 
+                                          int expectedDateCreatedMonth, int expectedDateCreatedDay, int expectedDateCreatedHour, 
+                                          int expectedDateCreatedMinutes, int expectedDateCreatedSeconds, int expectedBumpTimeYear, 
+                                          int expectedBumpTimeMonth, int expectedBumpTimeDay, int expectedBumpTimeHour, 
+                                          int expectedBumpTimeMinute, int expectedBumpTimeSecond, int expectedCategoryId, 
+                                          string expectedDescription, int expectedUserId)
         {
             //Prepare
             ModelBuilder modelBuilder = new ModelBuilder();
@@ -249,7 +259,9 @@ namespace Solvr.Test.DataAccesLayer
         [DataRow(1, 2036, 11, 09, 11, 21, 23, "Donec quis orci eget orci vehicula condimentum.Curabitur in libero ut massa volutpat convallis.", 714, 16)]
         [DataRow(350, 2036, 05, 05, 21, 27, 25, "Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh. In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet. Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam.", 65, 825)]
         [DataRow(500, 2020, 09, 11, 14, 53, 18, "Nulla nisl. Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo. Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros.", 226, 347)]
-        public void BuildCommentTestPositive(int expectedId, int expectedDateCreatedYear, int expectedDateCreatedMonth, int expectedDateCreatedDay, int expectedDateCreatedHour, int expectedDateCreatedMinute, int expectedDateCreatedSecond, string expectedText, int expectedPostId, int expectedUserId)
+        public void BuildCommentTestPositive(int expectedId, int expectedDateCreatedYear, int expectedDateCreatedMonth, 
+                                             int expectedDateCreatedDay, int expectedDateCreatedHour, int expectedDateCreatedMinute, 
+                                             int expectedDateCreatedSecond, string expectedText, int expectedPostId, int expectedUserId)
         {
             //prepare
             ModelBuilder modelBuilder = new ModelBuilder();
@@ -270,6 +282,331 @@ namespace Solvr.Test.DataAccesLayer
             AssertAreEqualWithMsg(expectedPostId, actualPostId, "postId");
             AssertAreEqualWithMsg(expectedUserId, actualUserId, "userId");
         }
+
+        [TestMethod]
+        //wrong id the right one is 1.
+        [DataRow(0, 2036, 11, 09, 11, 21, 23, "Donec quis orci eget orci vehicula condimentum.Curabitur in libero ut massa volutpat convallis.", 714, 16)]
+        //wrong year, the right one is 2036
+        [DataRow(350, 2500, 05, 05, 21, 27, 25, "Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh. In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet. Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam.", 65, 825)]
+        //wrong userId, the right one is 347
+        [DataRow(500, 2020, 09, 11, 14, 53, 18, "Nulla nisl. Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo. Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros.", 226, 350)]
+        public void BuildCommentTestNegative(int expectedId, int expectedDateCreatedYear, int expectedDateCreatedMonth, 
+                                             int expectedDateCreatedDay, int expectedDateCreatedHour, int expectedDateCreatedMinute, 
+                                             int expectedDateCreatedSecond, string expectedText, int expectedPostId, int expectedUserId)
+        {
+            //prepare
+            ModelBuilder modelBuilder = new ModelBuilder();
+            DateTime expectedDateCreated = new DateTime(expectedDateCreatedYear, expectedDateCreatedMonth, expectedDateCreatedDay, expectedDateCreatedHour, expectedDateCreatedMinute, expectedDateCreatedSecond);
+
+            //Act
+            Comment actualComment = modelBuilder.BuildComment<Comment>(expectedId);
+            int actualId = actualComment.Id;
+            DateTime actualDateCreated = actualComment.DateCreated;
+            string actualText = actualComment.Text;
+            int actualPostId = actualComment.PostId;
+            int actualUserId = actualComment.UserId;
+
+            //Assert
+            AssertAreNotEqualWithMsg(expectedId, actualId, "id");
+            AssertAreNotEqualWithMsg(expectedDateCreated, actualDateCreated, "dateCreated");
+            AssertAreNotEqualWithMsg(expectedText, actualText, "text");
+            AssertAreNotEqualWithMsg(expectedPostId, actualPostId, "postId");
+            AssertAreNotEqualWithMsg(expectedUserId, actualUserId, "userId");
+        }
+
+        [TestMethod]
+        [DataRow(1, 2022, 05, 12, 21, 06, 16, "Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit. Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.", 52, 892, 2019, 06, 15, 15, 02, 42, false)]
+        [DataRow(404, 2033, 10, 02, 00, 25, 04, "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo. Etiam pretium iaculis justo. In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus. Nulla ut erat id mauris vulputate elementum. Nullam varius.", 454, 307, 2028, 02, 19, 14, 54, 22, true)]
+        [DataRow(500, 2029, 12, 13, 10, 22, 24, "In quis justo.Maecenas rhoncus aliquam lacus.Morbi quis tortor id nulla ultrices aliquet.Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo.Pellentesque viverra pede ac diam.", 627, 852, 2036, 02, 22, 05, 49, 38, true)]
+        public void BuildSolvrCommentTestPositive(int expectedId, int expectedDateCreatedYear, int expectedDateCreatedMonth, 
+                                                  int expectedDateCreatedDay, int expectedDateCreatedHour, int expectedDateCreatedMinute, 
+                                                  int expectedDateCreatedSecond, string expectedText, int expectedUserId, int expectedPostId, 
+                                                  int expectedTimeAcceptedYear, int expectedTimeAcceptedMonth, int expectedTimeAcceptedDay, 
+                                                  int expectedTimeAcceptedHour, int expectedTimeAcceptedMinute, int expectedTimeAcceptedSecond, 
+                                                  Boolean expectedIsAccepte)
+        {
+            //Prepare
+            ModelBuilder modelBuilder = new ModelBuilder();
+            DateTime expectedDateCreated = new DateTime(expectedDateCreatedYear, expectedDateCreatedMonth, expectedDateCreatedDay, expectedDateCreatedHour, expectedDateCreatedMinute, expectedDateCreatedSecond);
+            DateTime ExpectedTimeAccepted = new DateTime(expectedTimeAcceptedYear, expectedTimeAcceptedMonth, expectedTimeAcceptedDay, expectedTimeAcceptedHour, expectedTimeAcceptedMinute, expectedTimeAcceptedSecond);
+
+
+            //Act
+            SolvrComment actualSolvrComment = modelBuilder.BuildComment<SolvrComment>(expectedId);
+            int actualId = actualSolvrComment.Id;
+            DateTime actualDateCreated = actualSolvrComment.DateCreated;
+            string actualText = actualSolvrComment.Text;
+            int actualPostId = actualSolvrComment.PostId;
+            int actualUserId = actualSolvrComment.UserId;
+            bool actualIsAccepted = actualSolvrComment.IsAccepted;
+            DateTime actualTimeAccepted = actualSolvrComment.TimeAccepted;
+
+            //Assert
+            AssertAreEqualWithMsg(expectedId, actualId, "id");
+            AssertAreEqualWithMsg(expectedDateCreated, actualDateCreated, "dateCreated");
+            AssertAreEqualWithMsg(expectedText, actualText, "text");
+            AssertAreEqualWithMsg(expectedPostId, actualPostId, "postId");
+            AssertAreEqualWithMsg(expectedUserId, actualUserId, "userId");
+            AssertAreEqualWithMsg(expectedIsAccepte, actualIsAccepted, "isAccepted");
+            AssertAreEqualWithMsg(ExpectedTimeAccepted, actualTimeAccepted, "timeAccepted");
+        }
+
+        [TestMethod]
+        //Wrong id, right one is 1
+        [DataRow(502, 2022, 05, 12, 21, 06, 16, "Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit. Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.", 52, 892, 2019, 06, 15, 15, 02, 42, false)]
+        //Wrong text, right one starts with capitalized v
+        [DataRow(404, 2033, 10, 02, 00, 25, 04, "vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo. Etiam pretium iaculis justo. In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus. Nulla ut erat id mauris vulputate elementum. Nullam varius.", 454, 307, 2028, 02, 19, 14, 54, 22, false)]
+        //wrong isAccepted, right one is true 
+        [DataRow(500, 2029, 12, 13, 10, 22, 24, "In quis justo.Maecenas rhoncus aliquam lacus.Morbi quis tortor id nulla ultrices aliquet.Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo.Pellentesque viverra pede ac diam.", 627, 852, 2036, 02, 22, 05, 49, 38, true)]
+        public void BuildSolvrCommentTestNegative(int expectedId, int expectedDateCreatedYear, int expectedDateCreatedMonth, 
+                                                  int expectedDateCreatedDay, int expectedDateCreatedHour, int expectedDateCreatedMinute, 
+                                                  int expectedDateCreatedSecond, string expectedText, int expectedUserId, int expectedPostId,
+                                                  int expectedTimeAcceptedYear, int expectedTimeAcceptedMonth, int expectedTimeAcceptedDay, 
+                                                  int expectedTimeAcceptedHour, int expectedTimeAcceptedMinute, int expectedTimeAcceptedSecond, 
+                                                  Boolean expectedIsAccepte)
+        {
+            //Prepare
+            ModelBuilder modelBuilder = new ModelBuilder();
+            DateTime expectedDateCreated = new DateTime(expectedDateCreatedYear, expectedDateCreatedMonth, expectedDateCreatedDay, expectedDateCreatedHour, expectedDateCreatedMinute, expectedDateCreatedSecond);
+            DateTime ExpectedTimeAccepted = new DateTime(expectedTimeAcceptedYear, expectedTimeAcceptedMonth, expectedTimeAcceptedDay, expectedTimeAcceptedHour, expectedTimeAcceptedMinute, expectedTimeAcceptedSecond);
+
+
+            //Act
+            SolvrComment actualSolvrComment = modelBuilder.BuildComment<SolvrComment>(expectedId);
+            int actualId = actualSolvrComment.Id;
+            DateTime actualDateCreated = actualSolvrComment.DateCreated;
+            string actualText = actualSolvrComment.Text;
+            int actualPostId = actualSolvrComment.PostId;
+            int actualUserId = actualSolvrComment.UserId;
+            bool actualIsAccepted = actualSolvrComment.IsAccepted;
+            DateTime actualTimeAccepted = actualSolvrComment.TimeAccepted;
+
+            //Assert
+            AssertAreNotEqualWithMsg(expectedId, actualId, "id");
+            AssertAreNotEqualWithMsg(expectedDateCreated, actualDateCreated, "dateCreated");
+            AssertAreNotEqualWithMsg(expectedText, actualText, "text");
+            AssertAreNotEqualWithMsg(expectedPostId, actualPostId, "postId");
+            AssertAreNotEqualWithMsg(expectedUserId, actualUserId, "userId");
+            AssertAreNotEqualWithMsg(expectedIsAccepte, actualIsAccepted, "isAccepted");
+            AssertAreNotEqualWithMsg(ExpectedTimeAccepted, actualTimeAccepted, "timeAccepted");
+        }
+
+        [TestMethod]
+        [DataRow(1, false, 275, 70)]
+        [DataRow(509, true, 155, 766)]
+        [DataRow(1000, false, 47, 540)]
+        public void BuildVoteTestPosetive(int expectedId, bool expectedIsUpvoted, int expectedUserId, int expecteCommentId)
+        {
+            //Prepare
+            ModelBuilder modelBuilder = new ModelBuilder();
+
+            //Act
+            Vote actualVote = modelBuilder.BuildVote(expectedId);
+            int actualId = actualVote.Id;
+            bool actualIsUpvoted = actualVote.IsUpvoted;
+            int actualUserId = actualVote.UserId;
+            int actualCommentId = actualVote.CommentId;
+
+            //Assert
+            AssertAreEqualWithMsg(expectedId, actualId, "id");
+            AssertAreEqualWithMsg(expectedIsUpvoted, actualIsUpvoted, "isUpvoted");
+            AssertAreEqualWithMsg(expectedUserId, actualUserId, "userId");
+            AssertAreEqualWithMsg(expecteCommentId, actualCommentId, "commentId");
+        }
+
+        [TestMethod]
+        [DataRow(55, false, 275, 70)]    //Wrong id, right one is 1
+        [DataRow(509, false, 155, 766)]  //Wrong isUpvoted, right one is true
+        [DataRow(1000, false, 48, 540)]  //Wrong userId, right one is 47 
+        public void BuildVoteTestNegative(int expectedId, bool expectedIsUpvoted, int expectedUserId, int expecteCommentId)
+        {
+            //Prepare
+            ModelBuilder modelBuilder = new ModelBuilder();
+
+            //Act
+            Vote actualVote = modelBuilder.BuildVote(expectedId);
+            int actualId = actualVote.Id;
+            bool actualIsUpvoted = actualVote.IsUpvoted;
+            int actualUserId = actualVote.UserId;
+            int actualCommentId = actualVote.CommentId;
+
+            //Assert
+            AssertAreNotEqualWithMsg(expectedId, actualId, "id");
+            AssertAreNotEqualWithMsg(expectedIsUpvoted, actualIsUpvoted, "isUpvoted");
+            AssertAreNotEqualWithMsg(expectedUserId, actualUserId, "userId");
+            AssertAreNotEqualWithMsg(expecteCommentId, actualCommentId, "commentId");
+        }
+
+        [TestMethod]
+        [DataRow(1, "Print On Demand", "Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit.|2025, 09, 26, 11, 56, 51|2025, 09, 26, 11, 56, 51|451|535|false|Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus. Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis. Duis consequat dui nec nisi volutpat eleifend.", 2025, 09, 26, 11, 56, 51, 2025, 09, 26, 11, 56, 51, 451, 535, false, "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus. Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis. Duis consequat dui nec nisi volutpat eleifend.", 555, "atvej 15")]
+        [DataRow(362, "Nunc rhoncus dui vel sem. Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus. Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.", 2028, 04, 10, 13, 58, 10, 2028, 04, 10, 13, 58, 10, 639, 10, false, "Nunc rhoncus dui vel sem. Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus. Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.", 2858, "antevej 748")]
+        [DataRow(500, "Sports Coaching", "Aenean lectus.", 2028, 01, 02, 08, 56, 40, 2028, 01, 02, 08, 56, 40, 658, 875, true, "Etiam vel augue.Vestibulum rutrum rutrum neque.", 8401, "accumsanvej 80")]
+        public void BuildPhysicalPostTestPositive(int expectedId, string expectedTitle, string expectedDescription,
+                                                  int expectedBumpTimeYear, int expectedBumpTimeMonth, int expectedBumpTimeDay,
+                                                  int expectedBumpTimeHour, int expectedBumpTimeMinute, int expectedBumpTimeSecond,
+                                                  int expectedDateCreatedYear, int expectedDateCreatedMonth, int expectedDateCreatedDay,
+                                                  int expectedDateCreatedHour, int expectedDateCreatedMinute, int expectedDateCreatedSecond,
+                                                  int expectedCategoryId, int expectedUserId, string expectePostType, bool expectedIsLocked,
+                                                  string expectedAltDescription, string expectedZipcode, string expectedAddress)
+        {
+            //Prepare
+            ModelBuilder modelBuilder = new ModelBuilder();
+            DateTime expectedDateCreated = new DateTime(expectedDateCreatedYear, expectedDateCreatedMonth, expectedDateCreatedDay, expectedDateCreatedHour, expectedDateCreatedMinute, expectedDateCreatedSecond);
+            DateTime expectedBumpTime = new DateTime(expectedBumpTimeYear, expectedBumpTimeMonth, expectedBumpTimeDay, expectedBumpTimeHour, expectedBumpTimeMinute, expectedBumpTimeSecond);
+
+            //Act
+            PhysicalPost actualPhysicalPost = modelBuilder.BuildPost<PhysicalPost>(expectedId);
+            int actualId = actualPhysicalPost.Id;
+            string actualTitle = actualPhysicalPost.Title;
+            string actualDescription = actualPhysicalPost.Description;
+            DateTime actualBumpTime = actualPhysicalPost.BumpTime;
+            DateTime actualDateCreated = actualPhysicalPost.DateCreated;
+            int actualCategoryId = actualPhysicalPost.CategoryId;
+            int actualUserId = actualPhysicalPost.UserId;
+            string actualPostType = actualPhysicalPost.PostType;
+            bool actualIsLocked = actualPhysicalPost.IsLocked;
+            string actualAltDescription = actualPhysicalPost.Description;
+            string actualZipcode = actualPhysicalPost.Zipcode;
+            string actualAdress = actualPhysicalPost.Address;
+
+            //Assert
+            AssertAreEqualWithMsg(expectedId, actualId, "id");
+            AssertAreEqualWithMsg(expectedTitle, actualTitle, "title");
+            AssertAreEqualWithMsg(expectedDateCreated, actualDateCreated, "dateCreated");
+            AssertAreEqualWithMsg(expectedBumpTime, actualBumpTime, "bumpTime");
+            AssertAreEqualWithMsg(expectedCategoryId, actualCategoryId, "categoryId");
+            AssertAreEqualWithMsg(expectedDescription, actualDescription, "description");
+            AssertAreEqualWithMsg(expectedUserId, actualUserId, "userId");
+            AssertAreEqualWithMsg(expectePostType, actualPostType, "postType");
+            AssertAreEqualWithMsg(expectedIsLocked, actualIsLocked, "isLocke");
+            AssertAreEqualWithMsg(expectedDescription, actualDescription, "description");
+            AssertAreEqualWithMsg(expectedZipcode, actualZipcode, "zipcode");
+            AssertAreEqualWithMsg(expectedAddress, actualAdress, "address");
+        }
+
+        [TestMethod]
+        //Wrong isLocked, right one is false
+        [DataRow(1, "Print On Demand", "Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit.|2025, 09, 26, 11, 56, 51|2025, 09, 26, 11, 56, 51|451|535|false|Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus. Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis. Duis consequat dui nec nisi volutpat eleifend.", 2025, 09, 26, 11, 56, 51, 2025, 09, 26, 11, 56, 51, 451, 535, true, "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus. Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis. Duis consequat dui nec nisi volutpat eleifend.", 555, "atvej 15")]
+        //Wrong altDescription, right one is a period at the end.
+        [DataRow(362, "Nunc rhoncus dui vel sem. Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus. Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.", 2028, 04, 10, 13, 58, 10, 2028, 04, 10, 13, 58, 10, 639, 10, false, "Nunc rhoncus dui vel sem. Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus. Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus", 2858, "antevej 748")]
+        //Wrong zipcode, right one is 8401
+        [DataRow(500, "Sports Coaching", "Aenean lectus.", 2028, 01, 02, 08, 56, 40, 2028, 01, 02, 08, 56, 40, 658, 875, true, "Etiam vel augue.Vestibulum rutrum rutrum neque.", 8400, "accumsanvej 80")]
+        public void BuildPhysicalPostTestNegative(int expectedId, string expectedTitle, string expectedDescription,
+                                                  int expectedBumpTimeYear, int expectedBumpTimeMonth, int expectedBumpTimeDay,
+                                                  int expectedBumpTimeHour, int expectedBumpTimeMinute, int expectedBumpTimeSecond,
+                                                  int expectedDateCreatedYear, int expectedDateCreatedMonth, int expectedDateCreatedDay,
+                                                  int expectedDateCreatedHour, int expectedDateCreatedMinute, int expectedDateCreatedSecond,
+                                                  int expectedCategoryId, int expectedUserId, string expectePostType, bool expectedIsLocked,
+                                                  string expectedAltDescription, string expectedZipcode, string expectedAddress)
+        {
+            //Prepare
+            ModelBuilder modelBuilder = new ModelBuilder();
+            DateTime expectedDateCreated = new DateTime(expectedDateCreatedYear, expectedDateCreatedMonth, expectedDateCreatedDay, expectedDateCreatedHour, expectedDateCreatedMinute, expectedDateCreatedSecond);
+            DateTime expectedBumpTime = new DateTime(expectedBumpTimeYear, expectedBumpTimeMonth, expectedBumpTimeDay, expectedBumpTimeHour, expectedBumpTimeMinute, expectedBumpTimeSecond);
+
+
+            //Act
+            PhysicalPost actualPhysicalPost = modelBuilder.BuildPost<PhysicalPost>(expectedId);
+            int actualId = actualPhysicalPost.Id;
+            string actualTitle = actualPhysicalPost.Title;
+            string actualDescription = actualPhysicalPost.Description;
+            DateTime actualBumpTime = actualPhysicalPost.BumpTime;
+            DateTime actualDateCreated = actualPhysicalPost.DateCreated;
+            int actualCategoryId = actualPhysicalPost.CategoryId;
+            int actualUserId = actualPhysicalPost.UserId;
+            string actualPostType = actualPhysicalPost.PostType;
+            bool actualIsLocked = actualPhysicalPost.IsLocked;
+            string actualAltDescription = actualPhysicalPost.Description;
+            string actualZipcode = actualPhysicalPost.Zipcode;
+            string actualAdress = actualPhysicalPost.Address;
+
+            //Assert
+            AssertAreNotEqualWithMsg(expectedId, actualId, "id");
+            AssertAreNotEqualWithMsg(expectedTitle, actualTitle, "title");
+            AssertAreNotEqualWithMsg(expectedDateCreated, actualDateCreated, "dateCreated");
+            AssertAreNotEqualWithMsg(expectedBumpTime, actualBumpTime, "bumpTime");
+            AssertAreNotEqualWithMsg(expectedCategoryId, actualCategoryId, "categoryId");
+            AssertAreNotEqualWithMsg(expectedDescription, actualDescription, "description");
+            AssertAreNotEqualWithMsg(expectedUserId, actualUserId, "userId");
+            AssertAreNotEqualWithMsg(expectePostType, actualPostType, "postType");
+            AssertAreNotEqualWithMsg(expectedIsLocked, actualIsLocked, "isLocke");
+            AssertAreNotEqualWithMsg(expectedDescription, actualDescription, "description");
+            AssertAreNotEqualWithMsg(expectedZipcode, actualZipcode, "zipcode");
+            AssertAreNotEqualWithMsg(expectedAddress, actualAdress, "address");
+        }
+
+        [TestMethod]
+        [DataRow(1, "massa tempor convallis nulla neque", "Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique.", 2019, 07, 24, 21, 48, 58, 337, 831, 158)]
+        [DataRow(847, "eget rutrum", "Aenean fermentum.", 2036, 12, 10, 15, 23, 35, 946, 14, 765)]
+        [DataRow(1000, "ullamcorper augue a suscipit nulla", "Duis mattis egestas metus. Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh. Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.", 2030, 02, 07, 17, 12, 05, 928, 778, 958)]
+        public void BuildReportTestPositive(int expectedId, string expectedTitle, string expectedDescription,
+                                            int expectedDateCreatedYear, int expectedDateCreatedMonth, int expectedDateCreatedDay,
+                                            int expectedDateCreatedHour, int expectedDateCreatedMinute, int expectedDateCreatedSecond,
+                                            int expectedUserId, int expectedCommentId, int expectedPostId, string expectedReportType)
+        {
+            //Prepare
+            ModelBuilder modelBuilder = new ModelBuilder();
+            DateTime expectedDateCreated = new DateTime(expectedDateCreatedYear, expectedDateCreatedMonth, expectedDateCreatedDay, expectedDateCreatedHour, expectedDateCreatedMinute, expectedDateCreatedSecond);
+
+            //Act
+            Report actualReport = modelBuilder.BuildReport(expectedId);
+            int actualId = actualReport.Id;
+            string actualTitle = actualReport.Title;
+            string actualDesription = actualReport.Description;
+            DateTime actualDateCreated = actualReport.DateCreated;
+            int actualUserId = actualReport.UserId;
+            int actualCommentId = actualReport.CommentId;
+            int actualPostId = actualReport.PostId;
+            string actualReportType = actualReport.ReportType;
+
+            //Assert
+            AssertAreEqualWithMsg(expectedId, actualId, "id");
+            AssertAreEqualWithMsg(expectedTitle, actualTitle, "title");
+            AssertAreEqualWithMsg(expectedDescription, actualDesription, "description");
+            AssertAreEqualWithMsg(expectedDateCreated, actualDateCreated, "dateCreated");
+            AssertAreEqualWithMsg(expectedUserId, actualUserId, "userId");
+            AssertAreEqualWithMsg(expectedCommentId, actualCommentId, "commentId");
+            AssertAreEqualWithMsg(expectedPostId, actualPostId, "postId");
+            AssertAreEqualWithMsg(expectedReportType, actualReportType, "reportType");
+        }
+
+        [TestMethod]
+        //Wrong id, right one is 1
+        [DataRow(2, "massa tempor convallis nulla neque", "Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique.", 2019, 07, 24, 21, 48, 58, 337, 831, 158)]
+        //Wrong Title, right one is "eget rutrum"
+        [DataRow(847, "egetrutrum", "Aenean fermentum.", 2036, 12, 10, 15, 23, 35, 946, 14, 765)]
+        //Wtong Description, right one starts with captial D
+        [DataRow(1000, "ullamcorper augue a suscipit nulla", "duis mattis egestas metus. Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh. Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.", 2030, 02, 07, 17, 12, 05, 928, 778, 958)]
+        public void BuildReportTestNegative(int expectedId, string expectedTitle, string expectedDescription,
+                                            int expectedDateCreatedYear, int expectedDateCreatedMonth, int expectedDateCreatedDay,
+                                            int expectedDateCreatedHour, int expectedDateCreatedMinute, int expectedDateCreatedSecond,
+                                            int expectedUserId, int expectedCommentId, int expectedPostId, string expectedReportType)
+                                    {
+                                        //Prepare
+                                        ModelBuilder modelBuilder = new ModelBuilder();
+                                        DateTime expectedDateCreated = new DateTime(expectedDateCreatedYear, expectedDateCreatedMonth, expectedDateCreatedDay, expectedDateCreatedHour, expectedDateCreatedMinute, expectedDateCreatedSecond);
+
+                                        //Act
+                                        Report actualReport = modelBuilder.BuildReport(expectedId);
+                                        int actualId = actualReport.Id;
+                                        string actualTitle = actualReport.Title;
+                                        string actualDesription = actualReport.Description;
+                                        DateTime actualDateCreated = actualReport.DateCreated;
+                                        int actualUserId = actualReport.UserId;
+                                        int actualCommentId = actualReport.CommentId;
+                                        int actualPostId = actualReport.PostId;
+                                        string actualReportType = actualReport.ReportType;
+
+                                        //Assert
+                                        AssertAreNotEqualWithMsg(expectedId, actualId, "id");
+                                        AssertAreNotEqualWithMsg(expectedTitle, actualTitle, "title");
+                                        AssertAreNotEqualWithMsg(expectedDescription, actualDesription, "description");
+                                        AssertAreNotEqualWithMsg(expectedDateCreated, actualDateCreated, "dateCreated");
+                                        AssertAreNotEqualWithMsg(expectedUserId, actualUserId, "userId");
+                                        AssertAreNotEqualWithMsg(expectedCommentId, actualCommentId, "commentId");
+                                        AssertAreNotEqualWithMsg(expectedPostId, actualPostId, "postId");
+                                        AssertAreNotEqualWithMsg(expectedReportType, actualReportType, "reportType");
+                                    }
 
         #region AssertAreEqualWithMsg methods
 
@@ -363,6 +700,6 @@ namespace Solvr.Test.DataAccesLayer
             AssertAreNotEqualWithMsg(expectedMinute, actualMinute, "minute");
             AssertAreNotEqualWithMsg(expectedSecond, actualSecond, "second");
         }
-        #endregion
+        #endregion  
     }
 }
