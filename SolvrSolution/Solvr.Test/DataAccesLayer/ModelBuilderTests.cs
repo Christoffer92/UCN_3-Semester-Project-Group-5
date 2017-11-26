@@ -624,14 +624,6 @@ namespace Solvr.Test.DataAccesLayer
             DateTime expectedDateCreated = new DateTime(expectedDateCreatedYear, expectedDateCreatedMonth, expectedDateCreatedDay, expectedDateCreatedHour, expectedDateCreatedMinute, expectedDateCreatedSecond);
             DateTime expectedDateCreated2 = new DateTime(expectedDateCreatedYear2, expectedDateCreatedMonth2, expectedDateCreatedDay2, expectedDateCreatedHour2, expectedDateCreatedMinute2, expectedDateCreatedSecond2);
             Post post = modelBuilder.BuildPost<Post>(expectedPostId);
-            
-            //Set to false data because it has to be asigned to something outside the if sentence.
-            int actualId2 = -1;
-            DateTime actualDateCreated2 = new DateTime(0, 0, 0, 0, 0, 0, 0);
-            Comment actualComment2 = null;
-            string actualText2 = null;
-            int actualPostId2 = -1;
-            int actualUserId2 = -1;
         
             //Act
             List <Comment> actualComments = post.Comments;
@@ -644,12 +636,20 @@ namespace Solvr.Test.DataAccesLayer
 
             if (expectedText2 != null)
             {
-                actualComment2 = actualComments[1];
-                actualId2 = actualComment2.Id;
-                actualDateCreated2 = actualComment2.DateCreated;
-                actualText2 = actualComment2.Text;
-                actualPostId2 = actualComment2.PostId;
-                actualUserId2 = actualComment2.UserId;
+                //Act
+                Comment actualComment2 = actualComments[1];
+                int actualId2 = actualComment2.Id;
+                DateTime actualDateCreated2 = actualComment2.DateCreated;
+                string actualText2 = actualComment2.Text;
+                int actualPostId2 = actualComment2.PostId;
+                int actualUserId2 = actualComment2.UserId;
+
+                //Assert
+                AssertAreEqualWithMsg(expectedId2, actualId2, "id");
+                AssertAreEqualWithMsg(expectedDateCreated2, actualDateCreated2, "dateCreated");
+                AssertAreEqualWithMsg(expectedText2, actualText2, "text");
+                AssertAreEqualWithMsg(expectedPostId2, actualPostId2, "postId");
+                AssertAreEqualWithMsg(expectedUserId2, actualUserId2, "userId");
             }
 
             //Assert
@@ -658,16 +658,8 @@ namespace Solvr.Test.DataAccesLayer
             AssertAreEqualWithMsg(expectedText, actualText, "text");
             AssertAreEqualWithMsg(expectedPostId, actualPostId, "postId");
             AssertAreEqualWithMsg(expectedUserId, actualUserId, "userId");
-
-            if (expectedText2 != null)
-            {
-                AssertAreEqualWithMsg(expectedId2, actualId2, "id");
-                AssertAreEqualWithMsg(expectedDateCreated2, actualDateCreated2, "dateCreated");
-                AssertAreEqualWithMsg(expectedText2, actualText2, "text");
-                AssertAreEqualWithMsg(expectedPostId2, actualPostId2, "postId");
-                AssertAreEqualWithMsg(expectedUserId2, actualUserId2, "userId");
-            }
         }
+
 
         [TestMethod]
         //Wrong day, right one is 09
@@ -689,14 +681,6 @@ namespace Solvr.Test.DataAccesLayer
             DateTime expectedDateCreated2 = new DateTime(expectedDateCreatedYear2, expectedDateCreatedMonth2, expectedDateCreatedDay2, expectedDateCreatedHour2, expectedDateCreatedMinute2, expectedDateCreatedSecond2);
             Post post = modelBuilder.BuildPost<Post>(expectedPostId);
 
-            //Set to false data because it has to be asigned to something outside the if sentence.
-            int actualId2 = -1;
-            DateTime actualDateCreated2 = new DateTime(0, 0, 0, 0, 0, 0, 0);
-            Comment actualComment2 = null;
-            string actualText2 = null;
-            int actualPostId2 = -1;
-            int actualUserId2 = -1;
-
             //Act
             List<Comment> actualComments = post.Comments;
             Comment actualComment = actualComments[0];
@@ -708,12 +692,20 @@ namespace Solvr.Test.DataAccesLayer
 
             if (expectedText2 != null)
             {
-                actualComment2 = actualComments[1];
-                actualId2 = actualComment2.Id;
-                actualDateCreated2 = actualComment2.DateCreated;
-                actualText2 = actualComment2.Text;
-                actualPostId2 = actualComment2.PostId;
-                actualUserId2 = actualComment2.UserId;
+                //Act
+                Comment actualComment2 = actualComments[1];
+                int actualId2 = actualComment2.Id;
+                DateTime actualDateCreated2 = actualComment2.DateCreated;
+                string actualText2 = actualComment2.Text;
+                int actualPostId2 = actualComment2.PostId;
+                int actualUserId2 = actualComment2.UserId;
+
+                //Assert
+                AssertAreEqualWithMsg(expectedId2, actualId2, "id");
+                AssertAreEqualWithMsg(expectedDateCreated2, actualDateCreated2, "dateCreated");
+                AssertAreEqualWithMsg(expectedText2, actualText2, "text");
+                AssertAreEqualWithMsg(expectedPostId2, actualPostId2, "postId");
+                AssertAreEqualWithMsg(expectedUserId2, actualUserId2, "userId");
             }
 
             //Assert
@@ -722,21 +714,149 @@ namespace Solvr.Test.DataAccesLayer
             AssertAreEqualWithMsg(expectedText, actualText, "text");
             AssertAreEqualWithMsg(expectedPostId, actualPostId, "postId");
             AssertAreEqualWithMsg(expectedUserId, actualUserId, "userId");
+        }
+
+        [TestMethod]
+        [DataRow(1, 2022, 05, 12, 21, 06, 16, "Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit. Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.", 52, 892, 2019, 06, 15, 15, 02, 42, false, 113, 2022, 02, 19, 01, 24, 45, "Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue.Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi.", 635, 892, 2025, 07, 12, 17, 24, 45, true)]
+        [DataRow(404, 2033, 10, 02, 00, 25, 04, "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo. Etiam pretium iaculis justo. In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus. Nulla ut erat id mauris vulputate elementum. Nullam varius.", 454, 307, 2028, 02, 19, 14, 54, 22, true)]
+        [DataRow(500, 2029, 12, 13, 10, 22, 24, "In quis justo.Maecenas rhoncus aliquam lacus.Morbi quis tortor id nulla ultrices aliquet.Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo.Pellentesque viverra pede ac diam.", 627, 852, 2036, 02, 22, 05, 49, 38, true, 2035, 12, 22, 00, 47, 51, "Nulla justo.Aliquam quis turpis eget elit sodales scelerisque.Mauris sit amet eros.Suspendisse accumsan tortor quis turpis.Sed ante.Vivamus tortor.Duis mattis egestas metus.Aenean fermentum.Donec ut mauris eget massa tempor convallis.", 875, 852, 2025, 03, 10, 02, 16, 23, true)]
+        public void BuildSolvrCommentListTestPositive(int expectedId, int expectedDateCreatedYear, int expectedDateCreatedMonth,
+                                                      int expectedDateCreatedDay, int expectedDateCreatedHour, int expectedDateCreatedMinute,
+                                                      int expectedDateCreatedSecond, string expectedText, int expectedUserId, int expectedPostId,
+                                                      int expectedTimeAcceptedYear, int expectedTimeAcceptedMonth, int expectedTimeAcceptedDay,
+                                                      int expectedTimeAcceptedHour, int expectedTimeAcceptedMinute, int expectedTimeAcceptedSecond,
+                                                      Boolean expectedIsAccepted, int expectedId2, int expectedDateCreatedYear2, int expectedDateCreatedMonth2,
+                                                      int expectedDateCreatedDay2, int expectedDateCreatedHour2, int expectedDateCreatedMinute2,
+                                                      int expectedDateCreatedSecond2, string expectedText2, int expectedUserId2, int expectedPostId2,
+                                                      int expectedTimeAcceptedYear2, int expectedTimeAcceptedMonth2, int expectedTimeAcceptedDay2,
+                                                      int expectedTimeAcceptedHour2, int expectedTimeAcceptedMinute2, int expectedTimeAcceptedSecond2,
+                                                      Boolean expectedIsAccepted2)
+        {
+            //Prepare
+            ModelBuilder modelBuilder = new ModelBuilder();
+            DateTime expectedDateCreated = new DateTime(expectedDateCreatedYear, expectedDateCreatedMonth, expectedDateCreatedDay, expectedDateCreatedHour, expectedDateCreatedMinute, expectedDateCreatedSecond);
+            DateTime expectedTimeAccepted = new DateTime(expectedTimeAcceptedYear, expectedTimeAcceptedMonth, expectedTimeAcceptedDay, expectedTimeAcceptedHour, expectedTimeAcceptedMinute, expectedTimeAcceptedSecond);
+            DateTime expectedDateCreated2 = new DateTime(expectedDateCreatedYear2, expectedDateCreatedMonth2, expectedDateCreatedDay2, expectedDateCreatedHour2, expectedDateCreatedMinute2, expectedDateCreatedSecond2);
+            DateTime expectedTimeAccepted2 = new DateTime(expectedTimeAcceptedYear2, expectedTimeAcceptedMonth2, expectedTimeAcceptedDay2, expectedTimeAcceptedHour2, expectedTimeAcceptedMinute2, expectedTimeAcceptedSecond2);
+            Post post = modelBuilder.BuildPost<Post>(expectedPostId);
+
+            //Act
+            List<Comment> actualComments = post.Comments;
+            SolvrComment actualSolvrComment = (SolvrComment)actualComments[0];
+            int actualId = actualSolvrComment.Id;
+            DateTime actualDateCreated = actualSolvrComment.DateCreated;
+            string actualText = actualSolvrComment.Text;
+            int actualPostId = actualSolvrComment.PostId;
+            int actualUserId = actualSolvrComment.UserId;
+            bool actualIsAccepted = actualSolvrComment.IsAccepted;
+            DateTime actualTimeAccepted = actualSolvrComment.TimeAccepted;
 
             if (expectedText2 != null)
             {
+                //Act
+                SolvrComment actualSolvrComment2 = (SolvrComment)actualComments[1];
+                int actualId2 = actualSolvrComment.Id;
+                DateTime actualDateCreated2 = actualSolvrComment2.DateCreated;
+                string actualText2 = actualSolvrComment2.Text;
+                int actualPostId2 = actualSolvrComment2.PostId;
+                int actualUserId2 = actualSolvrComment2.UserId;
+                bool actualIsAccepted2 = actualSolvrComment2.IsAccepted;
+                DateTime actualTimeAccepted2 = actualSolvrComment2.TimeAccepted;
+
+                //Assert
                 AssertAreEqualWithMsg(expectedId2, actualId2, "id");
                 AssertAreEqualWithMsg(expectedDateCreated2, actualDateCreated2, "dateCreated");
                 AssertAreEqualWithMsg(expectedText2, actualText2, "text");
                 AssertAreEqualWithMsg(expectedPostId2, actualPostId2, "postId");
                 AssertAreEqualWithMsg(expectedUserId2, actualUserId2, "userId");
+                AssertAreEqualWithMsg(expectedIsAccepted2, actualIsAccepted2, "isAccepted");
+                AssertAreEqualWithMsg(expectedTimeAccepted2, actualTimeAccepted2, "timeAccepted");
             }
+
+            //Assert
+            AssertAreEqualWithMsg(expectedId, actualId, "id");
+            AssertAreEqualWithMsg(expectedDateCreated, actualDateCreated, "dateCreated");
+            AssertAreEqualWithMsg(expectedText, actualText, "text");
+            AssertAreEqualWithMsg(expectedPostId, actualPostId, "postId");
+            AssertAreEqualWithMsg(expectedUserId, actualUserId, "userId");
+            AssertAreEqualWithMsg(expectedIsAccepted, actualIsAccepted, "isAccepted");
+            AssertAreEqualWithMsg(expectedTimeAccepted, actualTimeAccepted, "timeAccepted");
         }
 
 
+        [TestMethod]
+        //Wrong userid, right one is 635
+        [DataRow(1, 2022, 05, 12, 21, 06, 16, "Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit. Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.", 52, 892, 2019, 06, 15, 15, 02, 42, false, 113, 2022, 02, 19, 01, 24, 45, "Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue.Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi.", 636, 892, 2025, 07, 12, 17, 24, 45, true)]
+        //Wrong year, right one is 2033
+        [DataRow(404, 2032, 10, 02, 00, 25, 04, "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo. Etiam pretium iaculis justo. In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus. Nulla ut erat id mauris vulputate elementum. Nullam varius.", 454, 307, 2028, 02, 19, 14, 54, 22, true)]
+        //Wrong second, right one is 24
+        [DataRow(500, 2029, 12, 13, 10, 22, 23, "In quis justo.Maecenas rhoncus aliquam lacus.Morbi quis tortor id nulla ultrices aliquet.Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo.Pellentesque viverra pede ac diam.", 627, 852, 2036, 02, 22, 05, 49, 38, true, 2035, 12, 22, 00, 47, 51, "Nulla justo.Aliquam quis turpis eget elit sodales scelerisque.Mauris sit amet eros.Suspendisse accumsan tortor quis turpis.Sed ante.Vivamus tortor.Duis mattis egestas metus.Aenean fermentum.Donec ut mauris eget massa tempor convallis.", 875, 852, 2025, 03, 10, 02, 16, 23, true)]
+        public void BuildSolvrCommentListTestNegative(int expectedId, int expectedDateCreatedYear, int expectedDateCreatedMonth,
+                                                      int expectedDateCreatedDay, int expectedDateCreatedHour, int expectedDateCreatedMinute,
+                                                      int expectedDateCreatedSecond, string expectedText, int expectedUserId, int expectedPostId,
+                                                      int expectedTimeAcceptedYear, int expectedTimeAcceptedMonth, int expectedTimeAcceptedDay,
+                                                      int expectedTimeAcceptedHour, int expectedTimeAcceptedMinute, int expectedTimeAcceptedSecond,
+                                                      Boolean expectedIsAccepted, int expectedId2, int expectedDateCreatedYear2, int expectedDateCreatedMonth2,
+                                                      int expectedDateCreatedDay2, int expectedDateCreatedHour2, int expectedDateCreatedMinute2,
+                                                      int expectedDateCreatedSecond2, string expectedText2, int expectedUserId2, int expectedPostId2,
+                                                      int expectedTimeAcceptedYear2, int expectedTimeAcceptedMonth2, int expectedTimeAcceptedDay2,
+                                                      int expectedTimeAcceptedHour2, int expectedTimeAcceptedMinute2, int expectedTimeAcceptedSecond2,
+                                                      Boolean expectedIsAccepted2)
+        {
+            //Prepare
+            ModelBuilder modelBuilder = new ModelBuilder();
+            DateTime expectedDateCreated = new DateTime(expectedDateCreatedYear, expectedDateCreatedMonth, expectedDateCreatedDay, expectedDateCreatedHour, expectedDateCreatedMinute, expectedDateCreatedSecond);
+            DateTime expectedTimeAccepted = new DateTime(expectedTimeAcceptedYear, expectedTimeAcceptedMonth, expectedTimeAcceptedDay, expectedTimeAcceptedHour, expectedTimeAcceptedMinute, expectedTimeAcceptedSecond);
+            DateTime expectedDateCreated2 = new DateTime(expectedDateCreatedYear2, expectedDateCreatedMonth2, expectedDateCreatedDay2, expectedDateCreatedHour2, expectedDateCreatedMinute2, expectedDateCreatedSecond2);
+            DateTime expectedTimeAccepted2 = new DateTime(expectedTimeAcceptedYear2, expectedTimeAcceptedMonth2, expectedTimeAcceptedDay2, expectedTimeAcceptedHour2, expectedTimeAcceptedMinute2, expectedTimeAcceptedSecond2);
+            Post post = modelBuilder.BuildPost<Post>(expectedPostId);
+
+            //Act
+            List<Comment> actualComments = post.Comments;
+            SolvrComment actualSolvrComment = (SolvrComment)actualComments[0];
+            int actualId = actualSolvrComment.Id;
+            DateTime actualDateCreated = actualSolvrComment.DateCreated;
+            string actualText = actualSolvrComment.Text;
+            int actualPostId = actualSolvrComment.PostId;
+            int actualUserId = actualSolvrComment.UserId;
+            bool actualIsAccepted = actualSolvrComment.IsAccepted;
+            DateTime actualTimeAccepted = actualSolvrComment.TimeAccepted;
+
+            if (expectedText2 != null)
+            {
+                //Act
+                SolvrComment actualSolvrComment2 = (SolvrComment)actualComments[1];
+                int actualId2 = actualSolvrComment.Id;
+                DateTime actualDateCreated2 = actualSolvrComment2.DateCreated;
+                string actualText2 = actualSolvrComment2.Text;
+                int actualPostId2 = actualSolvrComment2.PostId;
+                int actualUserId2 = actualSolvrComment2.UserId;
+                bool actualIsAccepted2 = actualSolvrComment2.IsAccepted;
+                DateTime actualTimeAccepted2 = actualSolvrComment2.TimeAccepted;
+
+                //Assert
+                AssertAreEqualWithMsg(expectedId2, actualId2, "id");
+                AssertAreEqualWithMsg(expectedDateCreated2, actualDateCreated2, "dateCreated");
+                AssertAreEqualWithMsg(expectedText2, actualText2, "text");
+                AssertAreEqualWithMsg(expectedPostId2, actualPostId2, "postId");
+                AssertAreEqualWithMsg(expectedUserId2, actualUserId2, "userId");
+                AssertAreEqualWithMsg(expectedIsAccepted2, actualIsAccepted2, "isAccepted");
+                AssertAreEqualWithMsg(expectedTimeAccepted2, actualTimeAccepted2, "timeAccepted");
+            }
+
+            //Assert
+            AssertAreEqualWithMsg(expectedId, actualId, "id");
+            AssertAreEqualWithMsg(expectedDateCreated, actualDateCreated, "dateCreated");
+            AssertAreEqualWithMsg(expectedText, actualText, "text");
+            AssertAreEqualWithMsg(expectedPostId, actualPostId, "postId");
+            AssertAreEqualWithMsg(expectedUserId, actualUserId, "userId");
+            AssertAreEqualWithMsg(expectedIsAccepted, actualIsAccepted, "isAccepted");
+            AssertAreEqualWithMsg(expectedTimeAccepted, actualTimeAccepted, "timeAccepted");
+        }
+
         #region AssertAreEqualWithMsg methods
 
-        public void AssertAreEqualWithMsg(string expected, string actual, string name)
+            public void AssertAreEqualWithMsg(string expected, string actual, string name)
         {
             string msg = "expected " + name + " was: " + expected +
                          ". Actual " + name + " is: " + actual;
