@@ -85,13 +85,13 @@ namespace Solvr.Test.DataAccesLayer
         }
 
         [TestMethod]
-        //Wrong title, right one is "philosophy"
+        //Testing title, right one is "philosophy"
         [DataRow(1, "philosophy ")]
-        //Wrong title, right one is "soup"
+        //Testing title, right one is "soup".
         [DataRow(736, "soup£")]
-        //Wrong id, right one is 3
-        [DataRow(4, "tree")]
-        //Wrong id, right one is 1000
+        //Testing -1 to id.
+        [DataRow(2, "tree")]
+        //Testing +1 to id.
         [DataRow(1001, "test")]
         public void BuildCategoryTestNegative(int expectedId, string expectedName)
         {
@@ -109,8 +109,12 @@ namespace Solvr.Test.DataAccesLayer
             int actualId = actualCategory.Id;
 
             //Assert
-            AssertAreEqualWithMsg(expectedName, actualName, "name");
-            AssertAreEqualWithMsg(expectedId, actualId, "id");
+            AssertAreNotEqualWithMsg(expectedName, actualName, "name");
+
+            if (expectedId != 1 || expectedId != 736)
+            {
+                AssertAreNotEqualWithMsg(expectedId, actualId, "id");
+            }
         }
 
         [TestMethod]
