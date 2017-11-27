@@ -1,4 +1,5 @@
 ﻿using SolvrLibrary;
+using DataAccesLayer;
 using SolvrWebClient.Models;
 using System;
 using System.Collections.Generic;
@@ -14,12 +15,12 @@ namespace SolvrWebClient.Controllers
         ISolvrDB DB;
         public CreatePostController()
         {
-            DB = new SolvrDB();
+            DB = new MockDB();
         }
-        //public CreatePostController(ISolvrDB _DB)
-        //{
-        //    DB = _DB;
-        //}
+        public CreatePostController(ISolvrDB _DB)
+        {
+            DB = _DB;
+        }
 
         //CreatePost:
         //  Create a post with the following attributes from PostViewModel model.
@@ -68,7 +69,7 @@ namespace SolvrWebClient.Controllers
                 }
             }
             p.AltDescription = model.AltDescription;
-            p.ZipCode = model.Zipcode;
+            p.Zipcode = model.Zipcode;
             p.Address = model.Address;
             //TODO: Connect a user to this method
             //p.User = something goes here
