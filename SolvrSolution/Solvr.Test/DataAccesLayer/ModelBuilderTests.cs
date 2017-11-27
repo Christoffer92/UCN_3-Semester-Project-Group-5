@@ -111,7 +111,7 @@ namespace Solvr.Test.DataAccesLayer
             //Assert
             AssertAreNotEqualWithMsg(expectedName, actualName, "name");
 
-            if (expectedId != 1 || expectedId != 736)
+            if (expectedId != 1)
             {
                 AssertAreNotEqualWithMsg(expectedId, actualId, "id");
             }
@@ -1126,21 +1126,21 @@ namespace Solvr.Test.DataAccesLayer
         {
             string msg = "expected " + name + " was: " + expected +
                          ". Actual " + name + " is: " + actual;
-            Assert.AreEqual(expected, actual, msg);
+            Assert.AreNotEqual(expected, actual, msg);
         }
 
         public void AssertAreNotEqualWithMsg(int expected, int actual, string name)
         {
             string msg = "expected " + name + " was: " + expected +
                          ". Actual " + name + " is: " + actual;
-            Assert.AreEqual(expected, actual, msg);
+            Assert.AreNotEqual(expected, actual, msg);
         }
 
         public void AssertAreNotEqualWithMsg(bool expected, bool actual, string name)
         {
             string msg = "expected " + name + " was: " + expected +
                          ". Actual " + name + " is: " + actual;
-            Assert.AreEqual(expected, actual, msg);
+            Assert.AreNotEqual(expected, actual, msg);
         }
         
         public void AssertAreNotEqualWithMsg(DateTime expected, DateTime actual, string name)
