@@ -53,6 +53,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataAccesLayer\DataAccesLayer.csproj">
+      <Project>{2e3b225a-aad6-4d73-a4f6-c76db17e9638}</Project>
+      <Name>DataAccesLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SolvrLibrary\SolvrLibrary.csproj">
       <Project>{7a512b96-b646-4e04-b9f5-6c9658209c1b}</Project>
       <Name>SolvrLibrary</Name>

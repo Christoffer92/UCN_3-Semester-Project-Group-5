@@ -1,0 +1,41 @@
+﻿@model SolvrWebClient.Models.PhysicalPostViewModel
+
+@{
+    ViewBag.Title = "Create a physical post";
+}
+<h2>@ViewBag.Title</h2>
+
+@* TODO: CSS classes for layout *@
+
+<input type="button" name="CreatePhysical" value="Create regular post" onclick="location.href='@Url.Action("Index", "CreatePost")'" />
+
+@using (Html.BeginForm("CreatePhysical", "CreatePost", FormMethod.Post))
+{
+    <div>
+        <b>Titel:</b> <br />
+        @Html.TextBoxFor(m => m.Title)<br />
+        <b>Category:</b> <br />
+        @Html.DropDownListFor(m => m.CategoryId, (IEnumerable<SelectListItem>)ViewBag.DropDownList, "Select Category")
+    </div>
+    <div>
+        <b>Description:</b> <br />
+        @Html.TextAreaFor(m => m.Description, 10, 100, new { @class = "textarea-notresizeable" })
+    </div>
+    <div>
+        <b>Secret Description:</b> <br />
+        @Html.TextAreaFor(m => m.AltDescription, 10, 100, new { @class = "textarea-notresizeable" })
+    </div>
+    <div>
+        <b>Zipcode:</b> <br />
+        @Html.TextBoxFor(m => m.Zipcode)<br />
+    </div>
+    <div>
+        <b>Address:</b> <br />
+        @Html.TextBoxFor(m => m.Address)<br />
+    </div>
+    <div>
+        <b>Tags:</b> <br />
+        @Html.TextAreaFor(m => m.TagsString, 1, 100, new { @class = "textarea-notresizeable" })
+    </div>
+    <input type="submit" name="Create" value="Create" class="reposition-buttonright" />
+}

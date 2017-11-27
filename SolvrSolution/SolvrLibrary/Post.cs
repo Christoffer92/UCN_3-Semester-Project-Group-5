@@ -45,6 +45,8 @@ namespace SolvrLibrary
 
         public List<string> Tags { get; set; }
 
+        public User User { get; set; }
+
         public Category Category { get; set; }
 
         public List<Comment> Comments { get; set; }

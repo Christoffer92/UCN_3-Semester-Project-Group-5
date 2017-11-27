@@ -1,4 +1,5 @@
 ﻿using SolvrLibrary;
+using DataAccesLayer;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,7 +34,7 @@ namespace DbHandler.Models
                     List<T> objects = ReadLinesFromFile(50, streamRdr);
 
                     //Here the list objects is set into the database. The if statements are used to take care of 
-                    //the spicial cases 
+                    //the special cases 
                     using (var context = new SolvrDB())
                     {
                         foreach (T obj in objects)
