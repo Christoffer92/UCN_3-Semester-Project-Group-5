@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace SolvrLibrary
 {
-    [Table(Name = "physicalposts")]
+    //[Table(Name = "physicalposts")]
     public class PhysicalPost : Post
     {
-        [Column(Name= "id", IsPrimaryKey = true, IsDbGenerated = true)]
-        public int PhysId { get; set; }
+        /*[Column(IsPrimaryKey = true, IsDbGenerated = true)]
+        public int Id { get; set; }*/
 
         [Column()]
         public bool IsLocked { get; set; }
@@ -20,14 +20,14 @@ namespace SolvrLibrary
         public string AltDescription { get; set; }
 
         [Column()]
-        public string ZipCode { get; set; }
+        public string Zipcode { get; set; }
 
         [Column()]
         public string Address { get; set; }
 
         public List<SolvrComment> SolvrComments { get; set; }
 
-        //[Column()]
-        //public int PostId { get; set; }
+        /*[Column()]
+        public int PostId { get; set; }*/
     }
 }
