@@ -14,11 +14,19 @@ namespace SolvrLibrary
         public int Id { get; set; }
 
         [Column()]
-        public bool IsUpvoted { get; set; }
+        public bool IsUpvoted { get; set;}
+
+        [Column()]
+        public int UserId { get; set; }
+
+        [Column()]
+        public int CommentId { get; set; }
 
         public User User { get; set; }
 
         public Comment Comment { get; set; }
+
+    
 
     }
 }

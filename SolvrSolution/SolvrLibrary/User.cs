@@ -10,6 +10,11 @@ namespace SolvrLibrary
     [Table(Name = "users")]
     public class User
     {
+        public User()
+        {
+            DateCreated = DateTime.Now;
+        }
+
         [Column(IsPrimaryKey = true, IsDbGenerated = true)]
         public int Id { get; set; }
 
@@ -20,7 +25,7 @@ namespace SolvrLibrary
         public string Email { get; set; }
 
         [Column()]
-        public string UserName { get; set; }
+        public string Username { get; set; }
 
         [Column()]
         public string Password { get; set; }
