@@ -46,7 +46,7 @@ namespace DataAccesLayer.ModelBuilds
 
         public List<Comment> BuildCommentList(int postId, SolvrDB context)
         {
-            var CommentQuery = from comment in context.Comments where comment.PostId == postId && comment.CommentType == "Comment" select comment;
+            var CommentQuery = from comment in context.Comments where comment.PostId == postId select comment;
             var CommentList = new List<Comment>();
             foreach (var comment in CommentQuery)
             {
@@ -146,7 +146,7 @@ namespace DataAccesLayer.ModelBuilds
                 if (typeof(T) == typeof(Comment))
                 {
                     var Query = (from comment in context.Comments.OfType<Comment>() where comment.Id == PrimaryKey select comment).First();
-                   
+
                     CreatedComment = (T)(object)new Comment
                     {
                         Id = Query.Id,
@@ -154,7 +154,8 @@ namespace DataAccesLayer.ModelBuilds
                         Text = Query.Text,
                         UserId = Query.UserId,
                         User = BuildUser(Query.UserId),
-                        Votes = BuildVoteList(PrimaryKey, context)
+                        Votes = BuildVoteList(PrimaryKey, context),
+                        PostId = Query.PostId
                     }; 
                 }
                 else if(typeof(T) == typeof(SolvrComment))
