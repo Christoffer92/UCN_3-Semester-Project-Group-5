@@ -191,10 +191,6 @@ namespace Solvr.Test.DataAccesLayer
             AssertAreNotEqualWithMsg(expectedName, actualName, "name");
             AssertAreNotEqualWithMsg(expectedUsername, actualUsername, "username");
             AssertAreNotEqualWithMsg(expectedPassword, actualPassword, "password");
-
-
-
-
         }
 
 
@@ -234,12 +230,18 @@ namespace Solvr.Test.DataAccesLayer
         }
 
         [TestMethod]
-        //Wrong primaryKey, right one is 1
-        [DataRow(3, "JCIDS", "Maecenas pulvinar lobortis est. Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum. Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc.", 2028, 01, 29, 09, 23, 28, 2028, 01, 29, 09, 23, 28, 103, 504)]
-        //Wrong title and bumpTimeYear, right one is "OAS Gold" and 2021
-        [DataRow(420, "Osa Gold", "Etiam justo. Etiam pretium iaculis justo. In hac habitasse platea dictumst.", 2021, 07, 25, 02, 47, 33, 2031, 07, 25, 02, 47, 33, 22, 187)]
-        //wrong foreign keys, right one is 721 and 109
-        [DataRow(500, "Zero Waste", "Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.", 2030, 09, 01, 18, 00, 38, 2030, 09, 01, 18, 00, 38, 721, 139)]
+        //Testing -1 to id.
+        [DataRow(0, "JCIDS", "Maecenas pulvinar lobortis est. Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum. Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc.", 2028, 01, 29, 09, 23, 28, 2028, 01, 29, 09, 23, 28, 103, 504)]
+        //Testing +1 to id.
+        [DataRow(2, "JCIDS", "Maecenas pulvinar lobortis est. Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum. Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc.", 2028, 01, 29, 09, 23, 28, 2028, 01, 29, 09, 23, 28, 103, 504)]
+        //Testing -1 to all values, except id. Also changed the strings and flipped the bool.
+        [DataRow(439, "OASGold", "Etiamjusto. Etiam<pretium iaculis justo. In hac habitasse platea dictumst.", 2020, 06, 24, 01, 46, 32, 2030, 06, 24, 01, 46, 32, 21, 186)]
+        //Testing +1 to all values, except id. Also changed the strings and flipped the bool.
+        [DataRow(421, "Osa Gold", "etiam justo. Etiam pretium iaculis justo. In hac habitasse platea dictumst.", 2021, 07, 25, 02, 47, 33, 2021, 07, 25, 02, 47, 33, 22, 187)]
+        //Testing -1 to id.
+        [DataRow(499, "Zero Waste", "Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.", 2030, 09, 01, 18, 00, 38, 2030, 09, 01, 18, 00, 38, 721, 109)]
+        //Testing +1 to id.
+        [DataRow(501, "Zero Waste", "Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.", 2030, 09, 01, 18, 00, 38, 2030, 09, 01, 18, 00, 38, 721, 109)]
         public void BuildPostTestNegative(int expectedId, string expectedTitle, int expectedDateCreatedYear, 
                                           int expectedDateCreatedMonth, int expectedDateCreatedDay, int expectedDateCreatedHour, 
                                           int expectedDateCreatedMinutes, int expectedDateCreatedSeconds, int expectedBumpTimeYear, 
@@ -263,7 +265,10 @@ namespace Solvr.Test.DataAccesLayer
             int actualUserId = actualPost.UserId;
 
             //Assert
-            AssertAreEqualWithMsg(expectedId, actualId, "id");
+            if (expectedId != 439 || expectedId != 421)
+            {
+                AssertAreNotEqualWithMsg(expectedId, actualId, "id");
+            }
             AssertAreEqualWithMsg(expectedTitle, actualTitle, "title");
             AssertAreEqualWithMsg(expectedDateCreated, actualDateCreated, "dateCreated");
             AssertAreEqualWithMsg(expectedBumpTime, actualBumpTime, "bumpTime");
@@ -301,12 +306,18 @@ namespace Solvr.Test.DataAccesLayer
         }
 
         [TestMethod]
-        //wrong id the right one is 1.
+        //Testing -1 to id.
         [DataRow(0, 2036, 11, 09, 11, 21, 23, "Donec quis orci eget orci vehicula condimentum.Curabitur in libero ut massa volutpat convallis.", 714, 16)]
-        //wrong year, the right one is 2036
-        [DataRow(350, 2500, 05, 05, 21, 27, 25, "Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh. In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet. Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam.", 65, 825)]
-        //wrong userId, the right one is 347
-        [DataRow(500, 2020, 09, 11, 14, 53, 18, "Nulla nisl. Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo. Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros.", 226, 350)]
+        //Testing +1 to id.
+        [DataRow(2, 2036, 11, 09, 11, 21, 23, "Donec quis orci eget orci vehicula condimentum.Curabitur in libero ut massa volutpat convallis.", 714, 16)]
+        //Testing -1 to all values, except id. Also changed the strings and flipped the bool.
+        [DataRow(350, 2034, 04, 04, 20, 26, 24, "mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh. In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet. Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam.", 64, 824)]
+        //Testing +1 to all values, except id. Also changed the strings and flipped the bool.
+        [DataRow(350, 2037, 07, 07, 23, 29, 26, "mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh. In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet. Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam.", 66, 826)]
+        //Testing -1 to id.
+        [DataRow(499, 2020, 09, 11, 14, 53, 18, "Nulla nisl. Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo. Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros.", 226, 347)]
+        //Testing +1 to id.
+        [DataRow(501, 2020, 09, 11, 14, 53, 18, "Nulla nisl. Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo. Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros.", 226, 347)]
         public void BuildCommentTestNegative(int expectedId, int expectedDateCreatedYear, int expectedDateCreatedMonth, 
                                              int expectedDateCreatedDay, int expectedDateCreatedHour, int expectedDateCreatedMinute, 
                                              int expectedDateCreatedSecond, string expectedText, int expectedPostId, int expectedUserId)
@@ -324,6 +335,10 @@ namespace Solvr.Test.DataAccesLayer
             int actualUserId = actualComment.UserId;
 
             //Assert
+            if (expectedId != 350)
+            {
+                AssertAreNotEqualWithMsg(expectedId, actualId, "id");
+            }
             AssertAreNotEqualWithMsg(expectedId, actualId, "id");
             AssertAreNotEqualWithMsg(expectedDateCreated, actualDateCreated, "dateCreated");
             AssertAreNotEqualWithMsg(expectedText, actualText, "text");
@@ -432,9 +447,12 @@ namespace Solvr.Test.DataAccesLayer
         }
 
         [TestMethod]
-        [DataRow(55, false, 275, 70)]    //Wrong id, right one is 1
-        [DataRow(509, false, 155, 766)]  //Wrong isUpvoted, right one is true
-        [DataRow(1000, false, 48, 540)]  //Wrong userId, right one is 47 
+        [DataRow(2, false, 275, 70)]        //Testing +1 to id.
+        [DataRow(0, false, 275, 70)]        //Testing -1 to id.
+        [DataRow(509, false, 156, 767)]     //Testing +1 to all values, except id. Also changed the strings and flipped the bool.
+        [DataRow(509, false, 154, 764)]     //Testing -1 to all values, except id. Also changed the strings and flipped the bool.
+        [DataRow(1001, false, 47, 540)]     //Testing +1 to id.
+        [DataRow(999, false, 47, 540)]      //Testing -1 to id.
         public void BuildVoteTestNegative(int expectedId, bool expectedIsUpvoted, int expectedUserId, int expecteCommentId)
         {
             //Prepare
@@ -448,7 +466,10 @@ namespace Solvr.Test.DataAccesLayer
             int actualCommentId = actualVote.CommentId;
 
             //Assert
-            AssertAreNotEqualWithMsg(expectedId, actualId, "id");
+            if (expectedId != 509)
+            {
+                AssertAreEqualWithMsg(expectedId, actualId, "id");
+            }
             AssertAreNotEqualWithMsg(expectedIsUpvoted, actualIsUpvoted, "isUpvoted");
             AssertAreNotEqualWithMsg(expectedUserId, actualUserId, "userId");
             AssertAreNotEqualWithMsg(expecteCommentId, actualCommentId, "commentId");
@@ -502,12 +523,18 @@ namespace Solvr.Test.DataAccesLayer
         }
 
         [TestMethod]
-        //Wrong isLocked, right one is false
-        [DataRow(1, "Print On Demand", "Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit.|2025, 09, 26, 11, 56, 51|2025, 09, 26, 11, 56, 51|451|535|false|Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus. Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis. Duis consequat dui nec nisi volutpat eleifend.", 2025, 09, 26, 11, 56, 51, 2025, 09, 26, 11, 56, 51, 451, 535, true, "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus. Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis. Duis consequat dui nec nisi volutpat eleifend.", 555, "atvej 15")]
-        //Wrong altDescription, right one is a period at the end.
-        [DataRow(362, "Nunc rhoncus dui vel sem. Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus. Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.", 2028, 04, 10, 13, 58, 10, 2028, 04, 10, 13, 58, 10, 639, 10, false, "Nunc rhoncus dui vel sem. Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus. Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus", 2858, "antevej 748")]
-        //Wrong zipcode, right one is 8401
-        [DataRow(500, "Sports Coaching", "Aenean lectus.", 2028, 01, 02, 08, 56, 40, 2028, 01, 02, 08, 56, 40, 658, 875, true, "Etiam vel augue.Vestibulum rutrum rutrum neque.", 8400, "accumsanvej 80")]
+        //Testing -1 to id.
+        [DataRow(0, "Print On Demand", "Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit.|2025, 09, 26, 11, 56, 51|2025, 09, 26, 11, 56, 51|451|535|false|Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus. Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis. Duis consequat dui nec nisi volutpat eleifend.", 2025, 09, 26, 11, 56, 51, 2025, 09, 26, 11, 56, 51, 451, 535, false, "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus. Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis. Duis consequat dui nec nisi volutpat eleifend.", 555, "atvej 15")]
+        //Testing +1 to id.
+        [DataRow(2, "Print On Demand", "Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit.|2025, 09, 26, 11, 56, 51|2025, 09, 26, 11, 56, 51|451|535|false|Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus. Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis. Duis consequat dui nec nisi volutpat eleifend.", 2025, 09, 26, 11, 56, 51, 2025, 09, 26, 11, 56, 51, 451, 535, false, "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus. Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis. Duis consequat dui nec nisi volutpat eleifend.", 555, "atvej 15")]
+        //Testing +1 to all values, except id. Also changed the strings and flipped the bool.
+        [DataRow(362, "Nunc rhoncus dui vel sem. Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus. Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus", 2028, 04, 10, 13, 58, 10, 2028, 04, 10, 13, 58, 10, 639, 10, false, "Nunc rhoncus dui vel sem. Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus. Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus", 2858, "antevej748")]
+        //Testing -1 to all values, except id. Also changed the strings and flipped the bool.
+        [DataRow(362, "nunc rhoncus dui vel sem. Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus. Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.", 2028, 04, 10, 13, 58, 10, 2028, 04, 10, 13, 58, 10, 639, 10, false, "nunc rhoncus dui vel sem. Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus. Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus", 2858, "Antevej 748")]
+        //Testing +1 to id.
+        [DataRow(501, "Sports Coaching", "Aenean lectus.", 2028, 01, 02, 08, 56, 40, 2028, 01, 02, 08, 56, 40, 658, 875, true, "Etiam vel augue.Vestibulum rutrum rutrum neque.", 8401, "accumsanvej 80")]
+        //Testing -1 to id.
+        [DataRow(499, "Sports Coaching", "Aenean lectus.", 2028, 01, 02, 08, 56, 40, 2028, 01, 02, 08, 56, 40, 658, 875, true, "Etiam vel augue.Vestibulum rutrum rutrum neque.", 8401, "accumsanvej 80")]
         public void BuildPhysicalPostTestNegative(int expectedId, string expectedTitle, string expectedDescription,
                                                   int expectedBumpTimeYear, int expectedBumpTimeMonth, int expectedBumpTimeDay,
                                                   int expectedBumpTimeHour, int expectedBumpTimeMinute, int expectedBumpTimeSecond,
@@ -538,7 +565,10 @@ namespace Solvr.Test.DataAccesLayer
             string actualAdress = actualPhysicalPost.Address;
 
             //Assert
-            AssertAreNotEqualWithMsg(expectedId, actualId, "id");
+            if (expectedId != 362)
+            {
+                AssertAreNotEqualWithMsg(expectedId, actualId, "id");
+            }
             AssertAreNotEqualWithMsg(expectedTitle, actualTitle, "title");
             AssertAreNotEqualWithMsg(expectedDateCreated, actualDateCreated, "dateCreated");
             AssertAreNotEqualWithMsg(expectedBumpTime, actualBumpTime, "bumpTime");
@@ -588,42 +618,51 @@ namespace Solvr.Test.DataAccesLayer
         }
 
         [TestMethod]
-        //Wrong id, right one is 1
+        //Testing -1 to id.
+        [DataRow(0, "massa tempor convallis nulla neque", "Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique.", 2019, 07, 24, 21, 48, 58, 337, 831, 158)]
+        //Testing +1 to id.
         [DataRow(2, "massa tempor convallis nulla neque", "Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique.", 2019, 07, 24, 21, 48, 58, 337, 831, 158)]
-        //Wrong Title, right one is "eget rutrum"
-        [DataRow(847, "egetrutrum", "Aenean fermentum.", 2036, 12, 10, 15, 23, 35, 946, 14, 765)]
-        //Wtong Description, right one starts with captial D
-        [DataRow(1000, "ullamcorper augue a suscipit nulla", "duis mattis egestas metus. Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh. Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.", 2030, 02, 07, 17, 12, 05, 928, 778, 958)]
+        //Testing -1 to all values, except id. Also changed the strings and flipped the bool.
+        [DataRow(847, "egetrutrum", "Aeneanfermentum.", 2035, 11, 9, 14, 22, 34, 945, 13, 764)]
+        //Testing +1 to all values, except id. Also changed the strings and flipped the bool.
+        [DataRow(847, "eget rutrum ", "Aenean fermentum. ", 2037, 13, 11, 16, 24, 36, 947, 15, 766)]
+        //Testing -1 to id.
+        [DataRow(999, "ullamcorper augue a suscipit nulla", "Duis mattis egestas metus. Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh. Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.", 2030, 02, 07, 17, 12, 05, 928, 778, 958)]
+        //Testing +1 to id.
+        [DataRow(1001, "ullamcorper augue a suscipit nulla", "Duis mattis egestas metus. Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh. Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.", 2030, 02, 07, 17, 12, 05, 928, 778, 958)]
         public void BuildReportTestNegative(int expectedId, string expectedTitle, string expectedDescription,
                                             int expectedDateCreatedYear, int expectedDateCreatedMonth, int expectedDateCreatedDay,
                                             int expectedDateCreatedHour, int expectedDateCreatedMinute, int expectedDateCreatedSecond,
                                             int expectedUserId, int expectedCommentId, int expectedPostId, string expectedReportType)
-                                    {
-                                        //Prepare
-                                        ModelBuilder modelBuilder = new ModelBuilder();
-                                        DateTime expectedDateCreated = new DateTime(expectedDateCreatedYear, expectedDateCreatedMonth, expectedDateCreatedDay, expectedDateCreatedHour, expectedDateCreatedMinute, expectedDateCreatedSecond);
+        {
+            //Prepare
+            ModelBuilder modelBuilder = new ModelBuilder();
+            DateTime expectedDateCreated = new DateTime(expectedDateCreatedYear, expectedDateCreatedMonth, expectedDateCreatedDay, expectedDateCreatedHour, expectedDateCreatedMinute, expectedDateCreatedSecond);
 
-                                        //Act
-                                        Report actualReport = modelBuilder.BuildReport(expectedId);
-                                        int actualId = actualReport.Id;
-                                        string actualTitle = actualReport.Title;
-                                        string actualDesription = actualReport.Description;
-                                        DateTime actualDateCreated = actualReport.DateCreated;
-                                        int actualUserId = actualReport.UserId;
-                                        int actualCommentId = actualReport.CommentId;
-                                        int actualPostId = actualReport.PostId;
-                                        string actualReportType = actualReport.ReportType;
+            //Act
+            Report actualReport = modelBuilder.BuildReport(expectedId);
+            int actualId = actualReport.Id;
+            string actualTitle = actualReport.Title;
+            string actualDesription = actualReport.Description;
+            DateTime actualDateCreated = actualReport.DateCreated;
+            int actualUserId = actualReport.UserId;
+            int actualCommentId = actualReport.CommentId;
+            int actualPostId = actualReport.PostId;
+            string actualReportType = actualReport.ReportType;
 
-                                        //Assert
-                                        AssertAreNotEqualWithMsg(expectedId, actualId, "id");
-                                        AssertAreNotEqualWithMsg(expectedTitle, actualTitle, "title");
-                                        AssertAreNotEqualWithMsg(expectedDescription, actualDesription, "description");
-                                        AssertAreNotEqualWithMsg(expectedDateCreated, actualDateCreated, "dateCreated");
-                                        AssertAreNotEqualWithMsg(expectedUserId, actualUserId, "userId");
-                                        AssertAreNotEqualWithMsg(expectedCommentId, actualCommentId, "commentId");
-                                        AssertAreNotEqualWithMsg(expectedPostId, actualPostId, "postId");
-                                        AssertAreNotEqualWithMsg(expectedReportType, actualReportType, "reportType");
-                                    }
+            //Assert
+            if (expectedId != 847)
+                {
+                    AssertAreNotEqualWithMsg(expectedId, actualId, "id");
+                }
+            AssertAreNotEqualWithMsg(expectedTitle, actualTitle, "title");
+            AssertAreNotEqualWithMsg(expectedDescription, actualDesription, "description");
+            AssertAreNotEqualWithMsg(expectedDateCreated, actualDateCreated, "dateCreated");
+            AssertAreNotEqualWithMsg(expectedUserId, actualUserId, "userId");
+            AssertAreNotEqualWithMsg(expectedCommentId, actualCommentId, "commentId");
+            AssertAreNotEqualWithMsg(expectedPostId, actualPostId, "postId");
+            AssertAreNotEqualWithMsg(expectedReportType, actualReportType, "reportType");
+        }
 
         [TestMethod]
         [DataRow(1, 2036, 11, 09, 11, 21, 23, "Donec quis orci eget orci vehicula condimentum.Curabitur in libero ut massa volutpat convallis.", 714, 16, 142, "Etiam pretium iaculis justo.In hac habitasse platea dictumst.Etiam faucibus cursus urna.Ut tellus.Nulla ut erat id mauris vulputate elementum.Nullam varius.Nulla facilisi.", 714, 166)]
@@ -679,12 +718,18 @@ namespace Solvr.Test.DataAccesLayer
 
 
         [TestMethod]
-        //Wrong day, right one is 09
-        [DataRow(1, 2036, 11, 08, 11, 21, 23, "Donec quis orci eget orci vehicula condimentum.Curabitur in libero ut massa volutpat convallis.", 714, 16, 142, "Etiam pretium iaculis justo.In hac habitasse platea dictumst.Etiam faucibus cursus urna.Ut tellus.Nulla ut erat id mauris vulputate elementum.Nullam varius.Nulla facilisi.", 714, 166)]
-        //Wrong text, right one starts with capital M
-        [DataRow(350, 2036, 05, 05, 21, 27, 25, "mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh. In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet. Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam.", 65, 825)]
-        //Wrong userId, right one is 347
-        [DataRow(500, 2020, 09, 11, 14, 53, 18, "Nulla nisl. Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo. Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros.", 226, 346)]
+        //Testing -1 to id
+        [DataRow(0, 2036, 11, 09, 11, 21, 23, "Donec quis orci eget orci vehicula condimentum.Curabitur in libero ut massa volutpat convallis.", 714, 16, 142, "Etiam pretium iaculis justo.In hac habitasse platea dictumst.Etiam faucibus cursus urna.Ut tellus.Nulla ut erat id mauris vulputate elementum.Nullam varius.Nulla facilisi.", 714, 166)]
+        //Testing +1 to id
+        [DataRow(2, 2036, 11, 09, 11, 21, 23, "Donec quis orci eget orci vehicula condimentum.Curabitur in libero ut massa volutpat convallis.", 714, 16, 142, "Etiam pretium iaculis justo.In hac habitasse platea dictumst.Etiam faucibus cursus urna.Ut tellus.Nulla ut erat id mauris vulputate elementum.Nullam varius.Nulla facilisi.", 714, 166)]
+        //Testing -1 to all values, except id. Also changed the strings and flipped the bool.
+        [DataRow(350, 2035, 04, 04, 20, 26, 24, "mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh. In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet. Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam.", 64, 824)]
+        //Testing +1 to all values, except id. Also changed the strings and flipped the bool.
+        [DataRow(350, 2037, 06, 06, 22, 28, 26, "mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh. In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet. Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam", 66, 826)]
+        //Testing -1 to id
+        [DataRow(499, 2020, 09, 11, 14, 53, 18, "Nulla nisl. Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo. Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros.", 226, 347)]
+        //Testing +1 to id
+        [DataRow(501, 2020, 09, 11, 14, 53, 18, "Nulla nisl. Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo. Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros.", 226, 347)]
         public void BuildCommentListTestNegative(int expectedId, int expectedDateCreatedYear, int expectedDateCreatedMonth,
                                                  int expectedDateCreatedDay, int expectedDateCreatedHour, int expectedDateCreatedMinute,
                                                  int expectedDateCreatedSecond, string expectedText, int expectedPostId, int expectedUserId,
@@ -718,7 +763,10 @@ namespace Solvr.Test.DataAccesLayer
                 int actualUserId2 = actualComment2.UserId;
 
                 //Assert
-                AssertAreEqualWithMsg(expectedId2, actualId2, "id");
+                if (expectedId != 350)
+                {
+                    AssertAreEqualWithMsg(expectedId2, actualId2, "id");
+                }
                 AssertAreEqualWithMsg(expectedDateCreated2, actualDateCreated2, "dateCreated");
                 AssertAreEqualWithMsg(expectedText2, actualText2, "text");
                 AssertAreEqualWithMsg(expectedPostId2, actualPostId2, "postId");
@@ -726,7 +774,10 @@ namespace Solvr.Test.DataAccesLayer
             }
 
             //Assert
-            AssertAreEqualWithMsg(expectedId, actualId, "id");
+            if (expectedId != 350)
+            {
+                AssertAreEqualWithMsg(expectedId, actualId, "id");
+            }
             AssertAreEqualWithMsg(expectedDateCreated, actualDateCreated, "dateCreated");
             AssertAreEqualWithMsg(expectedText, actualText, "text");
             AssertAreEqualWithMsg(expectedPostId, actualPostId, "postId");
@@ -800,14 +851,22 @@ namespace Solvr.Test.DataAccesLayer
             AssertAreEqualWithMsg(expectedTimeAccepted, actualTimeAccepted, "timeAccepted");
         }
 
-
         [TestMethod]
-        //Wrong userid, right one is 635
-        [DataRow(1, 2022, 05, 12, 21, 06, 16, "Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit. Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.", 52, 892, 2019, 06, 15, 15, 02, 42, false, 113, 2022, 02, 19, 01, 24, 45, "Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue.Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi.", 636, 892, 2025, 07, 12, 17, 24, 45, true)]
-        //Wrong year, right one is 2033
-        [DataRow(404, 2032, 10, 02, 00, 25, 04, "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo. Etiam pretium iaculis justo. In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus. Nulla ut erat id mauris vulputate elementum. Nullam varius.", 454, 307, 2028, 02, 19, 14, 54, 22, true)]
-        //Wrong second, right one is 24
-        [DataRow(500, 2029, 12, 13, 10, 22, 23, "In quis justo.Maecenas rhoncus aliquam lacus.Morbi quis tortor id nulla ultrices aliquet.Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo.Pellentesque viverra pede ac diam.", 627, 852, 2036, 02, 22, 05, 49, 38, true, 2035, 12, 22, 00, 47, 51, "Nulla justo.Aliquam quis turpis eget elit sodales scelerisque.Mauris sit amet eros.Suspendisse accumsan tortor quis turpis.Sed ante.Vivamus tortor.Duis mattis egestas metus.Aenean fermentum.Donec ut mauris eget massa tempor convallis.", 875, 852, 2025, 03, 10, 02, 16, 23, true)]
+        //Testing -1 to id
+        [DataRow(0, 2022, 05, 12, 21, 06, 16, "Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit. Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.", 52, 892, 2019, 06, 15, 15, 02, 42, false, 113, 2022, 02, 19, 01, 24, 45, "Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue.Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi.", 635, 892, 2025, 07, 12, 17, 24, 45, true)]
+        //Testing +1 to id
+        [DataRow(1, 2022, 05, 12, 21, 06, 16, "Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit. Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.", 52, 892, 2019, 06, 15, 15, 02, 42, false, 113, 2022, 02, 19, 01, 24, 45, "Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue.Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi.", 635, 892, 2025, 07, 12, 17, 24, 45, true)]
+
+        //Testing -1 to all values, except id. Also changed the strings and flipped the bool.
+        [DataRow(404, 2032, 9, 01, -1, 24, 03, "vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo. Etiam pretium iaculis justo. In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus. Nulla ut erat id mauris vulputate elementum. Nullam varius.", 453, 306, 2027, 01, 18, 13, 53, 21, false)]
+        //Testing +1 to all values, except id. Also changed the strings and flipped the bool.
+        [DataRow(404, 2034, 11, 03, 01, 26, 05, "vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo. Etiam pretium iaculis justo. In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus. Nulla ut erat id mauris vulputate elementum. Nullam varius.", 455, 308, 2029, 03, 20, 15, 55, 23, false)]
+        //Testing -1 to id
+        [DataRow(499, 2029, 12, 13, 10, 22, 24, "In quis justo.Maecenas rhoncus aliquam lacus.Morbi quis tortor id nulla ultrices aliquet.Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo.Pellentesque viverra pede ac diam.", 627, 852, 2036, 02, 22, 05, 49, 38, true, 2035, 12, 22, 00, 47, 51, "Nulla justo.Aliquam quis turpis eget elit sodales scelerisque.Mauris sit amet eros.Suspendisse accumsan tortor quis turpis.Sed ante.Vivamus tortor.Duis mattis egestas metus.Aenean fermentum.Donec ut mauris eget massa tempor convallis.", 875, 852, 2025, 03, 10, 02, 16, 23, true)]
+        //Testing +1 to id
+        [DataRow(501, 2029, 12, 13, 10, 22, 24, "In quis justo.Maecenas rhoncus aliquam lacus.Morbi quis tortor id nulla ultrices aliquet.Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo.Pellentesque viverra pede ac diam.", 627, 852, 2036, 02, 22, 05, 49, 38, true, 2035, 12, 22, 00, 47, 51, "Nulla justo.Aliquam quis turpis eget elit sodales scelerisque.Mauris sit amet eros.Suspendisse accumsan tortor quis turpis.Sed ante.Vivamus tortor.Duis mattis egestas metus.Aenean fermentum.Donec ut mauris eget massa tempor convallis.", 875, 852, 2025, 03, 10, 02, 16, 23, true)]
+
+
         public void BuildSolvrCommentListTestNegative(int expectedId, int expectedDateCreatedYear, int expectedDateCreatedMonth,
                                                       int expectedDateCreatedDay, int expectedDateCreatedHour, int expectedDateCreatedMinute,
                                                       int expectedDateCreatedSecond, string expectedText, int expectedUserId, int expectedPostId,
@@ -852,7 +911,10 @@ namespace Solvr.Test.DataAccesLayer
                 DateTime actualTimeAccepted2 = actualSolvrComment2.TimeAccepted;
 
                 //Assert
-                AssertAreEqualWithMsg(expectedId2, actualId2, "id");
+                if (expectedId != 404)
+                {
+                    AssertAreEqualWithMsg(expectedId2, actualId2, "id");
+                }
                 AssertAreEqualWithMsg(expectedDateCreated2, actualDateCreated2, "dateCreated");
                 AssertAreEqualWithMsg(expectedText2, actualText2, "text");
                 AssertAreEqualWithMsg(expectedPostId2, actualPostId2, "postId");
@@ -862,7 +924,10 @@ namespace Solvr.Test.DataAccesLayer
             }
 
             //Assert
-            AssertAreEqualWithMsg(expectedId, actualId, "id");
+            if (expectedId != 404)
+            {
+                AssertAreEqualWithMsg(expectedId, actualId, "id");
+            }
             AssertAreEqualWithMsg(expectedDateCreated, actualDateCreated, "dateCreated");
             AssertAreEqualWithMsg(expectedText, actualText, "text");
             AssertAreEqualWithMsg(expectedPostId, actualPostId, "postId");
@@ -932,12 +997,18 @@ namespace Solvr.Test.DataAccesLayer
         }
 
         [TestMethod]
-        //Testing +1 to all values except commentId. Also flipped bools values.
-        [DataRow(2, true, 276, 71, 413, true, 220, 70)]
+        //Testing -1 to id
+        [DataRow(0, false, 275, 70, 412, false, 219, 69)]
+        //Testing +1 to id
+        [DataRow(2, false, 275, 70, 412, false, 219, 69)]
         //Testing -1 to all values except commentId. Also flipped bools values.
-        [DataRow(508, false, 154, 765, 322, true, 45, 769)]
+        [DataRow(509, false, 154, 765, 322, true, 45, 769)]
+        //Testing +1 to all values except commentId. Also flipped bools values.
+        [DataRow(509, false, 156, 767, 324, true, 47, 771)]
         //Testing -1 to commentId.
-        [DataRow(1000, false, 47, 539, 406, true, 149, 539, 666, false, 292, 539)]
+        [DataRow(999, false, 47, 539, 406, true, 149, 539, 666, false, 292, 539)]
+        //Testing +1 to commentId.
+        [DataRow(1001, false, 47, 539, 406, true, 149, 539, 666, false, 292, 539)]
         public void BuildVoteListTestNegative(int expectedId, bool expectedIsUpvoted, int expectedUserId,
                                               int expectedCommentId, int expectedId2, bool expectedIsUpvoted2,
                                               int expectedUserId2, int expectedCommentId2, int expectedId3,
@@ -965,7 +1036,10 @@ namespace Solvr.Test.DataAccesLayer
                 int actualCommentId2 = actualVote2.CommentId;
 
                 //Assert
-                AssertAreEqualWithMsg(expectedId2, actualId2, "id");
+                if (expectedId != 509)
+                {
+                    AssertAreEqualWithMsg(expectedId2, actualId2, "id");
+                }
                 AssertAreEqualWithMsg(expectedIsUpvoted2, actualIsUpvoted2, "isUpvoted");
                 AssertAreEqualWithMsg(expectedUserId2, actualUserId2, "userId");
                 AssertAreEqualWithMsg(expectedCommentId2, actualCommentId2, "commentId");
@@ -981,14 +1055,20 @@ namespace Solvr.Test.DataAccesLayer
                 int actualCommentId3 = actualVote3.CommentId;
 
                 //Assert
-                AssertAreEqualWithMsg(expectedId3, actualId3, "id");
+                if (expectedId != 509)
+                {
+                    AssertAreEqualWithMsg(expectedId3, actualId3, "id");
+                }
                 AssertAreEqualWithMsg(expectedIsUpvoted3, actualIsUpvoted3, "isUpvoted");
                 AssertAreEqualWithMsg(expectedUserId3, actualUserId3, "userId");
                 AssertAreEqualWithMsg(expectedCommentId3, actualCommentId3, "commentId");
             }
 
             //Assert
-            AssertAreEqualWithMsg(expectedId, actualId, "id");
+            if (expectedId != 509)
+            {
+                AssertAreEqualWithMsg(expectedId, actualId, "id");
+            }
             AssertAreEqualWithMsg(expectedIsUpvoted, actualIsUpvoted, "isUpvoted");
             AssertAreEqualWithMsg(expectedUserId, actualUserId, "userId");
             AssertAreEqualWithMsg(expectedCommentId, actualCommentId, "commentId");
