@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataAccesLayer.ModelBuilds;
+using System;
 using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
@@ -10,14 +11,14 @@ namespace SolvrLibrary
     public class SolvrDB : DataContext, ISolvrDB
     {
         //Here are the tables for the project. These tables are in the database.
-        private Table<Post> Posts;
-        private Table<User> Users;
-        private Table<Comment> Comments;
-        private Table<Category> Categories;
-        private Table<Report> Reports;
-        private Table<SolvrComment> SolvrComments;
-        private Table<Vote> Votes;
-        private Table<PhysicalPost> PhysicalPosts;
+        public Table<Post> Posts { get; private set; }
+        public Table<User> Users { get; private set; }
+        public Table<Comment> Comments { get; private set; }
+        public Table<Category> Categories { get; private set; }
+        public Table<Report> Reports { get; private set; }
+        public Table<SolvrComment> SolvrComments { get; private set; }
+        public Table<Vote> Votes { get; private set; }
+        public Table<PhysicalPost> PhysicalPosts { get; private set; }
 
         /// <summary>
         /// Used to create a connection to the database through a connection string.
@@ -27,32 +28,37 @@ namespace SolvrLibrary
         public SolvrDB(string connection = "") : base(connection) { }
 
         //Queries after this:
-        public void CreatePhysicalPost(User expectedUser, string expectedTitle, string expectedDescription, Category expectedCategory, List<string> expectedTagsList, string expectedAltDescription, string expectedZipcode, string expectedAddress)
+        public Category GetCategory(int id)
         {
-            throw new NotImplementedException();
+            return new ModelBuilder().BuildCategory(id);
         }
 
-        public PhysicalPost GetLastPhysicalPost()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CreatePost(User expectedUser, string expectedPostTitle, string expectedPostDescription, Category expectedCategory, List<string> expectedTagsList)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Post GetLastPost()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Category> GetAllCategories()
+        public Category GetCategory(string name)
         {
             throw new NotImplementedException();
         }
 
         public void CreatePost(Post post)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreatePhysicalPost(PhysicalPost pPost)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Post GetPost(int id)
+        {
+            return new ModelBuilder().BuildPost<Post>(id);
+        }
+
+        public Post GetPost()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Category> GetAllCategories()
         {
             throw new NotImplementedException();
         }

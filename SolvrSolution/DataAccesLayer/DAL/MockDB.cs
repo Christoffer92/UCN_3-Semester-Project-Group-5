@@ -23,7 +23,7 @@ namespace SolvrLibrary
             post.Category = _category;
             post.Tags = _tagsList;
             post.AltDescription = _altDescription;
-            post.ZipCode = _zipcode;
+            post.Zipcode = _zipcode;
             post.Address = _address;
 
             MockDBContainer.Instance.AddPhysicalPost(post);
@@ -46,11 +46,6 @@ namespace SolvrLibrary
             MockDBContainer.Instance.AddPost(p);
         }
 
-        public Post GetLastPost()
-        {
-            return MockDBContainer.Instance.GetLastPost();
-        }
-
         public IEnumerable<Category> GetAllCategories()
         {
             return MockDBContainer.Instance.GetAllCategories();
@@ -58,7 +53,32 @@ namespace SolvrLibrary
 
         public void CreatePost(Post post)
         {
-            throw new NotImplementedException();
+            MockDBContainer.Instance.CreatePost(post);
+        }
+
+        public Category GetCategory(int id)
+        {
+            return MockDBContainer.Instance.GetCategory(id);
+        }
+
+        public Category GetCategory(string name)
+        {
+            return MockDBContainer.Instance.GetCategory(name);
+        }
+
+        public void CreatePhysicalPost(PhysicalPost pPost)
+        {
+            MockDBContainer.Instance.CreatePhysicalPost(pPost);
+        }
+
+        public Post GetPost(int id)
+        {
+            return MockDBContainer.Instance.GetPost(id);
+        }
+
+        public Post GetPost()
+        {
+            return MockDBContainer.Instance.GetPost();
         }
     }
 
@@ -106,7 +126,46 @@ namespace SolvrLibrary
             Votes = new List<Vote>();
             
         }
+        
 
+        #region Create methods
+        internal void CreatePost(Post post)
+        {
+            int counterId = 0;
+
+            foreach (Post item in Posts)
+            {
+                if (item.Id > counterId)
+                {
+                    counterId = item.Id;
+                }
+            }
+
+            post.Id = counterId + 1;
+
+            Posts.Add(post);
+        }
+
+        internal void CreatePhysicalPost(PhysicalPost pPost)
+        {
+            int counterId = 0;
+
+            foreach (PhysicalPost item in PhysicalPosts)
+            {
+                if (item.Id > counterId)
+                {
+                    counterId = item.Id;
+                }
+            }
+
+            pPost.Id = counterId + 1;
+
+            PhysicalPosts.Add(pPost);
+        }
+
+
+
+        #endregion
 
         #region Add methods
 
@@ -226,17 +285,12 @@ namespace SolvrLibrary
 
         #region Get methods
 
-        public PhysicalPost GetLastPhysicalPost()
+        internal PhysicalPost GetLastPhysicalPost()
         {
             return PhysicalPosts.Last();
         }
 
-        public Post GetLastPost()
-        {
-            return Posts.Last();
-        }
-
-        public List<Category> GetAllCategories()
+        internal List<Category> GetAllCategories()
         {
             //List<Category> CatList = new List<Category>();
 
@@ -259,6 +313,53 @@ namespace SolvrLibrary
             CatList.Add(cat2);
 
             return CatList;
+        }
+
+        internal Category GetCategory(int id)
+        {
+            Category cat = null;
+
+            foreach (Category item in Categories)
+            {
+                if (item.Id == id)
+                {
+                    cat = item;
+                }
+            }
+            return cat;
+        }
+
+        internal Category GetCategory(string name)
+        {
+            Category cat = null;
+
+            foreach (Category item in Categories)
+            {
+                if (item.Name == name)
+                {
+                    cat = item;
+                }
+            }
+            return cat;
+        }
+
+        internal Post GetPost(int id)
+        {
+            Post p = null;
+
+            foreach (Post item in Posts)
+            {
+                if (item.Id == id)
+                {
+                    p = item;
+                }
+            }
+            return p;
+        }
+
+        internal Post GetPost()
+        {
+            return Posts.Last();
         }
 
         #endregion
