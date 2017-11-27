@@ -22,3 +22,13 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.textarea-notresizeable {
+    resize: none;
+    max-width: inherit;
+    margin-left: 0%;
+}
+
+.reposition-buttonright {
+    margin-left: 632px;
+}

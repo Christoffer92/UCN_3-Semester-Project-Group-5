@@ -15,7 +15,7 @@ namespace SolvrLibrary
 
         public void CreatePhysicalPost(User _user, string _title, string _description, Category _category, List<string> _tagsList, string _altDescription, string _zipcode, string _address)
         {
-            PhysicalPost post = new PhysicalPost(/*Fill this constructoer when needed*/);
+            PhysicalPost post = new PhysicalPost(/*Fill this constructor when needed*/);
 
             post.User = _user;
             post.Title = _title;
@@ -36,14 +36,30 @@ namespace SolvrLibrary
 
         public void CreatePost(User expectedUser, string expectedPostTitle, string expectedPostDescription, Category expectedCategory, List<string> expectedTagsList)
         {
-            throw new NotImplementedException();
+            Post p = new Post();
+            p.User = expectedUser;
+            p.Title = expectedPostTitle;
+            p.Description = expectedPostDescription;
+            p.Category = expectedCategory;
+            p.Tags = expectedTagsList;
+
+            MockDBContainer.Instance.AddPost(p);
         }
 
         public Post GetLastPost()
         {
-            throw new NotImplementedException();
+            return MockDBContainer.Instance.GetLastPost();
         }
 
+        public IEnumerable<Category> GetAllCategories()
+        {
+            return MockDBContainer.Instance.GetAllCategories();
+        }
+
+        public void CreatePost(Post post)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     class MockDBContainer
@@ -90,6 +106,7 @@ namespace SolvrLibrary
             Votes = new List<Vote>();
             
         }
+
 
         #region Add methods
 
@@ -204,12 +221,7 @@ namespace SolvrLibrary
 
             Votes.Add(_vote);
         }
-
-        internal void getLastPhysicalPost()
-        {
-            throw new NotImplementedException();
-        }
-
+        
         #endregion
 
         #region Get methods
@@ -217,6 +229,36 @@ namespace SolvrLibrary
         public PhysicalPost GetLastPhysicalPost()
         {
             return PhysicalPosts.Last();
+        }
+
+        public Post GetLastPost()
+        {
+            return Posts.Last();
+        }
+
+        public List<Category> GetAllCategories()
+        {
+            //List<Category> CatList = new List<Category>();
+
+            //foreach (Category cat in Categories)
+            //{
+            //    CatList.Add(cat);
+            //}
+
+            List<Category> CatList = new List<Category>();
+
+            Category cat1 = new Category();
+            Category cat2 = new Category();
+
+            cat1.Name = "Computer";
+            cat1.Id = 2;
+            cat2.Name = "Garden";
+            cat2.Id = 3;
+
+            CatList.Add(cat1);
+            CatList.Add(cat2);
+
+            return CatList;
         }
 
         #endregion

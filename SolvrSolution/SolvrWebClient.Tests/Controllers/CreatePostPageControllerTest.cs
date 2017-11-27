@@ -73,13 +73,13 @@ namespace SolvrWebClient.Tests.Controllers
 
             User expectedUser = new User("Tester", "TT@DD.SS", "TestUser123", "TestPass");
 
-            Category expectedCategory = new Category("Name");
+            Category expectedCategory = new Category();
 
             var controller = new CreatePostController(_DB);
 
             // Act 
 
-            PhysicalPost actualPost = controller.CreatePhysicalPost(expectedUser, expectedTitle, expectedDescription, expectedCategory, expectedTags, expectedAltDescription, expectedZipcode, expectedAddress); // this method has to return the newly created object after its ID is set from the DB
+            PhysicalPost actualPost = controller.CreatePhysicalPostModel(expectedUser, expectedTitle, expectedDescription, expectedCategory, expectedTags, expectedAltDescription, expectedZipcode, expectedAddress); // this method has to return the newly created object after its ID is set from the DB
 
             DateTime expectedBumpTime = new DateTime();
 
@@ -175,7 +175,7 @@ namespace SolvrWebClient.Tests.Controllers
 
             User expectedUser = new User("Tester", "TT@DD.SS", "TestUser123", "TestPass");
 
-            Category expectedCategory = new Category("Name");
+            Category expectedCategory = new Category();
 
             var controller = new CreatePostController(_DB);
 
@@ -186,7 +186,7 @@ namespace SolvrWebClient.Tests.Controllers
 
             try
             {
-                controller.CreatePhysicalPost(expectedUser, expectedTitle, expectedDescription, expectedCategory, expectedTagsList, expectedAltDescription, expectedZipcode, expectedAddress); // this method has to return the newly created object after its ID is set from the DB
+                controller.CreatePhysicalPostModel(expectedUser, expectedTitle, expectedDescription, expectedCategory, expectedTagsList, expectedAltDescription, expectedZipcode, expectedAddress); // this method has to return the newly created object after its ID is set from the DB
 
             }
             catch (Exception)
@@ -235,13 +235,13 @@ namespace SolvrWebClient.Tests.Controllers
 
             User expectedUser = new User("Tester", "TT@DD.SS", "TestUser123", "TestPass");
 
-            Category expectedCategory = new Category("Name");
+            Category expectedCategory = new Category();
 
             var controller = new CreatePostController(_DB);
 
             // Act 
 
-            Post actualPost = controller.CreatePost(expectedUser, expectedPostTitle, expectedPostDescription, expectedCategory, expectedTags); // this method has to return the newly created object after its ID is set from the DB
+            Post actualPost = controller.CreatePostModel(expectedUser, expectedPostTitle, expectedPostDescription, expectedCategory, expectedTags); // this method has to return the newly created object after its ID is set from the DB
 
             DateTime expectedBumpTime = new DateTime();
 
@@ -308,7 +308,7 @@ namespace SolvrWebClient.Tests.Controllers
 
             User expectedUser = new User("Tester", "TT@DD.SS", "TestUser123", "TestPass");
 
-            Category expectedCategory = new Category("Name");
+            Category expectedCategory = new Category();
 
             var controller = new CreatePostController(_DB);
 
@@ -319,7 +319,7 @@ namespace SolvrWebClient.Tests.Controllers
 
             try
             {
-                controller.CreatePost(expectedUser, expectedPostTitle, expectedPostDescription, expectedCategory, expectedTagsList); // this method has to return the newly created object after its ID is set from the DB
+                controller.CreatePostModel(expectedUser, expectedPostTitle, expectedPostDescription, expectedCategory, expectedTagsList); // this method has to return the newly created object after its ID is set from the DB
             }
             catch (Exception)
             {
