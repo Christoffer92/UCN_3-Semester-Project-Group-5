@@ -96,7 +96,7 @@ namespace SolvrWebClient.Controllers
                     CreatePost(model);
                 }
             }
-            catch
+            catch(Exception e)
             {
                 //TODO: Print error message
                 return View();
