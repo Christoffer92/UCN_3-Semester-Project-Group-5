@@ -84,4 +84,17 @@ textarea {
     width: 250px;
 }
 
+#post-ReportBtn-Location {
+    position: relative;
+    display: inline-block;
+    min-width: 100px;
+    margin-left: 30%;
+}
+
+#post-CommentBtn-Location {
+    position: absolute;
+    width: 15px;
+    height: 5px;
+}
+
 

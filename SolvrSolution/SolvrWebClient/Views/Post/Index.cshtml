@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Post";
+}
+<h2>@ViewBag.Title</h2>
+
+<div>
+    @Html.Label("HeaderLabel", "HeaderText")
+    </div>
+<div>
+    @Html.TextArea("DescriptionArea", "Description", new { @readonly = "readonly" })
+    </div>
+
+    <input type="submit" name="Report" value="Report" id="post-ReportBtn-Location"/>
+
+@*using (Html.BeginForm("Post Comment", "Post", FormMethod.Post))
+{
+    <div>
+        <br />
+        @Html.TextArea("CommentArea", "Write a comment here...")
+    </div>
+    <input type="submit" name="Post Comment" value="Post Comment" class="Post-comment-buttonright"/>
+}*@
+
+<hr />
+
+
+
+
+

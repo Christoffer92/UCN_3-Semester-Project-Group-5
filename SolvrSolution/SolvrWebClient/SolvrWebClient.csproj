@@ -194,6 +194,7 @@
     <Compile Include="Controllers\CreatePostController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -264,6 +265,7 @@
     <Content Include="Views\Home\NotImplementedYet.cshtml" />
     <Content Include="Views\CreatePost\CreatePhysical.cshtml" />
     <Content Include="Views\CreatePost\Index.cshtml" />
+    <Content Include="Views\Post\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
