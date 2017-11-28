@@ -1,27 +1,44 @@
-﻿@{
-    ViewBag.Title = "Post";
-}
-<h2>@ViewBag.Title</h2>
+﻿<head>
+</head>
+<body>
+    @{
+        ViewBag.Title = "Post";
+    }
+    <h2>@ViewBag.Title</h2>
 
-<div>
-    @Html.Label("HeaderLabel", "HeaderText")
+    <div>
+        @Html.Label("HeaderLabel", "HeaderText")
     </div>
-<div>
-    @Html.TextArea("DescriptionArea", "Description", new { @readonly = "readonly" })
+    <div>
+        @Html.TextArea("DescriptionArea", "Post Description", 10, 0, new { @readonly = "readonly", @class = "post-TextArea-Standard" })
     </div>
 
-    <input type="submit" name="Report" value="Report" id="post-ReportBtn-Location"/>
+    <input type="submit" name="Report" value="Report" id="post-ReportPostBtn-Location" />
 
-@*using (Html.BeginForm("Post Comment", "Post", FormMethod.Post))
-{
     <div>
         <br />
-        @Html.TextArea("CommentArea", "Write a comment here...")
+        @Html.TextArea("PostCommentArea", "", 4, 0, new { @class = "post-TextArea-PostComment", placeholder = "Write a comment here..." })
     </div>
-    <input type="submit" name="Post Comment" value="Post Comment" class="Post-comment-buttonright"/>
-}*@
+    <input type="submit" name="Post Comment" value="Post Comment" id="post-comment-buttonright" />
 
-<hr />
+    <hr />
+    <div class="post-CommentBox-Standard">
+        <div>
+            <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
+            @Html.Label("", "User")
+        </div>
+        <div class="post-VoteFloat">
+            <img src="~/Content/Images/upvote-downvote.png" class="post-Vote" />
+            @Html.Label("", "0", new { @class = "post-VoteLabel" })
+            <img src="~/Content/Images/downvote.png" class="post-Vote" />
+        </div>    
+        <div class="post-CommentBox-TextArea">
+            @Html.TextArea("ViewCommentArea", "User comments inserted here", 5, 0, new { @readonly = "readonly", @class = "post-TextArea-View" })
+        </div>
+    </div>
+    <input type="submit" name="Post Comment" value="Report" id="post-ReportComment-buttonright" />
+
+</body>
 
 
 

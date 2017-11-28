@@ -16,13 +16,6 @@
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
-}
-
 
 /* Change the color of the navigation bar (Header) */
 .navbar {
@@ -84,17 +77,96 @@ textarea {
     width: 250px;
 }
 
-#post-ReportBtn-Location {
+#post-ReportPostBtn-Location {
     position: relative;
-    display: inline-block;
     min-width: 100px;
-    margin-left: 30%;
+    text-align: center;
 }
 
 #post-CommentBtn-Location {
-    position: absolute;
-    width: 15px;
-    height: 5px;
+    position: relative;
+    min-width: 100px;
+    text-align: center;
 }
 
+#post-ReportCommentBtn-Location{
+    position: relative;
+    min-width: 100px;
+    text-align: center;
+}
+
+.post-TextArea-Standard{
+    resize: none;
+    width: 80%;
+}
+
+.post-TextArea-PostComment{
+    resize: none;
+    width: 60%;
+}
+
+.post-TextArea-View{
+    resize: none;
+    width: 40%;
+}
+
+.post-CommentBox-TextArea{
+    float: none;
+    padding: 2px;
+    vertical-align: middle;
+    width: 220%;
+}
+
+.post-CommentBox-Standard{
+    float: none;
+    height: auto;
+    width: 80%;
+    margin: 0,3px;
+    padding: 5px;
+    border: double;
+    border-radius: 10px;
+}
+
+img.post-CommentAvatar {
+    object-fit: cover;
+    height: 64px;
+    width: 64px;
+    vertical-align: middle;
+    float: left;
+    padding: 5px;
+}
+
+/*img.post-Vote-Up{
+    padding: 2px;
+    height: 32px;
+    width: 32px;
+}
+
+img.post-Vote-Down{
+    padding: 2px;
+    height: 32px;
+    width: 32px;
+}*/
+
+img.post-Vote {
+    padding: 2px;
+    height: 32px;
+    width: 32px;
+}
+
+.post-VoteFloat{
+    float: right;
+    display: table;
+    margin-top: 1%;
+}
+
+.post-VoteFloat img {
+    vertical-align: middle;
+    display: table-cell;
+}
+
+.post-VoteLabel{
+    padding: 1px;
+    margin-left: 30%;
+}
 
