@@ -74,7 +74,7 @@ namespace DataAccesLayer.ModelBuilds
             var votes = new List<Vote>();
             foreach (var vote in voteQuery)
             {
-                votes.Add(BuildVote(commentId));
+                votes.Add(BuildVote(vote.Id));
             }
             return votes;
         }
@@ -169,7 +169,8 @@ namespace DataAccesLayer.ModelBuilds
                         UserId = Query.UserId,
                         User = BuildUser(Query.UserId),
                         IsAccepted = Query.IsAccepted,
-                        TimeAccepted = Query.TimeAccepted
+                        TimeAccepted = Query.TimeAccepted,
+                        PostId = Query.PostId
                     };
                 }
                 else
@@ -211,7 +212,10 @@ namespace DataAccesLayer.ModelBuilds
                     Id = Query.Id,
                     DateCreated = Query.DateCreated,
                     Description = Query.Description,
-                    Title = Query.Title
+                    Title = Query.Title,
+                    UserId = Query.UserId,
+                    PostId = Query.PostId,
+                    CommentId = Query.CommentId
                 };
                 switch (Query.ReportType)
                 {
