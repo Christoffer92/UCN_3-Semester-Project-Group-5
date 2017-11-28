@@ -40,12 +40,44 @@ namespace SolvrLibrary
 
         public void CreatePost(Post post)
         {
-            throw new NotImplementedException();
+            Posts.InsertOnSubmit(post);
+            SubmitChanges();
         }
 
         public void CreatePhysicalPost(PhysicalPost pPost)
         {
-            throw new NotImplementedException();
+            Posts.InsertOnSubmit(pPost);
+            SubmitChanges();
+        }
+
+        public void CreateCategory(Category category)
+        {
+            Categories.InsertOnSubmit(category);
+            SubmitChanges();
+        }
+
+        public void CreateComment(Comment comment)
+        {
+            Comments.InsertOnSubmit(comment);
+            SubmitChanges();
+        }
+
+        public void CreateSolvrComment(SolvrComment solvrComment)
+        {
+            Comments.InsertOnSubmit(solvrComment);
+            SubmitChanges(); 
+        }
+
+        public void CreateUser(User user)
+        {
+            Users.InsertOnSubmit(user);
+            SubmitChanges();
+        }
+
+        public void CreateVote(Vote vote)
+        {
+            Votes.InsertOnSubmit(vote);
+            SubmitChanges();
         }
 
         public Post GetPost(int id)
