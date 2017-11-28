@@ -16,12 +16,12 @@
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
+/* Set width on the form input elements since they're 100% wide by default
 input,
 select,
 textarea {
     max-width: 280px;
-}
+}*/
 
 
 /* Change the color of the navigation bar (Header) */
@@ -80,8 +80,29 @@ textarea {
     padding-top: 60px;
 }
 
-.btnCreatePost{
-    width: 250px;
+/* Standard colour for buttons */
+.standard-Btn-Colour {
+    background-color: rgba(2, 2, 2, 0.3);
+    outline-style: solid;
+    outline-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Location for SwitchBtn in Createpost and createphysical */
+.createPostPage-SwitchBtn-Location {
+    position: relative;
+    left: 80%;
+}
+
+/* Location for CreateBtn in Createpost and createphysical */
+.createPostPage-CreateBtn-Location {
+    position: relative;
+    width: 100%;
+}
+
+/*Size for text area in createpost page and createphysical*/
+.createPostPage-TextArea-Size {
+    resize: none;
+    width: 100%;
 }
 
 

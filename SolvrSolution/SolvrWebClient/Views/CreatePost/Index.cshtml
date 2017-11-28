@@ -7,7 +7,7 @@
 
 @* TODO: CSS classes for layout *@
 
-<input type="button" name="CreatePhysical" value="Create Physical post" onclick="location.href='@Url.Action("CreatePhysical", "CreatePost")'"/>
+<input type="button" class="standard-Btn-Colour btn createPostPage-SwitchBtn-Location" name="CreatePhysical" value="Create Physical post" onclick="location.href='@Url.Action("CreatePhysical", "CreatePost")'"/>
 
 @using (Html.BeginForm("Create", "CreatePost", FormMethod.Post))
 {
@@ -19,11 +19,14 @@
     </div>
     <div>
         <b>Description:</b> <br />
-        @Html.TextAreaFor(m => m.Description, 10, 100, new { @class = "textarea-notresizeable" })
+        @Html.TextAreaFor(m => m.Description, 10, 100, new { @class = "createPostPage-TextArea-Size" })
     </div>
     <div>
         <b>Tags:</b> <br />
-        @Html.TextAreaFor(m => m.TagsString, 1, 100, new { @class = "textarea-notresizeable" })
+        @Html.TextAreaFor(m => m.TagsString, 1, 100, new { @class = "createPostPage-TextArea-Size" })
     </div>
-    <input type="submit" name="Create" value="Create" class="reposition-buttonright" />
+    <br />
+    <input type="submit" name="Create" value="Create" class="createPostPage-CreateBtn-Location standard-Btn-Colour btn" />
+
+    
 }
