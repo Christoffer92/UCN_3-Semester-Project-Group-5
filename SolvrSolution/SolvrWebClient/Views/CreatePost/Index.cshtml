@@ -19,11 +19,11 @@
     </div>
     <div>
         <b>Description:</b> <br />
-        @Html.TextAreaFor(m => m.Description, 10, 100, new { @class = "createPostPage-TextArea-Size" })
+        @Html.TextAreaFor(m => m.Description, 10, 0, new { @class = "createPostPage-TextArea-Size" })
     </div>
     <div>
         <b>Tags:</b> <br />
-        @Html.TextAreaFor(m => m.TagsString, 1, 100, new { @class = "createPostPage-TextArea-Size" })
+        @Html.TextAreaFor(m => m.TagsString, 1, 0, new { @class = "createPostPage-TextArea-Size" })
     </div>
     <br />
     <input type="submit" name="Create" value="Create" class="createPostPage-CreateBtn-Location standard-Btn-Colour btn" />
