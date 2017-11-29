@@ -29,5 +29,7 @@ namespace SolvrWebClient.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<SolvrLibrary.Post> Posts { get; set; }
     }
 }

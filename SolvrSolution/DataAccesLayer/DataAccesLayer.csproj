@@ -43,6 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\ISolvrDB.cs" />
+    <Compile Include="DAL\MockDB.cs" />
+    <Compile Include="DAL\SolvrDB.cs" />
     <Compile Include="ModelBuilds\ModelBuilder.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
