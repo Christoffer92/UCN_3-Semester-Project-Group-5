@@ -15,7 +15,7 @@ namespace SolvrWebClient.Controllers
         ISolvrDB DB;
         public CreatePostController()
         {
-            DB = new MockDB();
+            DB = new SolvrDB();
         }
         public CreatePostController(ISolvrDB _DB)
         {
@@ -32,9 +32,9 @@ namespace SolvrWebClient.Controllers
         {
             Post p = new Post();
             p.Title = model.Title;
+            p.CategoryId = model.CategoryId;
             p.Description = model.Description;
-            p.Category = DB.GetCategory(model.CategoryId);
-            
+
             foreach (string item in model.TagsString.Split(' ', '#', ',', '.'))
             {
                 if (!item.Equals("") && !item.Equals("#") && !item.Equals(",") && !item.Equals("."))
@@ -44,6 +44,8 @@ namespace SolvrWebClient.Controllers
             }
             //TODO: Connect a user to this method
             //p.User = something goes here
+            p.User = DB.GetUser();
+            p.UserId = p.User.Id;
             
             return DB.CreatePost(p);
         }
@@ -97,7 +99,7 @@ namespace SolvrWebClient.Controllers
                     post = CreatePost(model);
                 }
             }
-            catch
+            catch (Exception e)
             {
                 //TODO: Print error message
                 return View();

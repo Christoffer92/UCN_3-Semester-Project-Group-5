@@ -80,6 +80,11 @@ namespace SolvrLibrary
         {
             return MockDBContainer.Instance.GetPost();
         }
+
+        public User GetUser()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     class MockDBContainer

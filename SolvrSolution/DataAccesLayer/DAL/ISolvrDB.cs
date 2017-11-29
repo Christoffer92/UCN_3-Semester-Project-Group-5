@@ -36,6 +36,7 @@ namespace SolvrLibrary
         /// </summary>
         /// <param name="post"></param>
         Post CreatePost(Post post);
+        
 
         /// <summary>
         /// Creates a Physical Post and inserts it into the database, by giving it a foreign physical post
@@ -56,6 +57,13 @@ namespace SolvrLibrary
         /// </summary>
         /// <returns>Post</returns>
         Post GetPost();
+
+
+        /// Returns the last user that was inserted into the database.
+        /// </summary>
+        /// <returns>User</returns>
+        User GetUser();
+
 
         /// <summary>
         /// Returns all Categories from the database
