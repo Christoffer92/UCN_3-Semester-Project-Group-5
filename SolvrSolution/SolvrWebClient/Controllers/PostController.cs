@@ -14,7 +14,7 @@ namespace SolvrWebClient.Controllers
 
         public PostController()
         {
-            DB = new MockDB();
+            DB = new SolvrDB();
         }
         public PostController(ISolvrDB _DB)
         {
