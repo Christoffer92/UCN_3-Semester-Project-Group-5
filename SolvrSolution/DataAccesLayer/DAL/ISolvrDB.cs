@@ -70,6 +70,10 @@ namespace SolvrLibrary
         /// </summary>
         /// <returns>List of Categories</returns>
         IEnumerable<Category> GetAllCategories();
+
+        //TODO summary here
         User GetUser(int userId);
+        IEnumerable<Comment> GetComments(int iD);
+        Comment CreateComment(Comment c);
     }
 }

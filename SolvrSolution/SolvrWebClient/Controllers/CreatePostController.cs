@@ -105,7 +105,7 @@ namespace SolvrWebClient.Controllers
                 //TODO: Print error message
                 return View();
             }
-            return RedirectToAction("Index", "Post", post);
+            return RedirectToAction("Index", "Post", new { ID = post.Id });
         }
 
         // GET: CreatePost/CreatePhysical

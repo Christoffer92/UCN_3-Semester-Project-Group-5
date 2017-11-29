@@ -90,6 +90,16 @@ namespace SolvrLibrary
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Comment> GetComments(int iD)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Comment CreateComment(Comment c)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     class MockDBContainer

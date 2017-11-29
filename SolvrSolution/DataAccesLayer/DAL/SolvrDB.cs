@@ -61,6 +61,18 @@ namespace SolvrLibrary
             return GetPhysicalPost(physicalPost.Id);
         }
 
+        public Comment CreateComment(Comment comment)
+        {
+            Comments.InsertOnSubmit(comment);
+            SubmitChanges();
+            return GetComment(comment.Id);
+        }
+
+        public Comment GetComment(int id)
+        {
+            return new ModelBuilder().BuildComment<Comment>(id);
+        }
+
         public Post GetPost(int id)
         {
             return new ModelBuilder().BuildPost<Post>(id);
@@ -97,5 +109,12 @@ namespace SolvrLibrary
         {
             return new ModelBuilder().BuildUser(id);
         }
+
+        public IEnumerable<Comment> GetComments(int postId)
+        {
+            return new ModelBuilder().BuildCommentList(postId);
+        }
+
+
     }
 }
