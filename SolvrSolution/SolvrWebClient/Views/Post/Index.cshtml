@@ -20,7 +20,7 @@
             <input type="button" name="Report" value="Report" class="post-Btn-Size btn" onclick="location.href='@Url.Action("NotImplementedYet", "Home")'"/> 
         </div>
         <div>
-            @Html.Label("", "29-11-2017", new { @class = "post-DateLabel" })
+            @Html.Label("", (string)ViewBag.DateCreated, new { @class = "post-DateLabel" })
             @*@Html.Label(m => m.Datecreated, new { @class = "post-DateLabel" })*@
         </div>
         <br />

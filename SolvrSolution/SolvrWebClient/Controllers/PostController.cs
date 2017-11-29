@@ -26,6 +26,7 @@ namespace SolvrWebClient.Controllers
             //Post post = DB.GetPost(ID);
             ViewBag.Title = post.Title;
             ViewBag.Description = post.Description;
+            ViewBag.DateCreated = post.DateCreated.ToShortDateString();
 
             return View();
         }
