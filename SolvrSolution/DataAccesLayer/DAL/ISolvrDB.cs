@@ -70,5 +70,6 @@ namespace SolvrLibrary
         /// </summary>
         /// <returns>List of Categories</returns>
         IEnumerable<Category> GetAllCategories();
+        User GetUser(int userId);
     }
 }

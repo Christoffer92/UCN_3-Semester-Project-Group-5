@@ -91,7 +91,7 @@ namespace DataAccesLayer.ModelBuilds
                     var Query = (from post in Context.Posts where post.Id == PrimaryKey select post).First();
                     List<string> Tags = new List<string>();
                     Tags.Add("TODO");
-                    
+
 
                     CreatedPost = (T)(object)new Post
                     {
@@ -104,6 +104,7 @@ namespace DataAccesLayer.ModelBuilds
                         Category = BuildCategory(Query.CategoryId),
                         Description = Query.Description,
                         UserId = Query.UserId,
+                        User = BuildUser(Query.UserId)
                     }; 
                 }
                 else if(typeof(T) == typeof(PhysicalPost))

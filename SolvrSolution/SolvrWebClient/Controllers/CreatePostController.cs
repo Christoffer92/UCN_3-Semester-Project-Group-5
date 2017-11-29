@@ -46,6 +46,7 @@ namespace SolvrWebClient.Controllers
             //p.User = something goes here
             p.User = DB.GetUser();
             p.UserId = p.User.Id;
+
             
             return DB.CreatePost(p);
         }

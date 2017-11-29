@@ -13,6 +13,11 @@
     @* View the post here *@
     <div class="post-Box-ViewPost-Standard">
         <div>
+            <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
+            @Html.Label("", (string)ViewBag.UserName, new { @readonly = "readonly" })
+            @*@Html.Label(m => m.Username)*@
+        </div>
+        <div>
            @Html.TextArea("DescriptionArea", (string)ViewBag.Description, 10, 0, new { @readonly = "readonly", @class = "post-TextArea-Standard" })
             @*@Html.TextArea(m => m.Description, 10, 0, new { @readonly = "readonly", @class = "post-TextArea-Standard" })*@
         </div>
@@ -46,8 +51,6 @@
             <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
             @Html.Label("", "User")
             @*@Html.Label(m => m.Username)*@
-
-            
         </div>
         <div class="post-VoteFloat">
             <img src="~/Content/Images/upvote-downvote.png" class="post-Vote" />
