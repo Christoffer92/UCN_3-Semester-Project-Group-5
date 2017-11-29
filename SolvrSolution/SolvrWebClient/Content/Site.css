@@ -102,26 +102,23 @@
     padding: 1px;
 }
 
+/*The standard text area size*/
 .post-TextArea-Standard{
     resize: none;
     width: 100%;
 }
 
-.post-TextArea-PostComment{
-    resize: none;
-    width: 100%;
-}
-
+/*The size of the textarea view*/
 .post-TextArea-View{
     resize: none;
-    width: 40%;
+    width: 88%;
 }
 
+/*A container for the textarea that doesn't float*/
 .post-CommentBox-TextArea{
     float: none;
     padding: 2px;
     vertical-align: middle;
-    width: 220%;
 }
 
 /*The box view for making a comment*/
@@ -131,8 +128,6 @@
     width: 60%;
     margin: 0,3px;
     padding: 5px;
-    border: double;
-    border-radius: 10px;
 }
 
 /*The box view for viewing a post*/
@@ -142,8 +137,6 @@
     width: 100%;
     margin: 0,3px;
     padding: 5px;
-    border: double;
-    border-radius: 10px;
 }
 
 /*The box view for Viewing a comment*/
@@ -190,5 +183,10 @@ img.post-Vote {
 .post-VoteLabel{
     padding: 1px;
     margin-left: 30%;
+}
+
+/*Label for datecreated*/
+.post-DateLabel {
+    padding: 1px;
 }
 
