@@ -16,6 +16,7 @@ namespace SolvrLibrary
         public Post()
         {
             Tags = new List<string>();
+            Comments = new List<Comment>();
             BumpTime = DateTime.Now;
             DateCreated = DateTime.Now;
         }

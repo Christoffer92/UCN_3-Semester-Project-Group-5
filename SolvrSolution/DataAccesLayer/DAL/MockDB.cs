@@ -27,6 +27,16 @@ namespace SolvrLibrary
 
         public void FillTestData()
         {
+            User user1 = new User()
+            {
+                Name = "Jens",
+                Id = 1,
+                Email = "hej@email.dk",
+                Password = "sdads",
+                Username = "user123"
+            };
+            CreateUser(user1);
+
             Category cat1 = new Category();
             cat1.Name = "Computer";
             CreateCategory(cat1);
@@ -64,8 +74,14 @@ namespace SolvrLibrary
 
         }
 
+
+
         #region create methods
 
+        private void CreateUser(User user)
+        {
+            MockDBContainer.Instance.AddUser(user);
+        }
         public void CreatePost(Post post)
         {
             MockDBContainer.Instance.AddPost(post);
@@ -144,10 +160,16 @@ namespace SolvrLibrary
             return MockDBContainer.Instance.GetCategory(id);
         }
 
+        public User GetUser(int id)
+        {
+            return MockDBContainer.Instance.GetUser(id);
+        }
+
         #endregion
 
     }
 
+    //-----------------------------------------------------------------------------------------------------------
     class MockDBContainer
     {
 
@@ -375,6 +397,20 @@ namespace SolvrLibrary
                 }
             }
             return cat;
+        }
+
+        internal User GetUser(int id)
+        {
+            User user = null;
+
+            foreach (User item in Users)
+            {
+                if (item.Id == id)
+                {
+                    user = item;
+                }
+            }
+            return user;
         }
 
         #endregion

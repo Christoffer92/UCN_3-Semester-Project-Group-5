@@ -22,6 +22,12 @@ namespace SolvrWebClient.Controllers
             DB = _DB;
         }
 
+        public User GetLoggedInUser()
+        {
+            return DB.GetUser(1);
+            //TODO: This is our hardcorded user. Need fixing when we do login logic.
+        }
+
         //CreatePost:
         //  Create a post with the following attributes from PostViewModel model.
         //  Also add the logged in user as the owner of the post.
@@ -43,8 +49,9 @@ namespace SolvrWebClient.Controllers
                 }
             }
             //TODO: Connect a user to this method
-            //p.User = something goes here
-            
+            //This is a temp fix.
+            p.UserId = GetLoggedInUser().Id;
+
             DB.CreatePost(p);
         }
 
@@ -73,6 +80,7 @@ namespace SolvrWebClient.Controllers
             p.Address = model.Address;
             //TODO: Connect a user to this method
             //p.User = something goes here
+            
 
             DB.CreatePhysicalPost(p);
         }
@@ -99,6 +107,7 @@ namespace SolvrWebClient.Controllers
             catch(Exception e)
             {
                 //TODO: Print error message
+                Console.WriteLine(e.Message);
                 return View();
             }
             return RedirectToAction("Index", "Post", model);

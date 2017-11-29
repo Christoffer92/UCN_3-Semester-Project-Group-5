@@ -62,5 +62,11 @@ namespace SolvrLibrary
         /// </summary>
         /// <returns>List of Categories</returns>
         IEnumerable<Category> GetAllCategories();
+
+        /// <summary>
+        /// Returns all Categories from the database
+        /// </summary>
+        /// <returns>List of Categories</returns>
+        User GetUser(int id);
     }
 }

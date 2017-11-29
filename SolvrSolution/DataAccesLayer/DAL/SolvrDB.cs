@@ -62,5 +62,9 @@ namespace SolvrLibrary
         {
             throw new NotImplementedException();
         }
+        public User GetUser(int id) 
+        {
+            return new ModelBuilder().BuildUser(id);
+        }
     }
 }
