@@ -17,6 +17,8 @@ namespace SolvrLibrary
         {
             BumpTime = DateTime.Now;
             DateCreated = DateTime.Now;
+            Tags = new List<string>();
+            Comments = new List<Comment>();
         }
 
         [Column(IsPrimaryKey = true, IsDbGenerated = true)]

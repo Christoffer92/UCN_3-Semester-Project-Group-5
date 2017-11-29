@@ -16,13 +16,6 @@
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
-}
-
 
 /* Change the color of the navigation bar (Header) */
 .navbar {
@@ -84,4 +77,116 @@ textarea {
     width: 250px;
 }
 
+#post-ReportPostBtn-Location {
+    position: relative;
+}
+
+#post-CommentBtn-Location {
+    position: relative;
+    min-width: 100px;
+    text-align: center;
+}
+
+.post-Btn-Size {
+    padding: 3px;
+}
+
+.post-BtnFloat input {
+    vertical-align: middle;
+    display: table-cell;
+}
+
+.post-BtnFloat {
+    float: right;
+    display: table;
+    padding: 1px;
+}
+
+/*The standard text area size*/
+.post-TextArea-Standard{
+    resize: none;
+    width: 100%;
+}
+
+/*The size of the textarea view*/
+.post-TextArea-View{
+    resize: none;
+    width: 88%;
+}
+
+/*A container for the textarea that doesn't float*/
+.post-CommentBox-TextArea{
+    float: none;
+    padding: 2px;
+    vertical-align: middle;
+}
+
+/*The box view for making a comment*/
+.post-Box-MakeComment-Standard {
+    float: none;
+    height: auto;
+    width: 60%;
+    margin: 0,3px;
+    padding: 5px;
+}
+
+/*The box view for viewing a post*/
+.post-Box-ViewPost-Standard {
+    float: none;
+    height: auto;
+    width: 100%;
+    margin: 0,3px;
+    padding: 5px;
+}
+
+/*The box view for Viewing a comment*/
+.post-Box-ViewComment-Standard {
+    float: none;
+    height: auto;
+    width: 80%;
+    margin: 0,3px;
+    padding: 5px;
+    border: double;
+    border-radius: 10px;
+}
+
+/*The standard size for the users avatar*/
+img.post-CommentAvatar {
+    object-fit: cover;
+    height: 64px;
+    width: 64px;
+    vertical-align: middle;
+    float: left;
+    padding: 5px;
+}
+
+/*All vote images have the same size and padding*/
+img.post-Vote {
+    padding: 2px;
+    height: 32px;
+    width: 32px;
+}
+
+/*A container that floats right with a distance of 1% from the top*/
+.post-VoteFloat{
+    float: right;
+    display: table;
+    margin-top: 1%;
+}
+
+/*All images in votefloat will be divided into table cells and aligned in the middle vertically*/
+.post-VoteFloat img {
+    vertical-align: middle;
+    display: table-cell;
+}
+/*Label between vote arrows*/
+.post-VoteLabel{
+    padding: 1px;
+    margin-left: 30%;
+}
+
+/*Label for datecreated*/
+.post-DateLabel {
+    padding: 1px;
+}
 

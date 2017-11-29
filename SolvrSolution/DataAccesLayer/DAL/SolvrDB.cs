@@ -47,12 +47,12 @@ namespace SolvrLibrary
             throw new NotImplementedException();
         }
 
-        public void CreatePost(Post post)
+        public Post CreatePost(Post post)
         {
             throw new NotImplementedException();
         }
 
-        public void CreatePhysicalPost(PhysicalPost pPost)
+        public PhysicalPost CreatePhysicalPost(PhysicalPost pPost)
         {
             throw new NotImplementedException();
         }
