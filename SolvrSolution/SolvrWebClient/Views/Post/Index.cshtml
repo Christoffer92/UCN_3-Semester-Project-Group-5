@@ -19,6 +19,10 @@
         <div class="post-BtnFloat">
             <input type="submit" name="Report" value="Report" class="post-Btn-Size btn" />
         </div>
+        <div>
+            @Html.Label("", "29-11-2017", new { @class = "post-DateLabel" })
+            @*@Html.Label(m => m.Datecreated, new { @class = "post-DateLabel" })*@
+        </div>
         <br />
      </div>
 
@@ -26,7 +30,7 @@
     <div class="post-Box-MakeComment-Standard">
         <div>
             <br />
-            @Html.TextArea("PostCommentArea", "", 4, 0, new { @class = "post-TextArea-PostComment", placeholder = "Write a comment here..." })
+            @Html.TextArea("PostCommentArea", "", 4, 0, new { @class = "post-TextArea-Standard", placeholder = "Write a comment here..." })
             @*@Html.TextArea(m => m.Text, 4, 0, new { @class = "post-TextArea-PostComment", placeholder = "Write a comment here..." })*@
         </div>
         <div class="post-BtnFloat">
@@ -42,6 +46,8 @@
             <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
             @Html.Label("", "User")
             @*@Html.Label(m => m.Username)*@
+
+            
         </div>
         <div class="post-VoteFloat">
             <img src="~/Content/Images/upvote-downvote.png" class="post-Vote" />
@@ -56,6 +62,8 @@
         <div class="post-BtnFloat">
             <input type="submit" name="Post Comment" value="Report" class="post-Btn-Size btn" />
         </div>
+        @Html.Label("", "29-11-2017", new { @class = "post-DateLabel" })
+        @*@Html.Label(m => m.Datecreated, new { @class = "post-DateLabel" })*@
         <br />
         <br />
     </div>
