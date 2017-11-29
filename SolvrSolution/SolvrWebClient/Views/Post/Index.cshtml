@@ -4,7 +4,7 @@
 </head>
 <body>
     @{
-        ViewBag.Title = "Post title";
+//ViewBag.Title = "Post title";
         @*ViewBag.Title(m => m.Title)*@
     }
     <h2>@ViewBag.Title</h2>
@@ -13,11 +13,11 @@
     @* View the post here *@
     <div class="post-Box-ViewPost-Standard">
         <div>
-            @Html.TextArea("DescriptionArea", "Post Description", 10, 0, new { @readonly = "readonly", @class = "post-TextArea-Standard" })
+           @Html.TextArea("DescriptionArea", (string)ViewBag.Description, 10, 0, new { @readonly = "readonly", @class = "post-TextArea-Standard" })
             @*@Html.TextArea(m => m.Description, 10, 0, new { @readonly = "readonly", @class = "post-TextArea-Standard" })*@
         </div>
         <div class="post-BtnFloat">
-            <input type="submit" name="Report" value="Report" class="post-Btn-Size btn" />
+            <input type="button" name="Report" value="Report" class="post-Btn-Size btn" onclick="location.href='@Url.Action("NotImplementedYet", "Home")'"/> 
         </div>
         <br />
      </div>

@@ -28,7 +28,7 @@ namespace SolvrWebClient.Controllers
         //  Tags:
         //      Adds an array of strings to the tag list by seperating them with the split function
         //      Space, hashtags, commas, and full stop will split the tag string up.
-        public void CreatePost(PostViewModel model)
+        public Post CreatePost(PostViewModel model)
         {
             Post p = new Post();
             p.Title = model.Title;
@@ -45,7 +45,7 @@ namespace SolvrWebClient.Controllers
             //TODO: Connect a user to this method
             //p.User = something goes here
             
-            DB.CreatePost(p);
+            return DB.CreatePost(p);
         }
 
         //CreatePhysicalPost:
@@ -89,11 +89,12 @@ namespace SolvrWebClient.Controllers
         [HttpPost]
         public ActionResult Create(PostViewModel model)
         {
+            Post post = null;
             try
             {
                 if (ModelState.IsValid)
                 {
-                    CreatePost(model);
+                    post = CreatePost(model);
                 }
             }
             catch
@@ -101,7 +102,7 @@ namespace SolvrWebClient.Controllers
                 //TODO: Print error message
                 return View();
             }
-            return RedirectToAction("Index", "Post", model);
+            return RedirectToAction("Index", "Post", post);
         }
 
         // GET: CreatePost/CreatePhysical
@@ -115,11 +116,14 @@ namespace SolvrWebClient.Controllers
         [HttpPost]
         public ActionResult CreatePhysical(PhysicalPostViewModel model)
         {
+            
             try
             {
+
                 if (ModelState.IsValid)
                 {
                     CreatePhysicalPost(model);
+
                 }
             }
             catch
