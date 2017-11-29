@@ -11,8 +11,8 @@ namespace DbHandler.Models
     {
         public static void InsertDataIntoDB()
         {
-            InsertUser();
             InsertCategory();
+            InsertUser();
             InsertPost();
             InsertComment();
             InsertPhysicalPost();
