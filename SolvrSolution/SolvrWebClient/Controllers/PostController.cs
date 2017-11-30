@@ -28,6 +28,7 @@ namespace SolvrWebClient.Controllers
             ViewBag.Description = post.Description;
             ViewBag.DateCreated = post.DateCreated.ToShortDateString();
             ViewBag.UserName = DB.GetUser(post.UserId).Username;
+            ViewBag.UserID = post.UserId;
 
             //sortere efter tid
             ViewBag.CommentList = DB.GetComments(ID).OrderBy(x => x.DateCreated).ToList();

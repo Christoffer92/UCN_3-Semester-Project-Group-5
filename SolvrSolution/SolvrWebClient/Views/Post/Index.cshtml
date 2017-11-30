@@ -16,7 +16,8 @@
     <div class="post-Box-ViewPost-Standard">
         <div>
             <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
-            @Html.Label("", (string)ViewBag.UserName, new { @readonly = "readonly" })
+            <a href="@Url.Action("NotImplementedYet", "Home", new { ID = ViewBag.UserId })">@ViewBag.UserName</a>
+            @*@Html.Label("", (string)ViewBag.UserName, new { @readonly = "readonly" })*@
             @*@Html.Label(m => m.Username)*@
         </div>
         <div>
@@ -27,6 +28,7 @@
             <input type="button" name="Report" value="Report" class="post-Btn-Size btn" onclick="location.href='@Url.Action("NotImplementedYet", "Home")'"/> 
         </div>
         <div>
+            @*@Html.Label("", (string)ViewBag.Tags, new { @class = "post-DateLabel" })*@
             @Html.Label("", (string)ViewBag.DateCreated, new { @class = "post-DateLabel" })
             @*@Html.Label(m => m.Datecreated, new { @class = "post-DateLabel" })*@
         </div>
@@ -58,7 +60,8 @@
         <div class="post-Box-ViewComment-Standard">
             <div>
                 <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
-                @Html.Label("", item.User.Username)
+                <a href="@Url.Action("NotImplementedYet", "Home", new { ID = item.UserId })">@item.User.Username</a>
+                @*@Html.Label("", item.User.Username)*@
                 @*@Html.Label(m => m.Username)*@
             </div>
             <div class="post-VoteFloat">
@@ -72,7 +75,7 @@
                 @*@Html.TextArea(m => m.Text, 5, 0, new { @readonly = "readonly", @class = "post-TextArea-View" })*@
             </div>
             <div class="post-BtnFloat">
-                <input type="submit" name="Post Comment" value="Report" class="post-Btn-Size btn" />
+                <input type="submit" name="Post Comment" value="Report" class="post-Btn-Size btn"  />
             </div>
             @Html.Label("", (item.DateCreated.ToShortTimeString() + " " + item.DateCreated.ToShortDateString()), new { @class = "post-DateLabel" })
             @*@Html.Label(m => m.Datecreated, new { @class = "post-DateLabel" })*@
