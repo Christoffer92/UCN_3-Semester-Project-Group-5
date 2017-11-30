@@ -88,13 +88,18 @@
                     @Html.Label("", item.User.Username)
                     @*@Html.Label(m => m.Username)*@
                 </div>
+                <div class="post-VoteFloat">
+                    <img src="~/Content/Images/upvote-downvote.png" class="post-Vote" />
+                    @Html.Label("", "0", new { @class = "post-VoteLabel" })
+                    @*@Html.Label(m => m.Votecount, new { @class = "post-VoteLabel" })*@
+                    <img src="~/Content/Images/downvote.png" class="post-Vote" />
+                </div>
                 <div class="post-CommentBox-TextArea">
                     @Html.TextArea("ViewCommentArea", item.Text, 5, 0, new { @readonly = "readonly", @class = "post-TextArea-View" })
                     @*@Html.TextArea(m => m.Text, 5, 0, new { @readonly = "readonly", @class = "post-TextArea-View" })*@
                 </div>
                 <div class="post-BtnFloat">
                     <input type="submit" name="Report Comment" value="Report" class="post-Btn-Size btn" />
-                    <input type="submit" name="Choose Solvr" value="Choose" class="post-Btn-Size btn" />
                 </div>
                 @Html.Label("", (item.DateCreated.ToShortTimeString() + " " + item.DateCreated.ToShortDateString()), new { @class = "post-DateLabel" })
                 @*@Html.Label(m => m.Datecreated, new { @class = "post-DateLabel" })*@
@@ -110,16 +115,13 @@
                     @Html.Label("", item.User.Username)
                     @*@Html.Label(m => m.Username)*@
                 </div>
-                <div class="post-VoteFloat">
-                    @Html.Label("", "0", new { @class = "post-VoteLabel" })
-                    @*@Html.Label(m => m.Votecount, new { @class = "post-VoteLabel" })*@
-                </div>
                 <div class="post-CommentBox-TextArea">
                     @Html.TextArea("ViewCommentArea", item.Text, 5, 0, new { @readonly = "readonly", @class = "post-TextArea-View" })
                     @*@Html.TextArea(m => m.Text, 5, 0, new { @readonly = "readonly", @class = "post-TextArea-View" })*@
                 </div>
                 <div class="post-BtnFloat">
                     <input type="submit" name="Report Comment" value="Report" class="post-Btn-Size btn" />
+                    <input type="submit" name="Choose Solvr" value="Choose" class="post-Btn-Size btn" />
                 </div>
                 @Html.Label("", (item.DateCreated.ToShortTimeString() + " " + item.DateCreated.ToShortDateString()), new { @class = "post-DateLabel" })
                 @*@Html.Label(m => m.Datecreated, new { @class = "post-DateLabel" })*@

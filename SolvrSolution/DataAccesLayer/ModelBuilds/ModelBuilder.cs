@@ -67,7 +67,11 @@ namespace DataAccesLayer.ModelBuilds
 
             foreach (var comment in SolvrCommentQuery)
             {
-                solvrCommentList.Add(BuildComment<SolvrComment>(comment.Id));
+                /*solvrCommentList.Add(BuildComment<SolvrComment>(comment.Id));*/
+                if (comment.CommentType.Equals("Solvr"))
+                {
+                    solvrCommentList.Add(BuildComment<SolvrComment>(comment.Id));
+                }
             }
 
             return solvrCommentList;
