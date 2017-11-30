@@ -8,100 +8,9 @@ namespace SolvrLibrary
 {
     public class MockDB : ISolvrDB
     {
-        static bool IsTestDataInserted = false;
-        public MockDB()
-
-        {
-            if (!IsTestDataInserted)
-            {
-                FillTestData();
-                IsTestDataInserted = true;
-            }         
-         
-        }
         public void CloseDB()
         {
-            IsTestDataInserted = false;
             MockDBContainer.Instance = null;
-        }
-
-        public void FillTestData()
-        {
-            User user1 = new User()
-            {
-                Name = "Jens",
-                Id = 1,
-                Email = "hej@email.dk",
-                Password = "sdads",
-                Username = "user123"
-            };
-            CreateUser(user1);
-
-            Category cat1 = new Category();
-            cat1.Name = "Computer";
-            CreateCategory(cat1);
-
-            Category cat2 = new Category();
-            cat2.Name = "Garden";
-            CreateCategory(cat2);
-
-            Post post1 = new Post();
-            post1.User = null;
-            post1.Category = cat1;
-            post1.Title = "Lorum borum";
-            post1.Description = "Lorum ispum lambbda Bamba.";
-            post1.Comments = new List<Comment>();
-            CreatePost(post1);
-
-            Post post2 = new Post();
-            post2.User = null;
-            post2.Category = cat2;
-            post2.Title = "Hyncatia Mortis";
-            post2.Description = "Hycantia is dying in winter, helpie pls.";
-            post2.Comments = new List<Comment>();
-            CreatePost(post2);
-
-            PhysicalPost ppost1 = new PhysicalPost();
-            ppost1.User = null;
-            ppost1.Category = cat2;
-            ppost1.Title = "GardenKArl";
-            ppost1.Description = "Need help for old bones to cut grass";
-            ppost1.Comments = new List<Comment>();
-            ppost1.AltDescription = "TESTEPGNEAGSEG";
-            ppost1.Address = "Hycanitvej 2";
-            ppost1.Zipcode = "7100";
-            CreatePhysicalPost(ppost1);
-
-        }
-
-
-
-        #region create methods
-
-        private void CreateUser(User user)
-        {
-            MockDBContainer.Instance.AddUser(user);
-        }
-        public void CreatePost(Post post)
-        {
-            MockDBContainer.Instance.AddPost(post);
-        }
-
-        public void CreatePost(User expectedUser, string expectedPostTitle, string expectedPostDescription, Category expectedCategory, List<string> expectedTagsList)
-        {
-            Post p = new Post();
-            p.User = expectedUser;
-            p.Title = expectedPostTitle;
-            p.Description = expectedPostDescription;
-            p.Category = expectedCategory;
-            p.Tags = expectedTagsList;
-
-            MockDBContainer.Instance.AddPost(p);
-        }
-
-        public void CreatePhysicalPost(PhysicalPost pPost)
-        {
-            MockDBContainer.Instance.AddPhysicalPost(pPost);
         }
 
         public void CreatePhysicalPost(User _user, string _title, string _description, Category _category, List<string> _tagsList, string _altDescription, string _zipcode, string _address)
@@ -120,29 +29,21 @@ namespace SolvrLibrary
             MockDBContainer.Instance.AddPhysicalPost(post);
         }
 
-        public void CreateCategory(Category cat)
+        public PhysicalPost GetLastPhysicalPost()
         {
-            MockDBContainer.Instance.AddCategory(cat);
+            return MockDBContainer.Instance.GetLastPhysicalPost();
         }
 
-        #endregion
-
-
-        #region Get methods
-
-        public Post GetPost()
+        public Post CreatePost(User expectedUser, string expectedPostTitle, string expectedPostDescription, Category expectedCategory, List<string> expectedTagsList)
         {
-            return MockDBContainer.Instance.GetPost();
-        }
+            Post p = new Post();
+            p.User = expectedUser;
+            p.Title = expectedPostTitle;
+            p.Description = expectedPostDescription;
+            p.Category = expectedCategory;
+            p.Tags = expectedTagsList;
 
-        public Post GetPost(int id)
-        {
-            return MockDBContainer.Instance.GetPost(id);
-        }
-
-        public PhysicalPost GetPhysicalPost()
-        {
-            return MockDBContainer.Instance.GetPhysicalPost();
+            return MockDBContainer.Instance.AddPost(p);
         }
 
         public IEnumerable<Category> GetAllCategories()
@@ -150,9 +51,9 @@ namespace SolvrLibrary
             return MockDBContainer.Instance.GetAllCategories();
         }
 
-        public Category GetCategory(string name)
+        public Post CreatePost(Post post)
         {
-            return MockDBContainer.Instance.GetCategory(name);
+            return MockDBContainer.Instance.AddPost(post);
         }
 
         public Category GetCategory(int id)
@@ -160,20 +61,49 @@ namespace SolvrLibrary
             return MockDBContainer.Instance.GetCategory(id);
         }
 
-        public User GetUser(int id)
+        public Category GetCategory(string name)
         {
-            return MockDBContainer.Instance.GetUser(id);
+            return MockDBContainer.Instance.GetCategory(name);
         }
 
-        #endregion
+        public PhysicalPost CreatePhysicalPost(PhysicalPost pPost)
+        {
+           return MockDBContainer.Instance.AddPhysicalPost(pPost);
+        }
 
+        public Post GetPost(int id)
+        {
+            return MockDBContainer.Instance.GetPost(id);
+        }
+
+        public Post GetPost()
+        {
+            return MockDBContainer.Instance.GetPost();
+        }
+
+        public User GetUser()
+        {
+            throw new NotImplementedException();
+        }
+
+        public User GetUser(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Comment> GetComments(int iD)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Comment CreateComment(Comment c)
+        {
+            throw new NotImplementedException();
+        }
     }
 
-    //-----------------------------------------------------------------------------------------------------------
     class MockDBContainer
     {
-
-        //Singleton Creation
         private static MockDBContainer _Instance;
 
         public static MockDBContainer Instance
@@ -202,10 +132,10 @@ namespace SolvrLibrary
         private List<SolvrComment> SolvrComments;
         private List<Vote> Votes;
         private List<PhysicalPost> PhysicalPosts;
-
+        
         public MockDBContainer()
         {
-
+            
             Users = new List<User>();
             Posts = new List<Post>();
             PhysicalPosts = new List<PhysicalPost>();
@@ -214,8 +144,49 @@ namespace SolvrLibrary
             Comments = new List<Comment>();
             SolvrComments = new List<SolvrComment>();
             Votes = new List<Vote>();
-
+            
         }
+        
+
+        #region Create methods
+        //internal Post CreatePost(Post post)
+        //{
+        //    int counterId = 0;
+
+        //    foreach (Post item in Posts)
+        //    {
+        //        if (item.Id > counterId)
+        //        {
+        //            counterId = item.Id;
+        //        }
+        //    }
+
+        //    post.Id = counterId + 1;
+
+        //    Posts.Add(post);
+        //    return post;
+        //}
+
+        //internal void CreatePhysicalPost(PhysicalPost pPost)
+        //{
+        //    int counterId = 0;
+
+        //    foreach (PhysicalPost item in PhysicalPosts)
+        //    {
+        //        if (item.Id > counterId)
+        //        {
+        //            counterId = item.Id;
+        //        }
+        //    }
+
+        //    pPost.Id = counterId + 1;
+
+        //    PhysicalPosts.Add(pPost);
+        //}
+
+
+
+        #endregion
 
         #region Add methods
 
@@ -233,7 +204,7 @@ namespace SolvrLibrary
             Users.Add(_user);
         }
 
-        internal void AddPost(Post _post)
+        internal Post AddPost(Post _post)
         {
             if (Posts.Count == 0)
             {
@@ -245,9 +216,10 @@ namespace SolvrLibrary
             }
 
             Posts.Add(_post);
+            return _post;
         }
 
-        internal void AddPhysicalPost(PhysicalPost _post)
+        internal PhysicalPost AddPhysicalPost(PhysicalPost _post)
         {
             if (PhysicalPosts.Count == 0)
             {
@@ -259,6 +231,7 @@ namespace SolvrLibrary
             }
 
             PhysicalPosts.Add(_post);
+            return _post;
         }
 
         internal void AddCategory(Category _category)
@@ -330,45 +303,39 @@ namespace SolvrLibrary
 
             Votes.Add(_vote);
         }
-
+        
         #endregion
 
         #region Get methods
 
-        internal Post GetPost()
-        {
-            return Posts.Last();
-        }
-
-        internal Post GetPost(int id)
-        {
-            Post p = null;
-
-            foreach (Post item in Posts)
-            {
-                if (item.Id == id)
-                {
-                    p = item;
-                }
-            }
-            return p;
-        }
-
-        internal PhysicalPost GetPhysicalPost()
+        internal PhysicalPost GetLastPhysicalPost()
         {
             return PhysicalPosts.Last();
         }
 
         internal List<Category> GetAllCategories()
         {
-            List<Category> catlist = new List<Category>();
+            //List<Category> CatList = new List<Category>();
 
-            foreach (Category cat in Categories)
-            {
-                catlist.Add(cat);
-            }
+            //foreach (Category cat in Categories)
+            //{
+            //    CatList.Add(cat);
+            //}
 
-            return catlist;
+            List<Category> CatList = new List<Category>();
+
+            Category cat1 = new Category();
+            Category cat2 = new Category();
+
+            cat1.Name = "Computer";
+            cat1.Id = 2;
+            cat2.Name = "Garden";
+            cat2.Id = 3;
+
+            CatList.Add(cat1);
+            CatList.Add(cat2);
+
+            return CatList;
         }
 
         internal Category GetCategory(int id)
@@ -399,18 +366,23 @@ namespace SolvrLibrary
             return cat;
         }
 
-        internal User GetUser(int id)
+        internal Post GetPost(int id)
         {
-            User user = null;
+            Post p = null;
 
-            foreach (User item in Users)
+            foreach (Post item in Posts)
             {
                 if (item.Id == id)
                 {
-                    user = item;
+                    p = item;
                 }
             }
-            return user;
+            return p;
+        }
+
+        internal Post GetPost()
+        {
+            return Posts.Last();
         }
 
         #endregion

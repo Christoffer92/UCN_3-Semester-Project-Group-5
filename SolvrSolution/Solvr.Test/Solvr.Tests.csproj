@@ -48,13 +48,21 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccesLayer\ModelBuilderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\DataAccesLayer\DataAccesLayer.csproj">
+      <Project>{2E3B225A-AAD6-4D73-A4F6-C76DB17E9638}</Project>
+      <Name>DataAccesLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SolvrLibrary\SolvrLibrary.csproj">
+      <Project>{7A512B96-B646-4E04-B9F5-6C9658209C1B}</Project>
+      <Name>SolvrLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

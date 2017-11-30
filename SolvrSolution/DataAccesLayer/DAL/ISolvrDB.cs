@@ -35,14 +35,15 @@ namespace SolvrLibrary
         /// with attributes attached to it
         /// </summary>
         /// <param name="post"></param>
-        void CreatePost(Post post);
+        Post CreatePost(Post post);
+        
 
         /// <summary>
         /// Creates a Physical Post and inserts it into the database, by giving it a foreign physical post
         /// with attributes attached to it
         /// </summary>
         /// <param name="pPost"></param>
-        void CreatePhysicalPost(PhysicalPost pPost);
+        PhysicalPost CreatePhysicalPost(PhysicalPost Post);
 
         /// <summary>
         /// Returns a post with the given id.
@@ -57,16 +58,22 @@ namespace SolvrLibrary
         /// <returns>Post</returns>
         Post GetPost();
 
+
+        /// Returns the last user that was inserted into the database.
+        /// </summary>
+        /// <returns>User</returns>
+        User GetUser();
+
+
         /// <summary>
         /// Returns all Categories from the database
         /// </summary>
         /// <returns>List of Categories</returns>
         IEnumerable<Category> GetAllCategories();
 
-        /// <summary>
-        /// Returns all Categories from the database
-        /// </summary>
-        /// <returns>List of Categories</returns>
-        User GetUser(int id);
+        //TODO summary here
+        User GetUser(int userId);
+        IEnumerable<Comment> GetComments(int iD);
+        Comment CreateComment(Comment c);
     }
 }
