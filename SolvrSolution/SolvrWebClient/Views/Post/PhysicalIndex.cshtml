@@ -111,10 +111,8 @@
                     @*@Html.Label(m => m.Username)*@
                 </div>
                 <div class="post-VoteFloat">
-                    <img src="~/Content/Images/upvote-downvote.png" class="post-Vote" />
                     @Html.Label("", "0", new { @class = "post-VoteLabel" })
                     @*@Html.Label(m => m.Votecount, new { @class = "post-VoteLabel" })*@
-                    <img src="~/Content/Images/downvote.png" class="post-Vote" />
                 </div>
                 <div class="post-CommentBox-TextArea">
                     @Html.TextArea("ViewCommentArea", item.Text, 5, 0, new { @readonly = "readonly", @class = "post-TextArea-View" })
