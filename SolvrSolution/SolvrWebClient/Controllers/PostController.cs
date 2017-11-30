@@ -23,23 +23,82 @@ namespace SolvrWebClient.Controllers
 
         public ActionResult Index(int ID = 1)
         {
-            Post post = DB.GetPost(ID);
-            ViewBag.Title = post.Title;
-            ViewBag.Description = post.Description;
-            ViewBag.DateCreated = post.DateCreated.ToShortDateString();
-            ViewBag.UserName = DB.GetUser(post.UserId).Username;
-            ViewBag.UserID = post.UserId;
 
-            //sortere efter tid
-            ViewBag.CommentList = DB.GetComments(ID).OrderBy(x => x.DateCreated).ToList();
+            if (DB.GetPost(ID).PostType.Equals("Physical"))
+            {
+                return RedirectToAction("PhysicalIndex", new { ID = ID });
+            }
+            else
+            {
+                Post post = DB.GetPost(ID);
+                ViewBag.Title = post.Title;
+                ViewBag.Description = post.Description;
+                ViewBag.DateCreated = post.DateCreated.ToShortDateString();
+                ViewBag.UserId = post.UserId;
+                ViewBag.Username = DB.GetUser(post.UserId).Username;
 
-            //Usorteret
-            //ViewBag.CommentList = DB.GetComments(ID);
+                string tags = "";
 
-            var model = new CommentViewModel();
-            model.PostId = post.Id;
+                foreach (string item in post.Tags)
+                {
+                    tags = tags + " " + item;
+                }
 
-            return View(model);
+                ViewBag.Tags = tags;
+
+                //sortere efter tid
+                ViewBag.CommentList = DB.GetComments(post.Id).OrderBy(x => x.DateCreated).ToList();
+
+                //Usorteret
+                //ViewBag.CommentList = DB.GetComments(ID);
+
+                var model = new CommentViewModel();
+                model.PostId = post.Id;
+
+                return View(model);
+            }
+            
+        }
+
+        public ActionResult PhysicalIndex(int ID = 1)
+        {
+
+            if (DB.GetPost(ID).PostType.Equals("Post"))
+            {
+                return RedirectToAction("Index", new { ID = ID });
+            }
+            else
+            {
+                PhysicalPost ppost = DB.GetPhysicalPost(ID);
+                ViewBag.Title = ppost.Title;
+                ViewBag.Description = ppost.Description;
+                ViewBag.DateCreated = ppost.DateCreated.ToShortDateString();
+                ViewBag.User = DB.GetUser(ppost.UserId);
+                ViewBag.AltDescription = ppost.AltDescription;
+                ViewBag.Address = ppost.Address;
+                ViewBag.Zipcode = ppost.Zipcode;
+
+
+                string tags = "";
+
+                foreach (string item in ppost.Tags)
+                {
+                    tags = tags + " " + item;
+                }
+
+                ViewBag.Tags = tags;
+
+                //sortere efter tid
+                ViewBag.CommentList = DB.GetComments(ppost.Id).OrderBy(x => x.DateCreated).ToList();
+
+                //Usorteret
+                //ViewBag.CommentList = DB.GetComments(ID);
+
+                var model = new CommentViewModel();
+                model.PostId = ppost.Id;
+
+                return View(model);
+            }
         }
 
         public ActionResult PostComment(CommentViewModel model)

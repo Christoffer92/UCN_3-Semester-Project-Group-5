@@ -94,8 +94,10 @@ namespace DataAccesLayer.ModelBuilds
                 if (typeof(T) == typeof(Post))
                 {
                     var Query = (from post in Context.Posts.OfType<Post>() where post.Id == PrimaryKey select post).First();
-                    List<string> Tags = new List<string>();
-                    Tags.Add("TODO");
+                    List<string> TagList = new List<string>();
+                    TagList.Add("TODO tag test træ");
+                    TagList.Add("Tag");
+                    TagList.Add("Post"); //TODO Tags
 
 
                     CreatedPost = (T)(object)new Post
@@ -110,15 +112,19 @@ namespace DataAccesLayer.ModelBuilds
                         Description = Query.Description,
                         UserId = Query.UserId,
                         User = BuildUser(Query.UserId),
-                        PostType = Query.PostType
+                        PostType = Query.PostType,
+                        Tags = TagList
                     }; 
+
                 }
                 else if(typeof(T) == typeof(PhysicalPost))
                 {
                     var Query = (from post in Context.Posts.OfType<PhysicalPost>() where post.Id == PrimaryKey select post).First();
-                    List<string> Tags = new List<string>();
-                    Tags.Add("TODO");
-                    
+                    List<string> TagList = new List<string>();
+                    TagList.Add("TODO tag test træ");
+                    TagList.Add("Tag");
+                    TagList.Add("PhysicalPost"); //TODO tags
+
                     CreatedPost = (T)(object) new PhysicalPost
                     {
                         Id = Query.Id,
@@ -134,7 +140,8 @@ namespace DataAccesLayer.ModelBuilds
                         AltDescription = Query.AltDescription,
                         IsLocked = Query.IsLocked,
                         Zipcode = Query.Zipcode,
-                        PostType = Query.PostType
+                        PostType = Query.PostType,
+                        Tags = TagList
                     };
                 }
                 else

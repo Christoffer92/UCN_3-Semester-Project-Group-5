@@ -44,6 +44,7 @@ namespace SolvrLibrary
         /// </summary>
         /// <param name="pPost"></param>
         PhysicalPost CreatePhysicalPost(PhysicalPost Post);
+        PhysicalPost GetPhysicalPost(int id);
 
         /// <summary>
         /// Returns a post with the given id.

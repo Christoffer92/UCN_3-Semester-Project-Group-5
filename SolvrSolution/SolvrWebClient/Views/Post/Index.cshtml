@@ -16,7 +16,7 @@
     <div class="post-Box-ViewPost-Standard">
         <div>
             <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
-            <a href="@Url.Action("NotImplementedYet", "Home", new { ID = ViewBag.UserId })">@ViewBag.UserName</a>
+            <a href="@Url.Action("NotImplementedYet", "Home", new { ID = ViewBag.UserId })">@ViewBag.Username</a>
             @*@Html.Label("", (string)ViewBag.UserName, new { @readonly = "readonly" })*@
             @*@Html.Label(m => m.Username)*@
         </div>
@@ -28,7 +28,8 @@
             <input type="button" name="Report" value="Report" class="post-Btn-Size btn" onclick="location.href='@Url.Action("NotImplementedYet", "Home")'"/> 
         </div>
         <div>
-            @*@Html.Label("", (string)ViewBag.Tags, new { @class = "post-DateLabel" })*@
+            @Html.Label("", (string)ViewBag.Tags)
+            <br/>
             @Html.Label("", (string)ViewBag.DateCreated, new { @class = "post-DateLabel" })
             @*@Html.Label(m => m.Datecreated, new { @class = "post-DateLabel" })*@
         </div>
