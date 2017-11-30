@@ -73,29 +73,18 @@
     padding-top: 60px;
 }
 
-.btnCreatePost{
-    width: 250px;
-}
-
-#post-ReportPostBtn-Location {
-    position: relative;
-}
-
-#post-CommentBtn-Location {
-    position: relative;
-    min-width: 100px;
-    text-align: center;
-}
-
+/*Changing this makes all buttons bigger - padding is 3 px*/
 .post-Btn-Size {
     padding: 3px;
 }
 
+/*Makes the button a part of a table cell*/
 .post-BtnFloat input {
     vertical-align: middle;
     display: table-cell;
 }
 
+/*Floats a button right inside a table*/
 .post-BtnFloat {
     float: right;
     display: table;
