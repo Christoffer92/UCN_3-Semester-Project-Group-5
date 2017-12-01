@@ -32,22 +32,22 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormForside));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.grpBoxReports = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.grpBoxUsers = new System.Windows.Forms.GroupBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.grpBoxPosts = new System.Windows.Forms.GroupBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -55,7 +55,7 @@
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.grpBoxComments = new System.Windows.Forms.GroupBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
@@ -64,11 +64,13 @@
             this.label24 = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.lblConnection = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox4.SuspendLayout();
+            this.grpBoxReports.SuspendLayout();
+            this.grpBoxUsers.SuspendLayout();
+            this.grpBoxPosts.SuspendLayout();
+            this.grpBoxComments.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -93,76 +95,23 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // groupBox1
+            // grpBoxReports
             // 
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(12, 287);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(276, 257);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Rapporteringer";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.OrangeRed;
-            this.label1.Location = new System.Drawing.Point(159, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(36, 26);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "    ";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(21, 147);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 25);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Total";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(142, 147);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(23, 25);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "0";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(21, 98);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(93, 25);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "Resolved";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(142, 48);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(23, 25);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "0";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
+            this.grpBoxReports.Controls.Add(this.label6);
+            this.grpBoxReports.Controls.Add(this.label7);
+            this.grpBoxReports.Controls.Add(this.label5);
+            this.grpBoxReports.Controls.Add(this.label4);
+            this.grpBoxReports.Controls.Add(this.label3);
+            this.grpBoxReports.Controls.Add(this.label2);
+            this.grpBoxReports.Controls.Add(this.label1);
+            this.grpBoxReports.Controls.Add(this.button1);
+            this.grpBoxReports.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpBoxReports.Location = new System.Drawing.Point(12, 287);
+            this.grpBoxReports.Name = "grpBoxReports";
+            this.grpBoxReports.Size = new System.Drawing.Size(276, 257);
+            this.grpBoxReports.TabIndex = 1;
+            this.grpBoxReports.TabStop = false;
+            this.grpBoxReports.Text = "Reports";
             // 
             // label6
             // 
@@ -186,22 +135,108 @@
             this.label7.Text = "Unresolved";
             this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
-            // groupBox2
+            // label5
             // 
-            this.groupBox2.Controls.Add(this.label16);
-            this.groupBox2.Controls.Add(this.label17);
-            this.groupBox2.Controls.Add(this.label15);
-            this.groupBox2.Controls.Add(this.label9);
-            this.groupBox2.Controls.Add(this.label14);
-            this.groupBox2.Controls.Add(this.button3);
-            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(313, 287);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(258, 257);
-            this.groupBox2.TabIndex = 2;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Brugerer";
-            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(142, 48);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(23, 25);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "0";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(21, 98);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(93, 25);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "Resolved";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(142, 147);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(23, 25);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "0";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(21, 147);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(56, 25);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Total";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.OrangeRed;
+            this.label1.Location = new System.Drawing.Point(159, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(36, 26);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "    ";
+            // 
+            // grpBoxUsers
+            // 
+            this.grpBoxUsers.Controls.Add(this.label16);
+            this.grpBoxUsers.Controls.Add(this.label17);
+            this.grpBoxUsers.Controls.Add(this.label15);
+            this.grpBoxUsers.Controls.Add(this.label9);
+            this.grpBoxUsers.Controls.Add(this.label14);
+            this.grpBoxUsers.Controls.Add(this.button3);
+            this.grpBoxUsers.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpBoxUsers.Location = new System.Drawing.Point(313, 287);
+            this.grpBoxUsers.Name = "grpBoxUsers";
+            this.grpBoxUsers.Size = new System.Drawing.Size(258, 257);
+            this.grpBoxUsers.TabIndex = 2;
+            this.grpBoxUsers.TabStop = false;
+            this.grpBoxUsers.Text = "Users";
+            this.grpBoxUsers.Enter += new System.EventHandler(this.groupBox2_Enter);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.Location = new System.Drawing.Point(163, 147);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(23, 25);
+            this.label16.TabIndex = 2;
+            this.label16.Text = "0";
+            this.label16.Click += new System.EventHandler(this.label16_Click);
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.Location = new System.Drawing.Point(21, 147);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(132, 25);
+            this.label17.TabIndex = 10;
+            this.label17.Text = "Users in Total";
+            this.label17.Click += new System.EventHandler(this.label17_Click);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(163, 48);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(23, 25);
+            this.label15.TabIndex = 9;
+            this.label15.Text = "0";
+            this.label15.Click += new System.EventHandler(this.label15_Click);
             // 
             // label9
             // 
@@ -234,55 +269,22 @@
             this.button3.Text = "Adminstrer Rapporteringer";
             this.button3.UseVisualStyleBackColor = true;
             // 
-            // label15
+            // grpBoxPosts
             // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(163, 48);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(23, 25);
-            this.label15.TabIndex = 9;
-            this.label15.Text = "0";
-            this.label15.Click += new System.EventHandler(this.label15_Click);
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(163, 147);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(23, 25);
-            this.label16.TabIndex = 2;
-            this.label16.Text = "0";
-            this.label16.Click += new System.EventHandler(this.label16_Click);
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(21, 147);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(132, 25);
-            this.label17.TabIndex = 10;
-            this.label17.Text = "Users in Total";
-            this.label17.Click += new System.EventHandler(this.label17_Click);
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.label8);
-            this.groupBox3.Controls.Add(this.label10);
-            this.groupBox3.Controls.Add(this.label11);
-            this.groupBox3.Controls.Add(this.label18);
-            this.groupBox3.Controls.Add(this.label20);
-            this.groupBox3.Controls.Add(this.label21);
-            this.groupBox3.Controls.Add(this.button2);
-            this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox3.Location = new System.Drawing.Point(604, 287);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(257, 257);
-            this.groupBox3.TabIndex = 12;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Posteringer";
+            this.grpBoxPosts.Controls.Add(this.label8);
+            this.grpBoxPosts.Controls.Add(this.label10);
+            this.grpBoxPosts.Controls.Add(this.label11);
+            this.grpBoxPosts.Controls.Add(this.label18);
+            this.grpBoxPosts.Controls.Add(this.label20);
+            this.grpBoxPosts.Controls.Add(this.label21);
+            this.grpBoxPosts.Controls.Add(this.button2);
+            this.grpBoxPosts.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpBoxPosts.Location = new System.Drawing.Point(604, 287);
+            this.grpBoxPosts.Name = "grpBoxPosts";
+            this.grpBoxPosts.Size = new System.Drawing.Size(257, 257);
+            this.grpBoxPosts.TabIndex = 12;
+            this.grpBoxPosts.TabStop = false;
+            this.grpBoxPosts.Text = "Posts";
             // 
             // label8
             // 
@@ -353,22 +355,22 @@
             this.button2.Text = "Adminstrer Rapporteringer";
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // groupBox4
+            // grpBoxComments
             // 
-            this.groupBox4.Controls.Add(this.label12);
-            this.groupBox4.Controls.Add(this.label13);
-            this.groupBox4.Controls.Add(this.label19);
-            this.groupBox4.Controls.Add(this.label22);
-            this.groupBox4.Controls.Add(this.label23);
-            this.groupBox4.Controls.Add(this.label24);
-            this.groupBox4.Controls.Add(this.button4);
-            this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox4.Location = new System.Drawing.Point(891, 287);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(257, 257);
-            this.groupBox4.TabIndex = 13;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Comments";
+            this.grpBoxComments.Controls.Add(this.label12);
+            this.grpBoxComments.Controls.Add(this.label13);
+            this.grpBoxComments.Controls.Add(this.label19);
+            this.grpBoxComments.Controls.Add(this.label22);
+            this.grpBoxComments.Controls.Add(this.label23);
+            this.grpBoxComments.Controls.Add(this.label24);
+            this.grpBoxComments.Controls.Add(this.button4);
+            this.grpBoxComments.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpBoxComments.Location = new System.Drawing.Point(891, 287);
+            this.grpBoxComments.Name = "grpBoxComments";
+            this.grpBoxComments.Size = new System.Drawing.Size(257, 257);
+            this.grpBoxComments.TabIndex = 13;
+            this.grpBoxComments.TabStop = false;
+            this.grpBoxComments.Text = "Comments";
             // 
             // label12
             // 
@@ -443,16 +445,37 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // lblConnection
+            // 
+            this.lblConnection.AutoSize = true;
+            this.lblConnection.BackColor = System.Drawing.Color.Red;
+            this.lblConnection.Location = new System.Drawing.Point(1214, 12);
+            this.lblConnection.Name = "lblConnection";
+            this.lblConnection.Size = new System.Drawing.Size(28, 17);
+            this.lblConnection.TabIndex = 14;
+            this.lblConnection.Text = "     ";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(1110, 12);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(98, 17);
+            this.label25.TabIndex = 15;
+            this.label25.Text = "Connectection";
+            // 
             // FormForside
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1262, 673);
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.label25);
+            this.Controls.Add(this.lblConnection);
+            this.Controls.Add(this.grpBoxComments);
+            this.Controls.Add(this.grpBoxPosts);
+            this.Controls.Add(this.grpBoxUsers);
+            this.Controls.Add(this.grpBoxReports);
             this.Controls.Add(this.pictureBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(1280, 720);
@@ -462,14 +485,14 @@
             this.Text = "SolvrAdminstrator";
             this.Load += new System.EventHandler(this.FormForside_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
+            this.grpBoxReports.ResumeLayout(false);
+            this.grpBoxReports.PerformLayout();
+            this.grpBoxUsers.ResumeLayout(false);
+            this.grpBoxUsers.PerformLayout();
+            this.grpBoxPosts.ResumeLayout(false);
+            this.grpBoxPosts.PerformLayout();
+            this.grpBoxComments.ResumeLayout(false);
+            this.grpBoxComments.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -479,7 +502,7 @@
 
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox grpBoxReports;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -487,14 +510,14 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox grpBoxUsers;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox grpBoxPosts;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
@@ -502,7 +525,7 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.GroupBox grpBoxComments;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label19;
@@ -511,6 +534,8 @@
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label lblConnection;
+        private System.Windows.Forms.Label label25;
     }
 }
 
