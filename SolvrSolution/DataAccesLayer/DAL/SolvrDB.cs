@@ -51,7 +51,7 @@ namespace SolvrLibrary
         {
             Posts.InsertOnSubmit(post);
             SubmitChanges();
-            return post;
+            return new ModelBuilder().BuildPost<Post>(post.Id);
         }
 
         public PhysicalPost CreatePhysicalPost(PhysicalPost physicalPost)
@@ -59,6 +59,18 @@ namespace SolvrLibrary
             Posts.InsertOnSubmit(physicalPost);
             SubmitChanges();
             return GetPhysicalPost(physicalPost.Id);
+        }
+
+        public Comment CreateComment(Comment comment)
+        {
+            Comments.InsertOnSubmit(comment);
+            SubmitChanges();
+            return GetComment(comment.Id);
+        }
+
+        public Comment GetComment(int id)
+        {
+            return new ModelBuilder().BuildComment<Comment>(id);
         }
 
         public Post GetPost(int id)
@@ -92,5 +104,17 @@ namespace SolvrLibrary
             int lastID = Users.Count();
             return new ModelBuilder().BuildUser(lastID);
         }
+
+        public User GetUser(int id)
+        {
+            return new ModelBuilder().BuildUser(id);
+        }
+
+        public IEnumerable<Comment> GetComments(int postId)
+        {
+            return new ModelBuilder().BuildCommentList(postId);
+        }
+
+
     }
 }

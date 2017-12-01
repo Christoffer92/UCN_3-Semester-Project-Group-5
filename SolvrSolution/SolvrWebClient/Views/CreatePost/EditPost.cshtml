@@ -1,0 +1,32 @@
+﻿@model SolvrWebClient.Models.PostViewModel
+
+<h2>Edit Post</h2>
+
+<div class="createPost-Box-ViewPost-Standard">
+    @using (Html.BeginForm("EditPost", "CreatePost", FormMethod.Post))
+    {
+        <div>
+            <b>Titel:</b><br />
+            @* TODO: Insert Titel logic *@
+            @ViewBag.Title
+            @Html.TextBoxFor(m => m.Title)
+            <br />
+            <b>Category:</b><br />
+            @* TODO: Insert Category logic *@
+            @Html.DropDownListFor(m => m.CategoryId, (IEnumerable<SelectListItem>)ViewBag.DropDownList, "Select Category")
+        </div>
+        <div>
+            <b>Description:</b><br />
+            @* TODO: Insert Description logic *@
+            @Html.TextArea("DescriptionArea", (string)ViewBag.Description, 10, 0, new { @readonly = "readonly", @class = "standard-TextArea-Size" })
+        </div>
+        <div>
+            <b>Tags:</b><br />
+            @* TODO: Insert tags logic *@
+        </div><br />
+        <div class="createPost-BtnFloat">
+            <input type="submit" name="EditPost" value="Save Changes" class="standard-Btn-Colour standard-Btn-border btn" />
+        </div><br />
+    }
+</div>
+

@@ -15,6 +15,7 @@ namespace SolvrLibrary
         public Comment()
         {
             DateCreated = DateTime.Now;
+            Votes = new List<Vote>();
         }
 
         [Column(IsPrimaryKey = true, IsDbGenerated = true)]

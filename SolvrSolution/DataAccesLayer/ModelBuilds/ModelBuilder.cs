@@ -44,13 +44,18 @@ namespace DataAccesLayer.ModelBuilds
             return CreatedCategory;
         }
 
-        public List<Comment> BuildCommentList(int postId, SolvrDB context)
+        public List<Comment> BuildCommentList(int postId)
         {
-            var CommentQuery = from comment in context.Comments where comment.PostId == postId select comment;
-            var CommentList = new List<Comment>();
-            foreach (var comment in CommentQuery)
+            List<Comment> CommentList = null;
+            using (var Context = new SolvrDB())
             {
-                CommentList.Add(BuildComment<Comment>(comment.Id));
+                var CommentQuery = from comment in Context.Comments where comment.PostId == postId select comment;
+                CommentList = new List<Comment>();
+
+                foreach (Comment item in CommentQuery)
+                {
+                    CommentList.Add(BuildComment<Comment>(item.Id));
+                }
             }
             return CommentList;
         }
@@ -88,10 +93,10 @@ namespace DataAccesLayer.ModelBuilds
             {
                 if (typeof(T) == typeof(Post))
                 {
-                    var Query = (from post in Context.Posts where post.Id == PrimaryKey select post).First();
+                    var Query = (from post in Context.Posts.OfType<Post>() where post.Id == PrimaryKey select post).First();
                     List<string> Tags = new List<string>();
                     Tags.Add("TODO");
-                    
+
 
                     CreatedPost = (T)(object)new Post
                     {
@@ -99,11 +104,13 @@ namespace DataAccesLayer.ModelBuilds
                         Title = Query.Title,
                         DateCreated = Query.DateCreated,
                         BumpTime = Query.BumpTime,
-                        Comments = BuildCommentList(PrimaryKey, Context),
+                        Comments = BuildCommentList(PrimaryKey),
                         CategoryId = Query.CategoryId,
                         Category = BuildCategory(Query.CategoryId),
                         Description = Query.Description,
                         UserId = Query.UserId,
+                        User = BuildUser(Query.UserId),
+                        PostType = Query.PostType
                     }; 
                 }
                 else if(typeof(T) == typeof(PhysicalPost))
@@ -126,7 +133,8 @@ namespace DataAccesLayer.ModelBuilds
                         Address = Query.Address,
                         AltDescription = Query.AltDescription,
                         IsLocked = Query.IsLocked,
-                        Zipcode = Query.Zipcode
+                        Zipcode = Query.Zipcode,
+                        PostType = Query.PostType
                     };
                 }
                 else
@@ -155,7 +163,8 @@ namespace DataAccesLayer.ModelBuilds
                         UserId = Query.UserId,
                         User = BuildUser(Query.UserId),
                         Votes = BuildVoteList(PrimaryKey, context),
-                        PostId = Query.PostId
+                        PostId = Query.PostId,
+                        CommentType = Query.CommentType
                     }; 
                 }
                 else if(typeof(T) == typeof(SolvrComment))
@@ -170,7 +179,8 @@ namespace DataAccesLayer.ModelBuilds
                         User = BuildUser(Query.UserId),
                         IsAccepted = Query.IsAccepted,
                         TimeAccepted = Query.TimeAccepted,
-                        PostId = Query.PostId
+                        PostId = Query.PostId,
+                        CommentType = Query.CommentType
                     };
                 }
                 else
