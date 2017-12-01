@@ -12,22 +12,17 @@ namespace SolvrDesktopClient
 {
     public partial class FormForside : Form
     {
+
+        int i = 0;
         public FormForside()
         {
             InitializeComponent();
+            timerConnectionStatus.Start();
+            timerOverview.Start();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
 
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
+        private void toolTipReportsLbl_Popup(object sender, PopupEventArgs e)
         {
 
         }
@@ -37,77 +32,77 @@ namespace SolvrDesktopClient
 
         }
 
-        private void label7_Click(object sender, EventArgs e)
+        private void lblPostsStatus_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void label6_Click(object sender, EventArgs e)
+        private void lblReportsUnresolved_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void label5_Click(object sender, EventArgs e)
+        private void timerConnectionStatus_Tick(object sender, EventArgs e)
+        {
+            //TODO needs to get info if the connection to the database is up.
+            if (i%2 == 0)
+            {
+                lblConnectionStatus.BackColor = Color.Green;
+            }
+            else
+            {
+                lblConnectionStatus.BackColor = Color.Red;
+            }
+            i++;
+        }
+
+        private void timerOverview_Tick(object sender, EventArgs e)
+        {
+            //Gets the text from the labels  //TODO this needs to get some real data.
+            lblReportsUnresolvedAmount.Text = i.ToString(); //desktopCtr.GetUnresolveReportsCount();
+            lblReportsResolvedAmount.Text   = i.ToString(); 
+            lblReportsTotalAmount.Text      = i.ToString(); 
+            lblPostsReportedAmount.Text     = i.ToString();
+            lblPostsResolvedAmount.Text     = i.ToString();
+            lblPostsTotalAmount.Text        = i.ToString();
+            lblCommentsReportedAmount.Text  = i.ToString();
+            lblCommentsResolvedAmount.Text  = i.ToString();
+            lblCommentsTotalAmount.Text     = i.ToString();
+            lblUsersReportedAmount.Text     = i.ToString();
+            lblUsersResolvedAmount.Text     = i.ToString();
+            lblUsersTotalAmount.Text        = i.ToString();
+            UpdateStatusLbls();
+
+            i++; //only to see something.
+        }
+
+        private void UpdateStatusLbls()
+        {
+            int postsReportsUnresolved = Int32.Parse(lblPostsReportedAmount.Text);
+            int commentsReportsUnresolved = Int32.Parse(lblCommentsReportedAmount.Text);
+            int usersReportsUnresolved = Int32.Parse(lblUsersReportedAmount.Text);
+
+            UpdateStatusLbl(lblPostsStatus, postsReportsUnresolved);
+            UpdateStatusLbl(lblCommentsStatus, commentsReportsUnresolved);
+            UpdateStatusLbl(lblUsersStatus, usersReportsUnresolved);
+        }
+
+        private void UpdateStatusLbl(Label lblStatus, int amount)
+        {
+            if (amount == 0)
+                lblStatus.BackColor = Color.Green;
+            if (amount > 0 && amount < 10)
+                lblStatus.BackColor = Color.Orange;
+            if (amount >= 10)
+                lblStatus.BackColor = Color.Red;
+        }
+
+        private void lblPostsReportedAmount_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void label9_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label17_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label16_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void FormForside_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label15_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label10_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label11_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label12_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label13_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
+        private void progressBarOverviewStatus_Click(object sender, EventArgs e)
         {
 
         }
