@@ -6,27 +6,27 @@ using System.Web.Mvc;
 
 namespace SolvrWebClient.Controllers
 {
-    public class LoginController : Controller
+    public class AccountController : Controller
     {
-        // GET: Login
+        // GET: Account
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: Login/Details/5
+        // GET: Account/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Login/Create
+        // GET: Account/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Login/Create
+        // POST: Account/Create
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
@@ -42,13 +42,13 @@ namespace SolvrWebClient.Controllers
             }
         }
 
-        // GET: Login/Edit/5
+        // GET: Account/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Login/Edit/5
+        // POST: Account/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -64,13 +64,13 @@ namespace SolvrWebClient.Controllers
             }
         }
 
-        // GET: Login/Delete/5
+        // GET: Account/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Login/Delete/5
+        // POST: Account/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
