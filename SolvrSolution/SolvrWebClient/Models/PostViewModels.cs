@@ -13,5 +13,7 @@ namespace SolvrWebClient.Models
         public string Text { get; set; }
 
         public int PostId { get; set; }
+
+        public bool IsSolvr { get; set; }
     }
 }

@@ -16,13 +16,13 @@
             @*@Html.Label(m => m.Username)*@
         </div>
         <div>
-            @Html.TextArea("DescriptionArea", (string)ViewBag.Description, 10, 0, new { @readonly = "readonly", @class = "post-TextArea-Standard" })
+            @Html.TextArea("DescriptionArea", (string)ViewBag.Description, 10, 0, new { @readonly = "readonly", @class = "standard-TextArea-Size" })
             @*@Html.TextArea(m => m.Description, 10, 0, new { @readonly = "readonly", @class = "post-TextArea-Standard" })*@
         </div>
         <div class="post-BtnFloat">
-            <input type="button" name="Report Post" value="Edit" style="margin-right: 10px" class="post-Btn-Size btn" onclick="location.href='@Url.Action("NotImplementedYet", "Home")'"/>
+            <input type="button" name="Report Post" value="Edit" style="margin-right: 10px" class="standard-Btn-Colour standard-Btn-border post-Btn-Size btn" onclick="location.href='@Url.Action("NotImplementedYet", "Home")'"/>
             
-            <input type="button" name="Report Post" value="Report" class="post-Btn-Size btn" onclick="location.href='@Url.Action("NotImplementedYet", "Home")'"/> 
+            <input type="button" name="Report Post" value="Report" class="standard-Btn-Colour standard-Btn-border post-Btn-Size btn" onclick="location.href='@Url.Action("NotImplementedYet", "Home")'"/> 
         </div>
         <div>
             @Html.Label("", (string)ViewBag.DateCreated, new { @class = "post-DateLabel" })
@@ -30,6 +30,8 @@
         </div>
         <br />
     </div>
+
+    <hr />
 
     @* Make a comment here *@
     @using (Html.BeginForm("PostComment", "Post", FormMethod.Post))
@@ -39,17 +41,18 @@
                 <br />
                 @*@{Model.PostId = ViewBag.id;}*@
                 @Html.HiddenFor(m => m.PostId)
-                @Html.TextAreaFor(m => m.Text, 4, 0, new { @class = "post-TextArea-Standard", placeholder = "Write a comment here..." })
+                @Html.TextAreaFor(m => m.Text, 4, 0, new { @class = "standard-TextArea-Size", placeholder = "Write a comment here..." })
                 @*@Html.TextArea("PostCommentArea", "", 4, 0, new { @class = "post-TextArea-Standard", placeholder = "Write a comment here..." })*@
             </div>
             <div class="post-BtnFloat">
-                <input type="submit" name="Post Comment" value="Post Comment" class="post-Btn-Size btn" />
+                <input type="submit" name="Post Comment" value="Post Comment" class="standard-Btn-Colour standard-Btn-border post-Btn-Size btn" />
             </div>
             <br />
         </div>
     }
 
     <hr />
+
     @* View the comments here *@
     @foreach (SolvrLibrary.Comment item in ViewBag.CommentList)
     {
@@ -70,7 +73,7 @@
                 @*@Html.TextArea(m => m.Text, 5, 0, new { @readonly = "readonly", @class = "post-TextArea-View" })*@
             </div>
             <div class="post-BtnFloat">
-                <input type="submit" name="Report Comment" value="Report" class="post-Btn-Size btn" />
+                <input type="submit" name="Report Comment" value="Report" class="standard-Btn-Colour standard-Btn-border post-Btn-Size btn" />
             </div>
             @Html.Label("", (item.DateCreated.ToShortTimeString() + " " + item.DateCreated.ToShortDateString()), new { @class = "post-DateLabel" })
             @*@Html.Label(m => m.Datecreated, new { @class = "post-DateLabel" })*@

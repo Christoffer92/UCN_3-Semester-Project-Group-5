@@ -76,5 +76,6 @@ namespace SolvrLibrary
         User GetUser(int userId);
         IEnumerable<Comment> GetComments(int iD);
         Comment CreateComment(Comment c);
+        SolvrComment CreateSolvrComment(SolvrComment sc);
     }
 }

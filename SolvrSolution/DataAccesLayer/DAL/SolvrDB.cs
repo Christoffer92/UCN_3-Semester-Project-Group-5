@@ -115,6 +115,16 @@ namespace SolvrLibrary
             return new ModelBuilder().BuildCommentList(postId);
         }
 
+        public SolvrComment CreateSolvrComment(SolvrComment sc)
+        {
+            Comments.InsertOnSubmit(sc);
+            SubmitChanges();
+            return GetSolvrComment(sc.Id);
+        }
 
+        public SolvrComment GetSolvrComment(int id)
+        {
+            return new ModelBuilder().BuildComment<SolvrComment>(id);
+        }
     }
 }

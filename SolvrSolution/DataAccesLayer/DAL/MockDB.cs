@@ -105,6 +105,11 @@ namespace SolvrLibrary
         {
             throw new NotImplementedException();
         }
+
+        public SolvrComment CreateSolvrComment(SolvrComment sc)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     class MockDBContainer

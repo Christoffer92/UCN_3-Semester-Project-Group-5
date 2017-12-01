@@ -101,13 +101,25 @@ namespace SolvrWebClient.Controllers
             }
         }
 
-        public ActionResult PostComment(CommentViewModel model)
+
+        public ActionResult PostComment(CommentViewModel model, string comment)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    CreateComment(model);
+                    if (comment.Equals("Post Comment"))
+                    {
+                        CreateComment(model);
+                    }
+                    else if(comment.Equals("Apply"))
+                    {
+                        CreateSolvr(model);
+                    }
+                    else
+                    {
+                        return View();
+                    }
                 }
             }
             catch (Exception e)
@@ -131,6 +143,20 @@ namespace SolvrWebClient.Controllers
             c.UserId = c.User.Id;
 
             DB.CreateComment(c);
+        }
+
+        private void CreateSolvr(CommentViewModel model)
+        {
+            SolvrComment sc = new SolvrComment();
+            sc.Text = model.Text;
+            sc.PostId = model.PostId;
+
+            //TODO: Connect a user to this method
+            //p.User = something goes here
+            sc.User = DB.GetUser();
+            sc.UserId = sc.User.Id;
+
+            DB.CreateSolvrComment(sc);
         }
 
         //public ActionResult Index(Post post)
