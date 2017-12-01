@@ -47,14 +47,18 @@ namespace SolvrLibrary
             throw new NotImplementedException();
         }
 
-        public void CreatePost(Post post)
+        public Post CreatePost(Post post)
         {
-            throw new NotImplementedException();
+            Posts.InsertOnSubmit(post);
+            SubmitChanges();
+            return post;
         }
 
-        public void CreatePhysicalPost(PhysicalPost pPost)
+        public PhysicalPost CreatePhysicalPost(PhysicalPost physicalPost)
         {
-            throw new NotImplementedException();
+            Posts.InsertOnSubmit(physicalPost);
+            SubmitChanges();
+            return GetPhysicalPost(physicalPost.Id);
         }
 
         public Post GetPost(int id)
@@ -62,14 +66,31 @@ namespace SolvrLibrary
             return new ModelBuilder().BuildPost<Post>(id);
         }
 
+        public PhysicalPost GetPhysicalPost(int id)
+        {
+            return new ModelBuilder().BuildPost<PhysicalPost>(id);
+        }
+
         public Post GetPost()
         {
-            throw new NotImplementedException();
+            return Posts.OfType<Post>().Last();
+        }
+
+        public PhysicalPost GetPhysicalPost()
+        {
+            return Posts.OfType<PhysicalPost>().Last();
         }
 
         public IEnumerable<Category> GetAllCategories()
         {
-            throw new NotImplementedException();
+            return Categories.ToList<Category>();
+        }
+
+        public User GetUser()
+        {
+            //TODO Improve
+            int lastID = Users.Count();
+            return new ModelBuilder().BuildUser(lastID);
         }
     }
 }

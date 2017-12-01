@@ -34,7 +34,7 @@ namespace SolvrLibrary
             return MockDBContainer.Instance.GetLastPhysicalPost();
         }
 
-        public void CreatePost(User expectedUser, string expectedPostTitle, string expectedPostDescription, Category expectedCategory, List<string> expectedTagsList)
+        public Post CreatePost(User expectedUser, string expectedPostTitle, string expectedPostDescription, Category expectedCategory, List<string> expectedTagsList)
         {
             Post p = new Post();
             p.User = expectedUser;
@@ -43,7 +43,7 @@ namespace SolvrLibrary
             p.Category = expectedCategory;
             p.Tags = expectedTagsList;
 
-            MockDBContainer.Instance.AddPost(p);
+            return MockDBContainer.Instance.AddPost(p);
         }
 
         public IEnumerable<Category> GetAllCategories()
@@ -51,9 +51,9 @@ namespace SolvrLibrary
             return MockDBContainer.Instance.GetAllCategories();
         }
 
-        public void CreatePost(Post post)
+        public Post CreatePost(Post post)
         {
-            MockDBContainer.Instance.CreatePost(post);
+            return MockDBContainer.Instance.AddPost(post);
         }
 
         public Category GetCategory(int id)
@@ -66,9 +66,9 @@ namespace SolvrLibrary
             return MockDBContainer.Instance.GetCategory(name);
         }
 
-        public void CreatePhysicalPost(PhysicalPost pPost)
+        public PhysicalPost CreatePhysicalPost(PhysicalPost pPost)
         {
-            MockDBContainer.Instance.CreatePhysicalPost(pPost);
+           return MockDBContainer.Instance.AddPhysicalPost(pPost);
         }
 
         public Post GetPost(int id)
@@ -79,6 +79,11 @@ namespace SolvrLibrary
         public Post GetPost()
         {
             return MockDBContainer.Instance.GetPost();
+        }
+
+        public User GetUser()
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -129,39 +134,40 @@ namespace SolvrLibrary
         
 
         #region Create methods
-        internal void CreatePost(Post post)
-        {
-            int counterId = 0;
+        //internal Post CreatePost(Post post)
+        //{
+        //    int counterId = 0;
 
-            foreach (Post item in Posts)
-            {
-                if (item.Id > counterId)
-                {
-                    counterId = item.Id;
-                }
-            }
+        //    foreach (Post item in Posts)
+        //    {
+        //        if (item.Id > counterId)
+        //        {
+        //            counterId = item.Id;
+        //        }
+        //    }
 
-            post.Id = counterId + 1;
+        //    post.Id = counterId + 1;
 
-            Posts.Add(post);
-        }
+        //    Posts.Add(post);
+        //    return post;
+        //}
 
-        internal void CreatePhysicalPost(PhysicalPost pPost)
-        {
-            int counterId = 0;
+        //internal void CreatePhysicalPost(PhysicalPost pPost)
+        //{
+        //    int counterId = 0;
 
-            foreach (PhysicalPost item in PhysicalPosts)
-            {
-                if (item.Id > counterId)
-                {
-                    counterId = item.Id;
-                }
-            }
+        //    foreach (PhysicalPost item in PhysicalPosts)
+        //    {
+        //        if (item.Id > counterId)
+        //        {
+        //            counterId = item.Id;
+        //        }
+        //    }
 
-            pPost.Id = counterId + 1;
+        //    pPost.Id = counterId + 1;
 
-            PhysicalPosts.Add(pPost);
-        }
+        //    PhysicalPosts.Add(pPost);
+        //}
 
 
 
@@ -183,7 +189,7 @@ namespace SolvrLibrary
             Users.Add(_user);
         }
 
-        internal void AddPost(Post _post)
+        internal Post AddPost(Post _post)
         {
             if (Posts.Count == 0)
             {
@@ -195,9 +201,10 @@ namespace SolvrLibrary
             }
 
             Posts.Add(_post);
+            return _post;
         }
 
-        internal void AddPhysicalPost(PhysicalPost _post)
+        internal PhysicalPost AddPhysicalPost(PhysicalPost _post)
         {
             if (PhysicalPosts.Count == 0)
             {
@@ -209,6 +216,7 @@ namespace SolvrLibrary
             }
 
             PhysicalPosts.Add(_post);
+            return _post;
         }
 
         internal void AddCategory(Category _category)
