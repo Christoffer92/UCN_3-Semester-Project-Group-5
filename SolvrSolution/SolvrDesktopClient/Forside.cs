@@ -106,5 +106,105 @@ namespace SolvrDesktopClient
         {
 
         }
+
+        private void btnRefreshTable_Click(object sender, EventArgs e)
+        {
+
+            Report r = new Report
+            {
+                Id = 13,
+                Title = "Verbal Harasement",
+                Description = "he said i was dumb and should uninstall life",
+                DateCreated = DateTime.Now,
+                Type = "Comment"
+            };
+            Report r2 = new Report
+            {
+                Id = 23,
+                Title = "Spam",
+                Description = "tttasdsadahould uninstall life",
+                DateCreated = DateTime.Now,
+                Type = "Post"
+            };
+            Report r3 = new Report
+            {
+                Id = 33,
+                Title = "Inappropate picture",
+                Description = "he said i was dumb and should uninstall life",
+                DateCreated = DateTime.Now,
+                Type = "User"
+            };
+
+            var desktopController = new Object();
+            List<Report> reports = new List<Report>();//desktopController.GetAllReports();
+            dataTable.Rows.Clear();
+
+            reports.Add(r);
+            reports.Add(r2);
+            reports.Add(r3);
+            DataGridViewButtonCell btn = new DataGridViewButtonCell();
+            //btn = btnAdminComment;
+
+
+
+
+            foreach (Report report in reports)
+            {
+                dataTable.Rows.Add(report.Id, report.Title, report.Type, report.DateCreated);
+            }
+
+            btnRefreshTable.Enabled = false;
+            timerRefreshTimeOut.Start();
+        }
+
+
+
+
+
+        //just for semi testing.
+             public class Report
+            {
+            public int Id { get; set; }
+            public string Title { get; set; }
+            public string Description { get; set; }
+            public DateTime DateCreated { get; set; }
+            public string Type { get; set; }
+
+            public Report()
+            { }
+                    
+            }
+
+
+
+        private void dataTable_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var senderGrid = (DataGridView)sender;
+            string type = (string)dataTable[2, e.RowIndex].Value;
+
+                if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
+                    e.RowIndex >= 0)
+                {
+                    if (type.Equals("Comment"))
+                    {
+                        MessageBox.Show("Not Implementet yet.", "Error");
+                    }
+                    if (type.Equals("Post"))
+                    {
+                        MessageBox.Show("Not Implementet yet.", "Error");
+
+                    }
+                    if (type.Equals("User"))
+                    {
+                        MessageBox.Show("Not Implementet yet.", "Error");
+                    }
+            }
+        }
+
+        private void timerRefreshTimeOut_Tick(object sender, EventArgs e)
+        {
+            btnRefreshTable.Enabled = true;
+        }
     }
-}
+    }
+

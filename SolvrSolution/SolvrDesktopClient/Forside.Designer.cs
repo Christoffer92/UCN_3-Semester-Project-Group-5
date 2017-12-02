@@ -69,14 +69,16 @@
             this.lblConnection = new System.Windows.Forms.Label();
             this.comboBoxTypes = new System.Windows.Forms.ComboBox();
             this.dataTable = new System.Windows.Forms.DataGridView();
-            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Title = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.administrateReport = new System.Windows.Forms.DataGridViewButtonColumn();
             this.txtBoxSearch = new System.Windows.Forms.TextBox();
             this.timerConnectionStatus = new System.Windows.Forms.Timer(this.components);
             this.btnRefreshTable = new System.Windows.Forms.Button();
             this.timerOverview = new System.Windows.Forms.Timer(this.components);
+            this.timerRefreshTimeOut = new System.Windows.Forms.Timer(this.components);
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Title = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dateCreated = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.administrateReport = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxTitle)).BeginInit();
             this.grpBoxReports.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable)).BeginInit();
@@ -509,13 +511,49 @@
             this.id,
             this.Title,
             this.Type,
+            this.dateCreated,
             this.administrateReport});
             this.dataTable.Location = new System.Drawing.Point(412, 205);
             this.dataTable.Name = "dataTable";
             this.dataTable.ReadOnly = true;
             this.dataTable.RowTemplate.Height = 24;
-            this.dataTable.Size = new System.Drawing.Size(528, 456);
+            this.dataTable.Size = new System.Drawing.Size(802, 456);
             this.dataTable.TabIndex = 17;
+            this.dataTable.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataTable_CellContentClick);
+            // 
+            // txtBoxSearch
+            // 
+            this.txtBoxSearch.Enabled = false;
+            this.txtBoxSearch.Location = new System.Drawing.Point(412, 177);
+            this.txtBoxSearch.Name = "txtBoxSearch";
+            this.txtBoxSearch.Size = new System.Drawing.Size(109, 22);
+            this.txtBoxSearch.TabIndex = 18;
+            this.txtBoxSearch.Text = "Search...";
+            // 
+            // timerConnectionStatus
+            // 
+            this.timerConnectionStatus.Interval = 10000;
+            this.timerConnectionStatus.Tick += new System.EventHandler(this.timerConnectionStatus_Tick);
+            // 
+            // btnRefreshTable
+            // 
+            this.btnRefreshTable.Location = new System.Drawing.Point(729, 175);
+            this.btnRefreshTable.Name = "btnRefreshTable";
+            this.btnRefreshTable.Size = new System.Drawing.Size(135, 23);
+            this.btnRefreshTable.TabIndex = 20;
+            this.btnRefreshTable.Text = "Refresh Table";
+            this.btnRefreshTable.UseVisualStyleBackColor = true;
+            this.btnRefreshTable.Click += new System.EventHandler(this.btnRefreshTable_Click);
+            // 
+            // timerOverview
+            // 
+            this.timerOverview.Interval = 1000;
+            this.timerOverview.Tick += new System.EventHandler(this.timerOverview_Tick);
+            // 
+            // timerRefreshTimeOut
+            // 
+            this.timerRefreshTimeOut.Interval = 5000;
+            this.timerRefreshTimeOut.Tick += new System.EventHandler(this.timerRefreshTimeOut_Tick);
             // 
             // id
             // 
@@ -536,6 +574,14 @@
             this.Type.Name = "Type";
             this.Type.ReadOnly = true;
             this.Type.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Type.Width = 200;
+            // 
+            // dateCreated
+            // 
+            this.dateCreated.HeaderText = "Date Created";
+            this.dateCreated.Name = "dateCreated";
+            this.dateCreated.ReadOnly = true;
+            this.dateCreated.Width = 200;
             // 
             // administrateReport
             // 
@@ -545,34 +591,6 @@
             this.administrateReport.ReadOnly = true;
             this.administrateReport.Text = "";
             this.administrateReport.ToolTipText = "Buttons to Administrate the specific Report.";
-            // 
-            // txtBoxSearch
-            // 
-            this.txtBoxSearch.Enabled = false;
-            this.txtBoxSearch.Location = new System.Drawing.Point(412, 177);
-            this.txtBoxSearch.Name = "txtBoxSearch";
-            this.txtBoxSearch.Size = new System.Drawing.Size(109, 22);
-            this.txtBoxSearch.TabIndex = 18;
-            this.txtBoxSearch.Text = "Search...";
-            // 
-            // timerConnectionStatus
-            // 
-            this.timerConnectionStatus.Interval = 10000;
-            this.timerConnectionStatus.Tick += new System.EventHandler(this.timerConnectionStatus_Tick);
-            // 
-            // btnRefreshTable
-            // 
-            this.btnRefreshTable.Location = new System.Drawing.Point(729, 175);
-            this.btnRefreshTable.Name = "btnRefreshTable";
-            this.btnRefreshTable.Size = new System.Drawing.Size(92, 23);
-            this.btnRefreshTable.TabIndex = 20;
-            this.btnRefreshTable.Text = "Refresh";
-            this.btnRefreshTable.UseVisualStyleBackColor = true;
-            // 
-            // timerOverview
-            // 
-            this.timerOverview.Interval = 1000;
-            this.timerOverview.Tick += new System.EventHandler(this.timerOverview_Tick);
             // 
             // FormForside
             // 
@@ -645,13 +663,15 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label lblUsersTotalAmount;
-        private System.Windows.Forms.DataGridViewTextBoxColumn id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Title;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Type;
-        private System.Windows.Forms.DataGridViewButtonColumn administrateReport;
         private System.Windows.Forms.Timer timerConnectionStatus;
         private System.Windows.Forms.Button btnRefreshTable;
         private System.Windows.Forms.Timer timerOverview;
+        private System.Windows.Forms.Timer timerRefreshTimeOut;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Title;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Type;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dateCreated;
+        private System.Windows.Forms.DataGridViewButtonColumn administrateReport;
     }
 }
 
