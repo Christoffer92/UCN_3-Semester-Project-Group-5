@@ -102,7 +102,7 @@ namespace SolvrWebClient.Controllers
         }
 
 
-        public ActionResult PostComment(CommentViewModel model, string comment)
+        public ActionResult PostComment(CommentViewModel model, string comment = "Post Comment")
         {
             try
             {

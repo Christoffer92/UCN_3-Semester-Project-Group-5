@@ -137,26 +137,46 @@ namespace SolvrWebClient.Controllers
             return RedirectToAction("Index", "Post", model);
         }
 
-        //// GET: CreatePost/Edit/id
-        //public ActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
+        // GET: CreatePost/Edit/id
+        public ActionResult EditPost(int id = 0)
+        {
+            Post post = DB.GetPost(id);
+            PostViewModel viewPost = new PostViewModel();
 
-        //// POST: CreatePost/Edit/id
-        //[HttpPost]
-        //public ActionResult Edit(int id, FormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add update logic here
+            viewPost.Title = post.Title;
+            viewPost.Description = post.Description;
 
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+            string tags = "";
+            foreach (string item in post.Tags)
+            {
+                tags = tags + " " + item;
+            }
+
+            viewPost.TagsString = tags;
+
+            viewPost.postId = id;
+            viewPost.CategoryId = post.CategoryId;
+
+            ViewBag.CategoryName = post.Category.Name;
+
+
+            return View(viewPost);
+        }
+
+        // POST: CreatePost/Edit/id
+        [HttpPost]
+        public ActionResult Edit(PostViewModel model)
+        {
+            try
+            {
+                // TODO: Add update logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
     }
 }

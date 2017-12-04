@@ -20,7 +20,7 @@
             @*@Html.TextArea(m => m.Description, 10, 0, new { @readonly = "readonly", @class = "post-TextArea-Standard" })*@
         </div>
         <div class="post-BtnFloat">
-            <input type="button" name="Report Post" value="Edit" style="margin-right: 10px" class="standard-Btn-Colour standard-Btn-border post-Btn-Size btn" onclick="location.href='@Url.Action("NotImplementedYet", "Home")'"/>
+            <input type="button" name="Report Post" value="Edit" style="margin-right: 10px" class="standard-Btn-Colour standard-Btn-border post-Btn-Size btn" onclick="location.href='@Url.Action("EditPost", "CreatePost", new { ID = Model.PostId })'"/>
             
             <input type="button" name="Report Post" value="Report" class="standard-Btn-Colour standard-Btn-border post-Btn-Size btn" onclick="location.href='@Url.Action("NotImplementedYet", "Home")'"/> 
         </div>

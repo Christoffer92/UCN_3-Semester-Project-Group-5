@@ -22,6 +22,8 @@ namespace SolvrWebClient.Models
 
         [StringLength(300)]
         public string TagsString { get; set; }
+
+        public int postId { get; set; }
     }
 
     public class PhysicalPostViewModel
