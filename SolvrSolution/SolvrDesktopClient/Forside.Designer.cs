@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormForside));
             this.picBoxTitle = new System.Windows.Forms.PictureBox();
             this.grpBoxReports = new System.Windows.Forms.GroupBox();
@@ -365,7 +366,6 @@
             this.lblPostsStatus.Size = new System.Drawing.Size(36, 26);
             this.lblPostsStatus.TabIndex = 2;
             this.lblPostsStatus.Text = "    ";
-            this.lblPostsStatus.Click += new System.EventHandler(this.lblPostsStatus_Click);
             // 
             // label5
             // 
@@ -385,7 +385,6 @@
             this.label4.Size = new System.Drawing.Size(276, 26);
             this.label4.TabIndex = 9;
             this.label4.Text = "______________________";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // lblPostsReportedAmount
             // 
@@ -396,7 +395,6 @@
             this.lblPostsReportedAmount.Size = new System.Drawing.Size(23, 25);
             this.lblPostsReportedAmount.TabIndex = 9;
             this.lblPostsReportedAmount.Text = "0";
-            this.lblPostsReportedAmount.Click += new System.EventHandler(this.lblPostsReportedAmount_Click);
             // 
             // lblReportsResolvedAmount
             // 
@@ -427,7 +425,6 @@
             this.lblReportsUnresolved.Size = new System.Drawing.Size(111, 25);
             this.lblReportsUnresolved.TabIndex = 7;
             this.lblReportsUnresolved.Text = "Unresolved";
-            this.lblReportsUnresolved.Click += new System.EventHandler(this.lblReportsUnresolved_Click);
             // 
             // lblReportsUnresolvedAmount
             // 
@@ -496,7 +493,7 @@
             "Posts",
             "Comments",
             "Users"});
-            this.comboBoxTypes.Location = new System.Drawing.Point(549, 175);
+            this.comboBoxTypes.Location = new System.Drawing.Point(549, 170);
             this.comboBoxTypes.Name = "comboBoxTypes";
             this.comboBoxTypes.Size = new System.Drawing.Size(150, 24);
             this.comboBoxTypes.TabIndex = 16;
@@ -513,18 +510,18 @@
             this.Type,
             this.dateCreated,
             this.administrateReport});
-            this.dataTable.Location = new System.Drawing.Point(412, 205);
+            this.dataTable.Location = new System.Drawing.Point(400, 200);
             this.dataTable.Name = "dataTable";
             this.dataTable.ReadOnly = true;
             this.dataTable.RowTemplate.Height = 24;
-            this.dataTable.Size = new System.Drawing.Size(802, 456);
+            this.dataTable.Size = new System.Drawing.Size(800, 460);
             this.dataTable.TabIndex = 17;
             this.dataTable.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataTable_CellContentClick);
             // 
             // txtBoxSearch
             // 
             this.txtBoxSearch.Enabled = false;
-            this.txtBoxSearch.Location = new System.Drawing.Point(412, 177);
+            this.txtBoxSearch.Location = new System.Drawing.Point(412, 172);
             this.txtBoxSearch.Name = "txtBoxSearch";
             this.txtBoxSearch.Size = new System.Drawing.Size(109, 22);
             this.txtBoxSearch.TabIndex = 18;
@@ -537,7 +534,7 @@
             // 
             // btnRefreshTable
             // 
-            this.btnRefreshTable.Location = new System.Drawing.Point(729, 175);
+            this.btnRefreshTable.Location = new System.Drawing.Point(730, 170);
             this.btnRefreshTable.Name = "btnRefreshTable";
             this.btnRefreshTable.Size = new System.Drawing.Size(135, 23);
             this.btnRefreshTable.TabIndex = 20;
@@ -557,6 +554,8 @@
             // 
             // id
             // 
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.id.DefaultCellStyle = dataGridViewCellStyle1;
             this.id.HeaderText = "ID";
             this.id.Name = "id";
             this.id.ReadOnly = true;
@@ -567,6 +566,7 @@
             this.Title.HeaderText = "Title";
             this.Title.Name = "Title";
             this.Title.ReadOnly = true;
+            this.Title.Width = 130;
             // 
             // Type
             // 
@@ -574,14 +574,14 @@
             this.Type.Name = "Type";
             this.Type.ReadOnly = true;
             this.Type.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Type.Width = 200;
+            this.Type.Width = 130;
             // 
             // dateCreated
             // 
             this.dateCreated.HeaderText = "Date Created";
             this.dateCreated.Name = "dateCreated";
             this.dateCreated.ReadOnly = true;
-            this.dateCreated.Width = 200;
+            this.dateCreated.Width = 130;
             // 
             // administrateReport
             // 
@@ -591,6 +591,7 @@
             this.administrateReport.ReadOnly = true;
             this.administrateReport.Text = "";
             this.administrateReport.ToolTipText = "Buttons to Administrate the specific Report.";
+            this.administrateReport.Width = 115;
             // 
             // FormForside
             // 

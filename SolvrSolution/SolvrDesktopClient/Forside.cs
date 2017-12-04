@@ -12,34 +12,12 @@ namespace SolvrDesktopClient
 {
     public partial class FormForside : Form
     {
-
-        int i = 0;
+        int i = 0; //Just temp test data.
         public FormForside()
         {
             InitializeComponent();
             timerConnectionStatus.Start();
             timerOverview.Start();
-        }
-
-
-        private void toolTipReportsLbl_Popup(object sender, PopupEventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblPostsStatus_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblReportsUnresolved_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void timerConnectionStatus_Tick(object sender, EventArgs e)
@@ -73,7 +51,7 @@ namespace SolvrDesktopClient
             lblUsersTotalAmount.Text        = i.ToString();
             UpdateStatusLbls();
 
-            i++; //only to see something.
+            i++; //Just temp test data.
         }
 
         private void UpdateStatusLbls()
@@ -97,19 +75,9 @@ namespace SolvrDesktopClient
                 lblStatus.BackColor = Color.Red;
         }
 
-        private void lblPostsReportedAmount_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void progressBarOverviewStatus_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnRefreshTable_Click(object sender, EventArgs e)
         {
-
+            //just temp test data.
             Report r = new Report
             {
                 Id = 13,
@@ -135,47 +103,26 @@ namespace SolvrDesktopClient
                 Type = "User"
             };
 
+            //TODO Need to contact the database and get all reports.
             var desktopController = new Object();
             List<Report> reports = new List<Report>();//desktopController.GetAllReports();
             dataTable.Rows.Clear();
 
+            //Just temp test data.
             reports.Add(r);
             reports.Add(r2);
             reports.Add(r3);
-            DataGridViewButtonCell btn = new DataGridViewButtonCell();
-            //btn = btnAdminComment;
 
-
-
-
+            //Fills the dataTable with the reports.
             foreach (Report report in reports)
             {
                 dataTable.Rows.Add(report.Id, report.Title, report.Type, report.DateCreated);
             }
 
+            //Sets the timeout for the refresh button so it cant be spammed.
             btnRefreshTable.Enabled = false;
             timerRefreshTimeOut.Start();
         }
-
-
-
-
-
-        //just for semi testing.
-             public class Report
-            {
-            public int Id { get; set; }
-            public string Title { get; set; }
-            public string Description { get; set; }
-            public DateTime DateCreated { get; set; }
-            public string Type { get; set; }
-
-            public Report()
-            { }
-                    
-            }
-
-
 
         private void dataTable_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -198,7 +145,7 @@ namespace SolvrDesktopClient
                     {
                         MessageBox.Show("Not Implementet yet.", "Error");
                     }
-            }
+                }
         }
 
         private void timerRefreshTimeOut_Tick(object sender, EventArgs e)
@@ -206,5 +153,17 @@ namespace SolvrDesktopClient
             btnRefreshTable.Enabled = true;
         }
     }
-    }
 
+    //Just temp test data
+    public class Report
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public DateTime DateCreated { get; set; }
+        public string Type { get; set; }
+
+        public Report()
+        { }
+    }
+}
