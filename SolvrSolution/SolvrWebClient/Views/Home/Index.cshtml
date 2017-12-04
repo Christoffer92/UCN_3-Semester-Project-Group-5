@@ -7,58 +7,34 @@
             I am the side box fear me
         </div>
         <div class="home-main">
-            @*Home-column sætter ind i tre kolonner som fylder 33,33% af box home-main*@
-            @*Alt her under skal ind i en foreach loop*@
-            <div class="home-column">
-                @*Home-main-content sætter alt indhold ind i en boks*@
-                <div class="home-main-content">
-                    <div>
-                        <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
-                        @*Name skal være en link*@
-                        @Html.Label("BrianGotchu")<br />
-                        Category:
-                        @*Category skal hentes fra den valgte pos*@
-                        @Html.Label("Computer")
-                    </div>
-                    <div>
-                        @*Text area her er description fra hentede postering og skal være readonly*@
-                        @Html.TextArea("ViewCommentArea","ViewCommentArea", new { @readonly = "readonly", @class = "standard-TextArea-Size" })
-                    </div>
-                    <div>
-                        @*Den her knap linker til posteringen*@
-                        <input type="submit" name="View post" value="ViewPost" class="standard-Btn-border btn standard-Btn-Colour" style="float:right"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-       @* <div class="home-main">
-            @foreach (@*Der skal indsættes noget her*@)
+            @foreach (SolvrLibrary.Post item in ViewBag.PostList)
             {
                 @*Home-column sætter ind i tre kolonner som fylder 33,33% af box home-main*@
-               @* <div class="home-column">
-                        <div class="home-main-content">
-                            <div>
-                                <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
-                                @Html.Label("", item.User.Username)
-                            </div>
-                            <div class="post-VoteFloat">
-                                <img src="~/Content/Images/upvote-downvote.png" class="post-Vote" />
-                                @Html.Label("", "0", new { @class = "post-VoteLabel" })
-                                <img src="~/Content/Images/downvote.png" class="post-Vote" />
-                            </div>
-                            <div class="post-CommentBox-TextArea">
-                                @Html.TextArea("ViewCommentArea", item.Text, 5, 0, new { @readonly = "readonly", @class = "post-TextArea-View" })
-                            </div>
-                            <div class="post-BtnFloat">
-                                <input type="submit" name="Report Comment" value="Report" class="post-Btn-Size btn" />
-                            </div>
-                            @Html.Label("", (item.DateCreated.ToShortTimeString() + " " + item.DateCreated.ToShortDateString()), new { @class = "post-DateLabel" })
-                            <br />
-                            <br />
+                @*Alt her under skal ind i en foreach loop*@
+                <div class="home-column" onclick="location.href='@Url.Action("Index", "Post", new { ID = item.Id })'">
+                    @*Home-main-content sætter alt indhold ind i en boks*@
+                    <div class="home-main-content">
+                        <div>
+                            @Html.Label("", item.Title)
+                        </div>
+                        <div>
+                            <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
+                            @*Name skal være en link*@
+                            @Html.Label("", item.User.Username)<br />
+                            Category:
+                            @*Category skal hentes fra den valgte pos*@
+                            @Html.Label("", item.Category.Name)
+                        </div>
+                        <div>
+                            @*Text area her er description fra hentede postering og skal være readonly*@
+                            @Html.TextArea("ViewCommentArea", item.Description, new { @readonly = "readonly", @class = "standard-TextArea-Size" })
                         </div>
                     </div>
-                }
-            </div>*@
+                </div>
+            }
+            @*Den her knap linker til posteringen*@
+            <input type="button" name="View post" value="Load more Pages" class="standard-Btn-border btn standard-Btn-Colour" onclick="location.href='@Url.Action("Index", "Home", new { loadCount = ViewBag.LoadCount + 24 })'"/>
+        </div>
+    </div>
   </body>
 
