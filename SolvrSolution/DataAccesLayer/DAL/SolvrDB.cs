@@ -204,6 +204,7 @@ namespace SolvrLibrary
                      select comment
                     ).First();
                 Query.IsAccepted = sc.IsAccepted;
+                Query.TimeAccepted = sc.TimeAccepted;
 
                 //TODO runs an error when updating the lock.
                 //Query.Text = sc.Text;

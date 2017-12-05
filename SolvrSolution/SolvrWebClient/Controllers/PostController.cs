@@ -172,6 +172,7 @@ namespace SolvrWebClient.Controllers
             }
             else
             {
+                sc.TimeAccepted = DateTime.Now;
                 sc.IsAccepted = true;
             }
 
