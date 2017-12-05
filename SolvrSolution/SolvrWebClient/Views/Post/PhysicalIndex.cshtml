@@ -29,6 +29,7 @@
         <br />
     </div>
 
+    @{/* TODO: Only user who doesnt own the post and is chosen as a solvr can view this */}
     @* View the secret description here *@
     @if (true)
     {
@@ -64,7 +65,7 @@
             </div>
             <div class="post-BtnFloat">
                 <input type="submit" name="comment" value="Post Comment" style="margin-right: 10px" class="standard-Btn-Colour standard-Btn-border btn"/>
-                @{/* TODO: Only user who doesnt own the post can choose to edit and view this */}
+                @{/* TODO: Only user who doesnt own the post can choose to apply */}
                 <input type="submit" name="comment" value="Apply" class="standard-Btn-Colour standard-Btn-border btn"/>
             </div>
             <br />
