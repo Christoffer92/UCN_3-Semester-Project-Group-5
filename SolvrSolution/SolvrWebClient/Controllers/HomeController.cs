@@ -3,13 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using SolvrLibrary;
 
 namespace SolvrWebClient.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ISolvrDB DB;
+
+        public HomeController()
         {
+            DB = new SolvrDB();
+        }
+        public HomeController(ISolvrDB _DB)
+        {
+            DB = _DB;
+        }
+
+        public ActionResult Index(int loadCount = 0)
+        {
+            IEnumerable<Post> posts = DB.GetPostsByBumpTime(loadCount);
+            ViewBag.PostList = posts;
+            ViewBag.LoadCount = loadCount;
+
             return View();
         }
 

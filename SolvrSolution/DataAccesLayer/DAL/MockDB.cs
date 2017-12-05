@@ -101,7 +101,7 @@ namespace SolvrLibrary
             throw new NotImplementedException();
         }
 
-        public User GetUser(string Email)
+        public IEnumerable<Post> GetPostsByBumpTime(int loadCount)
         {
             throw new NotImplementedException();
         }
@@ -392,7 +392,6 @@ namespace SolvrLibrary
 
         #endregion
     }
-
 
 
 }
