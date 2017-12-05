@@ -91,6 +91,11 @@ namespace SolvrLibrary
             return Categories.ToList<Category>();
         }
 
+        public List<Report> GetAllReports()
+        {
+            return Reports.ToList<Report>();
+        }
+
         public User GetUser()
         {
             //TODO Improve

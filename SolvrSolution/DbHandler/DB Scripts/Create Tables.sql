@@ -61,6 +61,7 @@ create table reports (
 	description varchar(2000),
 	dateCreated datetime,
 	reporttype VARCHAR(15),
+	isResolved BIT,
 	userid int FOREIGN KEY REFERENCES users(id),
 	postid int FOREIGN KEY REFERENCES posts(id),
 	commentid int FOREIGN KEY REFERENCES comments(id)

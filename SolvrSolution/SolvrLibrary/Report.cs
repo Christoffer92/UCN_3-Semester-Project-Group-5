@@ -50,6 +50,10 @@ namespace SolvrLibrary
         public string ReportType { get; set; }
 
         [DataMember]
+        [Column()]
+        public bool IsResolved { get; set; }
+
+        [DataMember]
         public User User { get; set; }
 
         [DataMember]
@@ -57,5 +61,7 @@ namespace SolvrLibrary
 
         [DataMember]
         public Post Post { get; set; }
+
+        
     }
 }

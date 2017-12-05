@@ -12,9 +12,12 @@ namespace SolvrServices
     public interface ISolvrServices
     {
         [OperationContract]
-        List<Report> GetReports();
+        List<Report> GetAllReports();
 
         [OperationContract]
         Report GetReport(int id);
+
+        [OperationContract]
+        bool IsConnectedToDatabase();
     }
 }

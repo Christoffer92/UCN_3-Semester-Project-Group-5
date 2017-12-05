@@ -13,14 +13,19 @@ namespace SolvrServices
     {
         readonly SolvrDB solvrDB = new SolvrDB();
 
-        public List<Report> GetReports()
+        public List<Report> GetAllReports()
         {
-            throw new NotImplementedException();
+            return solvrDB.GetAllReports();
         }
 
         public Report GetReport(int id)
         {
             return solvrDB.GetReport(id);
+        }
+
+        public bool IsConnectedToDatabase()
+        {
+            return solvrDB.DatabaseExists();
         }
 
         public void Dispose()
