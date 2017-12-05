@@ -76,5 +76,6 @@ namespace SolvrLibrary
         IEnumerable<Comment> GetComments(int iD);
         Comment CreateComment(Comment c);
         IEnumerable<Post> GetPostsByBumpTime(int loadCount);
+        User GetUser(string Email);
     }
 }

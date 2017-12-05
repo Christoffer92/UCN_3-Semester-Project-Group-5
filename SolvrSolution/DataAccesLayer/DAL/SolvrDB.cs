@@ -131,5 +131,16 @@ namespace SolvrLibrary
             }
             return postList;
         }
+        public User GetUser(string Email)
+        {
+            using (var DB = new SolvrDB())
+            {
+                var Query = (from user in DB.Users where user.Email == Email select user).First();
+                return new ModelBuilder().BuildUser(Query.Id);
+            }
+
+        }
     }
+
+
 }
