@@ -100,6 +100,11 @@ namespace SolvrLibrary
         {
             throw new NotImplementedException();
         }
+
+        public User GetUser(string Email)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     class MockDBContainer
@@ -387,6 +392,7 @@ namespace SolvrLibrary
 
         #endregion
     }
+
 
 
 }
