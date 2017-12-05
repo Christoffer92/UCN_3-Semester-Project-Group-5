@@ -21,8 +21,11 @@ namespace SolvrDesktopClient
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.Hide();
             forside.Show();
+            this.Hide();
+            btnIgnore.BackColor = SystemColors.Control;
+            btnDelete.BackColor = SystemColors.Control;
+            btnEdit.BackColor = SystemColors.Control;
         }
 
         private void btnIgnore_Click(object sender, EventArgs e)

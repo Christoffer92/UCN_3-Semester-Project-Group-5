@@ -114,13 +114,13 @@ namespace SolvrDesktopClient
                 {
                     if (type.Equals("comment"))
                     {
-                        this.Hide();
                         reportCommentForm.Show();
+                        this.Hide();
                     }
                     if (type.Equals("post"))
                     {
-                        this.Hide();
                         reportPostForm.Show();
+                        this.Hide();
 
                     }
                     if (type.Equals("user"))
