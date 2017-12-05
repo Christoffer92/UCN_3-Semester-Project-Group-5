@@ -17,5 +17,7 @@ namespace SolvrServices
         [OperationContract]
         Report GetReport(int id);
 
+        [OperationContract]
+        bool IsConnectedToDatabase();
     }
 }

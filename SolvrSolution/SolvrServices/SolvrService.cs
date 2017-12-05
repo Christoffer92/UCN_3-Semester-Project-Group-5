@@ -23,6 +23,11 @@ namespace SolvrServices
             return solvrDB.GetReport(id);
         }
 
+        public bool IsConnectedToDatabase()
+        {
+            return solvrDB.DatabaseExists();
+        }
+
         public void Dispose()
         {
             solvrDB.Dispose();

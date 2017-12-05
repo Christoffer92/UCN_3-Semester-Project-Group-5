@@ -10,8 +10,6 @@ namespace SolvrDesktopClient
 {
     public class DesktopController
     {
-
-        private List<Report> reports;
         private ISolvrServices proxy;
         public DesktopController()
         {

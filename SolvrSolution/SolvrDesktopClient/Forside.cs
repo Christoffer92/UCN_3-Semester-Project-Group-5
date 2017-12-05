@@ -13,20 +13,19 @@ namespace SolvrDesktopClient
 {
     public partial class FormForside : Form
     {
-        int i = 0; //Just temp test data.
         public FormForside()
         {
             InitializeComponent();
             timerConnectionStatus.Start();
             timerOverview.Start();
-            ISolvrServices proxy = new SolvrService();
-            lblWcfTest.Text = proxy.GetReport(1).Title;
         }
 
         private void timerConnectionStatus_Tick(object sender, EventArgs e)
         {
-            //TODO needs to get info if the connection to the database is up.
-            if (i%2 == 0)
+            ISolvrServices proxy = new SolvrService();
+            bool isConnected = proxy.IsConnectedToDatabase();
+
+            if (isConnected)
             {
                 lblConnectionStatus.BackColor = Color.Green;
             }
@@ -34,7 +33,6 @@ namespace SolvrDesktopClient
             {
                 lblConnectionStatus.BackColor = Color.Red;
             }
-            i++;
         }
 
         private void timerOverview_Tick(object sender, EventArgs e)
@@ -42,9 +40,7 @@ namespace SolvrDesktopClient
             DesktopController desktopController = new DesktopController();
             int[] reportCounts = desktopController.GetReportCounts();
 
-
-
-            //Gets the text from the labels  //TODO this needs to get some real data.
+            //Gets the text from the labels
             lblReportsUnresolvedAmount.Text = reportCounts[0].ToString();
             lblReportsResolvedAmount.Text   = reportCounts[1].ToString();
             lblReportsTotalAmount.Text      = reportCounts[2].ToString();
@@ -58,8 +54,6 @@ namespace SolvrDesktopClient
             lblUsersResolvedAmount.Text     = reportCounts[10].ToString();
             lblUsersTotalAmount.Text        = reportCounts[11].ToString();
             UpdateStatusLbls();
-
-            i++; //Just temp test data.
         }
 
         private void UpdateStatusLbls()
@@ -85,32 +79,6 @@ namespace SolvrDesktopClient
 
         private void btnRefreshTable_Click(object sender, EventArgs e)
         {
-            //just temp test data.
-            Report r = new Report
-            {
-                Id = 13,
-                Title = "Verbal Harasement",
-                Description = "he said i was dumb and should uninstall life",
-                DateCreated = DateTime.Now,
-                //Type = "Comment"
-            };
-            Report r2 = new Report
-            {
-                Id = 23,
-                Title = "Spam",
-                Description = "tttasdsadahould uninstall life",
-                DateCreated = DateTime.Now,
-                //Type = "Post"
-            };
-            Report r3 = new Report
-            {
-                Id = 33,
-                Title = "Inappropate picture",
-                Description = "he said i was dumb and should uninstall life",
-                DateCreated = DateTime.Now,
-                //Type = "User"
-            };
-
             DesktopController desktopController = new DesktopController();
             List<Report> reports = desktopController.GetAllReports();
             
@@ -121,6 +89,9 @@ namespace SolvrDesktopClient
                 dataTable.Rows.Add(report.Id, report.Title, report.ReportType, report.DateCreated);
             }
 
+            //Sorts the data by dateTime.
+            dataTable.Sort(dataTable.Columns[3], ListSortDirection.Ascending);
+
             //Sets the timeout for the refresh button so it cant be spammed.
             btnRefreshTable.Enabled = false;
             timerRefreshTimeOut.Start();
@@ -129,7 +100,9 @@ namespace SolvrDesktopClient
         private void dataTable_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             var senderGrid = (DataGridView)sender;
-            string type = (string)dataTable[2, e.RowIndex].Value;
+            if (e.RowIndex >= 0)
+            {
+                string type = (string)dataTable[2, e.RowIndex].Value;
 
                 if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
                     e.RowIndex >= 0)
@@ -148,6 +121,7 @@ namespace SolvrDesktopClient
                         MessageBox.Show("Not Implementet yet.", "Error");
                     }
                 }
+            }
         }
 
         private void timerRefreshTimeOut_Tick(object sender, EventArgs e)

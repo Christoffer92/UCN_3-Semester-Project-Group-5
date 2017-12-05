@@ -136,11 +136,11 @@ namespace DbHandler.Models
                 Title = subStrings[0],
                 Description = subStrings[1],
                 ReportType = subStrings[2],
-                DateCreated = SubstringToDateTime(subStrings[3]),
-                IsResolved = false,
-                UserId = Int32.Parse(subStrings[4]),
-                CommentId = Int32.Parse(subStrings[5]),
-                PostId = Int32.Parse(subStrings[6])
+                IsResolved = StringToBoolean(subStrings[3]),
+                DateCreated = SubstringToDateTime(subStrings[4]),
+                UserId = Int32.Parse(subStrings[5]),
+                CommentId = Int32.Parse(subStrings[6]),
+                PostId = Int32.Parse(subStrings[7])
             };
 
             return (T)(object)report;
