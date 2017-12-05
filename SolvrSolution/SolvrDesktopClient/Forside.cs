@@ -13,11 +13,16 @@ namespace SolvrDesktopClient
 {
     public partial class FormForside : Form
     {
+        private Form reportCommentForm;
+        private Form reportPostForm;
+
         public FormForside()
         {
             InitializeComponent();
             timerConnectionStatus.Start();
             timerOverview.Start();
+            reportCommentForm = new ReportCommentForm(this);
+            reportPostForm = new ReportPostForm(this);
         }
 
         private void timerConnectionStatus_Tick(object sender, EventArgs e)
@@ -109,11 +114,13 @@ namespace SolvrDesktopClient
                 {
                     if (type.Equals("comment"))
                     {
-                        MessageBox.Show("Not Implementet yet.", "Error");
+                        this.Hide();
+                        reportCommentForm.Show();
                     }
                     if (type.Equals("post"))
                     {
-                        MessageBox.Show("Not Implementet yet.", "Error");
+                        this.Hide();
+                        reportPostForm.Show();
 
                     }
                     if (type.Equals("user"))
