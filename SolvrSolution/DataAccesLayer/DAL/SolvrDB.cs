@@ -129,7 +129,7 @@ namespace SolvrLibrary
             return new ModelBuilder().BuildComment<SolvrComment>(id);
         }
 
-        public void Update(Post p)
+        public void UpdatePost(Post p)
         {
             using (var db = new SolvrContext())
             {
@@ -143,9 +143,9 @@ namespace SolvrLibrary
 
                 // Execute the query, and change the column values
                 // you want to change.ch
-                Query.Title = "test";
-                Query.Description = "Testing 124";
-                Query.CategoryId = 1;
+                Query.Title = p.Title;
+                Query.Description = p.Description;
+                Query.CategoryId = p.CategoryId;
                 // Insert any additional changes to column values.
 
                 // Query.Tags = p.Tags;
