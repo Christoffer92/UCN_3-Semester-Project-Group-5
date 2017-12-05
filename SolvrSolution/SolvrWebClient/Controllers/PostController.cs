@@ -159,6 +159,24 @@ namespace SolvrWebClient.Controllers
             DB.CreateSolvrComment(sc);
         }
 
+        public ActionResult ChooseSolvr(int ID=0)
+        {
+            SolvrComment sc = DB.GetComment<SolvrComment>(ID);
+
+            if (sc.IsAccepted)
+            {
+                sc.IsAccepted = false;
+            }
+            else
+            {
+                sc.IsAccepted = true;
+            }
+
+            DB.UpdateSolvrCommentLock(sc);
+
+            return RedirectToAction("Index", new { ID = sc.PostId });
+        }
+
         //public ActionResult Index(Post post)
         //{
         //    //Post post = DB.GetPost(ID);

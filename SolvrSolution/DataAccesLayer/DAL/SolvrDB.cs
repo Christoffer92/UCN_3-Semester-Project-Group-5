@@ -129,6 +129,30 @@ namespace SolvrLibrary
             return new ModelBuilder().BuildComment<SolvrComment>(id);
         }
 
+        public void UpdateSolvrCommentLock(SolvrComment sc)
+        {
+            using (var db = new SolvrContext())
+            {
+                // Query the database for the row to be updated.
+                var Query =
+                    (from comment
+                     in db.Comments.OfType<SolvrComment>()
+                     where comment.Id == sc.Id
+                     select comment
+                    ).First();
+                Query.IsAccepted = sc.IsAccepted;
+                // Submit the changes to the database.
+                try
+                {
+                    db.SubmitChanges();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+        }
+
         public void UpdatePost(Post p)
         {
             using (var db = new SolvrContext())
@@ -160,6 +184,11 @@ namespace SolvrLibrary
                     Console.WriteLine(e.Message);
                 }
             }
+        }
+
+        public T GetComment<T>(int ID)
+        {
+            return new ModelBuilder().BuildComment<T>(ID);
         }
     }
 }

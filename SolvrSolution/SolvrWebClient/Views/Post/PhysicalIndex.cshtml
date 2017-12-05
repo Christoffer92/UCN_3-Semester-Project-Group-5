@@ -102,14 +102,14 @@
         }
         else
         {
-            @{/* TODO: Choose og remove skal kun være visibel når den anden er skjult */}
+            /* TODO: Choose og remove skal kun være visibel når den anden er skjult */
             @*If sætningen indeholder den ikke valgte bruger*@
-            @if ()
+            if (item is SolvrLibrary.SolvrComment solvr && solvr.IsAccepted)
             {
                 <div class="post-Box-ViewPhysicalComment-Standard-NotChosen">
                     <div>
                         <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
-                        @Html.Label("", item.User.Username)
+                        @Html.Label("", solvr.User.Username)
                     </div>
                     <div class="post-CommentBox-TextArea">
                         @Html.TextArea("ViewCommentArea", item.Text, 5, 0, new { @readonly = "readonly", @class = "post-TextArea-View" })
@@ -117,7 +117,7 @@
                     <div class="post-BtnFloat" style="margin-right: 5%">
                         <input type="submit" name="Report Comment" value="Report" class="standard-Btn-Colour standard-Btn-border btn" />
                         @{/* TODO: Only Post owner can choose this */}
-                        <input type="submit" name="Choose Solvr" value="Choose" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("NotImplementedYet", "Home")'" />
+                        <input type="submit" name="Choose Solvr" value="Choose" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("ChooseSolvr", "Post", new { ID = item.Id }))'" />
                     </div>
                     @Html.Label("", (item.DateCreated.ToShortTimeString() + " " + item.DateCreated.ToShortDateString()), new { @class = "post-DateLabel" })
                     <br />
@@ -125,7 +125,7 @@
                 </div>
             }
             @*Else sætningen indeholder den valgte bruger*@
-            @else
+            else
             {
                 <div class="post-Box-ViewPhysicalComment-Standard-Chosen">
                     <div>
@@ -136,8 +136,8 @@
                         @Html.TextArea("ViewCommentArea", item.Text, 5, 0, new { @readonly = "readonly", @class = "post-TextArea-View" })
                     </div>
                     <div class="post-BtnFloat" style="margin-right: 5%">
-                        <input type="submit" name="Report Comment" value="Report" class="standard-Btn-Colour standard-Btn-border btn" />@{/* TODO: ¨Choose ændres til remove */}
-                        <input type="submit" name="Choose Solvr" value="Remove" class="standard-Btn-Colour standard-Btn-border btn" onclick="" />
+                        <input type="submit" name="Report Comment" value="Report" class="standard-Btn-Colour standard-Btn-border btn" />
+                        <input type="submit" name="Choose Solvr" value="Remove" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("ChooseSolvr", "Post", new { ID = item.Id })'" />
                     </div>
                     @Html.Label("", (item.DateCreated.ToShortTimeString() + " " + item.DateCreated.ToShortDateString()), new { @class = "post-DateLabel" })
                     <br />
