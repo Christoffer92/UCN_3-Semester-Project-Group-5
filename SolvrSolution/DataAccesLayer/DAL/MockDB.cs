@@ -100,6 +100,11 @@ namespace SolvrLibrary
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Post> GetPostsByBumpTime(int loadCount)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     class MockDBContainer
