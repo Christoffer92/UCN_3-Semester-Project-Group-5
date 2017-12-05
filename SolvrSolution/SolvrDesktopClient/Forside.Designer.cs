@@ -586,7 +586,7 @@
             // 
             // timerOverview
             // 
-            this.timerOverview.Interval = 1000;
+            this.timerOverview.Interval = 10000;
             this.timerOverview.Tick += new System.EventHandler(this.timerOverview_Tick);
             // 
             // timerRefreshTimeOut

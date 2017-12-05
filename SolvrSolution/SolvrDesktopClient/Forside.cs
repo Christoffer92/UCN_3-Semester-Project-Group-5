@@ -48,15 +48,15 @@ namespace SolvrDesktopClient
             lblReportsUnresolvedAmount.Text = reportCounts[0].ToString();
             lblReportsResolvedAmount.Text   = reportCounts[1].ToString();
             lblReportsTotalAmount.Text      = reportCounts[2].ToString();
-            lblPostsReportedAmount.Text     = i.ToString();
-            lblPostsResolvedAmount.Text     = i.ToString();
-            lblPostsTotalAmount.Text        = i.ToString();
-            lblCommentsReportedAmount.Text  = i.ToString();
-            lblCommentsResolvedAmount.Text  = i.ToString();
-            lblCommentsTotalAmount.Text     = i.ToString();
-            lblUsersReportedAmount.Text     = i.ToString();
-            lblUsersResolvedAmount.Text     = i.ToString();
-            lblUsersTotalAmount.Text        = i.ToString();
+            lblPostsReportedAmount.Text     = reportCounts[3].ToString();
+            lblPostsResolvedAmount.Text     = reportCounts[4].ToString();
+            lblPostsTotalAmount.Text        = reportCounts[5].ToString();
+            lblCommentsReportedAmount.Text  = reportCounts[6].ToString();
+            lblCommentsResolvedAmount.Text  = reportCounts[7].ToString();
+            lblCommentsTotalAmount.Text     = reportCounts[8].ToString();
+            lblUsersReportedAmount.Text     = reportCounts[9].ToString();
+            lblUsersResolvedAmount.Text     = reportCounts[10].ToString();
+            lblUsersTotalAmount.Text        = reportCounts[11].ToString();
             UpdateStatusLbls();
 
             i++; //Just temp test data.
@@ -113,7 +113,7 @@ namespace SolvrDesktopClient
 
             DesktopController desktopController = new DesktopController();
             List<Report> reports = desktopController.GetAllReports();
-
+            
             //Clears and Fills the dataTable with the reports.
             dataTable.Rows.Clear();
             foreach (Report report in reports)
@@ -134,16 +134,16 @@ namespace SolvrDesktopClient
                 if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
                     e.RowIndex >= 0)
                 {
-                    if (type.Equals("Comment"))
+                    if (type.Equals("comment"))
                     {
                         MessageBox.Show("Not Implementet yet.", "Error");
                     }
-                    if (type.Equals("Post"))
+                    if (type.Equals("post"))
                     {
                         MessageBox.Show("Not Implementet yet.", "Error");
 
                     }
-                    if (type.Equals("User"))
+                    if (type.Equals("user"))
                     {
                         MessageBox.Show("Not Implementet yet.", "Error");
                     }

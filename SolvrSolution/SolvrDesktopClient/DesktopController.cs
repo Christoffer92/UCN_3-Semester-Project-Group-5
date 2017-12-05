@@ -30,7 +30,7 @@ namespace SolvrDesktopClient
 
         public int[] GetReportCounts()
         {
-            int[] counts = new int[3];
+            int[] counts = new int[12];
             List<Report> reports = GetAllReports();
 
             counts[0] = reports.Count;
@@ -47,6 +47,48 @@ namespace SolvrDesktopClient
                     default:
                         break;
                 }
+
+                if (report.ReportType.Equals("post") && report.IsResolved == false)
+                {
+                    counts[3]++;
+                }
+                if (report.ReportType.Equals("post") && report.IsResolved == true)
+                {
+                    counts[4]++;
+                }
+                if (report.ReportType.Equals("post"))
+                {
+                    counts[5]++;
+                }
+                if (report.ReportType.Equals("comment") && report.IsResolved == false)
+                {
+                    counts[6]++;
+                }
+                if (report.ReportType.Equals("comment") && report.IsResolved == true)
+                {
+                    counts[7]++;
+                }
+                if (report.ReportType.Equals("comment"))
+                {
+                    counts[8]++;
+                }
+                if (report.ReportType.Equals("user") && report.IsResolved == false)
+                {
+                    counts[9]++;
+                }
+                if (report.ReportType.Equals("user") && report.IsResolved == true)
+                {
+                    counts[10]++;
+                }
+                if (report.ReportType.Equals("user"))
+                {
+                    counts[11]++;
+                }
+
+
+
+
+
             }
 
             return counts;
