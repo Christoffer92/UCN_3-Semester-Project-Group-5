@@ -47,6 +47,11 @@ namespace SolvrLibrary
             throw new NotImplementedException();
         }
 
+        public Report GetReport(int id)
+        {
+            return new ModelBuilder().BuildReport(id);
+        }
+
         public Post CreatePost(Post post)
         {
             Posts.InsertOnSubmit(post);
@@ -84,6 +89,11 @@ namespace SolvrLibrary
         public IEnumerable<Category> GetAllCategories()
         {
             return Categories.ToList<Category>();
+        }
+
+        public List<Report> GetAllReports()
+        {
+            return Reports.ToList<Report>();
         }
 
         public User GetUser()

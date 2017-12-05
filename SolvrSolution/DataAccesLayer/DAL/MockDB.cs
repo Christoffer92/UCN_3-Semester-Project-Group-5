@@ -85,6 +85,16 @@ namespace SolvrLibrary
         {
             throw new NotImplementedException();
         }
+
+        public Report GetReport(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Report> GetAllReports()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     class MockDBContainer

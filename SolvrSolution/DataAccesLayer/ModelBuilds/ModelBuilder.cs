@@ -211,8 +211,10 @@ namespace DataAccesLayer.ModelBuilds
                 {
                     Id = Query.Id,
                     DateCreated = Query.DateCreated,
+                    ReportType = Query.ReportType,
                     Description = Query.Description,
                     Title = Query.Title,
+                    IsResolved = Query.IsResolved,
                     UserId = Query.UserId,
                     PostId = Query.PostId,
                     CommentId = Query.CommentId
