@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SolvrLibrary;
 
 namespace SolvrDesktopClient
 {
@@ -38,10 +39,15 @@ namespace SolvrDesktopClient
 
         private void timerOverview_Tick(object sender, EventArgs e)
         {
+            DesktopController desktopController = new DesktopController();
+            int[] reportCounts = desktopController.GetReportCounts();
+
+
+
             //Gets the text from the labels  //TODO this needs to get some real data.
-            lblReportsUnresolvedAmount.Text = i.ToString(); //desktopCtr.GetUnresolveReportsCount();
-            lblReportsResolvedAmount.Text   = i.ToString(); 
-            lblReportsTotalAmount.Text      = i.ToString(); 
+            lblReportsUnresolvedAmount.Text = reportCounts[0].ToString();
+            lblReportsResolvedAmount.Text   = reportCounts[1].ToString();
+            lblReportsTotalAmount.Text      = reportCounts[2].ToString();
             lblPostsReportedAmount.Text     = i.ToString();
             lblPostsResolvedAmount.Text     = i.ToString();
             lblPostsTotalAmount.Text        = i.ToString();
@@ -86,7 +92,7 @@ namespace SolvrDesktopClient
                 Title = "Verbal Harasement",
                 Description = "he said i was dumb and should uninstall life",
                 DateCreated = DateTime.Now,
-                Type = "Comment"
+                //Type = "Comment"
             };
             Report r2 = new Report
             {
@@ -94,7 +100,7 @@ namespace SolvrDesktopClient
                 Title = "Spam",
                 Description = "tttasdsadahould uninstall life",
                 DateCreated = DateTime.Now,
-                Type = "Post"
+                //Type = "Post"
             };
             Report r3 = new Report
             {
@@ -102,23 +108,17 @@ namespace SolvrDesktopClient
                 Title = "Inappropate picture",
                 Description = "he said i was dumb and should uninstall life",
                 DateCreated = DateTime.Now,
-                Type = "User"
+                //Type = "User"
             };
 
-            //TODO Need to contact the database and get all reports.
-            var desktopController = new Object();
-            List<Report> reports = new List<Report>();//desktopController.GetAllReports();
+            DesktopController desktopController = new DesktopController();
+            List<Report> reports = desktopController.GetAllReports();
+
+            //Clears and Fills the dataTable with the reports.
             dataTable.Rows.Clear();
-
-            //Just temp test data.
-            reports.Add(r);
-            reports.Add(r2);
-            reports.Add(r3);
-
-            //Fills the dataTable with the reports.
             foreach (Report report in reports)
             {
-                dataTable.Rows.Add(report.Id, report.Title, report.Type, report.DateCreated);
+                dataTable.Rows.Add(report.Id, report.Title, report.ReportType, report.DateCreated);
             }
 
             //Sets the timeout for the refresh button so it cant be spammed.
@@ -154,18 +154,5 @@ namespace SolvrDesktopClient
         {
             btnRefreshTable.Enabled = true;
         }
-    }
-
-    //Just temp test data
-    public class Report
-    {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public DateTime DateCreated { get; set; }
-        public string Type { get; set; }
-
-        public Report()
-        { }
     }
 }

@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DesktopController.cs" />
     <Compile Include="Forside.cs">
       <SubType>Form</SubType>
     </Compile>

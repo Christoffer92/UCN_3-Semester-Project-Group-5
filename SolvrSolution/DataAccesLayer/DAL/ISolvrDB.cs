@@ -77,5 +77,13 @@ namespace SolvrLibrary
         /// </summary>
         /// <returns>List of Categories</returns>
         IEnumerable<Category> GetAllCategories();
+
+        /// <summary>
+        /// Returns all Reports from the database
+        /// </summary>
+        /// <returns>List of Reports</returns>
+        List<Report> GetAllReports();
+
+        
     }
 }

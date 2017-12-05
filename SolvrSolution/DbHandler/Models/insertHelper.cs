@@ -136,6 +136,7 @@ namespace DbHandler.Models
                 Title = subStrings[0],
                 Description = subStrings[1],
                 DateCreated = SubstringToDateTime(subStrings[2]),
+                IsResolved = false,
                 UserId = Int32.Parse(subStrings[3]),
                 CommentId = Int32.Parse(subStrings[4]),
                 PostId = Int32.Parse(subStrings[5])
