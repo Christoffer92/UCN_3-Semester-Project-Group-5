@@ -1,9 +1,9 @@
-﻿using System;
+﻿using SolvrServices;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,6 +18,8 @@ namespace SolvrDesktopClient
             InitializeComponent();
             timerConnectionStatus.Start();
             timerOverview.Start();
+            ISolvrServices proxy = new SolvrService();
+            lblWcfTest.Text = proxy.GetReport(1).Title;
         }
 
         private void timerConnectionStatus_Tick(object sender, EventArgs e)

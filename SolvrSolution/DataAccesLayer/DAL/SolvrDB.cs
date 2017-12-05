@@ -47,6 +47,11 @@ namespace SolvrLibrary
             throw new NotImplementedException();
         }
 
+        public Report GetReport(int id)
+        {
+            return new ModelBuilder().BuildReport(id);
+        }
+
         public Post CreatePost(Post post)
         {
             Posts.InsertOnSubmit(post);

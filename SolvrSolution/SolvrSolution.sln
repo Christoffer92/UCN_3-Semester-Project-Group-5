@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.15
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolvrWebClient", "SolvrWebClient\SolvrWebClient.csproj", "{36427826-98CF-49DA-8D00-91BE3C82ECAE}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbHandler", "DbHandler\DbHandler.csproj", "{8BDD62DA-112F-4F2A-BA74-072077470C3A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccesLayer", "DataAccesLayer\DataAccesLayer.csproj", "{2E3B225A-AAD6-4D73-A4F6-C76DB17E9638}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolvrServices", "SolvrServices\SolvrServices.csproj", "{6CCBD207-72D6-41B1-8BE6-7F3093464FF5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{2E3B225A-AAD6-4D73-A4F6-C76DB17E9638}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E3B225A-AAD6-4D73-A4F6-C76DB17E9638}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E3B225A-AAD6-4D73-A4F6-C76DB17E9638}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CCBD207-72D6-41B1-8BE6-7F3093464FF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CCBD207-72D6-41B1-8BE6-7F3093464FF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CCBD207-72D6-41B1-8BE6-7F3093464FF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CCBD207-72D6-41B1-8BE6-7F3093464FF5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

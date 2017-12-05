@@ -79,7 +79,16 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\SolvrLibrary\SolvrLibrary.csproj">
+      <Project>{7A512B96-B646-4E04-B9F5-6C9658209C1B}</Project>
+      <Name>SolvrLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SolvrServices\SolvrServices.csproj">
+      <Project>{6CCBD207-72D6-41B1-8BE6-7F3093464FF5}</Project>
+      <Name>SolvrServices</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <None Include="Images\Logo.png" />
   </ItemGroup>
