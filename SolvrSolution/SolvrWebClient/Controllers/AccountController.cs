@@ -25,7 +25,18 @@ namespace SolvrWebClient.Controllers
             DB = _DB;
         }
 
-        public ActionResult Index()
+        public ActionResult Register()
+        {
+            return View("Register");
+        }
+       /* public ActionResult Register(LoginViewModel model)
+        {
+            return View();
+        }*/
+
+
+
+            public ActionResult Index()
         {
             return View("Login");
         }
