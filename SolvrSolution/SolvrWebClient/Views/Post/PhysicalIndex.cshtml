@@ -55,25 +55,29 @@
     <hr />
 
     @* Make a comment here *@
-    @using (Html.BeginForm("PostComment", "Post", FormMethod.Post))
+    @if (!ViewBag.IsLocked)
     {
-        <div class="post-Box-MakeComment-Standard">
-            <div>
+        using (Html.BeginForm("PostComment", "Post", FormMethod.Post))
+        {
+            <div class="post-Box-MakeComment-Standard">
+                <div>
+                    <br />
+                    @Html.HiddenFor(m => m.PostId)
+                    @Html.TextAreaFor(m => m.Text, 4, 0, new { @class = "standard-TextArea-Size", placeholder = "Write a comment here..." })
+                </div>
+                <div class="post-BtnFloat">
+                    <input type="submit" name="comment" value="Post Comment" style="margin-right: 10px" class="standard-Btn-Colour standard-Btn-border btn" />
+                    @{/* TODO: Only user who doesnt own the post can choose to apply */}
+                    <input type="submit" name="comment" value="Apply" class="standard-Btn-Colour standard-Btn-border btn" />
+                </div>
                 <br />
-                @Html.HiddenFor(m => m.PostId)
-                @Html.TextAreaFor(m => m.Text, 4, 0, new { @class = "standard-TextArea-Size", placeholder = "Write a comment here..." })
             </div>
-            <div class="post-BtnFloat">
-                <input type="submit" name="comment" value="Post Comment" style="margin-right: 10px" class="standard-Btn-Colour standard-Btn-border btn"/>
-                @{/* TODO: Only user who doesnt own the post can choose to apply */}
-                <input type="submit" name="comment" value="Apply" class="standard-Btn-Colour standard-Btn-border btn"/>
-            </div>
-            <br />
-        </div>
-     }
+        }
 
-    <hr />
-    
+        <hr />
+    }
+
+
     @* View the Solvr and regular comments here *@
     @foreach (SolvrLibrary.Comment item in ViewBag.CommentList)
     {
@@ -104,7 +108,7 @@
         {
             /* TODO: Choose og remove skal kun være visibel når den anden er skjult */
             @*If sætningen indeholder den ikke valgte bruger*@
-            if (item is SolvrLibrary.SolvrComment solvr && solvr.IsAccepted)
+            if (item is SolvrLibrary.SolvrComment solvr && !solvr.IsAccepted)
             {
                 <div class="post-Box-ViewPhysicalComment-Standard-NotChosen">
                     <div>
@@ -117,15 +121,14 @@
                     <div class="post-BtnFloat" style="margin-right: 5%">
                         <input type="submit" name="Report Comment" value="Report" class="standard-Btn-Colour standard-Btn-border btn" />
                         @{/* TODO: Only Post owner can choose this */}
-                        <input type="submit" name="Choose Solvr" value="Choose" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("ChooseSolvr", "Post", new { ID = item.Id }))'" />
+                        <input type="submit" name="Choose Solvr" value="Choose" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("ChooseSolvr", "Post", new { ID = item.Id })'" />
                     </div>
                     @Html.Label("", (item.DateCreated.ToShortTimeString() + " " + item.DateCreated.ToShortDateString()), new { @class = "post-DateLabel" })
                     <br />
                     <br />
                 </div>
             }
-            @*Else sætningen indeholder den valgte bruger*@
-            else
+            else /*Else sætningen indeholder den valgte bruger*/
             {
                 <div class="post-Box-ViewPhysicalComment-Standard-Chosen">
                     <div>

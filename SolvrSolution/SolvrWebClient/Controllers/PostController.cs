@@ -77,6 +77,7 @@ namespace SolvrWebClient.Controllers
                 ViewBag.AltDescription = ppost.AltDescription;
                 ViewBag.Address = ppost.Address;
                 ViewBag.Zipcode = ppost.Zipcode;
+                ViewBag.IsLocked = ppost.IsLocked;
 
 
                 string tags = "";
