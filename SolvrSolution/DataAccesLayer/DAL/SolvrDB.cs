@@ -121,7 +121,7 @@ namespace SolvrLibrary
             using (var DB = new SolvrDB())
             {
                 postList = new List<Post>();
-                var postQuery = (from post in DB.Posts orderby post.BumpTime select post).Skip(loadCount).Take(24);
+                var postQuery = (from post in DB.Posts orderby post.BumpTime descending select post).Skip(loadCount).Take(24);
                 foreach (var post in postQuery)
                 {
                     post.User = GetUser(post.UserId);

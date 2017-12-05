@@ -13,23 +13,47 @@
                 @*Alt her under skal ind i en foreach loop*@
                 <div class="home-column" onclick="location.href='@Url.Action("Index", "Post", new { ID = item.Id })'">
                     @*Home-main-content sætter alt indhold ind i en boks*@
-                    <div class="home-main-content">
-                        <div>
-                            @Html.Label("", item.Title)
+                    @if (item.PostType == "Physical")
+                    {
+                        <div class="home-main-content" style="background-color: rgba(255,99,71,0.4)">
+                            <div>
+                                @Html.Label("", item.Title)
+                            </div>
+
+                            <div>
+                                <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
+                                @*Name skal være en link*@
+                                @Html.Label("", item.User.Username)<br />
+                                Category:
+                                @*Category skal hentes fra den valgte pos*@
+                                @Html.Label("", item.Category.Name)
+                            </div>
+                            <div>
+                                @*Text area her er description fra hentede postering og skal være readonly*@
+                                @Html.TextArea("ViewCommentArea", item.Description, new { @readonly = "readonly", @class = "standard-TextArea-Size" })
+                            </div>
                         </div>
-                        <div>
-                            <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
-                            @*Name skal være en link*@
-                            @Html.Label("", item.User.Username)<br />
-                            Category:
-                            @*Category skal hentes fra den valgte pos*@
-                            @Html.Label("", item.Category.Name)
+                    }
+                    else{ 
+                        <div class="home-main-content">
+                            <div>
+                                @Html.Label("", item.Title)
+                            </div>
+                        
+                            <div>
+                                <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
+                                @*Name skal være en link*@
+                                @Html.Label("", item.User.Username)<br />
+                                Category:
+                                @*Category skal hentes fra den valgte pos*@
+                                @Html.Label("", item.Category.Name)
+                            </div>
+                            <div>
+                                @*Text area her er description fra hentede postering og skal være readonly*@
+                                @Html.TextArea("ViewCommentArea", item.Description, new { @readonly = "readonly", @class = "standard-TextArea-Size" })
+                            </div>
                         </div>
-                        <div>
-                            @*Text area her er description fra hentede postering og skal være readonly*@
-                            @Html.TextArea("ViewCommentArea", item.Description, new { @readonly = "readonly", @class = "standard-TextArea-Size" })
-                        </div>
-                    </div>
+                    }
                 </div>
             }
             @*Den her knap linker til posteringen*@
