@@ -5,10 +5,6 @@
 <head>
 </head>
 <body>
-    @{
-//ViewBag.Title = "Post title";
-        @*ViewBag.Title(m => m.Title)*@
-    }
     <h2>@ViewBag.Title</h2>
 
 
@@ -17,24 +13,23 @@
         <div>
             <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
             @Html.Label("", (string)ViewBag.UserName, new { @readonly = "readonly" })
-            @*@Html.Label(m => m.Username)*@
         </div>
         <div>
             @Html.TextArea("DescriptionArea", (string)ViewBag.Description, 10, 0, new { @readonly = "readonly", @class = "standard-TextArea-Size" })
-            @*@Html.TextArea(m => m.Description, 10, 0, new { @readonly = "readonly", @class = "post-TextArea-Standard" })*@
         </div>
         <div class="post-BtnFloat">
-            <input type="button" name="Report Post" value="Report" class="standard-Btn-Colour standard-Btn-border post-Btn-Size btn" onclick="location.href='@Url.Action("NotImplementedYet", "Home")'" />
+            @{/* TODO: Only Post owner can choose to edit and view this */}
+            @{/* TODO: EditPhysicalPost i controller skal laves */}
+            <input type="button" name="Report Post" value="Edit" style="margin-right: 15px" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("EditPhysicalPost", "CreatePost", new { ID = Model.PostId })'" />
+            <input type="button" name="Report Post" value="Report" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("NotImplementedYet", "Home")'" />
         </div>
         <div>
             @Html.Label("", (string)ViewBag.DateCreated, new { @class = "post-DateLabel" })
-            @*@Html.Label(m => m.Datecreated, new { @class = "post-DateLabel" })*@
         </div>
         <br />
     </div>
 
     @* View the secret description here *@
-    @* TODO: Ret dette til så det passer *@
     @if (true)
     {
         <div class="post-Box-ViewPost-Standard">
@@ -64,14 +59,13 @@
         <div class="post-Box-MakeComment-Standard">
             <div>
                 <br />
-                @*@{Model.PostId = ViewBag.id;}*@
                 @Html.HiddenFor(m => m.PostId)
                 @Html.TextAreaFor(m => m.Text, 4, 0, new { @class = "standard-TextArea-Size", placeholder = "Write a comment here..." })
-                @*@Html.TextArea("PostCommentArea", "", 4, 0, new { @class = "post-TextArea-Standard", placeholder = "Write a comment here..." })*@
             </div>
             <div class="post-BtnFloat">
-                <input type="submit" name="comment" value="Post Comment" style="margin-right: 10px" class="standard-Btn-Colour standard-Btn-border post-Btn-Size btn" @*@{Model.IsSolvr = false; Html.HiddenFor(m => m.IsSolvr);}*@ />
-                <input type="submit" name="comment" value="Apply" class="standard-Btn-Colour standard-Btn-border post-Btn-Size btn" @*@{Model.IsSolvr = true;} @{Html.HiddenFor(m => m.IsSolvr); }*@ />
+                <input type="submit" name="comment" value="Post Comment" style="margin-right: 10px" class="standard-Btn-Colour standard-Btn-border btn"/>
+                @{/* TODO: Only user who doesnt own the post can choose to edit and view this */}
+                <input type="submit" name="comment" value="Apply" class="standard-Btn-Colour standard-Btn-border btn"/>
             </div>
             <br />
         </div>
@@ -79,7 +73,7 @@
 
     <hr />
     
-    @* View the Solvr comments here *@
+    @* View the Solvr and regular comments here *@
     @foreach (SolvrLibrary.Comment item in ViewBag.CommentList)
     {
         if (item.CommentType.Equals("Comment"))
@@ -88,48 +82,67 @@
                 <div>
                     <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
                     @Html.Label("", item.User.Username)
-                    @*@Html.Label(m => m.Username)*@
                 </div>
                 <div class="post-VoteFloat">
                     <img src="~/Content/Images/upvote-downvote.png" class="post-Vote" />
                     @Html.Label("", "0", new { @class = "post-VoteLabel" })
-                    @*@Html.Label(m => m.Votecount, new { @class = "post-VoteLabel" })*@
                     <img src="~/Content/Images/downvote.png" class="post-Vote" />
                 </div>
                 <div class="post-CommentBox-TextArea">
                     @Html.TextArea("ViewCommentArea", item.Text, 5, 0, new { @readonly = "readonly", @class = "post-TextArea-View" })
-                    @*@Html.TextArea(m => m.Text, 5, 0, new { @readonly = "readonly", @class = "post-TextArea-View" })*@
                 </div>
-                <div class="post-BtnFloat">
-                    <input type="submit" name="Report Comment" value="Report" class="standard-Btn-Colour standard-Btn-border post-Btn-Size btn" />
+                <div class="post-BtnFloat" style="margin-right: 5%">
+                    <input type="submit" name="Report Comment" value="Report" class="standard-Btn-Colour standard-Btn-border btn" />
                 </div>
                 @Html.Label("", (item.DateCreated.ToShortTimeString() + " " + item.DateCreated.ToShortDateString()), new { @class = "post-DateLabel" })
-                @*@Html.Label(m => m.Datecreated, new { @class = "post-DateLabel" })*@
                 <br />
                 <br />
             </div>
         }
         else
         {
-            <div class="post-Box-ViewComment-Standard">
-                <div>
-                    <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
-                    @Html.Label("", item.User.Username)
-                    @*@Html.Label(m => m.Username)*@
+            @{/* TODO: Choose og remove skal kun være visibel når den anden er skjult */}
+            @*If sætningen indeholder den ikke valgte bruger*@
+            @if ()
+            {
+                <div class="post-Box-ViewPhysicalComment-Standard-NotChosen">
+                    <div>
+                        <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
+                        @Html.Label("", item.User.Username)
+                    </div>
+                    <div class="post-CommentBox-TextArea">
+                        @Html.TextArea("ViewCommentArea", item.Text, 5, 0, new { @readonly = "readonly", @class = "post-TextArea-View" })
+                    </div>
+                    <div class="post-BtnFloat" style="margin-right: 5%">
+                        <input type="submit" name="Report Comment" value="Report" class="standard-Btn-Colour standard-Btn-border btn" />
+                        @{/* TODO: Only Post owner can choose this */}
+                        <input type="submit" name="Choose Solvr" value="Choose" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("NotImplementedYet", "Home")'" />
+                    </div>
+                    @Html.Label("", (item.DateCreated.ToShortTimeString() + " " + item.DateCreated.ToShortDateString()), new { @class = "post-DateLabel" })
+                    <br />
+                    <br />
                 </div>
-                <div class="post-CommentBox-TextArea">
-                    @Html.TextArea("ViewCommentArea", item.Text, 5, 0, new { @readonly = "readonly", @class = "post-TextArea-View" })
-                    @*@Html.TextArea(m => m.Text, 5, 0, new { @readonly = "readonly", @class = "post-TextArea-View" })*@
+            }
+            @*Else sætningen indeholder den valgte bruger*@
+            @else
+            {
+                <div class="post-Box-ViewPhysicalComment-Standard-Chosen">
+                    <div>
+                        <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
+                        @Html.Label("", item.User.Username)
+                    </div>
+                    <div class="post-CommentBox-TextArea">
+                        @Html.TextArea("ViewCommentArea", item.Text, 5, 0, new { @readonly = "readonly", @class = "post-TextArea-View" })
+                    </div>
+                    <div class="post-BtnFloat" style="margin-right: 5%">
+                        <input type="submit" name="Report Comment" value="Report" class="standard-Btn-Colour standard-Btn-border btn" />@{/* TODO: ¨Choose ændres til remove */}
+                        <input type="submit" name="Choose Solvr" value="Remove" class="standard-Btn-Colour standard-Btn-border btn" onclick="" />
+                    </div>
+                    @Html.Label("", (item.DateCreated.ToShortTimeString() + " " + item.DateCreated.ToShortDateString()), new { @class = "post-DateLabel" })
+                    <br />
+                    <br />
                 </div>
-                <div class="post-BtnFloat">
-                    <input type="submit" name="Report Comment" value="Report" class="standard-Btn-Colour standard-Btn-border post-Btn-Size btn" />
-                    <input type="submit" name="Choose Solvr" value="Choose" class="standard-Btn-Colour standard-Btn-border post-Btn-Size btn" />
-                </div>
-                @Html.Label("", (item.DateCreated.ToShortTimeString() + " " + item.DateCreated.ToShortDateString()), new { @class = "post-DateLabel" })
-                @*@Html.Label(m => m.Datecreated, new { @class = "post-DateLabel" })*@
-                <br />
-                <br />
-            </div>
+            }
         }
     }
 </body>
