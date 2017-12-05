@@ -21,7 +21,7 @@ namespace SolvrWebClient.Controllers
             DB = _DB;
         }
 
-        public ActionResult Index(int ID = 1)
+        public ActionResult Index(int ID = 0)
         {
 
             if (DB.GetPost(ID).PostType.Equals("Physical"))

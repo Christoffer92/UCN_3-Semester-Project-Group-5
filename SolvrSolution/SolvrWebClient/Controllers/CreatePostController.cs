@@ -138,14 +138,15 @@ namespace SolvrWebClient.Controllers
         }
 
         // GET: CreatePost/Edit/id
-        public ActionResult EditPost(int id = 0)
+        public ActionResult EditPost(int ID)
         {
-            Post post = DB.GetPost(id);
+            Post post = DB.GetPost(ID);
             PostViewModel viewPost = new PostViewModel();
 
             viewPost.Title = post.Title;
             viewPost.Description = post.Description;
 
+            //TODO should be fixed
             string tags = "";
             foreach (string item in post.Tags)
             {
@@ -154,29 +155,68 @@ namespace SolvrWebClient.Controllers
 
             viewPost.TagsString = tags;
 
-            viewPost.postId = id;
+            viewPost.postId = ID;
             viewPost.CategoryId = post.CategoryId;
 
             ViewBag.CategoryName = post.Category.Name;
-
+            ViewBag.DropdownList = new SelectList(DB.GetAllCategories(), "Id", "Name");
 
             return View(viewPost);
         }
 
-        // POST: CreatePost/Edit/id
-        [HttpPost]
-        public ActionResult Edit(PostViewModel model)
+        public ActionResult UpdatePost(PostViewModel model)
         {
-            try
-            {
-                // TODO: Add update logic here
+            Post post = DB.GetPost(model.postId);
 
-                return RedirectToAction("Index");
-            }
-            catch
+            if (!post.Title.Equals(model.Title))
             {
-                return View();
+                post.Title = model.Title;
             }
+
+            if (!post.Description.Equals(model.Description))
+            {
+                post.Description = model.Description;
+            }
+
+            if (post.CategoryId != model.CategoryId)
+            {
+                post.CategoryId = model.CategoryId;
+                post.Category = DB.GetCategory(model.CategoryId);
+            }
+
+            //TODO make as an extension method to String
+            List<string> tagsList = new List<string>();
+            foreach (string item in model.TagsString.Split(' ', '#', ',', '.'))
+            {
+                if (!item.Equals("") && !item.Equals("#") && !item.Equals(",") && !item.Equals("."))
+                {
+                    tagsList.Add(item);
+                }
+            }
+
+            post.Tags = tagsList;
+
+            DB.UpdatePost(post);
+
+            return RedirectToAction("Index", "Post", new {ID = model.postId });
         }
+
+        
+
+        //// POST: CreatePost/Edit/id
+        //[HttpPost]
+        //public ActionResult Edit(PostViewModel model)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add update logic here
+
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }

@@ -77,5 +77,7 @@ namespace SolvrLibrary
         IEnumerable<Comment> GetComments(int iD);
         Comment CreateComment(Comment c);
         SolvrComment CreateSolvrComment(SolvrComment sc);
+
+        void UpdatePost(Post p);
     }
 }

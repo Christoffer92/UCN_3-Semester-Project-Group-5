@@ -110,6 +110,11 @@ namespace SolvrLibrary
         {
             throw new NotImplementedException();
         }
+
+        public void UpdatePost(Post p)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     class MockDBContainer

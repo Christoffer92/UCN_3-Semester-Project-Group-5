@@ -6,37 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SolvrLibrary;
+using DataAccesLayer.DAL;
 
 namespace SolvrLibrary
 {
-    public class SolvrDB : DataContext, ISolvrDB
+    public class SolvrDB :  ISolvrDB
     {
-        //General Connection String. Kan ikke være Const pga. Enviroment.MachineName.
-        private static string ConnectionString = @"Data Source=" + Environment.MachineName + @"\SQLEXPRESS;" 
-        +"Initial Catalog=SolvrDb;" 
-        +"Integrated Security=True;" 
-        +"Connect Timeout=30;" 
-        +"Encrypt=False;" 
-        +"TrustServerCertificate=True;" 
-        +"ApplicationIntent=ReadWrite;" 
-        +"MultiSubnetFailover=False";
 
-        //Here are the tables for the project. These tables are in the database.
-        public Table<Post> Posts;// { get; private set; }
-        public Table<User> Users;// { get; private set; }
-        public Table<Comment> Comments;// { get; private set; }
-        public Table<Category> Categories;// { get; set; }
-        public Table<Report> Reports;// { get; private set; }
-        public Table<Vote> Votes;// { get; private set; }
-
-        /// <summary>
-        /// Used to create a connection to the database through a connection string.
-        /// Base is an inheritance that creates a new instance of the datacontext class (In here SolvrDB)
-        /// </summary>
-        /// <param name="connection"></param>
-        public SolvrDB() : base(ConnectionString) { }
-
-        //Queries after this:
+        //Queries
         public Category GetCategory(int id)
         {
             return new ModelBuilder().BuildCategory(id);
@@ -49,22 +26,32 @@ namespace SolvrLibrary
 
         public Post CreatePost(Post post)
         {
-            Posts.InsertOnSubmit(post);
-            SubmitChanges();
+            using (var db = new SolvrContext())
+            {
+                db.Posts.InsertOnSubmit(post);
+                db.SubmitChanges();
+            }
+
             return new ModelBuilder().BuildPost<Post>(post.Id);
         }
 
         public PhysicalPost CreatePhysicalPost(PhysicalPost physicalPost)
         {
-            Posts.InsertOnSubmit(physicalPost);
-            SubmitChanges();
+            using (var db = new SolvrContext())
+            {
+                db.Posts.InsertOnSubmit(physicalPost);
+                db.SubmitChanges();
+            }
             return GetPhysicalPost(physicalPost.Id);
         }
 
         public Comment CreateComment(Comment comment)
         {
-            Comments.InsertOnSubmit(comment);
-            SubmitChanges();
+            using (var db = new SolvrContext())
+            {
+                db.Comments.InsertOnSubmit(comment);
+                db.SubmitChanges();
+            }
             return GetComment(comment.Id);
         }
 
@@ -85,24 +72,36 @@ namespace SolvrLibrary
 
         public Post GetPost()
         {
-            return Posts.OfType<Post>().Last();
+            using (var db = new SolvrContext())
+            {
+                return db.Posts.OfType<Post>().Last();
+            }
         }
 
         public PhysicalPost GetPhysicalPost()
         {
-            return Posts.OfType<PhysicalPost>().Last();
+            using (var db = new SolvrContext())
+            {
+                return db.Posts.OfType<PhysicalPost>().Last();
+            }
         }
 
         public IEnumerable<Category> GetAllCategories()
         {
-            return Categories.ToList<Category>();
+            using (var db = new SolvrContext())
+            {
+                return db.Categories.ToList<Category>();
+            }
         }
 
         public User GetUser()
         {
-            //TODO Improve
-            int lastID = Users.Count();
-            return new ModelBuilder().BuildUser(lastID);
+            using (var db = new SolvrContext())
+            {
+                //TODO Improve
+                int lastID = db.Users.Count();
+                return new ModelBuilder().BuildUser(lastID);
+            }
         }
 
         public User GetUser(int id)
@@ -117,14 +116,50 @@ namespace SolvrLibrary
 
         public SolvrComment CreateSolvrComment(SolvrComment sc)
         {
-            Comments.InsertOnSubmit(sc);
-            SubmitChanges();
-            return GetSolvrComment(sc.Id);
+            using (var db = new SolvrContext())
+            {
+                db.Comments.InsertOnSubmit(sc);
+                db.SubmitChanges();
+                return GetSolvrComment(sc.Id);
+            }
         }
 
         public SolvrComment GetSolvrComment(int id)
         {
             return new ModelBuilder().BuildComment<SolvrComment>(id);
+        }
+
+        public void Update(Post p)
+        {
+            using (var db = new SolvrContext())
+            {
+                // Query the database for the row to be updated.
+                var Query =
+                    (from post
+                    in db.Posts.OfType<Post>()
+                    where post.Id == p.Id
+                    select post
+                    ).First();
+
+                // Execute the query, and change the column values
+                // you want to change.ch
+                Query.Title = "test";
+                Query.Description = "Testing 124";
+                Query.CategoryId = 1;
+                // Insert any additional changes to column values.
+
+                // Query.Tags = p.Tags;
+
+                // Submit the changes to the database.
+                try
+                {
+                    db.SubmitChanges();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
         }
     }
 }

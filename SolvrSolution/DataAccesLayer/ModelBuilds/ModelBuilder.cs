@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SolvrLibrary;
-
+using DataAccesLayer.DAL;
 
 namespace DataAccesLayer.ModelBuilds
 {
@@ -13,17 +13,20 @@ namespace DataAccesLayer.ModelBuilds
         public User BuildUser(int PrimaryKey)
         {
             User CreatedUser = null;
-            using (var Context = new SolvrDB()) {
+            using (var Context = new SolvrContext())
+            {
                 var Query = (from user in Context.Users where user.Id == PrimaryKey select user).First();
-                CreatedUser = new User {
-                                        Id = Query.Id,
-                                        DateCreated = Query.DateCreated,
-                                        Email = Query.Email,
-                                        IsAdmin = Query.IsAdmin,
-                                        Name = Query.Name,
-                                        Username = Query.Username,
-                                        Password = Query.Password };
-                    };
+                CreatedUser = new User
+                {
+                    Id = Query.Id,
+                    DateCreated = Query.DateCreated,
+                    Email = Query.Email,
+                    IsAdmin = Query.IsAdmin,
+                    Name = Query.Name,
+                    Username = Query.Username,
+                    Password = Query.Password
+                };
+            };
             return CreatedUser;
         }
 
@@ -31,7 +34,7 @@ namespace DataAccesLayer.ModelBuilds
         {
             Category CreatedCategory = null;
 
-            using(var Context = new SolvrDB())
+            using(var Context = new SolvrContext())
             {
                 var Query = (from category in Context.Categories where category.Id == PrimaryKey select category).First();
                 CreatedCategory = new Category
@@ -47,7 +50,7 @@ namespace DataAccesLayer.ModelBuilds
         public List<Comment> BuildCommentList(int postId)
         {
             List<Comment> CommentList = null;
-            using (var Context = new SolvrDB())
+            using (var Context = new SolvrContext())
             {
                 var CommentQuery = from comment in Context.Comments where comment.PostId == postId select comment;
                 CommentList = new List<Comment>();
@@ -60,32 +63,40 @@ namespace DataAccesLayer.ModelBuilds
             return CommentList;
         }
 
-        public List<SolvrComment> BuildSolvrCommentList(int postId, SolvrDB context)
+        public List<SolvrComment> BuildSolvrCommentList(int postId)
         {
-            var SolvrCommentQuery = from comment in context.Comments where comment.PostId == postId select comment;
             var solvrCommentList = new List<SolvrComment>();
 
-            foreach (var comment in SolvrCommentQuery)
+            using (var context = new SolvrContext())
             {
-                /*solvrCommentList.Add(BuildComment<SolvrComment>(comment.Id));*/
-                if (comment.CommentType.Equals("Solvr"))
+                var SolvrCommentQuery = from comment in context.Comments where comment.PostId == postId select comment;
+                
+
+                foreach (var comment in SolvrCommentQuery)
                 {
-                    solvrCommentList.Add(BuildComment<SolvrComment>(comment.Id));
+                    /*solvrCommentList.Add(BuildComment<SolvrComment>(comment.Id));*/
+                    if (comment.CommentType.Equals("Solvr"))
+                    {
+                        solvrCommentList.Add(BuildComment<SolvrComment>(comment.Id));
+                    }
                 }
             }
-
             return solvrCommentList;
         }
 
-        public List<Vote> BuildVoteList(int commentId, SolvrDB context)
+        public List<Vote> BuildVoteList(int commentId)
         {
-            var voteQuery = from vote in context.Votes where vote.CommentId == commentId select vote;
-            var votes = new List<Vote>();
-            foreach (var vote in voteQuery)
+            using (var context = new SolvrContext())
             {
-                votes.Add(BuildVote(vote.Id));
+                var voteQuery = from vote in context.Votes where vote.CommentId == commentId select vote;
+                var votes = new List<Vote>();
+                foreach (var vote in voteQuery)
+                {
+                    votes.Add(BuildVote(vote.Id));
+                }
+                return votes;
             }
-            return votes;
+            
         }
 
 
@@ -93,7 +104,7 @@ namespace DataAccesLayer.ModelBuilds
         {
             T CreatedPost;
 
-            using(var Context = new SolvrDB())
+            using(var Context = new SolvrContext())
             {
                 if (typeof(T) == typeof(Post))
                 {
@@ -135,7 +146,7 @@ namespace DataAccesLayer.ModelBuilds
                         Title = Query.Title,
                         DateCreated = Query.DateCreated,
                         BumpTime = Query.BumpTime,
-                        SolvrComments = BuildSolvrCommentList(PrimaryKey, Context),
+                        Comments = BuildCommentList(PrimaryKey),
                         CategoryId = Query.CategoryId,
                         Category = BuildCategory(Query.CategoryId),
                         Description = Query.Description,
@@ -160,7 +171,7 @@ namespace DataAccesLayer.ModelBuilds
         {
             T CreatedComment;
 
-            using(var context = new SolvrDB())
+            using(var context = new SolvrContext())
             {
                 if (typeof(T) == typeof(Comment))
                 {
@@ -173,7 +184,7 @@ namespace DataAccesLayer.ModelBuilds
                         Text = Query.Text,
                         UserId = Query.UserId,
                         User = BuildUser(Query.UserId),
-                        Votes = BuildVoteList(PrimaryKey, context),
+                        Votes = BuildVoteList(PrimaryKey),
                         PostId = Query.PostId,
                         CommentType = Query.CommentType
                     }; 
@@ -207,9 +218,9 @@ namespace DataAccesLayer.ModelBuilds
         {
             Vote CreatedVote = null;
 
-            using (var Context = new SolvrDB())
+            using (var context = new SolvrContext())
             {
-                var Query = (from vote in Context.Votes where vote.Id == PrimaryKey select vote).First();
+                var Query = (from vote in context.Votes where vote.Id == PrimaryKey select vote).First();
                 CreatedVote = new Vote
                 {
                     Id = Query.Id,
@@ -225,9 +236,9 @@ namespace DataAccesLayer.ModelBuilds
         public Report BuildReport(int PrimaryKey)
         {
             Report CreatedReport = null;
-            using (var Context = new SolvrDB())
+            using (var context = new SolvrContext())
             {
-                var Query = (from report in Context.Reports where report.Id == PrimaryKey select report).First();
+                var Query = (from report in context.Reports where report.Id == PrimaryKey select report).First();
                 CreatedReport = new Report
                 {
                     Id = Query.Id,
