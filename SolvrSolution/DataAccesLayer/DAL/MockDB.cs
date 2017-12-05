@@ -116,7 +116,7 @@ namespace SolvrLibrary
             throw new NotImplementedException();
         }
 
-        public void UpdateSolvrCommentLock(SolvrComment sc)
+        public void UpdateSolvrComment(SolvrComment sc)
         {
             throw new NotImplementedException();
         }

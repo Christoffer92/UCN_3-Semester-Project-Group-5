@@ -78,7 +78,7 @@ namespace SolvrLibrary
         Comment CreateComment(Comment c);
         SolvrComment CreateSolvrComment(SolvrComment sc);
         void UpdatePost(Post p);
-        void UpdateSolvrCommentLock(SolvrComment sc);
+        void UpdateSolvrComment(SolvrComment sc);
         T GetComment<T>(int ID);
     }
 }

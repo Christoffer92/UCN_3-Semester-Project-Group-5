@@ -102,6 +102,7 @@ namespace SolvrWebClient.Controllers
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 //TODO: Print error message
                 return View();
             }

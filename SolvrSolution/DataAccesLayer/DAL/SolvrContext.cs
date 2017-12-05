@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccesLayer.DAL
 {
-    class SolvrContext : DataContext
+    public class SolvrContext : DataContext
     {
         //General Connection String. Kan ikke være Const pga. Enviroment.MachineName.
         private static string ConnectionString = @"Data Source=" + Environment.MachineName + @"\SQLEXPRESS;"

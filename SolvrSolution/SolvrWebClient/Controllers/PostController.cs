@@ -89,7 +89,8 @@ namespace SolvrWebClient.Controllers
                 ViewBag.Tags = tags;
 
                 //sortere efter tid
-                ViewBag.CommentList = DB.GetComments(ppost.Id).OrderBy(x => x.DateCreated).ToList();
+                IEnumerable<Comment> a = DB.GetComments(ppost.Id).OrderBy(x => x.DateCreated).ToList();
+                ViewBag.CommentList = a;
 
                 //Usorteret
                 //ViewBag.CommentList = DB.GetComments(ID);
@@ -124,6 +125,7 @@ namespace SolvrWebClient.Controllers
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 //TODO: Print error message
                 return View();
             }
@@ -172,7 +174,7 @@ namespace SolvrWebClient.Controllers
                 sc.IsAccepted = true;
             }
 
-            DB.UpdateSolvrCommentLock(sc);
+            DB.UpdateSolvrComment(sc);
 
             return RedirectToAction("Index", new { ID = sc.PostId });
         }
