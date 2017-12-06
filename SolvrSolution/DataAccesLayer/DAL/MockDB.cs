@@ -12,6 +12,41 @@ namespace SolvrLibrary
         {
             MockDBContainer.Instance = null;
         }
+        public void FillTestData()
+        {
+            Category cat1 = new Category();
+            cat1.Name = "Computer";
+            CreateCategory(cat1);
+
+            Category cat2 = new Category();
+            cat2.Name = "Garden";
+            CreateCategory(cat2);
+
+            Post post1 = new Post();
+            post1.User = null;
+            post1.Category = cat1;
+            post1.Title = "Lorum borum";
+            post1.Description = "Lorum ispum lambbda Bamba.";
+            post1.Comments = new List<Comment>();
+
+            Post post2 = new Post();
+            post2.User = null;
+            post2.Category = cat2;
+            post2.Title = "Hyncatia Mortis";
+            post2.Description = "Hycantia is dying in winter, helpie pls.";
+            post2.Comments = new List<Comment>();
+
+            PhysicalPost ppost1 = new PhysicalPost();
+            ppost1.User = null;
+            ppost1.Category = cat2;
+            ppost1.Title = "GardenKArl";
+            ppost1.Description = "Need help for old bones to cut grass";
+            ppost1.Comments = new List<Comment>();
+            ppost1.AltDescription = "TESTEPGNEAGSEG";
+            ppost1.Address = "Hycanitvej 2";
+            ppost1.Zipcode = "7100";
+
+        }
 
         public void CreatePhysicalPost(User _user, string _title, string _description, Category _category, List<string> _tagsList, string _altDescription, string _zipcode, string _address)
         {
@@ -44,6 +79,11 @@ namespace SolvrLibrary
             p.Tags = expectedTagsList;
 
             return MockDBContainer.Instance.AddPost(p);
+        }
+
+        public void CreateCategory(Category cat)
+        {
+            MockDBContainer.Instance.AddCategory(cat);
         }
 
         public IEnumerable<Category> GetAllCategories()
@@ -383,6 +423,11 @@ namespace SolvrLibrary
                 }
             }
             return p;
+        }
+
+        internal User getUser(int id)
+        {
+
         }
 
         internal Post GetPost()
