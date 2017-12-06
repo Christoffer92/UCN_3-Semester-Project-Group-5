@@ -31,8 +31,6 @@
 
     @{/* TODO: Only user who doesnt own the post and is chosen as a solvr can view this */}
     @* View the secret description here *@
-    @if (true)
-    {
         <div class="post-Box-ViewPost-Standard">
             <div>
                 Alternativ description:
@@ -50,33 +48,32 @@
                 @Html.TextBox("ZipCode", (string)ViewBag.ZipCode, new { @readonly = "readonly" })
             </div>
         </div>
-    }
 
     <hr />
 
     @* Make a comment here *@
-    @if (!ViewBag.IsLocked)
+    
+    @using (Html.BeginForm("PostComment", "Post", FormMethod.Post))
     {
-        using (Html.BeginForm("PostComment", "Post", FormMethod.Post))
-        {
-            <div class="post-Box-MakeComment-Standard">
-                <div>
-                    <br />
-                    @Html.HiddenFor(m => m.PostId)
-                    @Html.TextAreaFor(m => m.Text, 4, 0, new { @class = "standard-TextArea-Size", placeholder = "Write a comment here..." })
-                </div>
-                <div class="post-BtnFloat">
-                    <input type="submit" name="comment" value="Post Comment" style="margin-right: 10px" class="standard-Btn-Colour standard-Btn-border btn" />
-                    @{/* TODO: Only user who doesnt own the post can choose to apply */}
-                    <input type="submit" name="comment" value="Apply" class="standard-Btn-Colour standard-Btn-border btn" />
-                </div>
+        <div class="post-Box-MakeComment-Standard">
+            <div>
                 <br />
+                @Html.HiddenFor(m => m.PostId)
+                @Html.TextAreaFor(m => m.Text, 4, 0, new { @class = "standard-TextArea-Size", placeholder = "Write a comment here..." })
             </div>
-        }
-
-        <hr />
+            <div class="post-BtnFloat">
+                @{/* TODO: Only user who doesnt own the post can choose to apply */}
+                @if (!ViewBag.IsLocked)
+                {
+                    <input type="submit" name="comment" value="Apply" style="margin-right: 10px" class="standard-Btn-Colour standard-Btn-border btn" />
+                }
+                <input type="submit" name="comment" value="Post Comment" class="standard-Btn-Colour standard-Btn-border btn" />
+            </div>
+            <br />
+        </div>
     }
 
+    <hr />
 
     @* View the Solvr and regular comments here *@
     @foreach (SolvrLibrary.Comment item in ViewBag.CommentList)

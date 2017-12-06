@@ -117,9 +117,9 @@ namespace DataAccesLayer.ModelBuilds
                 {
                     var Query = (from post in Context.Posts.OfType<Post>() where post.Id == PrimaryKey select post).First();
                     List<string> TagList = new List<string>();
-                    TagList.Add("TODO tag test træ");
-                    TagList.Add("Tag");
-                    TagList.Add("Post"); //TODO Tags
+                    TagList.Add("Tag1");
+                    TagList.Add("Tag2");
+                    TagList.Add("Tag3"); //TODO Tags
 
 
                     CreatedPost = (T)(object)new Post

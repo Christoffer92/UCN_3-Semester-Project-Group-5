@@ -125,6 +125,11 @@ namespace SolvrLibrary
         {
             throw new NotImplementedException();
         }
+
+        public void UpdatePhysicalPost(PhysicalPost post)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     class MockDBContainer

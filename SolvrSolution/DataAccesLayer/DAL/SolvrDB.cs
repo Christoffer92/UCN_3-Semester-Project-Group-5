@@ -130,6 +130,43 @@ namespace SolvrLibrary
             return GetPhysicalPost(physicalPost.Id);
         }
 
+        public void UpdatePhysicalPost(PhysicalPost p)
+        {
+            using (var db = new SolvrContext())
+            {
+                // Query the database for the row to be updated.
+                var Query =
+                    (from post
+                    in db.Posts.OfType<PhysicalPost>()
+                     where post.Id == p.Id
+                     select post
+                    ).First();
+
+                // Execute the query, and change the column values
+                // you want to change.ch
+                Query.Title = p.Title;
+                Query.Description = p.Description;
+                Query.CategoryId = p.CategoryId;
+                Query.AltDescription = p.AltDescription;
+                Query.Zipcode = p.Zipcode;
+                Query.Address = p.Address;
+                Query.IsLocked = p.IsLocked;
+                // Insert any additional changes to column values.
+
+                // Query.Tags = p.Tags;
+
+                // Submit the changes to the database.
+                try
+                {
+                    db.SubmitChanges();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+        }
+
         public PhysicalPost GetPhysicalPost()
         {
             using (var db = new SolvrContext())
