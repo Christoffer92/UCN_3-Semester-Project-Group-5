@@ -102,5 +102,10 @@ namespace SolvrLibrary
             int lastID = Users.Count();
             return new ModelBuilder().BuildUser(lastID);
         }
+
+        public User GetUser(int id)
+        {
+            return new ModelBuilder().BuildUser(id);
+        }
     }
 }

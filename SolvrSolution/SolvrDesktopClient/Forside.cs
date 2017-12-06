@@ -22,7 +22,6 @@ namespace SolvrDesktopClient
             timerConnectionStatus.Start();
             timerOverview.Start();
             reportCommentForm = new ReportCommentForm(this);
-            reportPostForm = new ReportPostForm(this);
         }
 
         private void timerConnectionStatus_Tick(object sender, EventArgs e)
@@ -119,6 +118,8 @@ namespace SolvrDesktopClient
                     }
                     if (type.Equals("post"))
                     {
+                        int reportId = (int)dataTable[0, e.RowIndex].Value;
+                        reportPostForm = new ReportPostForm(this, reportId);
                         reportPostForm.Show();
                         this.Hide();
 

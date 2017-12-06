@@ -18,6 +18,12 @@ namespace SolvrServices
         Report GetReport(int id);
 
         [OperationContract]
+        User GetUser(int id);
+
+        [OperationContract]
         bool IsConnectedToDatabase();
+
+        [OperationContract]
+        void SetReportToResolved(int reportId);
     }
 }

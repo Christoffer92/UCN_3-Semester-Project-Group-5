@@ -59,6 +59,7 @@
             this.btnResolve.TabIndex = 2;
             this.btnResolve.Text = "Resolve";
             this.btnResolve.UseVisualStyleBackColor = true;
+            this.btnResolve.Click += new System.EventHandler(this.btnResolve_Click);
             // 
             // txtBoxPost
             // 

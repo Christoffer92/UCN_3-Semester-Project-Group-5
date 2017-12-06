@@ -60,6 +60,13 @@ namespace SolvrLibrary
         Report GetReport(int id);
 
         /// <summary>
+        /// Returns a user with the given id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        User GetUser(int id);
+
+        /// <summary>
         /// Returns the last post that was inserted into the database.
         /// </summary>
         /// <returns>Post</returns>

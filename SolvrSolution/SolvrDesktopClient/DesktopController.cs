@@ -16,9 +16,9 @@ namespace SolvrDesktopClient
             proxy = new SolvrService();
         }
 
-        public void GetReport(int id)
+        public Report GetReport(int id)
         {
-            proxy.GetReport(id);
+            return proxy.GetReport(id);
         }
 
         public List<Report> GetAllReports()
@@ -82,14 +82,18 @@ namespace SolvrDesktopClient
                 {
                     counts[11]++;
                 }
-
-
-
-
-
             }
-
             return counts;
+        }
+
+        public User GetUser(int id)
+        {
+            return proxy.GetUser(id);
+        }
+
+        public void SetReportToResolved(int reportId)
+        {
+            proxy.SetReportToResolved(reportId);
         }
     }
 }
