@@ -140,6 +140,12 @@ namespace SolvrLibrary
             }
 
         }
+
+        public void CreateUser(User user)
+        {
+                Users.InsertOnSubmit(user);
+                SubmitChanges();
+        }
     }
 
 

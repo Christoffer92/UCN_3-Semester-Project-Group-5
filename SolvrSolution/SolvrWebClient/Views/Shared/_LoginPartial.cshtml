@@ -26,6 +26,7 @@ else
         else
         {
             <li>@Html.ActionLink("Log out", "LogOut", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+            <li>@Html.Label("Logged in as: " + Session["UserName"], new { id = "registerLink", @readonly = "readonly" })</li>
 
         }
     </ul>
