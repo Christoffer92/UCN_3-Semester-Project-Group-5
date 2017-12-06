@@ -261,24 +261,30 @@ namespace SolvrLibrary
         #endregion
 
 
+        public IEnumerable<Post> GetPostsByBumpTime(int loadCount = 0)
+        {
+            List<Post> postList = null;
+            using (var DB = new SolvrContext())
+            {
+                postList = new List<Post>();
+                var postQuery = (from post in DB.Posts orderby post.BumpTime descending select post).Skip(loadCount).Take(24);
+                foreach (var post in postQuery)
+                {
+                    post.User = GetUser(post.UserId);
+                    post.Category = GetCategory(post.CategoryId);
+                    postList.Add(post);
+                }
+            }
+            return postList;
+        }
+        public User GetUser(string Email)
+        {
+            using (var DB = new SolvrContext())
+            {
+                var Query = (from user in DB.Users where user.Email == Email select user).First();
+                return new ModelBuilder().BuildUser(Query.Id);
+            }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
-        
+        }
     }
 }

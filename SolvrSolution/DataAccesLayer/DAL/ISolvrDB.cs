@@ -81,5 +81,7 @@ namespace SolvrLibrary
         void UpdateSolvrComment(SolvrComment sc);
         T GetComment<T>(int ID);
         void UpdatePhysicalPost(PhysicalPost post);
+        IEnumerable<Post> GetPostsByBumpTime(int loadCount);
+        User GetUser(string Email);
     }
 }

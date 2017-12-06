@@ -130,6 +130,15 @@ namespace SolvrLibrary
         {
             throw new NotImplementedException();
         }
+        public IEnumerable<Post> GetPostsByBumpTime(int loadCount)
+        {
+            throw new NotImplementedException();
+        }
+
+        public User GetUser(string Email)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     class MockDBContainer
