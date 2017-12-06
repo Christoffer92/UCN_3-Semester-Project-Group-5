@@ -67,6 +67,7 @@ namespace SolvrWebClient.Controllers
         {
             return View("Login");
         }
+
         public ActionResult Login(LoginViewModel model)
         {
             bool valid = false;
@@ -99,7 +100,7 @@ namespace SolvrWebClient.Controllers
             User user = null;
             try
             {
-                user = DB.GetUser(model.Email);
+                user = DB.GetUser(model.Username);
             }
             catch
             {
@@ -129,59 +130,6 @@ namespace SolvrWebClient.Controllers
             //return View("Login");
             return RedirectToAction("Index","Home");
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /*
-        // GET: Account
-        public ActionResult Index()
-        {
-            return View();
-        }
-        */
-
-        // TODO Lav UserManager, SignInManager, ect. ændre til korrekte navne
-        /*
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model,string returnUrl)
-        {   
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
-            var user = UserManager.FindByNameAsync(model.Email);
-            if (user != null)
-            {
-                if(!await UserManager.IsEmailConfirmedAsync(user.id))
-                ViewBag.Errormessage = "Email is not registeret";
-                return View("Error");
-            }
-            var result = await SignInManager.PasswordSignIn(model.Email, model.Password, model.RememberMe);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return Index(returnUrl);
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("","Invalid login attempt");
-                    return View(model);
-            }
-                        
-            
-        }
-        */
 
         // GET: Account/Create
         public ActionResult Create()

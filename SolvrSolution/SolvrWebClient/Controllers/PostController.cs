@@ -46,6 +46,21 @@ namespace SolvrWebClient.Controllers
 
                 ViewBag.Tags = tags;
 
+                ViewBag.UserIsOwner = false;
+                User user = null;
+                try
+                {
+                    user = DB.GetUser((string)Session["Username"]);
+
+                    if (user != null && user.Id == post.UserId)
+                        ViewBag.UserIsOwner = true;
+                }
+                catch 
+                {
+                    // empty catch, because any exceptions here would (hopefully) not affect the program on runtime.
+                }
+                
+
                 //sortere efter tid
                 ViewBag.CommentList = DB.GetComments(post.Id).OrderBy(x => x.DateCreated).ToList();
 
@@ -60,7 +75,7 @@ namespace SolvrWebClient.Controllers
             
         }
 
-        public ActionResult PhysicalIndex(int ID = 1)
+        public ActionResult PhysicalIndex(int ID = 0)
         {
 
             if (DB.GetPost(ID).PostType.Equals("Post"))
@@ -73,13 +88,15 @@ namespace SolvrWebClient.Controllers
                 ViewBag.Title = ppost.Title;
                 ViewBag.Description = ppost.Description;
                 ViewBag.DateCreated = ppost.DateCreated.ToShortDateString();
-                ViewBag.User = DB.GetUser(ppost.UserId);
+                ViewBag.Username = DB.GetUser(ppost.UserId).Username;
+                ViewBag.UserId = ppost.UserId;
                 ViewBag.AltDescription = ppost.AltDescription;
                 ViewBag.Address = ppost.Address;
                 ViewBag.Zipcode = ppost.Zipcode;
                 ViewBag.IsLocked = ppost.IsLocked;
 
 
+                //TODO revamp
                 string tags = "";
 
                 foreach (string item in ppost.Tags)
@@ -89,12 +106,34 @@ namespace SolvrWebClient.Controllers
 
                 ViewBag.Tags = tags;
 
-                //sortere efter tid
-                IEnumerable<Comment> a = DB.GetComments(ppost.Id).OrderBy(x => x.DateCreated).ToList();
-                ViewBag.CommentList = a;
+                //sorteret omvendt efter tid
+                IEnumerable<Comment> commentList = DB.GetComments(ppost.Id).OrderByDescending(x => x.DateCreated).ToList();
+                ViewBag.CommentList = commentList;
 
-                //Usorteret
-                //ViewBag.CommentList = DB.GetComments(ID);
+                User user = null;
+                ViewBag.UserIsAccepted = false;
+                try
+                {
+                    user = DB.GetUser((string)Session["Username"]);
+                    foreach (SolvrComment item in commentList)
+                    {
+                        if (item.CommentType.Equals("Solvr") && item.IsAccepted && item.UserId == user.Id)
+                        {
+                            ViewBag.UserIsAccepted = true;
+                            break;
+                        }
+                    }
+                } catch 
+                {
+                    ViewBag.UserIsAccepted = false;
+                }
+
+                ViewBag.UserIsOwner = false;
+
+                if (user != null && user.Id == ppost.UserId)
+                    ViewBag.UserIsOwner = true;
+
+
 
                 var model = new CommentViewModel();
                 model.PostId = ppost.Id;
