@@ -221,23 +221,23 @@ namespace DataAccesLayer.ModelBuilds
                 };
                 switch (Query.ReportType)
                 {
-                    case "Comment":
+                    case "comment":
                         CreatedReport.Comment = BuildComment<Comment>(Query.CommentId);
                         break;
 
-                    case "SolvrComment":
+                    case "solvrComment":
                         CreatedReport.Comment = BuildComment<SolvrComment>(Query.CommentId);
                         break;
 
-                    case "Post":
+                    case "post":
                         CreatedReport.Post = BuildPost<Post>(Query.PostId);
                         break;
 
-                    case "PhysicalPost":
+                    case "physicalPost":
                         CreatedReport.Post = BuildPost<PhysicalPost>(Query.PostId);
                         break;
 
-                    case "User":
+                    case "user":
                         CreatedReport.User = BuildUser(Query.UserId);
                         break;
                     default:

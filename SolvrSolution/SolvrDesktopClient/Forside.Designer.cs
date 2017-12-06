@@ -70,16 +70,16 @@
             this.lblConnection = new System.Windows.Forms.Label();
             this.comboBoxTypes = new System.Windows.Forms.ComboBox();
             this.dataTable = new System.Windows.Forms.DataGridView();
-            this.txtBoxSearch = new System.Windows.Forms.TextBox();
-            this.timerConnectionStatus = new System.Windows.Forms.Timer(this.components);
-            this.btnRefreshTable = new System.Windows.Forms.Button();
-            this.timerOverview = new System.Windows.Forms.Timer(this.components);
-            this.timerRefreshTimeOut = new System.Windows.Forms.Timer(this.components);
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Title = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dateCreated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.administrateReport = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.txtBoxSearch = new System.Windows.Forms.TextBox();
+            this.timerConnectionStatus = new System.Windows.Forms.Timer(this.components);
+            this.btnRefreshTable = new System.Windows.Forms.Button();
+            this.timerOverview = new System.Windows.Forms.Timer(this.components);
+            this.timerRefreshTimeOut = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.picBoxTitle)).BeginInit();
             this.grpBoxReports.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable)).BeginInit();
@@ -520,40 +520,6 @@
             this.dataTable.TabIndex = 17;
             this.dataTable.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataTable_CellContentClick);
             // 
-            // txtBoxSearch
-            // 
-            this.txtBoxSearch.Enabled = false;
-            this.txtBoxSearch.Location = new System.Drawing.Point(412, 172);
-            this.txtBoxSearch.Name = "txtBoxSearch";
-            this.txtBoxSearch.Size = new System.Drawing.Size(109, 22);
-            this.txtBoxSearch.TabIndex = 18;
-            this.txtBoxSearch.Text = "Search...";
-            // 
-            // timerConnectionStatus
-            // 
-            this.timerConnectionStatus.Interval = 5000;
-            this.timerConnectionStatus.Tick += new System.EventHandler(this.timerConnectionStatus_Tick);
-            // 
-            // btnRefreshTable
-            // 
-            this.btnRefreshTable.Location = new System.Drawing.Point(730, 170);
-            this.btnRefreshTable.Name = "btnRefreshTable";
-            this.btnRefreshTable.Size = new System.Drawing.Size(135, 23);
-            this.btnRefreshTable.TabIndex = 20;
-            this.btnRefreshTable.Text = "Refresh Table";
-            this.btnRefreshTable.UseVisualStyleBackColor = true;
-            this.btnRefreshTable.Click += new System.EventHandler(this.btnRefreshTable_Click);
-            // 
-            // timerOverview
-            // 
-            this.timerOverview.Interval = 10000;
-            this.timerOverview.Tick += new System.EventHandler(this.timerOverview_Tick);
-            // 
-            // timerRefreshTimeOut
-            // 
-            this.timerRefreshTimeOut.Interval = 5000;
-            this.timerRefreshTimeOut.Tick += new System.EventHandler(this.timerRefreshTimeOut_Tick);
-            // 
             // id
             // 
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
@@ -595,6 +561,40 @@
             this.administrateReport.ToolTipText = "Buttons to Administrate the specific Report.";
             this.administrateReport.Width = 115;
             // 
+            // txtBoxSearch
+            // 
+            this.txtBoxSearch.Enabled = false;
+            this.txtBoxSearch.Location = new System.Drawing.Point(412, 172);
+            this.txtBoxSearch.Name = "txtBoxSearch";
+            this.txtBoxSearch.Size = new System.Drawing.Size(109, 22);
+            this.txtBoxSearch.TabIndex = 18;
+            this.txtBoxSearch.Text = "Search...";
+            // 
+            // timerConnectionStatus
+            // 
+            this.timerConnectionStatus.Interval = 5000;
+            this.timerConnectionStatus.Tick += new System.EventHandler(this.timerConnectionStatus_Tick);
+            // 
+            // btnRefreshTable
+            // 
+            this.btnRefreshTable.Location = new System.Drawing.Point(730, 170);
+            this.btnRefreshTable.Name = "btnRefreshTable";
+            this.btnRefreshTable.Size = new System.Drawing.Size(135, 23);
+            this.btnRefreshTable.TabIndex = 20;
+            this.btnRefreshTable.Text = "Refresh Table";
+            this.btnRefreshTable.UseVisualStyleBackColor = true;
+            this.btnRefreshTable.Click += new System.EventHandler(this.btnRefreshTable_Click);
+            // 
+            // timerOverview
+            // 
+            this.timerOverview.Interval = 10000;
+            this.timerOverview.Tick += new System.EventHandler(this.timerOverview_Tick);
+            // 
+            // timerRefreshTimeOut
+            // 
+            this.timerRefreshTimeOut.Interval = 5000;
+            this.timerRefreshTimeOut.Tick += new System.EventHandler(this.timerRefreshTimeOut_Tick);
+            // 
             // FormForside
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -614,6 +614,7 @@
             this.MinimumSize = new System.Drawing.Size(1280, 720);
             this.Name = "FormForside";
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SolvrAdminstrator";
             ((System.ComponentModel.ISupportInitialize)(this.picBoxTitle)).EndInit();
             this.grpBoxReports.ResumeLayout(false);

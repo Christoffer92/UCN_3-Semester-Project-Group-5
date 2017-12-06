@@ -23,15 +23,28 @@ namespace SolvrServices
             return solvrDB.GetReport(id);
         }
 
+        public User GetUser(int id)
+        {
+            return solvrDB.GetUser(id);
+        }
+
         public bool IsConnectedToDatabase()
         {
             return solvrDB.DatabaseExists();
+        }
+
+        public void SetReportToResolved(int reportId)
+        {
+            throw new NotImplementedException();
+            //solvrDB.SetReportToResolved(reportId);
         }
 
         public void Dispose()
         {
             solvrDB.Dispose();
         }
+
+
     }
 }
 
