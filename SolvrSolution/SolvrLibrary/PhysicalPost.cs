@@ -25,7 +25,7 @@ namespace SolvrLibrary
         [Column()]
         public string Address { get; set; }
 
-        public List<SolvrComment> SolvrComments { get; set; }
+        /*public List<SolvrComment> SolvrComments { get; set; }*/
 
         /*[Column()]
         public int PostId { get; set; }*/
