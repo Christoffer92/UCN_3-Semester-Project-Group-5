@@ -461,7 +461,7 @@ namespace SolvrLibrary
 
         internal User getUser(int id)
         {
-
+            throw new NotImplementedException();
         }
 
         internal Post GetPost()
