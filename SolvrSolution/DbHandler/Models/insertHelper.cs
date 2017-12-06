@@ -1,5 +1,5 @@
 ﻿using SolvrLibrary;
-using DataAccesLayer;
+using DataAccesLayer.DAL;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -35,7 +35,7 @@ namespace DbHandler.Models
 
                     //Here the list objects is set into the database. The if statements are used to take care of 
                     //the special cases 
-                    using (var context = new SolvrDB())
+                    using (var context = new SolvrContext())
                     {
                         foreach (T obj in objects)
                         {
