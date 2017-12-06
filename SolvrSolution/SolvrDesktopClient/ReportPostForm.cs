@@ -85,6 +85,7 @@ namespace SolvrDesktopClient
             
             if (btnIgnore.BackColor == Color.YellowGreen)
             {
+                //TODO We need to take care of (Samtidigtheds problemet her)
                 desktopController.SetReportToResolved(reportId);
                 forside.Show();
                 forside.btnRefreshTable_Click(null, null);
@@ -92,6 +93,7 @@ namespace SolvrDesktopClient
             }
             else if (btnEdit.BackColor == Color.YellowGreen)
             {
+                //TODO We need to take care of (Samtidigtheds problemet her)
                 int postId = desktopController.GetReport(reportId).PostId;
                 desktopController.UpdatePostText(postId, txtBoxPost.Text);
                 desktopController.UpdatePostTitle(postId, lblTitle.Text);
@@ -102,12 +104,14 @@ namespace SolvrDesktopClient
             }
             else if (btnDelete.BackColor == Color.YellowGreen)
             {
-                int postId = desktopController.GetReport(reportId).PostId;
-                desktopController.DisablePost(postId);
-                desktopController.SetReportToResolved(reportId);
-                forside.Show();
-                forside.btnRefreshTable_Click(null, null);
-                this.Hide();
+                //TODO We need to take care of (Samtidigtheds problemet her)
+                    int postId = desktopController.GetReport(reportId).PostId;
+                    desktopController.DisablePost(postId);
+                    desktopController.SetReportToResolved(reportId);
+                    
+                    forside.Show();
+                    forside.btnRefreshTable_Click(null, null);
+                    this.Hide();
             }
             else
             {

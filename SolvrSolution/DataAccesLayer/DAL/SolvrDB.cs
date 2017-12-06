@@ -60,7 +60,7 @@ namespace SolvrLibrary
             }
         }
 
-        public void UpdatePostTile(int postId, string text)
+        public void UpdatePostTilte(int postId, string text)
         {
             using (var db = new SolvrContext())
             {

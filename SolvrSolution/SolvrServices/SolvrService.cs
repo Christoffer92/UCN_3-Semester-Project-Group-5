@@ -52,7 +52,7 @@ namespace SolvrServices
 
         public void UpdatePostTitle(int postId, string text)
         {
-            solvrDB.UpdatePostTile(postId, text);
+            solvrDB.UpdatePostTilte(postId, text);
         }
     }
 }
