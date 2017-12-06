@@ -72,12 +72,14 @@ namespace SolvrLibrary
         /// <returns>List of Categories</returns>
         IEnumerable<Category> GetAllCategories();
 
-        //TODO summary here
+        //TODO summary and cleanup
         User GetUser(int userId);
         IEnumerable<Comment> GetComments(int iD);
         Comment CreateComment(Comment c);
         SolvrComment CreateSolvrComment(SolvrComment sc);
-
         void UpdatePost(Post p);
+        void UpdateSolvrComment(SolvrComment sc);
+        T GetComment<T>(int ID);
+        void UpdatePhysicalPost(PhysicalPost post);
     }
 }

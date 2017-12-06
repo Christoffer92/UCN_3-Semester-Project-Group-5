@@ -77,6 +77,7 @@ namespace SolvrWebClient.Controllers
                 ViewBag.AltDescription = ppost.AltDescription;
                 ViewBag.Address = ppost.Address;
                 ViewBag.Zipcode = ppost.Zipcode;
+                ViewBag.IsLocked = ppost.IsLocked;
 
 
                 string tags = "";
@@ -89,7 +90,8 @@ namespace SolvrWebClient.Controllers
                 ViewBag.Tags = tags;
 
                 //sortere efter tid
-                ViewBag.CommentList = DB.GetComments(ppost.Id).OrderBy(x => x.DateCreated).ToList();
+                IEnumerable<Comment> a = DB.GetComments(ppost.Id).OrderBy(x => x.DateCreated).ToList();
+                ViewBag.CommentList = a;
 
                 //Usorteret
                 //ViewBag.CommentList = DB.GetComments(ID);
@@ -124,6 +126,7 @@ namespace SolvrWebClient.Controllers
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 //TODO: Print error message
                 return View();
             }
@@ -157,6 +160,25 @@ namespace SolvrWebClient.Controllers
             sc.UserId = sc.User.Id;
 
             DB.CreateSolvrComment(sc);
+        }
+
+        public ActionResult ChooseSolvr(int ID=0)
+        {
+            SolvrComment sc = DB.GetComment<SolvrComment>(ID);
+
+            if (sc.IsAccepted)
+            {
+                sc.IsAccepted = false;
+            }
+            else
+            {
+                sc.TimeAccepted = DateTime.Now;
+                sc.IsAccepted = true;
+            }
+
+            DB.UpdateSolvrComment(sc);
+
+            return RedirectToAction("Index", new { ID = sc.PostId });
         }
 
         //public ActionResult Index(Post post)

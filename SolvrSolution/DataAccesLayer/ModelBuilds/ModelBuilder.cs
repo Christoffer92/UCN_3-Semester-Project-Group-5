@@ -55,34 +55,41 @@ namespace DataAccesLayer.ModelBuilds
                 var CommentQuery = from comment in Context.Comments where comment.PostId == postId select comment;
                 CommentList = new List<Comment>();
 
-                foreach (Comment item in CommentQuery)
+                foreach (var item in CommentQuery)
                 {
-                    CommentList.Add(BuildComment<Comment>(item.Id));
+                    if (item.CommentType.Equals("Solvr"))
+                    {
+                        CommentList.Add(BuildComment<SolvrComment>(item.Id)); 
+                    }
+                    else
+                    {
+                        CommentList.Add(BuildComment<Comment>(item.Id));
+                    }
                 }
             }
             return CommentList;
         }
 
-        public List<SolvrComment> BuildSolvrCommentList(int postId)
-        {
-            var solvrCommentList = new List<SolvrComment>();
+        //public List<SolvrComment> BuildSolvrCommentList(int postId)
+        //{
+        //    var solvrCommentList = new List<SolvrComment>();
 
-            using (var context = new SolvrContext())
-            {
-                var SolvrCommentQuery = from comment in context.Comments where comment.PostId == postId select comment;
+        //    using (var context = new SolvrContext())
+        //    {
+        //        var SolvrCommentQuery = from comment in context.Comments where comment.PostId == postId select comment;
                 
 
-                foreach (var comment in SolvrCommentQuery)
-                {
-                    /*solvrCommentList.Add(BuildComment<SolvrComment>(comment.Id));*/
-                    if (comment.CommentType.Equals("Solvr"))
-                    {
-                        solvrCommentList.Add(BuildComment<SolvrComment>(comment.Id));
-                    }
-                }
-            }
-            return solvrCommentList;
-        }
+        //        foreach (var comment in SolvrCommentQuery)
+        //        {
+        //            /*solvrCommentList.Add(BuildComment<SolvrComment>(comment.Id));*/
+        //            if (comment.CommentType.Equals("Solvr"))
+        //            {
+        //                solvrCommentList.Add(BuildComment<SolvrComment>(comment.Id));
+        //            }
+        //        }
+        //    }
+        //    return solvrCommentList;
+        //}
 
         public List<Vote> BuildVoteList(int commentId)
         {
@@ -110,9 +117,9 @@ namespace DataAccesLayer.ModelBuilds
                 {
                     var Query = (from post in Context.Posts.OfType<Post>() where post.Id == PrimaryKey select post).First();
                     List<string> TagList = new List<string>();
-                    TagList.Add("TODO tag test træ");
-                    TagList.Add("Tag");
-                    TagList.Add("Post"); //TODO Tags
+                    TagList.Add("Tag1");
+                    TagList.Add("Tag2");
+                    TagList.Add("Tag3"); //TODO Tags
 
 
                     CreatedPost = (T)(object)new Post

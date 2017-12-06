@@ -115,6 +115,21 @@ namespace SolvrLibrary
         {
             throw new NotImplementedException();
         }
+
+        public void UpdateSolvrComment(SolvrComment sc)
+        {
+            throw new NotImplementedException();
+        }
+
+        public T GetComment<T>(int ID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdatePhysicalPost(PhysicalPost post)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     class MockDBContainer

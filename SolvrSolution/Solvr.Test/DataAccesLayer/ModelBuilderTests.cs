@@ -882,10 +882,15 @@ namespace Solvr.Test.DataAccesLayer
             DateTime expectedTimeAccepted = new DateTime(expectedTimeAcceptedYear, expectedTimeAcceptedMonth, expectedTimeAcceptedDay, expectedTimeAcceptedHour, expectedTimeAcceptedMinute, expectedTimeAcceptedSecond);
             DateTime expectedDateCreated2 = new DateTime(expectedDateCreatedYear2, expectedDateCreatedMonth2, expectedDateCreatedDay2, expectedDateCreatedHour2, expectedDateCreatedMinute2, expectedDateCreatedSecond2);
             DateTime expectedTimeAccepted2 = new DateTime(expectedTimeAcceptedYear2, expectedTimeAcceptedMonth2, expectedTimeAcceptedDay2, expectedTimeAcceptedHour2, expectedTimeAcceptedMinute2, expectedTimeAcceptedSecond2);
+            List<SolvrComment> actualSolvrComments = new List<SolvrComment>();
 
             //Act
             PhysicalPost post = modelBuilder.BuildPost<PhysicalPost>(expectedPostId);
-            List<SolvrComment> actualSolvrComments = post.SolvrComments;
+            foreach (SolvrComment item in post.Comments)
+            {
+                actualSolvrComments.Add(item);
+            }
+            
             SolvrComment actualSolvrComment = actualSolvrComments[0];
             int actualId = actualSolvrComment.Id;
             DateTime actualDateCreated = actualSolvrComment.DateCreated;
@@ -898,7 +903,7 @@ namespace Solvr.Test.DataAccesLayer
             if (expectedText2 != null)
             {
                 //Act
-                SolvrComment actualSolvrComment2 = (SolvrComment)actualSolvrComments[1];
+                SolvrComment actualSolvrComment2 = actualSolvrComments[1];
                 int actualId2 = actualSolvrComment.Id;
                 DateTime actualDateCreated2 = actualSolvrComment2.DateCreated;
                 string actualText2 = actualSolvrComment2.Text;
@@ -958,12 +963,14 @@ namespace Solvr.Test.DataAccesLayer
             //Prepare
             ModelBuilder modelBuilder = new ModelBuilder();
             DateTime expectedDateCreated, expectedTimeAccepted, expectedDateCreated2, expectedTimeAccepted2;
+            List<SolvrComment> actualSolvrComments = new List<SolvrComment>();
             try
             {
                 expectedDateCreated = new DateTime(expectedDateCreatedYear, expectedDateCreatedMonth, expectedDateCreatedDay, expectedDateCreatedHour, expectedDateCreatedMinute, expectedDateCreatedSecond);
                 expectedTimeAccepted = new DateTime(expectedTimeAcceptedYear, expectedTimeAcceptedMonth, expectedTimeAcceptedDay, expectedTimeAcceptedHour, expectedTimeAcceptedMinute, expectedTimeAcceptedSecond);
                 expectedDateCreated2 = new DateTime(expectedDateCreatedYear2, expectedDateCreatedMonth2, expectedDateCreatedDay2, expectedDateCreatedHour2, expectedDateCreatedMinute2, expectedDateCreatedSecond2);
                 expectedTimeAccepted2 = new DateTime(expectedTimeAcceptedYear2, expectedTimeAcceptedMonth2, expectedTimeAcceptedDay2, expectedTimeAcceptedHour2, expectedTimeAcceptedMinute2, expectedTimeAcceptedSecond2);
+                
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -983,7 +990,11 @@ namespace Solvr.Test.DataAccesLayer
             }
             
             PhysicalPost post = modelBuilder.BuildPost<PhysicalPost>(expectedPostId);
-            List<SolvrComment> actualSolvrComments = post.SolvrComments;
+            foreach (SolvrComment item in post.Comments)
+            {
+                actualSolvrComments.Add(item);
+            }
+            
             SolvrComment actualSolvrComment = actualSolvrComments[0];
             int actualId = actualSolvrComment.Id;
             DateTime actualDateCreated = actualSolvrComment.DateCreated;
