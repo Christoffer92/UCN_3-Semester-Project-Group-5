@@ -261,5 +261,51 @@ img.post-Vote {
     padding: 1px;
 }
 
-
-
+/*--------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------All .home classes are here---------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------*/
+/*------------------------------------*/
+/*------Post information here---------*/
+/*------------------------------------*/
+img.post-CommentAvatar {
+    object-fit: cover;
+    height: 36px;
+    width: 36px;
+    vertical-align: middle;
+    float: left;
+    padding: 5px;
+}
+/*------------------------------------*/
+/*----------Box view here-------------*/
+/*------------------------------------*/
+.home-side{
+    width: 20%;
+    height: auto;
+}
+.home-main-content {
+    display:table;
+    width: 90%;
+    height: 90%;
+    border:ridge;
+}
+/*.home-main-content div{
+    float: none;
+}*/
+.home-main{
+    width: 80%;
+    height: auto;
+}
+.home-main,
+.home-side{
+    display: table-cell;
+}
+.home-body{
+    display:table;
+    width: 100%;
+}
+.home-column {
+    float: left;
+    width: 33.33%;
+    padding: 10px;
+    height: auto;
+}
