@@ -25,6 +25,44 @@ namespace SolvrWebClient.Controllers
             DB = _DB;
         }
 
+        public ActionResult Register()
+        {
+            
+            return View();
+        }
+
+        public ActionResult RegisterUser(RegisterViewModel model)
+        {
+            User user = new User();
+            user.Email = model.Email;
+            user.Name = model.Name;
+            user.Password = model.Password;
+            user.Username = model.Username;
+
+            //bool isRegistered = false;
+
+            try
+            {
+                DB.CreateUser(user);
+
+            }
+            catch (Exception e)
+            {
+                if (e.Message.Contains(model.Username))
+                {
+                    ModelState.AddModelError("Username", "Username already exists");
+                }
+
+                if (e.Message.Contains(model.Email))
+                {
+                    ModelState.AddModelError("Email", "Email already exists");
+                }
+                return View("Register", model);
+            }
+
+            return RedirectToAction("Login");
+        }
+
         public ActionResult Index()
         {
             return View("Login");
@@ -73,7 +111,7 @@ namespace SolvrWebClient.Controllers
             if(user != null && model.Password.Equals(user.Password))
             {
                 Session["Username"] = user.Username;
-                Session["Email"] = user.Email;
+                //Session["Email"] = user.Email;
 
                 return true;
             }
