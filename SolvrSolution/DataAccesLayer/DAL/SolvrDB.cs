@@ -137,6 +137,16 @@ namespace SolvrLibrary
             return new ModelBuilder().BuildUser(id);
         }
 
+        public User GetUser(string Username)
+        {
+            using (var DB = new SolvrContext())
+            {
+                var Query = (from user in DB.Users where user.Username == Username select user).First();
+                return new ModelBuilder().BuildUser(Query.Id);
+            }
+
+        }
+
         #endregion
 
         #region General Post
@@ -366,12 +376,14 @@ namespace SolvrLibrary
             }
             return postList;
         }
-        public User GetUser(string Email)
+        
+
+        public void CreateUser(User user)
         {
             using (var DB = new SolvrContext())
             {
-                var Query = (from user in DB.Users where user.Email == Email select user).First();
-                return new ModelBuilder().BuildUser(Query.Id);
+                DB.Users.InsertOnSubmit(user);
+                DB.SubmitChanges();
             }
         }
     }

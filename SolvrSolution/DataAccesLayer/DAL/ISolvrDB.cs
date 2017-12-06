@@ -103,6 +103,7 @@ namespace SolvrLibrary
         T GetComment<T>(int ID);
         void UpdatePhysicalPost(PhysicalPost post);
         IEnumerable<Post> GetPostsByBumpTime(int loadCount);
-        User GetUser(string Email);
+        User GetUser(string Username);
+        void CreateUser(User user);
     }
 }

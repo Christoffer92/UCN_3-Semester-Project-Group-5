@@ -149,6 +149,11 @@ namespace SolvrLibrary
         {
             throw new NotImplementedException();
         }
+
+        public void CreateUser(User user)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     class MockDBContainer
