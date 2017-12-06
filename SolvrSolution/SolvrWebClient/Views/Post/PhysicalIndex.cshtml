@@ -74,7 +74,32 @@
     }
 
     <hr />
+    <h3>Accepted Solvr's</h3>
+    @* View the accepted solvr commennts here *@
+    @foreach (SolvrLibrary.Comment item in ViewBag.CommentList)
+    {
+        if (item is SolvrLibrary.SolvrComment solvr && solvr.IsAccepted)
+        {
+            <div class="post-Box-ViewPhysicalComment-Standard-Chosen">
+                <div>
+                    <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
+                    @Html.Label("", item.User.Username)
+                </div>
+                <div class="post-CommentBox-TextArea">
+                    @Html.TextArea("ViewCommentArea", item.Text, 5, 0, new { @readonly = "readonly", @class = "post-TextArea-View" })
+                </div>
+                <div class="post-BtnFloat" style="margin-right: 5%">
+                    <input type="submit" name="Choose Solvr" value="Remove" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("ChooseSolvr", "Post", new { ID = item.Id })'" />
+                </div>
+                @Html.Label("", (item.DateCreated.ToShortTimeString() + " " + item.DateCreated.ToShortDateString()), new { @class = "post-DateLabel" })
+                <br />
+                <br />
+            </div>
+        }
+    }
 
+    <hr />
+    <h3>Comments</h3>
     @* View the Solvr and regular comments here *@
     @foreach (SolvrLibrary.Comment item in ViewBag.CommentList)
     {
