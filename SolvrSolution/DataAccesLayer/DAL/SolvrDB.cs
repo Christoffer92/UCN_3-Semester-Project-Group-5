@@ -29,11 +29,93 @@ namespace SolvrLibrary
             throw new NotImplementedException();
         }
 
+        public Report GetReport(int id)
+        {
+            return new ModelBuilder().BuildReport(id);
+        }
+
         public IEnumerable<Category> GetAllCategories()
         {
             using (var db = new SolvrContext())
             {
                 return db.Categories.ToList<Category>();
+            }
+        }
+
+        public void SetReportToResolved(int reportId)
+        {
+            using (var db = new SolvrContext())
+            {
+                // Query the database for the row to be updated.
+                var Query =
+                (from report
+                in db.Reports.OfType<Report>()
+                 where report.Id == reportId
+                 select report
+                ).First();
+
+                Query.IsResolved = true;
+
+                db.SubmitChanges();
+            }
+        }
+
+        public void UpdatePostTilte(int postId, string text)
+        {
+            using (var db = new SolvrContext())
+            {
+                // Query the database for the row to be updated.
+                var Query =
+                    (from post
+                     in db.Posts.OfType<Post>()
+                     where post.Id == postId
+                     select post
+                      ).First();
+
+                Query.Title = text;
+
+                db.SubmitChanges();
+            }
+        }
+
+        public void DisablePost(int postId)
+        {
+            using (var db = new SolvrContext())
+            {
+                // Query the database for the row to be updated.
+                var Query =
+                    (from post
+                     in db.Posts.OfType<Post>()
+                     where post.Id == postId
+                     select post
+                      ).First();
+
+                Query.IsDisabled = true;
+            }
+        }
+
+        public void UpdatePostText(int postId, string text)
+        {
+            using (var db = new SolvrContext())
+            {
+                // Query the database for the row to be updated.
+                var Query =
+                (from post
+                in db.Posts.OfType<Post>()
+                 where post.Id == postId
+                 select post
+                ).First();
+
+                Query.Description = text;
+                db.SubmitChanges();
+            }
+        }
+
+        public bool DatabaseExists()
+        {
+            using (var db = new SolvrContext())
+            {
+                return db.DatabaseExists();
             }
         }
         #endregion
@@ -258,6 +340,13 @@ namespace SolvrLibrary
             }
         }
 
+        public List<Report> GetAllReports()
+        {
+            using (var db = new SolvrContext())
+            {
+                return db.Reports.ToList<Report>();
+            }
+        }
         #endregion
 
 
@@ -284,7 +373,6 @@ namespace SolvrLibrary
                 var Query = (from user in DB.Users where user.Email == Email select user).First();
                 return new ModelBuilder().BuildUser(Query.Id);
             }
-
         }
     }
 }
