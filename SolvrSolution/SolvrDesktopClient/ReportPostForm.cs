@@ -14,7 +14,6 @@ namespace SolvrDesktopClient
     public partial class ReportPostForm : Form
     {
         private FormForside forside;
-        private Report report;
         private int reportId;
 
         public ReportPostForm(FormForside forside, int reportId)
@@ -24,6 +23,7 @@ namespace SolvrDesktopClient
             this.reportId = reportId;
             LoadPost();
             txtBoxPost.Enabled = false;
+            txtBoxTitle.Text = lblTitle.Text;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -42,6 +42,8 @@ namespace SolvrDesktopClient
             btnEdit.BackColor   = SystemColors.Control;
             btnIgnore.BackColor = Color.YellowGreen;
             txtBoxPost.Enabled = false;
+            lblTitle.Enabled = false;
+            lblTitleEditable(false);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -50,7 +52,8 @@ namespace SolvrDesktopClient
             btnEdit.BackColor = SystemColors.Control;
             btnDelete.BackColor = Color.YellowGreen;
             txtBoxPost.Enabled = false;
-
+            lblTitle.Enabled = false;
+            lblTitleEditable(false);
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -59,6 +62,8 @@ namespace SolvrDesktopClient
             btnDelete.BackColor = SystemColors.Control;
             btnEdit.BackColor   = Color.YellowGreen;
             txtBoxPost.Enabled = true;
+            lblTitle.Enabled = true;
+            lblTitleEditable(true);
         }
 
         public void LoadPost()
@@ -78,12 +83,62 @@ namespace SolvrDesktopClient
             DesktopController desktopController = new DesktopController();
             Report report = desktopController.GetReport(reportId);
             
-
             if (btnIgnore.BackColor == Color.YellowGreen)
             {
                 desktopController.SetReportToResolved(reportId);
+                forside.Show();
+                forside.btnRefreshTable_Click(null, null);
+                this.Hide();
             }
-            
+            else if (btnEdit.BackColor == Color.YellowGreen)
+            {
+                int postId = desktopController.GetReport(reportId).PostId;
+                desktopController.UpdatePostText(postId, txtBoxPost.Text);
+                desktopController.UpdatePostTitle(postId, lblTitle.Text);
+                desktopController.SetReportToResolved(reportId);
+                forside.Show();
+                forside.btnRefreshTable_Click(null, null);
+                this.Hide();
+            }
+            else if (btnDelete.BackColor == Color.YellowGreen)
+            {
+                int postId = desktopController.GetReport(reportId).PostId;
+                desktopController.DisablePost(postId);
+                desktopController.SetReportToResolved(reportId);
+                forside.Show();
+                forside.btnRefreshTable_Click(null, null);
+                this.Hide();
+            }
+            else
+            {
+                MessageBox.Show("Please select one of the three options or click Cancel.");
+            }
+        }
+
+        private void lblTitleEditable(bool isEditable)
+        {
+            if (isEditable) {            
+            lblTitle.Hide();
+            txtBoxTitle.Text = lblTitle.Text;
+            txtBoxTitle.Show();
+            txtBoxTitle.Enabled = true;
+            txtBoxTitle.KeyDown += TxtBoxTitle_KeyDown;
+            }
+            else
+            {
+                txtBoxTitle.Hide();
+                txtBoxTitle.Enabled = false;
+                lblTitle.Text = txtBoxTitle.Text;
+                lblTitle.Show();
+            }
+        }
+
+        private void TxtBoxTitle_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                lblTitle.Text = txtBoxTitle.Text;
+            }
         }
     }
 }

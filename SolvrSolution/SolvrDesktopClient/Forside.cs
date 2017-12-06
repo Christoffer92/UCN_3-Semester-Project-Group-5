@@ -81,7 +81,7 @@ namespace SolvrDesktopClient
                 lblStatus.BackColor = Color.Red;
         }
 
-        private void btnRefreshTable_Click(object sender, EventArgs e)
+        public void btnRefreshTable_Click(object sender, EventArgs e)
         {
             DesktopController desktopController = new DesktopController();
             List<Report> reports = desktopController.GetAllReports();
@@ -90,7 +90,10 @@ namespace SolvrDesktopClient
             dataTable.Rows.Clear();
             foreach (Report report in reports)
             {
-                dataTable.Rows.Add(report.Id, report.Title, report.ReportType, report.DateCreated);
+                if (report.IsResolved == false)
+                {
+                    dataTable.Rows.Add(report.Id, report.Title, report.ReportType, report.DateCreated);
+                }
             }
 
             //Sorts the data by dateTime.
@@ -122,7 +125,6 @@ namespace SolvrDesktopClient
                         reportPostForm = new ReportPostForm(this, reportId);
                         reportPostForm.Show();
                         this.Hide();
-
                     }
                     if (type.Equals("user"))
                     {

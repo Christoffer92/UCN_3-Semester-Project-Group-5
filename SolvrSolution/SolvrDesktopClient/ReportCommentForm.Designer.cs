@@ -36,6 +36,7 @@
             this.btnIgnore = new System.Windows.Forms.Button();
             this.lblDateTime = new System.Windows.Forms.Label();
             this.btnDelete = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxUserPicture)).BeginInit();
             this.SuspendLayout();
             // 
@@ -68,16 +69,16 @@
             // 
             // picBoxUserPicture
             // 
-            this.picBoxUserPicture.Location = new System.Drawing.Point(183, 98);
+            this.picBoxUserPicture.Location = new System.Drawing.Point(190, 96);
             this.picBoxUserPicture.Name = "picBoxUserPicture";
-            this.picBoxUserPicture.Size = new System.Drawing.Size(98, 73);
+            this.picBoxUserPicture.Size = new System.Drawing.Size(75, 75);
             this.picBoxUserPicture.TabIndex = 3;
             this.picBoxUserPicture.TabStop = false;
             // 
             // lblUsername
             // 
             this.lblUsername.AutoSize = true;
-            this.lblUsername.Location = new System.Drawing.Point(288, 153);
+            this.lblUsername.Location = new System.Drawing.Point(271, 154);
             this.lblUsername.Name = "lblUsername";
             this.lblUsername.Size = new System.Drawing.Size(73, 17);
             this.lblUsername.TabIndex = 4;
@@ -111,11 +112,22 @@
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.button4_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(245, 39);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(757, 36);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "This Form is under construction, click cancel to go back.";
+            // 
             // ReportCommentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1262, 673);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.lblDateTime);
             this.Controls.Add(this.btnIgnore);
@@ -143,5 +155,6 @@
         private System.Windows.Forms.Button btnIgnore;
         private System.Windows.Forms.Label lblDateTime;
         private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Label label1;
     }
 }

@@ -47,6 +47,9 @@ namespace SolvrLibrary
         [Column(IsDiscriminator = true)]
         public string PostType;
 
+        [Column()]
+        public bool IsDisabled { get; set; }
+
         public List<string> Tags { get; set; }
 
         public User User { get; set; }
@@ -54,6 +57,5 @@ namespace SolvrLibrary
         public Category Category { get; set; }
 
         public List<Comment> Comments { get; set; }
-
     }
 }

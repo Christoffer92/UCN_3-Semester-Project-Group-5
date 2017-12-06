@@ -25,5 +25,14 @@ namespace SolvrServices
 
         [OperationContract]
         void SetReportToResolved(int reportId);
+
+        [OperationContract]
+        void UpdatePostText(int postId, string txt);
+
+        [OperationContract]
+        void DisablePost(int postId);
+
+        [OperationContract]
+        void UpdatePostTitle(int postId, string text);
     }
 }

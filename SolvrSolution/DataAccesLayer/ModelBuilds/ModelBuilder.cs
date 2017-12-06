@@ -135,7 +135,8 @@ namespace DataAccesLayer.ModelBuilds
                         UserId = Query.UserId,
                         User = BuildUser(Query.UserId),
                         PostType = Query.PostType,
-                        Tags = TagList
+                        Tags = TagList,
+                        IsDisabled = Query.IsDisabled
                     }; 
 
                 }
@@ -147,7 +148,7 @@ namespace DataAccesLayer.ModelBuilds
                     TagList.Add("Tag");
                     TagList.Add("PhysicalPost"); //TODO tags
 
-                    CreatedPost = (T)(object) new PhysicalPost
+                    CreatedPost = (T)(object)new PhysicalPost
                     {
                         Id = Query.Id,
                         Title = Query.Title,
@@ -163,7 +164,8 @@ namespace DataAccesLayer.ModelBuilds
                         IsLocked = Query.IsLocked,
                         Zipcode = Query.Zipcode,
                         PostType = Query.PostType,
-                        Tags = TagList
+                        Tags = TagList,
+                        IsDisabled = Query.IsDisabled
                     };
                 }
                 else

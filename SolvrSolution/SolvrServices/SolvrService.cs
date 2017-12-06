@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using SolvrLibrary;
 using System.ServiceModel;
+using DataAccesLayer.DAL;
 
 namespace SolvrServices
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall)]
-    public class SolvrService : ISolvrServices, IDisposable
+    //InstanceContextMode = InstanceContextMode.PerCall
+    [ServiceBehavior]
+    public class SolvrService : ISolvrServices//, IDisposable
     {
         readonly SolvrDB solvrDB = new SolvrDB();
 
@@ -35,16 +37,23 @@ namespace SolvrServices
 
         public void SetReportToResolved(int reportId)
         {
-            throw new NotImplementedException();
-            //solvrDB.SetReportToResolved(reportId);
+            solvrDB.SetReportToResolved(reportId);
         }
 
-        public void Dispose()
+        public void UpdatePostText(int postId, string txt)
         {
-            solvrDB.Dispose();
+            solvrDB.UpdatePostText(postId, txt);
         }
 
+        public void DisablePost(int postId)
+        {
+            solvrDB.DisablePost(postId);
+        }
 
+        public void UpdatePostTitle(int postId, string text)
+        {
+            solvrDB.UpdatePostTile(postId, text);
+        }
     }
 }
 

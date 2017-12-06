@@ -27,6 +27,7 @@ create table posts (
 	dateCreated DATETIME,
 
 	postType VARCHAR(20),
+	isDisabled BIT,
 
 	isLocked BIT,
 	altDescription varchar(1000),

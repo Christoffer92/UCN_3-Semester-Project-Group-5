@@ -101,11 +101,6 @@ namespace SolvrLibrary
             throw new NotImplementedException();
         }
 
-        public User GetUser(int userId)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<Comment> GetComments(int iD)
         {
             throw new NotImplementedException();

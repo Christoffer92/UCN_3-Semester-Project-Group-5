@@ -95,5 +95,20 @@ namespace SolvrDesktopClient
         {
             proxy.SetReportToResolved(reportId);
         }
+
+        internal void UpdatePostText(int reportId, string txt)
+        {
+            proxy.UpdatePostText(reportId, txt);
+        }
+
+        internal void DisablePost(int postId)
+        {
+            proxy.DisablePost(postId);
+        }
+
+        public void UpdatePostTitle(int postId, string text)
+        {
+            proxy.UpdatePostTitle(postId, text);
+        }
     }
 }

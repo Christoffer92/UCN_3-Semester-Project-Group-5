@@ -95,7 +95,6 @@ namespace SolvrLibrary
         
 
         //TODO summary and cleanup
-        User GetUser(int userId);
         IEnumerable<Comment> GetComments(int iD);
         Comment CreateComment(Comment c);
         SolvrComment CreateSolvrComment(SolvrComment sc);

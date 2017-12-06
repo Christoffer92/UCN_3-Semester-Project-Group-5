@@ -261,7 +261,8 @@ namespace DbHandler.Models
                 BumpTime = SubstringToDateTime(subStrings[2]),
                 DateCreated = SubstringToDateTime(subStrings[3]),
                 CategoryId = Int32.Parse(subStrings[4]),
-                UserId = Int32.Parse(subStrings[5])
+                UserId = Int32.Parse(subStrings[5]),
+                IsDisabled = false
             };
 
             return (T)(object)post;

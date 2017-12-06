@@ -32,12 +32,13 @@
             this.btnResolve = new System.Windows.Forms.Button();
             this.txtBoxPost = new System.Windows.Forms.TextBox();
             this.lblTitle = new System.Windows.Forms.Label();
-            this.picBoxUserPicture = new System.Windows.Forms.PictureBox();
             this.lblUsername = new System.Windows.Forms.Label();
             this.lblDateTime = new System.Windows.Forms.Label();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnIgnore = new System.Windows.Forms.Button();
+            this.txtBoxTitle = new System.Windows.Forms.TextBox();
+            this.picBoxUserPicture = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxUserPicture)).BeginInit();
             this.SuspendLayout();
             // 
@@ -79,18 +80,10 @@
             this.lblTitle.TabIndex = 4;
             this.lblTitle.Text = "Title";
             // 
-            // picBoxUserPicture
-            // 
-            this.picBoxUserPicture.Location = new System.Drawing.Point(157, 87);
-            this.picBoxUserPicture.Name = "picBoxUserPicture";
-            this.picBoxUserPicture.Size = new System.Drawing.Size(100, 84);
-            this.picBoxUserPicture.TabIndex = 5;
-            this.picBoxUserPicture.TabStop = false;
-            // 
             // lblUsername
             // 
             this.lblUsername.AutoSize = true;
-            this.lblUsername.Location = new System.Drawing.Point(273, 153);
+            this.lblUsername.Location = new System.Drawing.Point(263, 153);
             this.lblUsername.Name = "lblUsername";
             this.lblUsername.Size = new System.Drawing.Size(73, 17);
             this.lblUsername.TabIndex = 6;
@@ -99,7 +92,7 @@
             // lblDateTime
             // 
             this.lblDateTime.AutoSize = true;
-            this.lblDateTime.Location = new System.Drawing.Point(157, 438);
+            this.lblDateTime.Location = new System.Drawing.Point(154, 438);
             this.lblDateTime.Name = "lblDateTime";
             this.lblDateTime.Size = new System.Drawing.Size(69, 17);
             this.lblDateTime.TabIndex = 8;
@@ -135,11 +128,32 @@
             this.btnIgnore.UseVisualStyleBackColor = true;
             this.btnIgnore.Click += new System.EventHandler(this.btnIgnore_Click);
             // 
+            // txtBoxTitle
+            // 
+            this.txtBoxTitle.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtBoxTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBoxTitle.Location = new System.Drawing.Point(157, 37);
+            this.txtBoxTitle.Name = "txtBoxTitle";
+            this.txtBoxTitle.Size = new System.Drawing.Size(349, 34);
+            this.txtBoxTitle.TabIndex = 12;
+            this.txtBoxTitle.Visible = false;
+            // 
+            // picBoxUserPicture
+            // 
+            this.picBoxUserPicture.Image = global::SolvrDesktopClient.Properties.Resources.profile_placeholder;
+            this.picBoxUserPicture.Location = new System.Drawing.Point(157, 95);
+            this.picBoxUserPicture.Name = "picBoxUserPicture";
+            this.picBoxUserPicture.Size = new System.Drawing.Size(100, 75);
+            this.picBoxUserPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picBoxUserPicture.TabIndex = 5;
+            this.picBoxUserPicture.TabStop = false;
+            // 
             // ReportPostForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1262, 673);
+            this.Controls.Add(this.txtBoxTitle);
             this.Controls.Add(this.btnIgnore);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
@@ -152,7 +166,7 @@
             this.Controls.Add(this.btnCancel);
             this.Name = "ReportPostForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ReportPostForm";
+            this.Text = "Resolving Reported Post";
             ((System.ComponentModel.ISupportInitialize)(this.picBoxUserPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -171,5 +185,6 @@
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnIgnore;
+        private System.Windows.Forms.TextBox txtBoxTitle;
     }
 }
