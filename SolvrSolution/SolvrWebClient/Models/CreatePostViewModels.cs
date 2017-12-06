@@ -22,6 +22,8 @@ namespace SolvrWebClient.Models
 
         [StringLength(300)]
         public string TagsString { get; set; }
+
+        public int postId { get; set; }
     }
 
     public class PhysicalPostViewModel
@@ -50,5 +52,9 @@ namespace SolvrWebClient.Models
         
         [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 3)]
         public string Address { get; set; }
+
+        public int postId { get; set; }
+
+        public bool IsLocked { get; set; }
     }
 }

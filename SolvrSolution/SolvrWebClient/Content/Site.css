@@ -188,6 +188,28 @@ body {
     border: double;
     border-radius: 10px;
 }
+/*The box view for Viewing a Physicalcomment*/
+.post-Box-ViewPhysicalComment-Standard-NotChosen {
+    float: none;
+    height: auto;
+    width: 80%;
+    margin: 0,3px;
+    padding: 5px;
+    border: double;
+    border-radius: 10px;
+    background-color: rgba(255, 99, 71, 0.4);
+}
+/*The box view for Viewing a Physicalcomment*/
+.post-Box-ViewPhysicalComment-Standard-Chosen{
+    float: none;
+    height: auto;
+    width: 80%;
+    margin: 0,3px;
+    padding: 5px;
+    border: double;
+    border-radius: 10px;
+    background-color: rgba(99, 255, 71, 0.4);
+}
 /*------------------------------------*/
 /*----All img classes and ids here----*/
 /*------------------------------------*/
