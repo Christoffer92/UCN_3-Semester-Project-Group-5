@@ -54,6 +54,20 @@ namespace SolvrLibrary
         Post GetPost(int id);
 
         /// <summary>
+        /// Returns a report with the given id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Report GetReport(int id);
+
+        /// <summary>
+        /// Returns a user with the given id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        User GetUser(int id);
+
+        /// <summary>
         /// Returns the last post that was inserted into the database.
         /// </summary>
         /// <returns>Post</returns>
@@ -72,8 +86,15 @@ namespace SolvrLibrary
         /// <returns>List of Categories</returns>
         IEnumerable<Category> GetAllCategories();
 
+        /// <summary>
+        /// Returns all Reports from the database
+        /// </summary>
+        /// <returns>List of Reports</returns>
+        List<Report> GetAllReports();
+
+        
+
         //TODO summary and cleanup
-        User GetUser(int userId);
         IEnumerable<Comment> GetComments(int iD);
         Comment CreateComment(Comment c);
         SolvrComment CreateSolvrComment(SolvrComment sc);

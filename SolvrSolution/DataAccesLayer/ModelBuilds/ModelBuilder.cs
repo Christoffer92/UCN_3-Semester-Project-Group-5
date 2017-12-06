@@ -135,7 +135,8 @@ namespace DataAccesLayer.ModelBuilds
                         UserId = Query.UserId,
                         User = BuildUser(Query.UserId),
                         PostType = Query.PostType,
-                        Tags = TagList
+                        Tags = TagList,
+                        IsDisabled = Query.IsDisabled
                     }; 
 
                 }
@@ -147,7 +148,7 @@ namespace DataAccesLayer.ModelBuilds
                     TagList.Add("Tag");
                     TagList.Add("PhysicalPost"); //TODO tags
 
-                    CreatedPost = (T)(object) new PhysicalPost
+                    CreatedPost = (T)(object)new PhysicalPost
                     {
                         Id = Query.Id,
                         Title = Query.Title,
@@ -163,7 +164,8 @@ namespace DataAccesLayer.ModelBuilds
                         IsLocked = Query.IsLocked,
                         Zipcode = Query.Zipcode,
                         PostType = Query.PostType,
-                        Tags = TagList
+                        Tags = TagList,
+                        IsDisabled = Query.IsDisabled
                     };
                 }
                 else
@@ -250,31 +252,33 @@ namespace DataAccesLayer.ModelBuilds
                 {
                     Id = Query.Id,
                     DateCreated = Query.DateCreated,
+                    ReportType = Query.ReportType,
                     Description = Query.Description,
                     Title = Query.Title,
+                    IsResolved = Query.IsResolved,
                     UserId = Query.UserId,
                     PostId = Query.PostId,
                     CommentId = Query.CommentId
                 };
                 switch (Query.ReportType)
                 {
-                    case "Comment":
+                    case "comment":
                         CreatedReport.Comment = BuildComment<Comment>(Query.CommentId);
                         break;
 
-                    case "SolvrComment":
+                    case "solvrComment":
                         CreatedReport.Comment = BuildComment<SolvrComment>(Query.CommentId);
                         break;
 
-                    case "Post":
+                    case "post":
                         CreatedReport.Post = BuildPost<Post>(Query.PostId);
                         break;
 
-                    case "PhysicalPost":
+                    case "physicalPost":
                         CreatedReport.Post = BuildPost<PhysicalPost>(Query.PostId);
                         break;
 
-                    case "User":
+                    case "user":
                         CreatedReport.User = BuildUser(Query.UserId);
                         break;
                     default:
