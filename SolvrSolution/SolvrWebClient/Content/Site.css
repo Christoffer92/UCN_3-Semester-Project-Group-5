@@ -1,22 +1,30 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
-}
-
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-/* Override the default bootstrap behavior where horizontal description lists 
+﻿/* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
 .dl-horizontal dt {
     white-space: normal;
 }
-
-
+/*--------------------------------------------------------------------------------------------------------*/
+/*-------------------------------------All Body classes are here------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------*/
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+/* Moves the body down by 60px and etc. */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 60px;
+}
+/*--------------------------------------------------------------------------------------------------------*/
+/*-------------------------------------All Navbar classes are here----------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------*/
 /* Change the color of the navigation bar (Header) */
 .navbar {
     background-color: #ffffff
@@ -47,6 +55,14 @@
     color: rgba(160, 0, 16, 0.47);
 }
 
+/*Positions the create Post button on the navbar, (header) */
+.button-createPost {
+    height: 50px;
+    width: 100px;
+    margin-left: 120px;
+    padding-bottom: 20px;
+}
+
 /* our own Solvr logo in the navigation bar, (Header)*/
 .site-title {
     color: #c8c8c8;
@@ -58,69 +74,94 @@
     height: auto;
     width: 130px;
 }
- /*Positions the create Post button on the navbar, (header) */
-.button-createPost {
-    height: 50px;
-    width: 100px;
-    margin-left: 120px;
-    padding-bottom: 20px;
+
+/*--------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------All Standards are here------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------*/
+/*------------------------------------*/
+/*---------All Buttons here-----------*/
+/*------------------------------------*/
+.standard-Btn-Colour{
+    background-color: rgb(255,255,255);
+}
+.standard-Btn-border {
+    border: solid;
+    border-color: rgb(180,180,180);
+    border-width: 1px;
+}
+/*------------------------------------*/
+/*--------All Text areas here---------*/
+/*------------------------------------*/
+/*The standard text area size*/
+.standard-TextArea-Size {
+    resize: none;
+    width: 100%;
 }
 
-/* Moves the body down by 60px and etc. */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 60px;
+/*--------------------------------------------------------------------------------------------------------*/
+/*-------------------------------------All .createPost classes are here-----------------------------------*/
+/*--------------------------------------------------------------------------------------------------------*/
+/*------------------------------------*/
+/*--------All Box models here---------*/
+/*------------------------------------*/
+/*The box view for viewing a post*/
+.createPost-Box-ViewPost-Standard {
+    float: none;
+    height: auto;
+    width: 100%;
+    margin: 0,3px;
+    padding: 5px;
 }
-
-.btnCreatePost{
-    width: 250px;
-}
-
-#post-ReportPostBtn-Location {
-    position: relative;
-}
-
-#post-CommentBtn-Location {
-    position: relative;
-    min-width: 100px;
-    text-align: center;
-}
-
-.post-Btn-Size {
-    padding: 3px;
-}
-
-.post-BtnFloat input {
+/*------------------------------------*/
+/*----------All btn here--------------*/
+/*------------------------------------*/
+/*Makes the button a part of a table cell*/
+.createPost-BtnFloat input {
     vertical-align: middle;
     display: table-cell;
 }
-
-.post-BtnFloat {
+/*------------------------------------*/
+/*---------All tables here------------*/
+/*------------------------------------*/
+/*Floats a button right inside a table*/
+.createPost-BtnFloat {
     float: right;
     display: table;
     padding: 1px;
 }
 
-/*The standard text area size*/
-.post-TextArea-Standard{
-    resize: none;
-    width: 100%;
+/*--------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------All .post classes are here---------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------*/
+/*------------------------------------*/
+/*----All btn classes and ids here----*/
+/*------------------------------------*/
+/*Changing this makes all buttons bigger - padding is 3 px*/
+.post-Btn-Size {
+    padding: 3px;
 }
-
+/*Makes the button a part of a table cell*/
+.post-BtnFloat input {
+    vertical-align: middle;
+    display: table-cell;
+}
+/*------------------------------------*/
+/*--All textarea classes and ids here-*/
+/*------------------------------------*/
 /*The size of the textarea view*/
-.post-TextArea-View{
+.post-TextArea-View {
     resize: none;
     width: 88%;
 }
-
 /*A container for the textarea that doesn't float*/
-.post-CommentBox-TextArea{
+.post-CommentBox-TextArea {
     float: none;
     padding: 2px;
     vertical-align: middle;
 }
-
+/*------------------------------------*/
+/*---------All box views here---------*/
+/*------------------------------------*/
 /*The box view for making a comment*/
 .post-Box-MakeComment-Standard {
     float: none;
@@ -129,7 +170,6 @@
     margin: 0,3px;
     padding: 5px;
 }
-
 /*The box view for viewing a post*/
 .post-Box-ViewPost-Standard {
     float: none;
@@ -138,7 +178,6 @@
     margin: 0,3px;
     padding: 5px;
 }
-
 /*The box view for Viewing a comment*/
 .post-Box-ViewComment-Standard {
     float: none;
@@ -149,7 +188,31 @@
     border: double;
     border-radius: 10px;
 }
-
+/*The box view for Viewing a Physicalcomment*/
+.post-Box-ViewPhysicalComment-Standard-NotChosen {
+    float: none;
+    height: auto;
+    width: 80%;
+    margin: 0,3px;
+    padding: 5px;
+    border: double;
+    border-radius: 10px;
+    background-color: rgba(255, 99, 71, 0.4);
+}
+/*The box view for Viewing a Physicalcomment*/
+.post-Box-ViewPhysicalComment-Standard-Chosen{
+    float: none;
+    height: auto;
+    width: 80%;
+    margin: 0,3px;
+    padding: 5px;
+    border: double;
+    border-radius: 10px;
+    background-color: rgba(99, 255, 71, 0.4);
+}
+/*------------------------------------*/
+/*----All img classes and ids here----*/
+/*------------------------------------*/
 /*The standard size for the users avatar*/
 img.post-CommentAvatar {
     object-fit: cover;
@@ -159,34 +222,90 @@ img.post-CommentAvatar {
     float: left;
     padding: 5px;
 }
-
 /*All vote images have the same size and padding*/
 img.post-Vote {
     padding: 2px;
     height: 32px;
     width: 32px;
 }
-
-/*A container that floats right with a distance of 1% from the top*/
-.post-VoteFloat{
-    float: right;
-    display: table;
-    margin-top: 1%;
-}
-
 /*All images in votefloat will be divided into table cells and aligned in the middle vertically*/
 .post-VoteFloat img {
     vertical-align: middle;
     display: table-cell;
 }
+/*------------------------------------*/
+/*---------All tables here------------*/
+/*------------------------------------*/
+/*A container that floats right with a distance of 1% from the top*/
+.post-VoteFloat {
+    float: right;
+    display: table;
+    margin-top: 1%;
+}
+/*Floats a button right inside a table*/
+.post-BtnFloat {
+    float: right;
+    display: table;
+    padding: 1px;
+}
+/*------------------------------------*/
+/*---------All labels here------------*/
+/*------------------------------------*/
 /*Label between vote arrows*/
-.post-VoteLabel{
+.post-VoteLabel {
     padding: 1px;
     margin-left: 30%;
 }
-
 /*Label for datecreated*/
 .post-DateLabel {
     padding: 1px;
 }
 
+/*--------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------All .home classes are here---------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------*/
+/*------------------------------------*/
+/*------Post information here---------*/
+/*------------------------------------*/
+img.post-CommentAvatar {
+    object-fit: cover;
+    height: 36px;
+    width: 36px;
+    vertical-align: middle;
+    float: left;
+    padding: 5px;
+}
+/*------------------------------------*/
+/*----------Box view here-------------*/
+/*------------------------------------*/
+.home-side{
+    width: 20%;
+    height: auto;
+}
+.home-main-content {
+    display:table;
+    width: 90%;
+    height: 90%;
+    border:ridge;
+}
+/*.home-main-content div{
+    float: none;
+}*/
+.home-main{
+    width: 80%;
+    height: auto;
+}
+.home-main,
+.home-side{
+    display: table-cell;
+}
+.home-body{
+    display:table;
+    width: 100%;
+}
+.home-column {
+    float: left;
+    width: 33.33%;
+    padding: 10px;
+    height: auto;
+}

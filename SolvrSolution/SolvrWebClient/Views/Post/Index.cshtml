@@ -1,72 +1,78 @@
-﻿<link href="~/Content/bootstrap.css" rel="stylesheet" />
+﻿@model SolvrWebClient.Models.CommentViewModel
+
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
 <link href="~/Content/Site.css" rel="stylesheet" />
 <head>
 </head>
 <body>
-    @{
-//ViewBag.Title = "Post title";
-        @*ViewBag.Title(m => m.Title)*@
-    }
+
     <h2>@ViewBag.Title</h2>
-    
 
     @* View the post here *@
     <div class="post-Box-ViewPost-Standard">
         <div>
-           @Html.TextArea("DescriptionArea", (string)ViewBag.Description, 10, 0, new { @readonly = "readonly", @class = "post-TextArea-Standard" })
-            @*@Html.TextArea(m => m.Description, 10, 0, new { @readonly = "readonly", @class = "post-TextArea-Standard" })*@
+            <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
+            @Html.Label("", (string)ViewBag.UserName, new { @readonly = "readonly" })
+        </div>
+        <div>
+            @Html.TextArea("DescriptionArea", (string)ViewBag.Description, 10, 0, new { @readonly = "readonly", @class = "standard-TextArea-Size" })
         </div>
         <div class="post-BtnFloat">
-            <input type="button" name="Report" value="Report" class="post-Btn-Size btn" onclick="location.href='@Url.Action("NotImplementedYet", "Home")'"/> 
+            @{/* TODO: Only Post owner can choose to edit and view this */}
+            <input type="button" name="Report Post" value="Edit" style="margin-right: 15px" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("EditPost", "CreatePost", new { ID = Model.PostId })'"/>
+            <input type="button" name="Report Post" value="Report" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("NotImplementedYet", "Home")'"/> 
         </div>
         <div>
             @Html.Label("", (string)ViewBag.DateCreated, new { @class = "post-DateLabel" })
-            @*@Html.Label(m => m.Datecreated, new { @class = "post-DateLabel" })*@
-        </div>
-        <br />
-     </div>
-
-    @* Make a comment here *@
-    <div class="post-Box-MakeComment-Standard">
-        <div>
-            <br />
-            @Html.TextArea("PostCommentArea", "", 4, 0, new { @class = "post-TextArea-Standard", placeholder = "Write a comment here..." })
-            @*@Html.TextArea(m => m.Text, 4, 0, new { @class = "post-TextArea-PostComment", placeholder = "Write a comment here..." })*@
-        </div>
-        <div class="post-BtnFloat">
-            <input type="submit" name="Post Comment" value="Post Comment" class="post-Btn-Size btn" />
         </div>
         <br />
     </div>
 
     <hr />
-    @* View the comments here *@
-    <div class="post-Box-ViewComment-Standard">
-        <div>
-            <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
-            @Html.Label("", "User")
-            @*@Html.Label(m => m.Username)*@
 
-            
+    @* Make a comment here *@
+    @using (Html.BeginForm("PostComment", "Post", FormMethod.Post))
+    {
+        <div class="post-Box-MakeComment-Standard">
+            <div>
+                <br />
+                @Html.HiddenFor(m => m.PostId)
+                @Html.TextAreaFor(m => m.Text, 4, 0, new { @class = "standard-TextArea-Size", placeholder = "Write a comment here..." })
+            </div>
+            <div class="post-BtnFloat">
+                <input type="submit" name="Post Comment" value="Post Comment" class="standard-Btn-Colour standard-Btn-border btn" />
+            </div>
+            <br />
         </div>
-        <div class="post-VoteFloat">
-            <img src="~/Content/Images/upvote-downvote.png" class="post-Vote" />
-            @Html.Label("", "0", new { @class = "post-VoteLabel" })
-            @*@Html.Label(m => m.Votecount, new { @class = "post-VoteLabel" })*@
-            <img src="~/Content/Images/downvote.png" class="post-Vote" />
-        </div>    
-        <div class="post-CommentBox-TextArea">
-            @Html.TextArea("ViewCommentArea", "User comments inserted here", 5, 0, new { @readonly = "readonly", @class = "post-TextArea-View" })
-            @*@Html.TextArea(m => m.Text, 5, 0, new { @readonly = "readonly", @class = "post-TextArea-View" })*@
+    }
+
+    <hr />
+
+    @* View the comments here *@
+    <h2>Comments</h2>
+    @foreach (SolvrLibrary.Comment item in ViewBag.CommentList)
+    {
+        <div class="post-Box-ViewComment-Standard">
+            <div>
+                <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
+                @Html.Label("", item.User.Username)
+            </div>
+            <div class="post-VoteFloat">
+                <img src="~/Content/Images/upvote-downvote.png" class="post-Vote" />
+                @Html.Label("", "0", new { @class = "post-VoteLabel" })
+                <img src="~/Content/Images/downvote.png" class="post-Vote" />
+            </div>
+            <div class="post-CommentBox-TextArea">
+                @Html.TextArea("ViewCommentArea", item.Text, 5, 0, new { @readonly = "readonly", @class = "post-TextArea-View" })
+            </div>
+            <div class="post-BtnFloat" style="margin-right: 5%">
+                <input type="submit" name="Report Comment" value="Report" class="standard-Btn-Colour standard-Btn-border btn" />
+            </div>
+            @Html.Label("", (item.DateCreated.ToShortTimeString() + " " + item.DateCreated.ToShortDateString()), new { @class = "post-DateLabel" })
+            <br />
+            <br />
         </div>
-        <div class="post-BtnFloat">
-            <input type="submit" name="Post Comment" value="Report" class="post-Btn-Size btn" />
-        </div>
-        @Html.Label("", "29-11-2017", new { @class = "post-DateLabel" })
-        @*@Html.Label(m => m.Datecreated, new { @class = "post-DateLabel" })*@
-        <br />
-        <br />
-    </div>
+    }
 </body>
 
 

@@ -1,0 +1,179 @@
+﻿@model SolvrWebClient.Models.CommentViewModel
+
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/Site.css" rel="stylesheet" />
+<head>
+</head>
+<body>
+    <h2>@ViewBag.Title</h2>
+
+
+    @* View the post here *@
+    <div class="post-Box-ViewPost-Standard">
+        <div>
+            <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
+            @Html.Label("", (string)ViewBag.UserName, new { @readonly = "readonly" })
+        </div>
+        <div>
+            @Html.TextArea("DescriptionArea", (string)ViewBag.Description, 10, 0, new { @readonly = "readonly", @class = "standard-TextArea-Size" })
+        </div>
+        <div class="post-BtnFloat">
+            @{/* TODO: Only Post owner can choose to edit and view this */}
+            @{/* TODO: EditPhysicalPost i controller skal laves */}
+            <input type="button" name="Report Post" value="Edit" style="margin-right: 15px" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("EditPhysicalPost", "CreatePost", new { ID = Model.PostId })'" />
+            <input type="button" name="Report Post" value="Report" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("NotImplementedYet", "Home")'" />
+        </div>
+        <div>
+            @Html.Label("", (string)ViewBag.DateCreated, new { @class = "post-DateLabel" })
+        </div>
+        <br />
+    </div>
+
+    @{/* TODO: Only user who doesnt own the post and is chosen as a solvr can view this */}
+    @* View the secret description here *@
+        <div class="post-Box-ViewPost-Standard">
+            <div>
+                Alternativ description:
+                <br />
+                @Html.TextArea("AltDescriptionArea", (string)ViewBag.AltDescription, 5, 0, new { @readonly = "readonly", @class = "standard-TextArea-Size" })
+            </div>
+            <div>
+                Address:
+                <br />
+                @Html.TextBox("Adress", (string)ViewBag.Address, new { @readonly = "readonly" })
+            </div>
+            <div>
+                Zip code:
+                <br />
+                @Html.TextBox("ZipCode", (string)ViewBag.ZipCode, new { @readonly = "readonly" })
+            </div>
+        </div>
+
+    <hr />
+
+    @* Make a comment here *@
+    
+    @using (Html.BeginForm("PostComment", "Post", FormMethod.Post))
+    {
+        <div class="post-Box-MakeComment-Standard">
+            <div>
+                <br />
+                @Html.HiddenFor(m => m.PostId)
+                @Html.TextAreaFor(m => m.Text, 4, 0, new { @class = "standard-TextArea-Size", placeholder = "Write a comment here..." })
+            </div>
+            <div class="post-BtnFloat">
+                @{/* TODO: Only user who doesnt own the post can choose to apply */}
+                @if (!ViewBag.IsLocked)
+                {
+                    <input type="submit" name="comment" value="Apply" style="margin-right: 10px" class="standard-Btn-Colour standard-Btn-border btn" />
+                }
+                <input type="submit" name="comment" value="Post Comment" class="standard-Btn-Colour standard-Btn-border btn" />
+            </div>
+            <br />
+        </div>
+    }
+
+    <hr />
+    <h3>Accepted Solvr's</h3>
+    @* View the accepted solvr commennts here *@
+    @foreach (SolvrLibrary.Comment item in ViewBag.CommentList)
+    {
+        if (item is SolvrLibrary.SolvrComment solvr && solvr.IsAccepted)
+        {
+            <div class="post-Box-ViewPhysicalComment-Standard-Chosen">
+                <div>
+                    <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
+                    @Html.Label("", item.User.Username)
+                </div>
+                <div class="post-CommentBox-TextArea">
+                    @Html.TextArea("ViewCommentArea", item.Text, 5, 0, new { @readonly = "readonly", @class = "post-TextArea-View" })
+                </div>
+                <div class="post-BtnFloat" style="margin-right: 5%">
+                    <input type="submit" name="Choose Solvr" value="Remove" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("ChooseSolvr", "Post", new { ID = item.Id })'" />
+                </div>
+                @Html.Label("", (item.DateCreated.ToShortTimeString() + " " + item.DateCreated.ToShortDateString()), new { @class = "post-DateLabel" })
+                <br />
+                <br />
+            </div>
+        }
+    }
+
+    <hr />
+    <h3>Comments</h3>
+    @* View the Solvr and regular comments here *@
+    @foreach (SolvrLibrary.Comment item in ViewBag.CommentList)
+    {
+        if (item.CommentType.Equals("Comment"))
+        {
+            <div class="post-Box-ViewComment-Standard">
+                <div>
+                    <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
+                    @Html.Label("", item.User.Username)
+                </div>
+                <div class="post-VoteFloat">
+                    <img src="~/Content/Images/upvote-downvote.png" class="post-Vote" />
+                    @Html.Label("", "0", new { @class = "post-VoteLabel" })
+                    <img src="~/Content/Images/downvote.png" class="post-Vote" />
+                </div>
+                <div class="post-CommentBox-TextArea">
+                    @Html.TextArea("ViewCommentArea", item.Text, 5, 0, new { @readonly = "readonly", @class = "post-TextArea-View" })
+                </div>
+                <div class="post-BtnFloat" style="margin-right: 5%">
+                    <input type="submit" name="Report Comment" value="Report" class="standard-Btn-Colour standard-Btn-border btn" />
+                </div>
+                @Html.Label("", (item.DateCreated.ToShortTimeString() + " " + item.DateCreated.ToShortDateString()), new { @class = "post-DateLabel" })
+                <br />
+                <br />
+            </div>
+        }
+        else
+        {
+            /* TODO: Choose og remove skal kun være visibel når den anden er skjult */
+            @*If sætningen indeholder den ikke valgte bruger*@
+            if (item is SolvrLibrary.SolvrComment solvr && !solvr.IsAccepted)
+            {
+                <div class="post-Box-ViewPhysicalComment-Standard-NotChosen">
+                    <div>
+                        <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
+                        @Html.Label("", solvr.User.Username)
+                    </div>
+                    <div class="post-CommentBox-TextArea">
+                        @Html.TextArea("ViewCommentArea", item.Text, 5, 0, new { @readonly = "readonly", @class = "post-TextArea-View" })
+                    </div>
+                    <div class="post-BtnFloat" style="margin-right: 5%">
+                        <input type="submit" name="Report Comment" value="Report" class="standard-Btn-Colour standard-Btn-border btn" />
+                        @{/* TODO: Only Post owner can choose this */}
+                        <input type="submit" name="Choose Solvr" value="Choose" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("ChooseSolvr", "Post", new { ID = item.Id })'" />
+                    </div>
+                    @Html.Label("", (item.DateCreated.ToShortTimeString() + " " + item.DateCreated.ToShortDateString()), new { @class = "post-DateLabel" })
+                    <br />
+                    <br />
+                </div>
+            }
+            else /*Else sætningen indeholder den valgte bruger*/
+            {
+                <div class="post-Box-ViewPhysicalComment-Standard-Chosen">
+                    <div>
+                        <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
+                        @Html.Label("", item.User.Username)
+                    </div>
+                    <div class="post-CommentBox-TextArea">
+                        @Html.TextArea("ViewCommentArea", item.Text, 5, 0, new { @readonly = "readonly", @class = "post-TextArea-View" })
+                    </div>
+                    <div class="post-BtnFloat" style="margin-right: 5%">
+                        <input type="submit" name="Report Comment" value="Report" class="standard-Btn-Colour standard-Btn-border btn" />
+                        <input type="submit" name="Choose Solvr" value="Remove" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("ChooseSolvr", "Post", new { ID = item.Id })'" />
+                    </div>
+                    @Html.Label("", (item.DateCreated.ToShortTimeString() + " " + item.DateCreated.ToShortDateString()), new { @class = "post-DateLabel" })
+                    <br />
+                    <br />
+                </div>
+            }
+        }
+    }
+</body>
+
+
+
+
+
