@@ -101,7 +101,41 @@ namespace SolvrLibrary
             throw new NotImplementedException();
         }
 
+        public PhysicalPost GetPhysicalPost(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public SolvrComment CreateSolvrComment(SolvrComment sc)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdatePost(Post p)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateSolvrComment(SolvrComment sc)
+        {
+            throw new NotImplementedException();
+        }
+
+        public T GetComment<T>(int ID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdatePhysicalPost(PhysicalPost post)
+        {
+            throw new NotImplementedException();
+        }
         public IEnumerable<Post> GetPostsByBumpTime(int loadCount)
+        {
+            throw new NotImplementedException();
+        }
+
+        public User GetUser(string Email)
         {
             throw new NotImplementedException();
         }

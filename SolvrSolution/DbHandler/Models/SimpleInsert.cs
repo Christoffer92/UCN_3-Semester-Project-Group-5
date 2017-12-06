@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SolvrLibrary;
+using DataAccesLayer.DAL;
 
 namespace DbHandler.Models
 {
@@ -44,7 +45,7 @@ namespace DbHandler.Models
             user.DateCreated = DateTime.Now;
             Console.WriteLine("Date Created = "+ user.DateCreated);
 
-            using (var context = new SolvrDB())
+            using (var context = new SolvrContext())
             {
                 context.Users.InsertOnSubmit(user);
                 context.SubmitChanges();
@@ -61,7 +62,7 @@ namespace DbHandler.Models
             category.Name = "philosophy";
             Console.WriteLine("Name = " + category.Name);
 
-            using (var context = new SolvrDB())
+            using (var context = new SolvrContext())
             {
                 context.Categories.InsertOnSubmit(category);
                 context.SubmitChanges();
@@ -93,7 +94,7 @@ namespace DbHandler.Models
             post.UserId = 1;
             Console.WriteLine("User ID = " + post.UserId);
 
-            using (var context = new SolvrDB())
+            using (var context = new SolvrContext())
             {
                 context.Posts.InsertOnSubmit(post);
                 context.SubmitChanges();
@@ -143,7 +144,7 @@ namespace DbHandler.Models
             /*physicalPost.PostId = 1;
             Console.WriteLine("Post ID = " + physicalPost.PostId);*/
 
-            using (var context = new SolvrDB())
+            using (var context = new SolvrContext())
             {
                 context.Posts.InsertOnSubmit(physicalPost);
                 context.SubmitChanges();
@@ -169,7 +170,7 @@ Console.WriteLine("Done.\n");
     comment.PostId = 1;
     Console.WriteLine("Post ID = " + comment.PostId);
 
-    using (var context = new SolvrDB())
+    using (var context = new SolvrContext())
     {
         context.Comments.InsertOnSubmit(comment);
         context.SubmitChanges();
@@ -209,7 +210,7 @@ public static void InsertSolvrComment()
     /*solvrComment.CommentId = 1;
     Console.WriteLine("Comment ID = " + solvrComment.CommentId);*/
 
-    using (var context = new SolvrDB())
+    using (var context = new SolvrContext())
     {
         context.Comments.InsertOnSubmit(solvrComment);
         context.SubmitChanges();
@@ -232,7 +233,7 @@ public static void InsertVote()
     vote.CommentId = 1;
     Console.WriteLine("Comment ID = " + vote.CommentId);
 
-    using (var context = new SolvrDB())
+    using (var context = new SolvrContext())
     {
         context.Votes.InsertOnSubmit(vote);
         context.SubmitChanges();
@@ -264,7 +265,7 @@ public static void InsertReport()
     report.PostId = 1;
     Console.WriteLine("Post ID = " + report.PostId);
 
-    using (var context = new SolvrDB())
+    using (var context = new SolvrContext())
     {
         context.Reports.InsertOnSubmit(report);
         context.SubmitChanges();

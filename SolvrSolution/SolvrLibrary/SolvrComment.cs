@@ -12,7 +12,8 @@ namespace SolvrLibrary
     {
         public SolvrComment()
         {
-            DateCreated = DateTime.Now;
+            TimeAccepted = DateTime.Now;
+            IsAccepted = false;
         }
 
         /*[Column(IsPrimaryKey = true, IsDbGenerated = true)]
@@ -30,6 +31,6 @@ namespace SolvrLibrary
         /*[Column()]        
         public int PostId { get; set; }*/
 
-        public PhysicalPost PhysicalPost { get; set; }
+        //public PhysicalPost PhysicalPost { get; set; }
     }
 }
