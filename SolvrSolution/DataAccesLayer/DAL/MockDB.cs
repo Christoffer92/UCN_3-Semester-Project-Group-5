@@ -96,6 +96,11 @@ namespace SolvrLibrary
             return MockDBContainer.Instance.AddPost(post);
         }
 
+        public User CreateUser(User user)
+        {
+            return MockDBContainer.Instance.AddUser(user);
+        }
+
         public Category GetCategory(int id)
         {
             return MockDBContainer.Instance.GetCategory(id);
@@ -123,7 +128,7 @@ namespace SolvrLibrary
 
         public User GetUser()
         {
-            throw new NotImplementedException();
+            return MockDBContainer.Instance.GetLastUser();
         }
 
         public User GetUser(int userId)
@@ -269,7 +274,7 @@ namespace SolvrLibrary
 
         #region Add methods
 
-        internal void AddUser(User _user)
+        internal User AddUser(User _user)
         {
             if (Users.Count == 0)
             {
@@ -281,6 +286,7 @@ namespace SolvrLibrary
             }
 
             Users.Add(_user);
+            return _user;
         }
 
         internal Post AddPost(Post _post)
@@ -462,6 +468,11 @@ namespace SolvrLibrary
         internal User getUser(int id)
         {
             throw new NotImplementedException();
+        }
+
+        internal User GetLastUser()
+        {
+           return Users.Last();
         }
 
         internal Post GetPost()
