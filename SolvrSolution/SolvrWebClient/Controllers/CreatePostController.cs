@@ -44,8 +44,7 @@ namespace SolvrWebClient.Controllers
             }
             //TODO: Connect a user to this method
             //p.User = something goes here
-            p.User = DB.GetUser();
-            p.UserId = p.User.Id;
+            p.UserId = DB.GetUser((string)Session["Username"]).Id;
 
             
             return DB.CreatePost(p);
@@ -57,12 +56,12 @@ namespace SolvrWebClient.Controllers
         //  Tags:
         //      Adds an array of strings to the tag list by seperating them with the split function
         //      Space, hashtags, commas, and full stop will split the tag string up.
-        public void CreatePhysicalPost(PhysicalPostViewModel model)
+        public PhysicalPost CreatePhysicalPost(PhysicalPostViewModel model)
         {
             PhysicalPost p = new PhysicalPost();
             p.Title = model.Title;
             p.Description = model.Description;
-            p.Category = DB.GetCategory(model.CategoryId);
+            p.CategoryId = model.CategoryId;
 
             foreach (string item in model.TagsString.Split(' ', '#', ',', '.'))
             {
@@ -77,7 +76,9 @@ namespace SolvrWebClient.Controllers
             //TODO: Connect a user to this method
             //p.User = something goes here
 
-            DB.CreatePhysicalPost(p);
+            p.UserId = DB.GetUser((string)Session["Username"]).Id;
+
+            return DB.CreatePhysicalPost(p);
         }
 
         //Main View for Create post
@@ -102,6 +103,7 @@ namespace SolvrWebClient.Controllers
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 //TODO: Print error message
                 return View();
             }
@@ -119,14 +121,12 @@ namespace SolvrWebClient.Controllers
         [HttpPost]
         public ActionResult CreatePhysical(PhysicalPostViewModel model)
         {
-            
+            PhysicalPost ppost = null;
             try
             {
-
                 if (ModelState.IsValid)
                 {
-                    CreatePhysicalPost(model);
-
+                    ppost = CreatePhysicalPost(model);
                 }
             }
             catch
@@ -134,18 +134,164 @@ namespace SolvrWebClient.Controllers
                 //TODO: Print error message
                 return View();
             }
-            return RedirectToAction("Index", "Post", model);
+            return RedirectToAction("Index", "Post", new {ID = ppost.Id });
         }
 
-        //// GET: CreatePost/Edit/id
-        //public ActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
+        // GET: CreatePost/Edit/id
+        public ActionResult EditPost(int ID)
+        {
+            Post post = DB.GetPost(ID);
+            PostViewModel viewPost = new PostViewModel();
+
+            viewPost.Title = post.Title;
+            viewPost.Description = post.Description;
+
+            viewPost.postId = ID;
+            viewPost.CategoryId = post.CategoryId;
+
+            //TODO Tags should be fixed
+            string tags = "";
+            foreach (string item in post.Tags)
+            {
+                tags = tags + " " + item;
+            }
+            viewPost.TagsString = tags;
+
+            ViewBag.CategoryName = post.Category.Name;
+            ViewBag.DropdownList = new SelectList(DB.GetAllCategories(), "Id", "Name");
+
+            return View(viewPost);
+        }
+
+        public ActionResult EditPhysicalPost(int ID)
+        {
+            PhysicalPost post = DB.GetPhysicalPost(ID);
+            PhysicalPostViewModel viewPost = new PhysicalPostViewModel();
+
+            viewPost.Title = post.Title;
+            viewPost.Description = post.Description;
+
+            viewPost.postId = ID;
+            viewPost.CategoryId = post.CategoryId;
+            viewPost.AltDescription = post.AltDescription;
+            viewPost.Zipcode = post.Zipcode;
+            viewPost.Address = post.Address;
+            viewPost.IsLocked = post.IsLocked;
+
+            // TODO Tags should be fixed
+            string tags = "";
+            foreach (string item in post.Tags)
+            {
+                tags = tags + " " + item;
+            }
+            viewPost.TagsString = tags;
+
+            ViewBag.CategoryName = post.Category.Name;
+            ViewBag.DropdownList = new SelectList(DB.GetAllCategories(), "Id", "Name");
+
+            return View(viewPost);
+        }
+
+        //TODO Cleanup this method
+        public ActionResult UpdatePost(PostViewModel model)
+        {
+            Post post = DB.GetPost(model.postId);
+
+            if (!post.Title.Equals(model.Title))
+            {
+                post.Title = model.Title;
+            }
+
+            if (!post.Description.Equals(model.Description))
+            {
+                post.Description = model.Description;
+            }
+
+            if (post.CategoryId != model.CategoryId)
+            {
+                post.CategoryId = model.CategoryId;
+                post.Category = DB.GetCategory(model.CategoryId);
+            }
+
+            //TODO make as an extension method to String
+            List<string> tagsList = new List<string>();
+            foreach (string item in model.TagsString.Split(' ', '#', ',', '.'))
+            {
+                if (!item.Equals("") && !item.Equals("#") && !item.Equals(",") && !item.Equals("."))
+                {
+                    tagsList.Add(item);
+                }
+            }
+
+            post.Tags = tagsList;
+
+            DB.UpdatePost(post);
+
+            return RedirectToAction("Index", "Post", new {ID = model.postId });
+        }
+
+        //TODO Cleanup this method
+        public ActionResult UpdatePhysical(PhysicalPostViewModel model)
+        {
+            PhysicalPost post = DB.GetPhysicalPost(model.postId);
+
+            if (!post.Title.Equals(model.Title))
+            {
+                post.Title = model.Title;
+            }
+
+            if (!post.Description.Equals(model.Description))
+            {
+                post.Description = model.Description;
+            }
+
+            if (post.CategoryId != model.CategoryId)
+            {
+                post.CategoryId = model.CategoryId;
+                post.Category = DB.GetCategory(model.CategoryId);
+            }
+
+            if (!post.AltDescription.Equals(model.AltDescription))
+            {
+                post.AltDescription = model.AltDescription;
+            }
+
+            if (!post.Zipcode.Equals(model.Zipcode))
+            {
+                post.Zipcode = model.Zipcode;
+            }
+
+            if (!post.Address.Equals(model.Address))
+            {
+                post.Address = model.Address;
+            }
+
+            if (post.IsLocked != model.IsLocked)
+            {
+                post.IsLocked = model.IsLocked;
+            }
+
+            //TODO make as an extension method to String
+            List<string> tagsList = new List<string>();
+            foreach (string item in model.TagsString.Split(' ', '#', ',', '.'))
+            {
+                if (!item.Equals("") && !item.Equals("#") && !item.Equals(",") && !item.Equals("."))
+                {
+                    tagsList.Add(item);
+                }
+            }
+
+            post.Tags = tagsList;
+
+            DB.UpdatePhysicalPost(post);
+
+            return RedirectToAction("PhysicalIndex", "Post", new { ID = model.postId });
+        }
+
 
         //// POST: CreatePost/Edit/id
         //[HttpPost]
-        //public ActionResult Edit(int id, FormCollection collection)
+        //public ActionResult Edit(PostViewModel model)
         //{
         //    try
         //    {

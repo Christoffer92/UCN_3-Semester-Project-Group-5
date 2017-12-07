@@ -44,6 +44,7 @@ namespace SolvrLibrary
         /// </summary>
         /// <param name="pPost"></param>
         PhysicalPost CreatePhysicalPost(PhysicalPost Post);
+        PhysicalPost GetPhysicalPost(int id);
 
         /// <summary>
         /// Returns a post with the given id.
@@ -51,6 +52,20 @@ namespace SolvrLibrary
         /// <param name="id"></param>
         /// <returns></returns>
         Post GetPost(int id);
+
+        /// <summary>
+        /// Returns a report with the given id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Report GetReport(int id);
+
+        /// <summary>
+        /// Returns a user with the given id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        User GetUser(int id);
 
         /// <summary>
         /// Returns the last post that was inserted into the database.
@@ -71,9 +86,24 @@ namespace SolvrLibrary
         /// <returns>List of Categories</returns>
         IEnumerable<Category> GetAllCategories();
 
-        //TODO summary here
-        User GetUser(int userId);
+        /// <summary>
+        /// Returns all Reports from the database
+        /// </summary>
+        /// <returns>List of Reports</returns>
+        List<Report> GetAllReports();
+
+        
+
+        //TODO summary and cleanup
         IEnumerable<Comment> GetComments(int iD);
         Comment CreateComment(Comment c);
+        SolvrComment CreateSolvrComment(SolvrComment sc);
+        void UpdatePost(Post p);
+        void UpdateSolvrComment(SolvrComment sc);
+        T GetComment<T>(int ID);
+        void UpdatePhysicalPost(PhysicalPost post);
+        IEnumerable<Post> GetPostsByBumpTime(int loadCount);
+        User GetUser(string Username);
+        void CreateUser(User user);
     }
 }

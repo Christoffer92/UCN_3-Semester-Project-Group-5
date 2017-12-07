@@ -1,5 +1,5 @@
 ﻿using SolvrLibrary;
-using DataAccesLayer;
+using DataAccesLayer.DAL;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -35,7 +35,7 @@ namespace DbHandler.Models
 
                     //Here the list objects is set into the database. The if statements are used to take care of 
                     //the special cases 
-                    using (var context = new SolvrDB())
+                    using (var context = new SolvrContext())
                     {
                         foreach (T obj in objects)
                         {
@@ -135,10 +135,12 @@ namespace DbHandler.Models
             {
                 Title = subStrings[0],
                 Description = subStrings[1],
-                DateCreated = SubstringToDateTime(subStrings[2]),
-                UserId = Int32.Parse(subStrings[3]),
-                CommentId = Int32.Parse(subStrings[4]),
-                PostId = Int32.Parse(subStrings[5])
+                ReportType = subStrings[2],
+                IsResolved = StringToBoolean(subStrings[3]),
+                DateCreated = SubstringToDateTime(subStrings[4]),
+                UserId = Int32.Parse(subStrings[5]),
+                CommentId = Int32.Parse(subStrings[6]),
+                PostId = Int32.Parse(subStrings[7])
             };
 
             return (T)(object)report;
@@ -259,7 +261,8 @@ namespace DbHandler.Models
                 BumpTime = SubstringToDateTime(subStrings[2]),
                 DateCreated = SubstringToDateTime(subStrings[3]),
                 CategoryId = Int32.Parse(subStrings[4]),
-                UserId = Int32.Parse(subStrings[5])
+                UserId = Int32.Parse(subStrings[5]),
+                IsDisabled = false
             };
 
             return (T)(object)post;

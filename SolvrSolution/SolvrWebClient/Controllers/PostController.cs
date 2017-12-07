@@ -21,37 +21,151 @@ namespace SolvrWebClient.Controllers
             DB = _DB;
         }
 
-        public ActionResult Index(int ID = 1)
+        public ActionResult Index(int ID = 0)
         {
-            Post post = DB.GetPost(ID);
-            ViewBag.Title = post.Title;
-            ViewBag.Description = post.Description;
-            ViewBag.DateCreated = post.DateCreated.ToShortDateString();
-            ViewBag.UserName = DB.GetUser(post.UserId).Username;
 
-            //sortere efter tid
-            ViewBag.CommentList = DB.GetComments(ID).OrderBy(x => x.DateCreated).ToList();
+            if (DB.GetPost(ID).PostType.Equals("Physical"))
+            {
+                return RedirectToAction("PhysicalIndex", new { ID = ID });
+            }
+            else
+            {
+                Post post = DB.GetPost(ID);
+                ViewBag.Title = post.Title;
+                ViewBag.Description = post.Description;
+                ViewBag.DateCreated = post.DateCreated.ToShortDateString();
+                ViewBag.UserId = post.UserId;
+                ViewBag.Username = DB.GetUser(post.UserId).Username;
 
-            //Usorteret
-            //ViewBag.CommentList = DB.GetComments(ID);
+                string tags = "";
 
-            var model = new CommentViewModel();
-            model.PostId = post.Id;
+                foreach (string item in post.Tags)
+                {
+                    tags = tags + " " + item;
+                }
 
-            return View(model);
+                ViewBag.Tags = tags;
+
+                ViewBag.UserIsOwner = false;
+                User user = null;
+                try
+                {
+                    user = DB.GetUser((string)Session["Username"]);
+
+                    if (user != null && user.Id == post.UserId)
+                        ViewBag.UserIsOwner = true;
+                }
+                catch 
+                {
+                    // empty catch, because any exceptions here would (hopefully) not affect the program on runtime.
+                }
+                
+
+                //sortere efter tid
+                ViewBag.CommentList = DB.GetComments(post.Id).OrderBy(x => x.DateCreated).ToList();
+
+                //Usorteret
+                //ViewBag.CommentList = DB.GetComments(ID);
+
+                var model = new CommentViewModel();
+                model.PostId = post.Id;
+
+                return View(model);
+            }
+            
         }
 
-        public ActionResult PostComment(CommentViewModel model)
+        public ActionResult PhysicalIndex(int ID = 0)
+        {
+
+            if (DB.GetPost(ID).PostType.Equals("Post"))
+            {
+                return RedirectToAction("Index", new { ID = ID });
+            }
+            else
+            {
+                PhysicalPost ppost = DB.GetPhysicalPost(ID);
+                ViewBag.Title = ppost.Title;
+                ViewBag.Description = ppost.Description;
+                ViewBag.DateCreated = ppost.DateCreated.ToShortDateString();
+                ViewBag.Username = DB.GetUser(ppost.UserId).Username;
+                ViewBag.UserId = ppost.UserId;
+                ViewBag.AltDescription = ppost.AltDescription;
+                ViewBag.Address = ppost.Address;
+                ViewBag.Zipcode = ppost.Zipcode;
+                ViewBag.IsLocked = ppost.IsLocked;
+
+
+                //TODO revamp
+                string tags = "";
+
+                foreach (string item in ppost.Tags)
+                {
+                    tags = tags + " " + item;
+                }
+
+                ViewBag.Tags = tags;
+
+                //sorteret omvendt efter tid
+                IEnumerable<Comment> commentList = DB.GetComments(ppost.Id).OrderByDescending(x => x.DateCreated).ToList();
+                ViewBag.CommentList = commentList;
+
+                User user = null;
+                ViewBag.UserIsAccepted = false;
+                try
+                {
+                    user = DB.GetUser((string)Session["Username"]);
+                    foreach (SolvrComment item in commentList)
+                    {
+                        if (item.CommentType.Equals("Solvr") && item.IsAccepted && item.UserId == user.Id)
+                        {
+                            ViewBag.UserIsAccepted = true;
+                            break;
+                        }
+                    }
+                } catch 
+                {
+                    ViewBag.UserIsAccepted = false;
+                }
+
+                ViewBag.UserIsOwner = false;
+
+                if (user != null && user.Id == ppost.UserId)
+                    ViewBag.UserIsOwner = true;
+
+
+
+                var model = new CommentViewModel();
+                model.PostId = ppost.Id;
+
+                return View(model);
+            }
+        }
+
+
+        public ActionResult PostComment(CommentViewModel model, string comment = "Post Comment")
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    CreateComment(model);
+                    if (comment.Equals("Post Comment"))
+                    {
+                        CreateComment(model);
+                    }
+                    else if(comment.Equals("Apply"))
+                    {
+                        CreateSolvr(model);
+                    }
+                    else
+                    {
+                        return View();
+                    }
                 }
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 //TODO: Print error message
                 return View();
             }
@@ -71,6 +185,39 @@ namespace SolvrWebClient.Controllers
             c.UserId = c.User.Id;
 
             DB.CreateComment(c);
+        }
+
+        private void CreateSolvr(CommentViewModel model)
+        {
+            SolvrComment sc = new SolvrComment();
+            sc.Text = model.Text;
+            sc.PostId = model.PostId;
+
+            //TODO: Connect a user to this method
+            //p.User = something goes here
+            sc.User = DB.GetUser();
+            sc.UserId = sc.User.Id;
+
+            DB.CreateSolvrComment(sc);
+        }
+
+        public ActionResult ChooseSolvr(int ID=0)
+        {
+            SolvrComment sc = DB.GetComment<SolvrComment>(ID);
+
+            if (sc.IsAccepted)
+            {
+                sc.IsAccepted = false;
+            }
+            else
+            {
+                sc.TimeAccepted = DateTime.Now;
+                sc.IsAccepted = true;
+            }
+
+            DB.UpdateSolvrComment(sc);
+
+            return RedirectToAction("Index", new { ID = sc.PostId });
         }
 
         //public ActionResult Index(Post post)

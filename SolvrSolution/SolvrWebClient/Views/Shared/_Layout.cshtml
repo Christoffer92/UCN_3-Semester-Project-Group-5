@@ -38,7 +38,11 @@
 
             <!-- Her indsættes Create Post knappen -->
             <div class="button-createPost">
-                <p><a onclick="location.href='@Url.Action("Index", "CreatePost")'" class="btn btn-default btn-sm btnCreatePost"> Create Post </a></p>
+                @if (Session["Username"] != null)
+                {
+                    <p><a onclick="location.href='@Url.Action("Index", "CreatePost")'" class="btn btn-default btn-sm btnCreatePost"> Create Post </a></p>
+
+                }
             </div>
 
         </div>
