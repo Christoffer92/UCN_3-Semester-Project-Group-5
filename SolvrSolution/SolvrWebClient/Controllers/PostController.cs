@@ -179,10 +179,7 @@ namespace SolvrWebClient.Controllers
             c.Text = model.Text;
             c.PostId = model.PostId;
 
-            //TODO: Connect a user to this method
-            //p.User = something goes here
-            c.User = DB.GetUser();
-            c.UserId = c.User.Id;
+            c.UserId = DB.GetUser((string)Session["Username"]).Id;
 
             DB.CreateComment(c);
         }
@@ -192,11 +189,8 @@ namespace SolvrWebClient.Controllers
             SolvrComment sc = new SolvrComment();
             sc.Text = model.Text;
             sc.PostId = model.PostId;
-
-            //TODO: Connect a user to this method
-            //p.User = something goes here
-            sc.User = DB.GetUser();
-            sc.UserId = sc.User.Id;
+ 
+            sc.UserId = DB.GetUser((string)Session["Username"]).Id;
 
             DB.CreateSolvrComment(sc);
         }
@@ -219,16 +213,5 @@ namespace SolvrWebClient.Controllers
 
             return RedirectToAction("Index", new { ID = sc.PostId });
         }
-
-        //public ActionResult Index(Post post)
-        //{
-        //    //Post post = DB.GetPost(ID);
-        //    ViewBag.Title = post.Title;
-        //    ViewBag.Description = post.Description;
-        //    ViewBag.DateCreated = post.DateCreated.ToShortDateString();
-        //    ViewBag.UserName = DB.GetUser(post.UserId).Username;
-
-        //    return View();
-        //}
     }
 }
