@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using SolvrLibrary;
 using DataAccesLayer.DAL;
 
-namespace SolvrLibrary
+namespace DataAccesLayer.DAL
 {
     public class SolvrDB :  ISolvrDB
     {

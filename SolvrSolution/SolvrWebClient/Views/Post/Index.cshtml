@@ -15,7 +15,7 @@
             @Html.Label("", (string)ViewBag.UserName, new { @readonly = "readonly" })
         </div>
         <div>
-            @Html.TextArea("DescriptionArea", (string)ViewBag.Description, 10, 0, new { @readonly = "readonly", @class = "standard-TextArea-Size" })
+            @Html.Raw(Html.TextArea("DescriptionArea", (string)ViewBag.Description, 10, 0, new { @readonly = "readonly", @class = "standard-TextArea-Size" }))
         </div>
         <div class="post-BtnFloat">
             @{/* TODO: Only Post owner can choose to edit and view this */}
@@ -23,7 +23,7 @@
             {
                 if (ViewBag.UserIsOwner)
                 {
-                    <input type="button" name="Report Post" value="Edit" style="margin-right: 15px" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("EditPost", "CreatePost", new { ID = Model.PostId })'" />
+                    <input type="button" name="Report Post" value="Edit" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("EditPost", "CreatePost", new { ID = Model.PostId })'" />
                 }
                 else
                 {

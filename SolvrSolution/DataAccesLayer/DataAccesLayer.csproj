@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="DAL\ISolvrDB.cs" />
     <Compile Include="DAL\MockDB.cs" />
+    <Compile Include="DAL\MockDBContainer.cs" />
     <Compile Include="DAL\SolvrContext.cs" />
     <Compile Include="DAL\SolvrDB.cs" />
     <Compile Include="ModelBuilds\ModelBuilder.cs" />

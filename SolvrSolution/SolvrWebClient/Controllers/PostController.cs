@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using SolvrWebClient.Models;
 using SolvrLibrary;
+using DataAccesLayer.DAL;
 
 namespace SolvrWebClient.Controllers
 {
@@ -23,125 +24,138 @@ namespace SolvrWebClient.Controllers
 
         public ActionResult Index(int ID = 0)
         {
-
-            if (DB.GetPost(ID).PostType.Equals("Physical"))
+            try
             {
-                return RedirectToAction("PhysicalIndex", new { ID = ID });
+                if (DB.GetPost(ID).PostType.Equals("Physical"))
+                {
+                    return RedirectToAction("PhysicalIndex", new { ID = ID });
+                }
+                else
+                {
+                    Post post = DB.GetPost(ID);
+                    ViewBag.Title = post.Title;
+                    ViewBag.Description = post.Description;
+                    ViewBag.DateCreated = post.DateCreated.ToShortDateString();
+                    ViewBag.UserId = post.UserId;
+                    ViewBag.Username = DB.GetUser(post.UserId).Username;
+
+                    string tags = "";
+
+                    foreach (string item in post.Tags)
+                    {
+                        tags = tags + " " + item;
+                    }
+
+                    ViewBag.Tags = tags;
+
+                    ViewBag.UserIsOwner = false;
+                    User user = null;
+                    try
+                    {
+                        user = DB.GetUser((string)Session["Username"]);
+
+                        if (user != null && user.Id == post.UserId)
+                            ViewBag.UserIsOwner = true;
+                    }
+                    catch
+                    {
+                        // empty catch, because any exceptions here would (hopefully) not affect the program on runtime.
+                    }
+
+
+                    //sortere efter tid
+                    ViewBag.CommentList = DB.GetComments(post.Id).OrderBy(x => x.DateCreated).ToList();
+
+                    //Usorteret
+                    //ViewBag.CommentList = DB.GetComments(ID);
+
+                    var model = new CommentViewModel();
+                    model.PostId = post.Id;
+
+                    return View(model);
+                }
             }
-            else
+            catch (Exception e)
             {
-                Post post = DB.GetPost(ID);
-                ViewBag.Title = post.Title;
-                ViewBag.Description = post.Description;
-                ViewBag.DateCreated = post.DateCreated.ToShortDateString();
-                ViewBag.UserId = post.UserId;
-                ViewBag.Username = DB.GetUser(post.UserId).Username;
-
-                string tags = "";
-
-                foreach (string item in post.Tags)
-                {
-                    tags = tags + " " + item;
-                }
-
-                ViewBag.Tags = tags;
-
-                ViewBag.UserIsOwner = false;
-                User user = null;
-                try
-                {
-                    user = DB.GetUser((string)Session["Username"]);
-
-                    if (user != null && user.Id == post.UserId)
-                        ViewBag.UserIsOwner = true;
-                }
-                catch 
-                {
-                    // empty catch, because any exceptions here would (hopefully) not affect the program on runtime.
-                }
-                
-
-                //sortere efter tid
-                ViewBag.CommentList = DB.GetComments(post.Id).OrderBy(x => x.DateCreated).ToList();
-
-                //Usorteret
-                //ViewBag.CommentList = DB.GetComments(ID);
-
-                var model = new CommentViewModel();
-                model.PostId = post.Id;
-
-                return View(model);
+                return View("Error");
             }
-            
+
+
         }
 
         public ActionResult PhysicalIndex(int ID = 0)
         {
-
-            if (DB.GetPost(ID).PostType.Equals("Post"))
+            try
             {
-                return RedirectToAction("Index", new { ID = ID });
-            }
-            else
-            {
-                PhysicalPost ppost = DB.GetPhysicalPost(ID);
-                ViewBag.Title = ppost.Title;
-                ViewBag.Description = ppost.Description;
-                ViewBag.DateCreated = ppost.DateCreated.ToShortDateString();
-                ViewBag.Username = DB.GetUser(ppost.UserId).Username;
-                ViewBag.UserId = ppost.UserId;
-                ViewBag.AltDescription = ppost.AltDescription;
-                ViewBag.Address = ppost.Address;
-                ViewBag.Zipcode = ppost.Zipcode;
-                ViewBag.IsLocked = ppost.IsLocked;
-
-
-                //TODO revamp
-                string tags = "";
-
-                foreach (string item in ppost.Tags)
+                if (DB.GetPost(ID).PostType.Equals("Post"))
                 {
-                    tags = tags + " " + item;
+                    return RedirectToAction("Index", new { ID = ID });
                 }
-
-                ViewBag.Tags = tags;
-
-                //sorteret omvendt efter tid
-                IEnumerable<Comment> commentList = DB.GetComments(ppost.Id).OrderByDescending(x => x.DateCreated).ToList();
-                ViewBag.CommentList = commentList;
-
-                User user = null;
-                ViewBag.UserIsAccepted = false;
-                try
+                else
                 {
-                    user = DB.GetUser((string)Session["Username"]);
-                    foreach (SolvrComment item in commentList)
+                    PhysicalPost ppost = DB.GetPhysicalPost(ID);
+                    ViewBag.Title = ppost.Title;
+                    ViewBag.Description = ppost.Description;
+                    ViewBag.DateCreated = ppost.DateCreated.ToShortDateString();
+                    ViewBag.Username = DB.GetUser(ppost.UserId).Username;
+                    ViewBag.UserId = ppost.UserId;
+                    ViewBag.AltDescription = ppost.AltDescription;
+                    ViewBag.Address = ppost.Address;
+                    ViewBag.Zipcode = ppost.Zipcode;
+                    ViewBag.IsLocked = ppost.IsLocked;
+
+
+                    //TODO revamp
+                    string tags = "";
+
+                    foreach (string item in ppost.Tags)
                     {
-                        if (item.CommentType.Equals("Solvr") && item.IsAccepted && item.UserId == user.Id)
+                        tags = tags + " " + item;
+                    }
+
+                    ViewBag.Tags = tags;
+
+                    //sorteret omvendt efter tid
+                    IEnumerable<Comment> commentList = DB.GetComments(ppost.Id).OrderByDescending(x => x.DateCreated).ToList();
+                    ViewBag.CommentList = commentList;
+
+                    User user = null;
+                    ViewBag.UserIsAccepted = false;
+                    try
+                    {
+                        user = DB.GetUser((string)Session["Username"]);
+                        foreach (SolvrComment item in commentList)
                         {
-                            ViewBag.UserIsAccepted = true;
-                            break;
+                            if (item.CommentType.Equals("Solvr") && item.IsAccepted && item.UserId == user.Id)
+                            {
+                                ViewBag.UserIsAccepted = true;
+                                break;
+                            }
                         }
                     }
-                } catch 
-                {
-                    ViewBag.UserIsAccepted = false;
+                    catch
+                    {
+                        ViewBag.UserIsAccepted = false;
+                    }
+
+                    ViewBag.UserIsOwner = false;
+
+                    if (user != null && user.Id == ppost.UserId)
+                        ViewBag.UserIsOwner = true;
+
+
+
+                    var model = new CommentViewModel();
+                    model.PostId = ppost.Id;
+
+                    return View(model);
                 }
-
-                ViewBag.UserIsOwner = false;
-
-                if (user != null && user.Id == ppost.UserId)
-                    ViewBag.UserIsOwner = true;
-
-
-
-                var model = new CommentViewModel();
-                model.PostId = ppost.Id;
-
-                return View(model);
             }
-        }
-
+            catch (Exception e)
+            {
+                return View("Error");
+            }
+        } 
 
         public ActionResult PostComment(CommentViewModel model, string comment = "Post Comment")
         {
@@ -159,17 +173,15 @@ namespace SolvrWebClient.Controllers
                     }
                     else
                     {
-                        return View();
+                        return View("Error");
                     }
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
-                //TODO: Print error message
-                return View();
+                return View("Error");
             }
-            
+
             return RedirectToAction("Index", new { ID = model.PostId });
         }
 

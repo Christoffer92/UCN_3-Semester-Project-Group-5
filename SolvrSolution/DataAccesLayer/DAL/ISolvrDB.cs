@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SolvrLibrary;
 
-namespace SolvrLibrary
+namespace DataAccesLayer.DAL
 {
     public interface ISolvrDB
     {

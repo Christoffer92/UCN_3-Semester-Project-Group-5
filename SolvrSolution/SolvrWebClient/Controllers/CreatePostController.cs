@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DataAccesLayer.DAL;
 
 namespace SolvrWebClient.Controllers
 {
@@ -103,9 +104,7 @@ namespace SolvrWebClient.Controllers
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
-                //TODO: Print error message
-                return View();
+                return View("Error");
             }
             return RedirectToAction("Index", "Post", new { ID = post.Id });
         }
@@ -131,8 +130,7 @@ namespace SolvrWebClient.Controllers
             }
             catch
             {
-                //TODO: Print error message
-                return View();
+                return View("Error");
             }
             return RedirectToAction("Index", "Post", new {ID = ppost.Id });
         }
@@ -287,22 +285,5 @@ namespace SolvrWebClient.Controllers
 
             return RedirectToAction("PhysicalIndex", "Post", new { ID = model.postId });
         }
-
-
-        //// POST: CreatePost/Edit/id
-        //[HttpPost]
-        //public ActionResult Edit(PostViewModel model)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add update logic here
-
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
     }
 }
