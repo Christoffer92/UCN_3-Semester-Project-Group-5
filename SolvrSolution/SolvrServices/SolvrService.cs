@@ -13,7 +13,16 @@ namespace SolvrServices
     [ServiceBehavior]
     public class SolvrService : ISolvrServices//, IDisposable
     {
-        readonly SolvrDB solvrDB = new SolvrDB();
+        readonly ISolvrDB solvrDB;
+
+
+        public SolvrService(bool useMockDB = false)
+        {
+            if (useMockDB)
+                solvrDB = new MockDB();
+            else
+                solvrDB = new SolvrDB();
+        }
 
         public List<Report> GetAllReports()
         {

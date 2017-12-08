@@ -11,9 +11,9 @@ namespace SolvrDesktopClient
     public class DesktopController
     {
         private ISolvrServices proxy;
-        public DesktopController()
+        public DesktopController(bool useMockDB = false)
         {
-            proxy = new SolvrService();
+            proxy = new SolvrService(useMockDB);
         }
 
         public Report GetReport(int id)

@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccesLayer\ModelBuilderTests.cs" />
+    <Compile Include="DesktopTests\DesktopControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +59,10 @@
     <ProjectReference Include="..\DataAccesLayer\DataAccesLayer.csproj">
       <Project>{2E3B225A-AAD6-4D73-A4F6-C76DB17E9638}</Project>
       <Name>DataAccesLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SolvrDesktopClient\SolvrDesktopClient.csproj">
+      <Project>{81291A43-3210-4048-955D-0CB1C4DEFA39}</Project>
+      <Name>SolvrDesktopClient</Name>
     </ProjectReference>
     <ProjectReference Include="..\SolvrLibrary\SolvrLibrary.csproj">
       <Project>{7A512B96-B646-4E04-B9F5-6C9658209C1B}</Project>
