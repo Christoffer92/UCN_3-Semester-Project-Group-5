@@ -5,18 +5,20 @@ using System.Web;
 using System.Web.Mvc;
 using SolvrWebClient.Models;
 using SolvrLibrary;
+using SolvrServices;
 
 namespace SolvrWebClient.Controllers
 {
     public class PostController : Controller
     {
-        public ISolvrDB DB;
+        public ISolvrServices DB;
 
         public PostController()
         {
-            DB = new SolvrDB();
+            DB = new SolvrService();
         }
-        public PostController(ISolvrDB _DB)
+
+        public PostController(ISolvrServices _DB)
         {
             DB = _DB;
         }
@@ -203,7 +205,7 @@ namespace SolvrWebClient.Controllers
 
         public ActionResult ChooseSolvr(int ID=0)
         {
-            SolvrComment sc = DB.GetComment<SolvrComment>(ID);
+            SolvrComment sc = DB.GetSolvrComment(ID);
 
             if (sc.IsAccepted)
             {

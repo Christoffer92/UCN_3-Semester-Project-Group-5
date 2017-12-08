@@ -4,18 +4,20 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SolvrLibrary;
+using SolvrServices;
 
 namespace SolvrWebClient.Controllers
 {
     public class HomeController : Controller
     {
-        public ISolvrDB DB;
+        public ISolvrServices DB;
 
         public HomeController()
         {
-            DB = new SolvrDB();
+            DB = new SolvrService();
         }
-        public HomeController(ISolvrDB _DB)
+
+        public HomeController(ISolvrServices _DB)
         {
             DB = _DB;
         }

@@ -8,19 +8,20 @@ using System.Web;
 using System.Web.Mvc;
 using System.Threading.Tasks;
 using SolvrLibrary;
+using SolvrServices;
 
 namespace SolvrWebClient.Controllers
 {
     public class AccountController : Controller
     {
-        public ISolvrDB DB;
+        public ISolvrServices DB;
 
         public AccountController()
         {
-            DB = new SolvrDB();
+            DB = new SolvrService();
         }
 
-        public AccountController(ISolvrDB _DB)
+        public AccountController(ISolvrServices _DB)
         {
             DB = _DB;
         }

@@ -1,23 +1,25 @@
 ﻿using SolvrLibrary;
-using DataAccesLayer;
 using SolvrWebClient.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using SolvrServices;
 
 namespace SolvrWebClient.Controllers
 {
     public class CreatePostController : Controller
     {
         //Overloaded constructors for connecting to either SolvrDB or MockDB
-        ISolvrDB DB;
+        public ISolvrServices DB;
+
         public CreatePostController()
         {
-            DB = new SolvrDB();
+            DB = new SolvrService();
         }
-        public CreatePostController(ISolvrDB _DB)
+
+        public CreatePostController(ISolvrServices _DB)
         {
             DB = _DB;
         }

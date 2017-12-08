@@ -302,13 +302,13 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DataAccesLayer\DataAccesLayer.csproj">
-      <Project>{2e3b225a-aad6-4d73-a4f6-c76db17e9638}</Project>
-      <Name>DataAccesLayer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SolvrLibrary\SolvrLibrary.csproj">
       <Project>{7a512b96-b646-4e04-b9f5-6c9658209c1b}</Project>
       <Name>SolvrLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SolvrServices\SolvrServices.csproj">
+      <Project>{6ccbd207-72d6-41b1-8be6-7f3093464ff5}</Project>
+      <Name>SolvrServices</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

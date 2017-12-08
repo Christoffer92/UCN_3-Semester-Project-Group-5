@@ -37,13 +37,13 @@ namespace SolvrLibrary
         /// <param name="post"></param>
         Post CreatePost(Post post);
         
-
         /// <summary>
         /// Creates a Physical Post and inserts it into the database, by giving it a foreign physical post
         /// with attributes attached to it
         /// </summary>
         /// <param name="pPost"></param>
         PhysicalPost CreatePhysicalPost(PhysicalPost Post);
+
         PhysicalPost GetPhysicalPost(int id);
 
         /// <summary>
@@ -100,7 +100,8 @@ namespace SolvrLibrary
         SolvrComment CreateSolvrComment(SolvrComment sc);
         void UpdatePost(Post p);
         void UpdateSolvrComment(SolvrComment sc);
-        T GetComment<T>(int ID);
+        Comment GetComment(int ID);
+        SolvrComment GetSolvrComment(int ID);
         void UpdatePhysicalPost(PhysicalPost post);
         IEnumerable<Post> GetPostsByBumpTime(int loadCount);
         User GetUser(string Username);
