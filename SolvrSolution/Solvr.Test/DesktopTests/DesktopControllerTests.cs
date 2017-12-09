@@ -13,8 +13,10 @@ namespace Solvr.Test.DesktopTests
     [TestClass]
     public class DesktopControllerTests
     {
+        MockDB mockDB;
         public DesktopControllerTests()
         {
+            mockDB = new MockDB();
             //
             // TODO: Add constructor logic here
             //
@@ -37,28 +39,6 @@ namespace Solvr.Test.DesktopTests
                 testContextInstance = value;
             }
         }
-
-        #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
 
         [TestMethod]
         [DataRow(1, "massa tempor convallis nulla neque", "Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique.", "user", true, 2019, 07, 24, 21, 48, 58, 337, 831, 158)]
@@ -117,11 +97,11 @@ namespace Solvr.Test.DesktopTests
         }
 
         [TestMethod]
-        //[DataRow()]
-        public void GetReportCountsTests(int reportUnresolvedAmount, int reportResolvedAmount, int reportTotalAmount, 
-                                         int postsReportedAmount, int postsResolvedAmount, int postsTotalAmount,
-                                         int commentsReportedAmount, int commentsResolvedAmount, int commentsTotalAmount,
-                                         int usersReportedAmount, int usersResolvedAmount, int usersTotalAmount)
+        //[DataRow()] needs to have the exact numbers of whats in the mockDB. Look at the SetUp() method
+        public void GetReportCountsTestsPositive(int reportUnresolvedAmount, int reportResolvedAmount,   int reportTotalAmount, 
+                                                 int postsReportedAmount,    int postsResolvedAmount,    int postsTotalAmount,
+                                                 int commentsReportedAmount, int commentsResolvedAmount, int commentsTotalAmount,
+                                                 int usersReportedAmount,    int usersResolvedAmount,    int usersTotalAmount)
         {
             //Prepare
             DesktopController desktopController = new DesktopController(true);
@@ -136,13 +116,9 @@ namespace Solvr.Test.DesktopTests
             //Assert
             for (int i = 0; i <= 12; i++)
             {
-                AssertAreEqualWithMsg(expectedCounts[0], actuallyCounts[0], "reportCounts");
+                AssertAreEqualWithMsg(expectedCounts[0], actuallyCounts[0], "counts[" + i +"]");
             }
         }
-
-
-
-
 
         #region AssertAreEqualWithMsg methods
 
@@ -189,6 +165,77 @@ namespace Solvr.Test.DesktopTests
             AssertAreEqualWithMsg(expectedMinute, actualMinute, "minute");
             AssertAreEqualWithMsg(expectedSecond, actualSecond, "second");
         }
+        #endregion
+
+
+        [TestInitialize()]
+        public void SetUp()
+        {
+            //TODO The mockDB needs to be able to build a full report.
+
+            //mockDB.CreateReport(1, "massa tempor convallis nulla neque", "Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique.", 
+            //                    "user", true, 2019, 07, 24, 21, 48, 58, 337, 831, 158);
+            //mockDB.CreateReport(847, "eget rutrum", "Aenean fermentum.", "post", true, 2036, 12, 10, 15, 23, 35, 946, 14, 765);
+            //mockDB.CreateReport(1000, "ullamcorper augue a suscipit nulla", "Duis mattis egestas metus. Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh. Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.", "user", true, 2030, 02, 07, 17, 12, 05, 928, 778, 958);
+
+            //this is how a report looks like in the "real" db.
+            //Title = subStrings[0],
+            //    Description = subStrings[1],
+            //    ReportType = subStrings[2],
+            //    IsResolved = StringToBoolean(subStrings[3]),
+            //    DateCreated = SubstringToDateTime(subStrings[4]),
+            //    UserId = Int32.Parse(subStrings[5]),
+            //    CommentId = Int32.Parse(subStrings[6]),
+            //    PostId = Int32.Parse(subStrings[7])
+
+
+
+
+
+
+            /*  This is how a post looks like in the "real" db.
+             *  Title = subStrings[0],
+                Description = subStrings[1],
+                BumpTime = SubstringToDateTime(subStrings[2]),
+                DateCreated = SubstringToDateTime(subStrings[3]),
+                CategoryId = Int32.Parse(subStrings[4]),
+                UserId = Int32.Parse(subStrings[5]),
+                IsDisabled = false
+             * */
+
+
+            //mockDB.CreatePost();
+            //mockDB.CreatePost();
+            //mockDB.CreatePost();
+        }
+
+        [TestCleanup()]
+        public void TearDown()
+        {
+            mockDB = new MockDB();
+        }
+
+
+        #region Additional test attributes
+        //
+        // You can use the following additional attributes as you write your tests:
+        //
+        // Use ClassInitialize to run code before running the first test in the class
+        // [ClassInitialize()]
+        // public static void MyClassInitialize(TestContext testContext) { }
+        //
+        // Use ClassCleanup to run code after all tests in a class have run
+        // [ClassCleanup()]
+        // public static void MyClassCleanup() { }
+        //
+        // Use TestInitialize to run code before running each test 
+        // [TestInitialize()]
+        // public void MyTestInitialize() { }
+        //
+        // Use TestCleanup to run code after each test has run
+        // [TestCleanup()]
+        // public void MyTestCleanup() { }
+        //
         #endregion
     }
 }
