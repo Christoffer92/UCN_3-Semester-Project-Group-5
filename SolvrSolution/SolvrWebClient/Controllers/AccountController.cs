@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Threading.Tasks;
 using SolvrLibrary;
+using DataAccesLayer.DAL;
 
 namespace SolvrWebClient.Controllers
 {

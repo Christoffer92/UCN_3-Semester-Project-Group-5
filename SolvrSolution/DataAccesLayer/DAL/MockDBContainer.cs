@@ -113,7 +113,7 @@ namespace DataAccesLayer.DAL
             return _category;
         }
 
-        internal void AddReport(Report _report)
+        internal Report AddReport(Report _report)
         {
             if (Reports.Count == 0)
             {
@@ -125,6 +125,7 @@ namespace DataAccesLayer.DAL
             }
 
             Reports.Add(_report);
+            return _report;
         }
 
         internal void AddComment(Comment _comment)

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SolvrDesktopClient;
 using SolvrLibrary;
+using DataAccesLayer.DAL;
 
 namespace Solvr.Test.DesktopTests
 {
@@ -96,8 +97,9 @@ namespace Solvr.Test.DesktopTests
             AssertAreEqualWithMsg(false, postAfterDisabled.IsDisabled, "isDisable");
         }
 
+        //needs to have the exact numbers of whats in the mockDB. Look at the fillTestData method in mockDB
         [TestMethod]
-        //[DataRow()] needs to have the exact numbers of whats in the mockDB. Look at the SetUp() method
+        //[DataRow(0, 3, 3,   1, 1, 5,    1, 
         public void GetReportCountsTestsPositive(int reportUnresolvedAmount, int reportResolvedAmount,   int reportTotalAmount, 
                                                  int postsReportedAmount,    int postsResolvedAmount,    int postsTotalAmount,
                                                  int commentsReportedAmount, int commentsResolvedAmount, int commentsTotalAmount,
@@ -171,73 +173,13 @@ namespace Solvr.Test.DesktopTests
         [TestInitialize()]
         public void SetUp()
         {
-            Report report1 = new Report
-            {
-                Title = "massa tempor convallis nulla neque",
-                Description = "Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique.",
-                ReportType = "user",
-                IsResolved = true,
-                DateCreated = new DateTime(2019, 07, 24, 21, 48, 58),
-                UserId = 337,
-                CommentId = 831,
-                PostId = 158
-            };
-            Report report2 = new Report
-            {
-                Title = "eget rutrum",
-                Description = "Aenean fermentum.",
-                ReportType = "post",
-                IsResolved = true,
-                DateCreated = new DateTime(2036, 12, 10, 15, 23, 35),
-                UserId = 946,
-                CommentId = 14,
-                PostId = 765
-            };
-            Report report3 = new Report
-            {
-                Title = "ullamcorper augue a suscipit nulla",
-                Description = "Duis mattis egestas metus. Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh. Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.",
-                ReportType = "user",
-                IsResolved = true,
-                DateCreated = new DateTime(2030, 02, 07, 17, 12, 05),
-                UserId = 928,
-                CommentId = 778,
-                PostId = 958
-            };
-
-            mockDB.CreateReport(report1);
-            mockDB.CreateReport(report2);
-            mockDB.CreateReport(report3);
-
-            /*  This is how a post looks like in the "real" db.
-             *  Title = subStrings[0],
-                Description = subStrings[1],
-                BumpTime = SubstringToDateTime(subStrings[2]),
-                DateCreated = SubstringToDateTime(subStrings[3]),
-                CategoryId = Int32.Parse(subStrings[4]),
-                UserId = Int32.Parse(subStrings[5]),
-                IsDisabled = false
-             * */
-
-        //    1, "JCIDS", "Maecenas pulvinar lobortis est. Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum. Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc.", 2028, 01, 29, 09, 23, 28, 2028, 01, 29, 09, 23, 28, 103, 504)]
-        //[DataRow(420, "OAS Gold", "Etiam justo. Etiam pretium iaculis justo. In hac habitasse platea dictumst.", 2021, 07, 25, 02, 47, 33, 2021, 07, 25, 02, 47, 33, 22, 187)]
-        //[DataRow(500, "Zero Waste", "Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.", 2030, 09, 01, 18, 00, 38, 2030, 09, 01, 18, 00, 38, 791, 109)]
-
-        Post post = new Post
-        {
-            
-        };
-
-
-        //mockDB.CreatePost();
-        //mockDB.CreatePost();
-        //mockDB.CreatePost();
-    }
+            mockDB.FillTestData();
+        }
 
         [TestCleanup()]
         public void TearDown()
         {
-            //mockDB.Close();
+            MockDB.CloseDB();
         }
 
 

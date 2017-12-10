@@ -33,7 +33,6 @@ namespace SolvrLibrary
         [Column()]        
         public int PostId { get; set; }
 
-        //this wasnt af string but an int..... fixed it
         [Column(IsDiscriminator = true)]
         public string CommentType { get; set; }
 

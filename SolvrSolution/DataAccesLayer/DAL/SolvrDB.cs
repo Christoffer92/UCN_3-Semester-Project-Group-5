@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using SolvrLibrary;
 using DataAccesLayer.DAL;
 
-namespace SolvrLibrary
+namespace DataAccesLayer.DAL
 {
     public class SolvrDB :  ISolvrDB
     {
@@ -384,6 +384,11 @@ namespace SolvrLibrary
                 db.SubmitChanges();
             }
             return GetReport(report.Id);
+        }
+
+        public Vote CreateVote(Vote vote)
+        {
+            throw new NotImplementedException();
         }
     }
 }

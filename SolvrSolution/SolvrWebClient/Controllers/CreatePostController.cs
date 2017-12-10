@@ -1,5 +1,5 @@
 ﻿using SolvrLibrary;
-using DataAccesLayer;
+using DataAccesLayer.DAL;
 using SolvrWebClient.Models;
 using System;
 using System.Collections.Generic;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SolvrLibrary;
+using DataAccesLayer.DAL;
 
 namespace SolvrWebClient.Controllers
 {

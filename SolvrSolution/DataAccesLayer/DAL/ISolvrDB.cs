@@ -1,10 +1,11 @@
-﻿using System;
+﻿using SolvrLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SolvrLibrary
+namespace DataAccesLayer.DAL
 {
     public interface ISolvrDB
     {
@@ -23,12 +24,17 @@ namespace SolvrLibrary
         /// <returns>Category</returns>
         Category GetCategory(int id);
 
+        void SetReportToResolved(int reportId);
+        void UpdatePostText(int postId, string txt);
+
         /// <summary>
         /// Returns a category, by searching for its name
         /// </summary>
         /// <param name="name"></param>
         /// <returns>Category</returns>
         Category GetCategory(string name);
+        void DisablePost(int postId);
+        void UpdatePostTilte(int postId, string text);
 
         /// <summary>
         /// Creates a Post and inserts it into the database, by giving it a foreign post
@@ -99,7 +105,13 @@ namespace SolvrLibrary
         /// </summary>
         /// <param name="report"></param>
         Report CreateReport(Report report);
-        
+
+        /// <summary>
+        /// Creates a Vote and inserts it into the database, by giving it a foreign vote
+        /// with attributes attached to it
+        /// </summary>
+        /// <param name="vote"></param>
+        Vote CreateVote(Vote vote);
 
         //TODO summary and cleanup
         IEnumerable<Comment> GetComments(int iD);
@@ -111,5 +123,9 @@ namespace SolvrLibrary
         void UpdatePhysicalPost(PhysicalPost post);
         IEnumerable<Post> GetPostsByBumpTime(int loadCount);
         User GetUser(string Email);
+
+        
+
+        bool DatabaseExists();
     }
 }
