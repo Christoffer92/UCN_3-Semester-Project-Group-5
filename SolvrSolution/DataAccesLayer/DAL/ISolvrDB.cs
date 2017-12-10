@@ -92,6 +92,13 @@ namespace SolvrLibrary
         /// <returns>List of Reports</returns>
         List<Report> GetAllReports();
 
+
+        /// <summary>
+        /// Creates a Report and inserts it into the database, by giving it a foreign report
+        /// with attributes attached to it
+        /// </summary>
+        /// <param name="report"></param>
+        Report CreateReport(Report report);
         
 
         //TODO summary and cleanup

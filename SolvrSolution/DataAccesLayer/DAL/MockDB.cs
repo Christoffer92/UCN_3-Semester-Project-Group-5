@@ -121,6 +121,11 @@ namespace SolvrLibrary
             throw new NotImplementedException();
         }
 
+        public Report CreateReport(Report report)
+        {
+            return MockDBContainer.Instance.AddReport(report);
+        }
+
         public void UpdatePost(Post p)
         {
             throw new NotImplementedException();
@@ -297,7 +302,7 @@ namespace SolvrLibrary
             Categories.Add(_category);
         }
 
-        internal void AddReport(Report _report)
+        public Report AddReport(Report _report)
         {
             if (Reports.Count == 0)
             {
@@ -309,6 +314,7 @@ namespace SolvrLibrary
             }
 
             Reports.Add(_report);
+            return _report;
         }
 
         internal void AddComment(Comment _comment)

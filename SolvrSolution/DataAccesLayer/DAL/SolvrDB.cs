@@ -202,6 +202,7 @@ namespace SolvrLibrary
 
         #region Physical Post
 
+        //Please note; SubmitChanges do set the id on the object thats sent into this method. So physicalPost.Id is the right set by SubmitChanges.
         public PhysicalPost CreatePhysicalPost(PhysicalPost physicalPost)
         {
             using (var db = new SolvrContext())
@@ -373,6 +374,16 @@ namespace SolvrLibrary
                 var Query = (from user in DB.Users where user.Email == Email select user).First();
                 return new ModelBuilder().BuildUser(Query.Id);
             }
+        }
+
+        public Report CreateReport(Report report)
+        {
+            using (var db = new SolvrContext())
+            {
+                db.Reports.InsertOnSubmit(report);
+                db.SubmitChanges();
+            }
+            return GetReport(report.Id);
         }
     }
 }
