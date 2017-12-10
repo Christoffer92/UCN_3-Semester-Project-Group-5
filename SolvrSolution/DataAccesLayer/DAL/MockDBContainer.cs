@@ -98,7 +98,7 @@ namespace DataAccesLayer.DAL
             return _post;
         }
 
-        internal void AddCategory(Category _category)
+        internal Category AddCategory(Category _category)
         {
             if (Categories.Count == 0)
             {
@@ -110,6 +110,7 @@ namespace DataAccesLayer.DAL
             }
 
             Categories.Add(_category);
+            return _category;
         }
 
         internal void AddReport(Report _report)
@@ -179,25 +180,12 @@ namespace DataAccesLayer.DAL
 
         internal List<Category> GetAllCategories()
         {
-            //List<Category> CatList = new List<Category>();
-
-            //foreach (Category cat in Categories)
-            //{
-            //    CatList.Add(cat);
-            //}
-
             List<Category> CatList = new List<Category>();
 
-            Category cat1 = new Category();
-            Category cat2 = new Category();
-
-            cat1.Name = "Computer";
-            cat1.Id = 2;
-            cat2.Name = "Garden";
-            cat2.Id = 3;
-
-            CatList.Add(cat1);
-            CatList.Add(cat2);
+            foreach (Category cat in Categories)
+            {
+                CatList.Add(cat);
+            }
 
             return CatList;
         }
