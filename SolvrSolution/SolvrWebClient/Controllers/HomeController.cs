@@ -24,7 +24,20 @@ namespace SolvrWebClient.Controllers
         {
             IEnumerable<Post> posts = DB.GetPostsByBumpTime(loadCount);
             ViewBag.PostList = posts;
-            ViewBag.LoadCount = loadCount;
+            
+
+            if (posts.Count() == 0)
+            {
+                return View("Error");
+            }
+            else if (loadCount < 0)
+            {
+                ViewBag.LoadCount = 0;
+            }
+            else
+            {
+                ViewBag.LoadCount = loadCount;
+            }
 
             return View();
         }
