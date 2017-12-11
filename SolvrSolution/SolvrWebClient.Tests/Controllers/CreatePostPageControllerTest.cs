@@ -27,6 +27,11 @@ namespace SolvrWebClient.Tests.Controllers
             _DB = new MockDB();
         }
 
+        [TestCleanup]
+        public void TearDown()
+        {
+            _DB.CloseDB();
+        }
 
         #region Create Physical post tests
 
@@ -34,10 +39,10 @@ namespace SolvrWebClient.Tests.Controllers
 
         
         [DataRow("lorem ipsum", 2, "lorem ipsum sucks", "lol", "it doesnt actually", "9220", "Julivej")]
-        ////AltDescription min+1 nr of characters
-        //[DataRow(2, "Lorem.", "9210", "Blåbærvej 10")]
+        ////Description max nr of characters
+        [DataRow("Lorem.", 1, fiveHundredCharacters + fiveHundredCharacters + fiveHundredCharacters,":)","I CANT","9210", "Blåbærvej 10")]
         ////AltDescription max   nr of characters
-        //[DataRow(3, fiveHundredCharacters + fiveHundredCharacters, "7700", "Gedesvinget 2, 2 TV")]
+        [DataRow("lmao", 3, fiveHundredCharacters + fiveHundredCharacters, "tag", fiveHundredCharacters + fiveHundredCharacters , "9220", "Gedesvinget 2, 2 TV")]
         ////AltDescription max-1 nr of characters
         //[DataRow(4, fiveHundredCharacters + fiveHundredCharactersMinusOne, "8865", "Fugl Allé 5A")]
 
@@ -90,7 +95,7 @@ namespace SolvrWebClient.Tests.Controllers
 
             //PostID should be 1 as there is already 0 test posts in the Mock DB.
             string msg = "Expected that post Id was: 1 But actual post ID was: " + actualPost.Id;
-            Assert.AreEqual(1, actualPost.Id, msg);
+            Assert.AreEqual(_DB.GetLastPhysicalPost().Id, actualPost.Id, msg);
 
             //TItle Assert
             msg = "Expected that post Title was: " + expectedTitle + " But actual post Title was: " + actualPost.Title;
@@ -153,60 +158,54 @@ namespace SolvrWebClient.Tests.Controllers
         }
 
 
-        //        [TestMethod]
-        //        //AltDescription min-1 nr of characters
-        //        [DataRow(2, "Lore", "9210", "Blåbærvej 10")]
-        //        //AltDescription max+1 nr of characters
-        //        [DataRow(4, "1" + fiveHundredCharacters + fiveHundredCharactersMinusOne, "8865", "Fugl Allé 5A")]
+        //[TestMethod]
+        ////Too small title
+        //[DataRow("l", 2, "lorem ipsum sucks", "lol", "it doesnt actually", "922000000000", "Julivej")]
+        //////2 big description
+        //[DataRow("Lorem.", 1, fiveHundredCharacters + fiveHundredCharacters + fiveHundredCharacters + "LOL", ":)", "I CANT", "9210", "Blåbærvej 10")]
+        //////2 big AltDescription
+        //[DataRow("lmao", 3, fiveHundredCharacters + fiveHundredCharacters, "tag", fiveHundredCharacters + fiveHundredCharacters + fiveHundredCharacters, "9220", "Gedesvinget 2, 2 TV")]
 
-        //        //Zipcode min-1 nr of characters
-        //        [DataRow(6, "Consectetur adipiscing elit.", "12", "Blåbærvej 10")]
-        //        //Zipcode max+1 nr of characters
-        //        [DataRow(8, "Morbi at vestibulum est, non porttitor ante.", "USA 6458273", "Fugl Allé 5A")]
+        ////        //Zipcode min-1 nr of characters
+        ////        [DataRow(6, "Consectetur adipiscing elit.", "12", "Blåbærvej 10")]
+        ////        //Zipcode max+1 nr of characters
+        ////        [DataRow(8, "Morbi at vestibulum est, non porttitor ante.", "USA 6458273", "Fugl Allé 5A")]
 
-        //        //Address min-1 nr of characters
-        //        [DataRow(10, "Consectetur adipiscing elit.", "9210", "Ål")]
-        //        //Address max+1 nr of characters
-        //        [DataRow(12, "Morbi at vestibulum est, non porttitor ante.", "8865", "Phasellus viverra ullamcorper metus et massa nunc..")]
-        //        public void CreatePhysicalPostNegativeTest(int nrOfTags, string expectedAltDescription, string expectedZipcode, string expectedAddress)
-        //        {
-        //            // Arrange
-        //            string expectedTitle = "Morbi cursus.";
+        ////        //Address min-1 nr of characters
+        ////        [DataRow(10, "Consectetur adipiscing elit.", "9210", "Ål")]
+        ////        //Address max+1 nr of characters
+        ////        [DataRow(12, "Morbi at vestibulum est, non porttitor ante.", "8865", "Phasellus viverra ullamcorper metus et massa nunc..")]
+        //public void CreatePhysicalPostNegativeTest(string expectedTitle, int expectedCategoryId, string expectedDescription, string expectedTagString, string expectedAltDescription, string expectedZipCode, string expectedAddress)
+        //{
+        //    // Arrange
+        //    _DB.FillTestData();
 
-        //            string expectedDescription = "Lorem ipsum dolor sit amet.";
+        //    Category expectedCategory = _DB.GetCategory(expectedCategoryId);
 
-        //            List<string> expectedTagsList = new List<string>() { "Hardware", "Hot", "Dead", "RipFlowers", "Jewels", "Bland", "AlienNoises", "Fridge", "MomsSpaghetti", "EminemCantFixThis", "FutureWaifu", "TeknologiIsTheFuture" };
-        //            for (int i = 0; nrOfTags < expectedTagsList.Count; i++)
-        //            {
-        //                expectedTagsList.Remove(expectedTagsList.First());
-        //            }
+        //    var controller = new CreatePostController(_DB);
 
-        //            User expectedUser = new User("Tester", "TT@DD.SS", "TestUser123", "TestPass");
+        //    var model = new PhysicalPostViewModel { Title = expectedTitle, Description = expectedDescription, CategoryId = expectedCategoryId, TagsString = expectedTagString, AltDescription = expectedAltDescription, Zipcode = expectedZipCode, Address = expectedAddress };
 
-        //            Category expectedCategory = new Category();
-
-        //            var controller = new CreatePostController(_DB);
-
-        //            bool success = true;
+        //    bool success = true;
 
 
-        //            // Act 
+        //    // Act 
 
-        //            try
-        //            {
-        //                controller.CreatePhysicalPostModel(expectedUser, expectedTitle, expectedDescription, expectedCategory, expectedTagsList, expectedAltDescription, expectedZipcode, expectedAddress); // this method has to return the newly created object after its ID is set from the DB
+        //    try
+        //    {
+        //        controller.CreatePhysicalPost(model); // this method has to return the newly created object after its ID is set from the DB
 
-        //            }
-        //            catch (Exception)
-        //            {
-        //                success = false;
-        //            }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        success = false;
+        //    }
 
 
-        //            // Assert
+        //    // Assert
 
-        //            Assert.IsFalse(success);
-        //        }
+        //    Assert.IsFalse(success);
+        //}
         //        #endregion
 
         //        #region Create post test
@@ -214,45 +213,45 @@ namespace SolvrWebClient.Tests.Controllers
         [TestMethod]
 
         //Title min nr of characters
-        [DataRow("Car", 1,"Lorem ipsum dolor sit amet.", 1)]
+        [DataRow("Car", 1,"Lorem ipsum dolor sit amet.", "up")]
         //Title min+1 nr of characters
-        [DataRow("Bird", 2,"Consectetur adipiscing elit.", 2)]
+        [DataRow("Bird", 2,"Consectetur adipiscing elit.", "it")]
         //Title max nr of characters
-        [DataRow("Lorem ipsum dolor sit amet, consectetur cras amet.", 2,"Donec sit amet dictum purus.", 3)]
+        [DataRow("Lorem ipsum dolor sit amet, consectetur cras amet.", 2,"Donec sit amet dictum purus.", "tag")]
         //Title max-1 nr of characters
-        [DataRow("Lorem ipsum dolor sit amet, consectetur volutpat.", 1,"Morbi at vestibulum est, non porttitor ante.", 4)]
+        [DataRow("Lorem ipsum dolor sit amet, consectetur volutpat.", 1,"Morbi at vestibulum est, non porttitor ante.", "k")]
 
 
         //Description min nr of characters
-        [DataRow("Ut mauris.", 2,"Lorum", 5)]
+        [DataRow("Ut mauris.", 2,"Lorum", "Xx))")]
         //Description min+1 nr of characters
-        [DataRow("Morbi cursus.", 1,"Semper", 6)]
+        [DataRow("Morbi cursus.", 1,"Semper", "REE")]
         //Description max nr of characters
-        [DataRow("Nam quis.", 1, fiveHundredCharacters + fiveHundredCharacters + fiveHundredCharacters, 7)]
+        [DataRow("Nam quis.", 1, fiveHundredCharacters + fiveHundredCharacters + fiveHundredCharacters, "erw")]
         //Description max-1 nr of characters
-        [DataRow("Lorem ipsum.", 1, fiveHundredCharacters + fiveHundredCharacters + fiveHundredCharactersMinusOne, 8)]
+        [DataRow("Lorem ipsum.", 1, fiveHundredCharacters + fiveHundredCharacters + fiveHundredCharactersMinusOne, "lol")]
 
-        public void CreatePostTest(string expectedPostTitle, int expectedCategoryId, string expectedPostDescription, int nrOfTags)
+        public void CreatePostTest(string expectedPostTitle, int expectedCategoryId, string expectedPostDescription, string expectedTags)
         {
             // Arrange
-            List<string> expectedTags = new List<string>() { "Hardware", "Hot", "Dead", "RipFlowers", "Jewels", "Bland", "AlienNoises", "Fridge", "MomsSpaghetti", "EminemCantFixThis", "FutureWaifu", "TeknologiIsTheFuture" };
-            for (int i = 0; nrOfTags < expectedTags.Count; i++)
-            {
-                expectedTags.Remove(expectedTags.First());
-            }
+            //List<string> expectedTags = new List<string>() { "Hardware", "Hot", "Dead", "RipFlowers", "Jewels", "Bland", "AlienNoises", "Fridge", "MomsSpaghetti", "EminemCantFixThis", "FutureWaifu", "TeknologiIsTheFuture" };
+            //for (int i = 0; nrOfTags <= expectedTags.Count; i++)
+            //{
+            //    expectedTags.Remove(expectedTags.First());
+            //}
 
-            //User expectedUser = new User("Tester", "TT@DD.SS", "TestUser123", "TestPass");
+            User expectedUser = new User { Name = "john", Username = "john", Password = "John", Email = "john@mail.dk" };
 
             Category expectedCategory = _DB.GetCategory(expectedCategoryId);
 
             var controller = new CreatePostController(_DB);
 
-            var model = new PostViewModel { Title = expectedPostTitle, CategoryId = expectedCategoryId, Description = expectedPostDescription, TagsString = expectedTags[0] };
+            var model = new PostViewModel { Title = expectedPostTitle, CategoryId = expectedCategoryId, Description = expectedPostDescription, TagsString = expectedTags };
 
 
             // Act 
 
-
+            _DB.CreateUser(expectedUser);
 
             Post actualPost = controller.CreatePost(model); // this method has to return the newly created object after its ID is set from the DB
 
@@ -264,28 +263,35 @@ namespace SolvrWebClient.Tests.Controllers
             // Assert
 
             //ID should be 1 as there is already 0 test posts in the Mock DB.
-            string msg = "Expected that post ID was: 1 But actual post ID was: " + actualPost.Id;
-            Assert.AreEqual(1, actualPost.Id, msg);
+            //string msg = "Expected that post ID was: 1 But actual post ID was: " + actualPost.Id;
+            //Assert.AreEqual(1, actualPost.Id, msg);
 
             //TItle Assert
-            msg = "Expected that post Title was: " + expectedPostTitle + " But actual post Title was: " + actualPost.Title;
+            string msg = "Expected that post Title was: " + expectedPostTitle + " But actual post Title was: " + actualPost.Title;
             Assert.AreEqual(expectedPostTitle, actualPost.Title, msg);
 
             //Description Assert
             msg = "Expected that post Description was: " + expectedPostDescription + " But actual post Description was: " + actualPost.Description;
             Assert.AreEqual(expectedPostDescription, actualPost.Description, msg);
 
-            //Tags assert. Number of tags defined in the Datarow, tags are predefined.
-            msg = "Expected that post Tags.Count was: " + expectedTags + " But actual post Tags.Count was: " + actualPost.Tags.Count;
-            Assert.AreEqual(expectedTags, actualPost.Tags.Count, msg);
+            ////Tags assert. Number of tags defined in the Datarow, tags are predefined.
+            //msg = "Expected that post Tags.Count was: " + expectedTags + " But actual post Tags.Count was: " + actualPost.Tags.Count;
+            //Assert.AreEqual(expectedTags.Count, actualPost.Tags.Count, msg);
 
-            //BumpTime Assert, check if theres a better way to test this
+            //BumpTime Assert
             msg = "Expected that post BumpTime.TimeOfDay was around: " + expectedBumpTime.TimeOfDay + " But actual post BumpTime was: " + actualPost.BumpTime.TimeOfDay;
-            Assert.AreEqual(expectedBumpTime.TimeOfDay, actualPost.BumpTime.TimeOfDay, msg);
+            Assert.AreEqual(expectedBumpTime.Date, actualPost.BumpTime.Date, msg);
+
+            msg = "Expected that post BumpTime.TimeOfDay was around: " + expectedBumpTime.TimeOfDay + " But actual post BumpTime was: " + actualPost.BumpTime.TimeOfDay;
+            Assert.AreEqual(expectedBumpTime.Hour, actualPost.BumpTime.Hour, msg);
+
 
             //DateCreated Assert,  check if theres a better way to test this
             msg = "Expected that post DateCreated.TimeOfDay was around: " + expectedDateCreated.TimeOfDay + " But actual post DateCreated was: " + actualPost.DateCreated.TimeOfDay;
-            Assert.AreEqual(expectedDateCreated.TimeOfDay, actualPost.DateCreated.TimeOfDay, msg);
+            Assert.AreEqual(expectedDateCreated.Date, actualPost.DateCreated.Date, msg);
+
+            msg = "Expected that post DateCreated.TimeOfDay was around: " + expectedDateCreated.TimeOfDay + " But actual post DateCreated was: " + actualPost.DateCreated.TimeOfDay;
+            Assert.AreEqual(expectedDateCreated.Hour, actualPost.DateCreated.Hour, msg);
 
             //Owner Assert
             //msg = "Expected that post User was around: " + expectedUser + " But actual post User was: " + actualPost.User;

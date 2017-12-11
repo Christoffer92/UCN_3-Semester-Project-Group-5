@@ -81,6 +81,11 @@ namespace SolvrLibrary
             return MockDBContainer.Instance.AddPost(p);
         }
 
+        public void CreateUser(User user)
+        {
+            MockDBContainer.Instance.AddUser(user);
+        }
+
         public void CreateCategory(Category cat)
         {
             MockDBContainer.Instance.AddCategory(cat);
@@ -123,7 +128,7 @@ namespace SolvrLibrary
 
         public User GetUser()
         {
-            throw new NotImplementedException();
+            return MockDBContainer.Instance.getLastUser();
         }
 
         public User GetUser(int userId)
@@ -390,6 +395,11 @@ namespace SolvrLibrary
         internal PhysicalPost GetLastPhysicalPost()
         {
             return PhysicalPosts.Last();
+        }
+
+        internal User getLastUser()
+        {
+            return Users.Last();
         }
 
         internal List<Category> GetAllCategories()
