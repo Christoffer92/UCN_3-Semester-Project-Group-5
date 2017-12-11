@@ -9,26 +9,27 @@ namespace SolvrDesktopClient
 {
     public class DesktopController
     {
-        private ISolvrServices proxy;
+        private static RemoteSolvrReference.ISolvrServices solvrObj = new RemoteSolvrReference.SolvrServicesClient();
+
         public DesktopController(bool useMockDB = false)
         {
-            proxy = new SolvrService(useMockDB);
+            //TODO ...use the mockDB bool somehow.
         }
 
         public Report GetReport(int id)
         {
-            return proxy.GetReport(id);
+            return solvrObj.GetReport(id);
         }
 
-        public List<Report> GetAllReports()
+        public List<Report> GetAllReports(bool onlyNotResolved)
         {
-            return proxy.GetAllReports();
+            return solvrObj.GetReportList(onlyNotResolved).ToList();
         }
 
-        public int[] GetReportCounts()
+        public int[] GetReportCounts(bool onlyNotResolved)
         {
             int[] counts = new int[12];
-            List<Report> reports = GetAllReports();
+            List<Report> reports = GetAllReportList(onlyNotResolved);
 
             counts[0] = reports.Count;
             foreach (Report report in reports)

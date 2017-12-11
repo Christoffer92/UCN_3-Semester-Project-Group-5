@@ -73,9 +73,9 @@ namespace DataAccesLayer.DAL
         /// <summary>
         /// Returns a list of reports thats resolved or a list of reports thats not resolved.
         /// </summary>
-        /// <param name="notResolved"></param>
+        /// <param name="onlyNotResolved"></param>
         /// <returns>List<Report></returns>
-        List<Report> GetReportList(bool notResolved);
+        List<Report> GetReportList(bool onlyNotResolved);
 
         /// <summary>
         /// Returns a list of all categories.

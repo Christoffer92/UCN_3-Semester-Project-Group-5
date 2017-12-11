@@ -40,7 +40,7 @@ namespace SolvrServices
         List<Category> GetCategoryList();
 
         [OperationContract]
-        List<Report> GetReportList(bool notResolved);
+        List<Report> GetReportList(bool onlyNotResolved);
 
         [OperationContract]
         List<Vote> GetVoteList(int commentId);

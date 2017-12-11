@@ -113,16 +113,27 @@ namespace DataAccesLayer.DAL
 
             return postList;
         }
-        public List<Report> GetReportList(bool notResolved)
+        public List<Report> GetReportList(bool onlyNotResolved)
         {
             List<Report> reportList = new List<Report>();
 
             using (var db = new SolvrContext())
             {
-                var Query = from report in db.Reports select report;
+                var Query = from report in db.Reports where report.IsResolved == false select report;
+
                 foreach (Report item in Query)
                 {
                     reportList.Add(item);
+                }
+
+                if (!onlyNotResolved)
+                {
+                    Query = from report in db.Reports where report.IsResolved == true select report;
+
+                    foreach (Report item in Query)
+                    {
+                        reportList.Add(item);
+                    }
                 }
             }
 

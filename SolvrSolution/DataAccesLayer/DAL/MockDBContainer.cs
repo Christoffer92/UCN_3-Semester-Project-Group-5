@@ -34,19 +34,15 @@ namespace DataAccesLayer.DAL
         private List<Comment> Comments;
         private List<Category> Categories;
         private List<Report> Reports;
-        private List<SolvrComment> SolvrComments;
         private List<Vote> Votes;
-        private List<PhysicalPost> PhysicalPosts;
 
         private MockDBContainer()
         {
             Users = new List<User>();
             Posts = new List<Post>();
-            PhysicalPosts = new List<PhysicalPost>();
             Categories = new List<Category>();
             Reports = new List<Report>();
             Comments = new List<Comment>();
-            SolvrComments = new List<SolvrComment>();
             Votes = new List<Vote>();
         }
 
@@ -79,21 +75,6 @@ namespace DataAccesLayer.DAL
             }
 
             Posts.Add(_post);
-            return _post;
-        }
-
-        internal PhysicalPost AddPhysicalPost(PhysicalPost _post)
-        {
-            if (PhysicalPosts.Count == 0)
-            {
-                _post.Id = 1;
-            }
-            else
-            {
-                _post.Id = PhysicalPosts.Last().Id + 1;
-            }
-
-            PhysicalPosts.Add(_post);
             return _post;
         }
 
@@ -140,20 +121,6 @@ namespace DataAccesLayer.DAL
 
             Comments.Add(_comment);
             return _comment;
-        }
-
-        internal void AddSolvrComment(SolvrComment _comment)
-        {
-            if (SolvrComments.Count == 0)
-            {
-                _comment.Id = 1;
-            }
-            else
-            {
-                _comment.Id = SolvrComments.Last().Id + 1;
-            }
-
-            SolvrComments.Add(_comment);
         }
 
         internal Vote AddVote(Vote _vote)
@@ -261,11 +228,11 @@ namespace DataAccesLayer.DAL
             return report;
         }
 
-        internal List<Report> GetAllReport(bool notResolved)
+        internal List<Report> GetAllReport(bool onlyNotResolved)
         {
             List<Report> reportList = new List<Report>();
 
-            if (notResolved)
+            if (!onlyNotResolved)
             {
                 foreach (var item in Reports)
                 {

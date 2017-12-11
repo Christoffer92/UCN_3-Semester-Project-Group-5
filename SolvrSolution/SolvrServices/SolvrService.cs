@@ -15,6 +15,11 @@ namespace SolvrServices
     {
         private readonly DataAccesController dbCtr;
 
+        public SolvrService()
+        {
+            dbCtr = new DataAccesController(false);
+        }
+
         public SolvrService(bool useMockDB = false)
         {
             dbCtr = new DataAccesController(useMockDB);
@@ -66,9 +71,9 @@ namespace SolvrServices
             return dbCtr.GetCategoryList();
         }
 
-        public List<Report> GetReportList(bool notResolved)
+        public List<Report> GetReportList(bool onlyNotResolved)
         {
-            return dbCtr.GetReportList(notResolved);
+            return dbCtr.GetReportList(onlyNotResolved);
         }
 
         public List<Vote> GetVoteList(int commentId)

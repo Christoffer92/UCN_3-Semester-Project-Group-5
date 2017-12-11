@@ -195,9 +195,9 @@ namespace DataAccesLayer
             return comments;
         }
 
-        public List<Report> GetReportList(bool notResolved = false)
+        public List<Report> GetReportList(bool onlyNotResolved = false)
         {
-            return db.GetReportList(notResolved);            
+            return db.GetReportList(onlyNotResolved);            
         }
 
         public List<Category> GetCategoryList()

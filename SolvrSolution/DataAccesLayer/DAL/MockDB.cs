@@ -325,9 +325,9 @@ namespace DataAccesLayer.DAL
             return MockDBContainer.Instance.GetReport(id);
         }
 
-        public List<Report> GetReportList(bool notResolved)
+        public List<Report> GetReportList(bool onlyNotResolved)
         {
-            return MockDBContainer.Instance.GetAllReport(notResolved);
+            return MockDBContainer.Instance.GetAllReport(onlyNotResolved);
         }
 
         public User GetUser(string username)
