@@ -2,7 +2,6 @@
 using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DataAccesLayer.ModelBuilds;
 using SolvrLibrary;
 
 namespace Solvr.Test.DataAccesLayer

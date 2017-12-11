@@ -103,10 +103,6 @@
       <Project>{7A512B96-B646-4E04-B9F5-6C9658209C1B}</Project>
       <Name>SolvrLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SolvrServices\SolvrServices.csproj">
-      <Project>{6ccbd207-72d6-41b1-8be6-7f3093464ff5}</Project>
-      <Name>SolvrServices</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Images\Logo.png" />

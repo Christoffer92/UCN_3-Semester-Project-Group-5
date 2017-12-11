@@ -38,9 +38,8 @@ namespace DataAccesLayer.DAL
         private List<Vote> Votes;
         private List<PhysicalPost> PhysicalPosts;
 
-        public MockDBContainer()
+        private MockDBContainer()
         {
-
             Users = new List<User>();
             Posts = new List<Post>();
             PhysicalPosts = new List<PhysicalPost>();
@@ -49,12 +48,11 @@ namespace DataAccesLayer.DAL
             Comments = new List<Comment>();
             SolvrComments = new List<SolvrComment>();
             Votes = new List<Vote>();
-
         }
 
         #region Add methods
 
-        internal void AddUser(User _user)
+        internal User AddUser(User _user)
         {
             if (Users.Count == 0)
             {
@@ -66,6 +64,7 @@ namespace DataAccesLayer.DAL
             }
 
             Users.Add(_user);
+            return _user;
         }
 
         internal Post AddPost(Post _post)
@@ -128,7 +127,7 @@ namespace DataAccesLayer.DAL
             return _report;
         }
 
-        internal void AddComment(Comment _comment)
+        internal Comment AddComment(Comment _comment)
         {
             if (Comments.Count == 0)
             {
@@ -140,6 +139,7 @@ namespace DataAccesLayer.DAL
             }
 
             Comments.Add(_comment);
+            return _comment;
         }
 
         internal void AddSolvrComment(SolvrComment _comment)
@@ -156,7 +156,7 @@ namespace DataAccesLayer.DAL
             SolvrComments.Add(_comment);
         }
 
-        internal void AddVote(Vote _vote)
+        internal Vote AddVote(Vote _vote)
         {
             if (Votes.Count == 0)
             {
@@ -168,29 +168,12 @@ namespace DataAccesLayer.DAL
             }
 
             Votes.Add(_vote);
+            return _vote;
         }
 
         #endregion
 
         #region Get methods
-
-        internal PhysicalPost GetLastPhysicalPost()
-        {
-            return PhysicalPosts.Last();
-        }
-
-        internal List<Category> GetAllCategories()
-        {
-            List<Category> CatList = new List<Category>();
-
-            foreach (Category cat in Categories)
-            {
-                CatList.Add(cat);
-            }
-
-            return CatList;
-        }
-
         internal Category GetCategory(int id)
         {
             Category cat = null;
@@ -198,20 +181,6 @@ namespace DataAccesLayer.DAL
             foreach (Category item in Categories)
             {
                 if (item.Id == id)
-                {
-                    cat = item;
-                }
-            }
-            return cat;
-        }
-
-        internal Category GetCategory(string name)
-        {
-            Category cat = null;
-
-            foreach (Category item in Categories)
-            {
-                if (item.Name == name)
                 {
                     cat = item;
                 }
@@ -233,11 +202,158 @@ namespace DataAccesLayer.DAL
             return p;
         }
 
-        internal Post GetPost()
+        internal Comment GetComment(int id)
         {
-            return Posts.Last();
+            Comment comment = null;
+            foreach (Comment item in Comments)
+            {
+                if (item.Id == id)
+                    return comment;
+            }
+            return comment;
         }
 
+        internal List<Category> GetAllCategories()
+        {
+            List<Category> CatList = new List<Category>();
+
+            foreach (Category cat in Categories)
+            {
+                CatList.Add(cat);
+            }
+
+            return CatList;
+        }
+
+
+        internal List<Comment> GetAllComments(int postId)
+        {
+            List<Comment> commentList = new List<Comment>();
+
+            foreach(var item in Comments)
+            {
+                commentList.Add(item);
+            }
+
+            return commentList;
+        }
+
+        internal List<Post> GetPostList(int offSet, int loadCount)
+        {
+            List<Post> postList = new List<Post>();
+
+            foreach (var item in Posts)
+            {
+                postList.Add(item);
+            }
+
+            return postList;
+        }
+
+        internal Report GetReport(int id)
+        {
+            Report report = null;
+            foreach (Report item in Reports)
+            {
+                if (item.Id == id)
+                    return report;
+            }
+            return report;
+        }
+
+        internal List<Report> GetAllReport(bool notResolved)
+        {
+            List<Report> reportList = new List<Report>();
+
+            if (notResolved)
+            {
+                foreach (var item in Reports)
+                {
+                    reportList.Add(item);
+                }
+                return reportList;
+            }
+            else
+            {
+                foreach (var item in Reports)
+                {
+                    if (!item.IsResolved)
+                        reportList.Add(item);
+                }
+                return reportList;
+            }
+        }
+
+        internal User GetUser(string username)
+        {
+            User user = null;
+            foreach (var item in Users)
+            {
+                if (item.Username.Equals(username))
+                    user = item;
+            }
+            return user;
+        }
+
+        internal User GetUser(int id)
+        {
+            User user = null;
+            foreach (var item in Users)
+            {
+                if (item.Id == id)
+                    user = item;
+            }
+            return user;
+        }
+
+        internal List<Vote> GetVoteList(int commentId)
+        {
+            List<Vote> voteList = null;
+            foreach (var item in Votes)
+            {
+                voteList.Add(item);
+            }
+            return voteList;
+        }
+
+        internal Comment UpdateComment(Comment newComment)
+        {
+            for (int i = 0; i < Comments.Count; i++)
+            {
+                if (newComment.Id == Comments[i].Id)
+                {
+                    Comments[i] = newComment;
+                    return Comments[i];
+                }
+            }
+            return null;
+        }
+
+        internal Post UpdatePost(Post newPost)
+        {
+            for (int i = 0; i < Posts.Count; i++)
+            {
+                if (newPost.Id == Posts[i].Id)
+                {
+                    Posts[i] = newPost;
+                    return Posts[i];
+                }
+            }
+            return null;
+        }
+
+        internal Report UpdateReport(Report newReport)
+        {
+            for (int i = 0; i < Reports.Count; i++)
+            {
+                if (newReport.Id == Reports[i].Id)
+                {
+                    Reports[i] = newReport;
+                    return Reports[i];
+                }
+            }
+            return null;
+        }
         #endregion
     }
 }

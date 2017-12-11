@@ -1,116 +1,15 @@
-﻿using DataAccesLayer.ModelBuilds;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SolvrLibrary;
-using DataAccesLayer.DAL;
 
 namespace DataAccesLayer.DAL
 {
-    public class SolvrDB :  ISolvrDB
+    public class SolvrDB : ISolvrDB
     {
-
-        //Queries
-        //All regions follow order of: Create, Get, Update (CRU)
-          
-
-        #region Category
-
-        public Category GetCategory(int id)
-        {
-            return new ModelBuilder().BuildCategory(id);
-        }
-
-        public Category GetCategory(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Report GetReport(int id)
-        {
-            return new ModelBuilder().BuildReport(id);
-        }
-
-        public IEnumerable<Category> GetAllCategories()
-        {
-            using (var db = new SolvrContext())
-            {
-                return db.Categories.ToList<Category>();
-            }
-        }
-
-        public void SetReportToResolved(int reportId)
-        {
-            using (var db = new SolvrContext())
-            {
-                // Query the database for the row to be updated.
-                var Query =
-                (from report
-                in db.Reports.OfType<Report>()
-                 where report.Id == reportId
-                 select report
-                ).First();
-
-                Query.IsResolved = true;
-
-                db.SubmitChanges();
-            }
-        }
-
-        public void UpdatePostTilte(int postId, string text)
-        {
-            using (var db = new SolvrContext())
-            {
-                // Query the database for the row to be updated.
-                var Query =
-                    (from post
-                     in db.Posts.OfType<Post>()
-                     where post.Id == postId
-                     select post
-                      ).First();
-
-                Query.Title = text;
-
-                db.SubmitChanges();
-            }
-        }
-
-        public void DisablePost(int postId)
-        {
-            using (var db = new SolvrContext())
-            {
-                // Query the database for the row to be updated.
-                var Query =
-                    (from post
-                     in db.Posts.OfType<Post>()
-                     where post.Id == postId
-                     select post
-                      ).First();
-
-                Query.IsDisabled = true;
-            }
-        }
-
-        public void UpdatePostText(int postId, string text)
-        {
-            using (var db = new SolvrContext())
-            {
-                // Query the database for the row to be updated.
-                var Query =
-                (from post
-                in db.Posts.OfType<Post>()
-                 where post.Id == postId
-                 select post
-                ).First();
-
-                Query.Description = text;
-                db.SubmitChanges();
-            }
-        }
-
         public bool DatabaseExists()
         {
             using (var db = new SolvrContext())
@@ -118,277 +17,257 @@ namespace DataAccesLayer.DAL
                 return db.DatabaseExists();
             }
         }
-        #endregion
 
-        #region User
+        #region Get methods
 
-        public User GetUser()
+        public Category GetCategory(int id)
         {
+            //from post in DB.Posts orderby post.BumpTime descending select post).Skip(loadCount).Take(24
             using (var db = new SolvrContext())
             {
-                //TODO Improve
-                int lastID = db.Users.Count();
-                return new ModelBuilder().BuildUser(lastID);
+                return (from category in db.Categories where category.Id == id select category).First();               
             }
         }
 
-        public User GetUser(int id)
+        public Comment GetComment(int id)
         {
-            return new ModelBuilder().BuildUser(id);
+            using (var db = new SolvrContext())
+            {
+                return (from comment in db.Comments where comment.Id == id select comment).First();
+            }
+        }
+    
+        public Post GetPost(int id)
+        {
+            using (var db = new SolvrContext())
+            {
+                return (from post in db.Posts where post.Id == id select post).First();
+            }
         }
 
+        public Report GetReport(int id)
+        {
+            using (var db = new SolvrContext())
+            {
+                return (from report in db.Reports where report.Id == id select report).First();
+            }
+        }
+        public User GetUser(string username)
+        {
+            using (var db = new SolvrContext())
+            {
+                return (from user in db.Users where user.Username == username select user).First();
+            }
+        }
+        public User GetUser(int id)
+        {
+            using (var db = new SolvrContext())
+            {
+                return (from user in db.Users where user.Id == id select user).First();
+            }
+        }
+
+        public List<Category> GetCategoryList()
+        {
+            List<Category> categoryList = new List<Category>();
+
+            using (var db = new SolvrContext())
+            {
+                var Query = from category in db.Categories select category;
+                foreach (Category item in Query)
+                {
+                    categoryList.Add(item);
+                }
+            }
+
+            return categoryList;
+        }
+        public List<Comment> GetCommentList(int postId)
+        {
+            List<Comment> commentList = new List<Comment>();
+
+            using (var db = new SolvrContext())
+            {
+                var Query = from comment in db.Comments select comment;
+                foreach (Comment item in Query)
+                {
+                    commentList.Add(item);
+                }
+            }
+
+            return commentList;
+        }
+
+        public List<Post> GetPostList(int offSet, int loadCount)
+        {
+            List<Post> postList = new List<Post>();
+
+            using (var db = new SolvrContext())
+            {
+                var Query = from post in db.Posts select post;
+                foreach (Post item in Query)
+                {
+                    postList.Add(item);
+                }
+            }
+
+            return postList;
+        }
+        public List<Report> GetReportList(bool notResolved)
+        {
+            List<Report> reportList = new List<Report>();
+
+            using (var db = new SolvrContext())
+            {
+                var Query = from report in db.Reports select report;
+                foreach (Report item in Query)
+                {
+                    reportList.Add(item);
+                }
+            }
+
+            return reportList;
+        }
+        public List<Vote> GetVoteList(int commentId)
+        {
+            List<Vote> voteList = new List<Vote>();
+
+            using (var db = new SolvrContext())
+            {
+                var Query = from vote in db.Votes select vote;
+                foreach (Vote item in Query)
+                {
+                    voteList.Add(item);
+                }
+            }
+
+            return voteList;
+        }
         #endregion
 
-        #region General Post
+        #region Insert methods
 
-        public Post CreatePost(Post post)
+        public Comment InsertComment(Comment comment)
+        {
+            using (var db = new SolvrContext())
+            {
+               db.Comments.InsertOnSubmit(comment);
+               db.SubmitChanges();
+            }
+            return comment;
+        }
+
+        public Post InsertPost(Post post)
         {
             using (var db = new SolvrContext())
             {
                 db.Posts.InsertOnSubmit(post);
                 db.SubmitChanges();
             }
-
-            return new ModelBuilder().BuildPost<Post>(post.Id);
+            return post;
         }
 
-        public Post GetPost()
-        {
-            using (var db = new SolvrContext())
-            {
-                return db.Posts.OfType<Post>().Last();
-            }
-        }
-
-        public Post GetPost(int id)
-        {
-            return new ModelBuilder().BuildPost<Post>(id);
-        }
-
-        public void UpdatePost(Post p)
-        {
-            using (var db = new SolvrContext())
-            {
-                // Query the database for the row to be updated.
-                var Query =
-                    (from post
-                    in db.Posts.OfType<Post>()
-                     where post.Id == p.Id
-                     select post
-                    ).First();
-
-                // Execute the query, and change the column values
-                // you want to change.ch
-                Query.Title = p.Title;
-                Query.Description = p.Description;
-                Query.CategoryId = p.CategoryId;
-                // Insert any additional changes to column values.
-
-                // Query.Tags = p.Tags;
-
-                // Submit the changes to the database.
-                try
-                {
-                    db.SubmitChanges();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            }
-        }
-
-        #endregion
-
-        #region Physical Post
-
-        //Please note; SubmitChanges do set the id on the object thats sent into this method. So physicalPost.Id is the right set by SubmitChanges.
-        public PhysicalPost CreatePhysicalPost(PhysicalPost physicalPost)
-        {
-            using (var db = new SolvrContext())
-            {
-                db.Posts.InsertOnSubmit(physicalPost);
-                db.SubmitChanges();
-            }
-            return GetPhysicalPost(physicalPost.Id);
-        }
-
-        public void UpdatePhysicalPost(PhysicalPost p)
-        {
-            using (var db = new SolvrContext())
-            {
-                // Query the database for the row to be updated.
-                var Query =
-                    (from post
-                    in db.Posts.OfType<PhysicalPost>()
-                     where post.Id == p.Id
-                     select post
-                    ).First();
-
-                // Execute the query, and change the column values
-                // you want to change.ch
-                Query.Title = p.Title;
-                Query.Description = p.Description;
-                Query.CategoryId = p.CategoryId;
-                Query.AltDescription = p.AltDescription;
-                Query.Zipcode = p.Zipcode;
-                Query.Address = p.Address;
-                Query.IsLocked = p.IsLocked;
-                // Insert any additional changes to column values.
-
-                // Query.Tags = p.Tags;
-
-                // Submit the changes to the database.
-                try
-                {
-                    db.SubmitChanges();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            }
-        }
-
-        public PhysicalPost GetPhysicalPost()
-        {
-            using (var db = new SolvrContext())
-            {
-                return db.Posts.OfType<PhysicalPost>().Last();
-            }
-        }
-
-        public PhysicalPost GetPhysicalPost(int id)
-        {
-            //TODO Is model builder needed?
-            return new ModelBuilder().BuildPost<PhysicalPost>(id);
-        }
-
-        #endregion
-
-        #region General Comment
-
-        public Comment CreateComment(Comment comment)
-        {
-            using (var db = new SolvrContext())
-            {
-                db.Comments.InsertOnSubmit(comment);
-                db.SubmitChanges();
-            }
-            return GetComment(comment.Id);
-        }
-
-        public Comment GetComment(int id)
-        {
-            return new ModelBuilder().BuildComment<Comment>(id);
-        }
-
-        public T GetComment<T>(int ID)
-        {
-            return new ModelBuilder().BuildComment<T>(ID);
-        }
-
-        public IEnumerable<Comment> GetComments(int postId)
-        {
-            return new ModelBuilder().BuildCommentList(postId);
-        }
-
-        #endregion
-
-        #region SolvrComment
-
-        public SolvrComment CreateSolvrComment(SolvrComment sc)
-        {
-            using (var db = new SolvrContext())
-            {
-                db.Comments.InsertOnSubmit(sc);
-                db.SubmitChanges();
-                return GetSolvrComment(sc.Id);
-            }
-        }
-
-        public SolvrComment GetSolvrComment(int id)
-        {
-            return new ModelBuilder().BuildComment<SolvrComment>(id);
-        }
-
-        public void UpdateSolvrComment(SolvrComment sc)
-        {
-            using (var db = new SolvrContext())
-            {
-                // Query the database for the row to be updated.
-                var Query =
-                    (from comment
-                     in db.Comments.OfType<SolvrComment>()
-                     where comment.Id == sc.Id
-                     select comment
-                    ).First();
-                Query.IsAccepted = sc.IsAccepted;
-                Query.TimeAccepted = sc.TimeAccepted;
-
-                //TODO runs an error when updating the lock.
-                //Query.Text = sc.Text;
-
-                // Submit the changes to the database.
-                try
-                {
-                    db.SubmitChanges();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            }
-        }
-
-        public List<Report> GetAllReports()
-        {
-            using (var db = new SolvrContext())
-            {
-                return db.Reports.ToList<Report>();
-            }
-        }
-        #endregion
-
-
-        public IEnumerable<Post> GetPostsByBumpTime(int loadCount = 0)
-        {
-            List<Post> postList = null;
-            using (var DB = new SolvrContext())
-            {
-                postList = new List<Post>();
-                var postQuery = (from post in DB.Posts orderby post.BumpTime descending select post).Skip(loadCount).Take(24);
-                foreach (var post in postQuery)
-                {
-                    post.User = GetUser(post.UserId);
-                    post.Category = GetCategory(post.CategoryId);
-                    postList.Add(post);
-                }
-            }
-            return postList;
-        }
-        public User GetUser(string Email)
-        {
-            using (var DB = new SolvrContext())
-            {
-                var Query = (from user in DB.Users where user.Email == Email select user).First();
-                return new ModelBuilder().BuildUser(Query.Id);
-            }
-        }
-
-        public Report CreateReport(Report report)
+        public Report InsertReport(Report report)
         {
             using (var db = new SolvrContext())
             {
                 db.Reports.InsertOnSubmit(report);
                 db.SubmitChanges();
             }
-            return GetReport(report.Id);
+            return report;
         }
 
-        public Vote CreateVote(Vote vote)
+        public User InsertUser(User user)
         {
-            throw new NotImplementedException();
+            using (var db = new SolvrContext())
+            {
+                db.Users.InsertOnSubmit(user);
+                db.SubmitChanges();
+            }
+            return user;
         }
+
+        #endregion
+
+        #region Update methods
+        public Comment UpdateComment(Comment comment)
+        {
+            if (comment.CommentType.Equals("Comment"))
+            {
+                using (var db = new SolvrContext())
+                {
+                    var Query = (from comm in db.Comments where comm.Id == comment.Id select comm).First();
+                    Query.Text = comment.Text;
+                    Query.IsDisabled = comment.IsDisabled;
+                    db.SubmitChanges();
+                }
+                return comment;
+            }
+            else
+            {
+                SolvrComment solvrComment = (SolvrComment)comment;
+                using (var db = new SolvrContext())
+                {
+                    var Query = (from solvrComm in db.Comments.OfType<SolvrComment>() where solvrComm.Id == comment.Id select solvrComm).First();
+                    Query.IsAccepted = solvrComment.IsAccepted;
+                    Query.TimeAccepted = solvrComment.TimeAccepted;
+                    Query.Text = solvrComment.Text;
+                    Query.IsDisabled = solvrComment.IsDisabled;
+                    db.SubmitChanges();
+                }
+                return solvrComment;
+            }
+        }
+
+        public Post UpdatePost(Post post)
+        {
+            if (post.PostType.Equals("Post"))
+            {
+                using (var db = new SolvrContext())
+                {
+                    var Query = (from pos in db.Posts where pos.Id == post.Id select pos).First();
+                    Query.Title = post.Title;
+                    Query.Description = post.Description;
+                    Query.BumpTime = post.BumpTime;
+                    Query.CategoryId = post.CategoryId;
+                    Query.IsDisabled = post.IsDisabled;
+                    db.SubmitChanges();
+                }
+                return post;
+            }
+            else
+            {
+                PhysicalPost physicalPost = (PhysicalPost)post;
+                using (var db = new SolvrContext())
+                {
+                    var Query = (from physPost in db.Posts.OfType<PhysicalPost>() where physPost.Id == physicalPost.Id select physPost).First();
+                    Query.Title = physicalPost.Title;
+                    Query.Description = physicalPost.Description;
+                    Query.BumpTime = physicalPost.BumpTime;
+                    Query.CategoryId = physicalPost.CategoryId;
+                    Query.IsDisabled = physicalPost.IsDisabled;
+                    Query.IsLocked = physicalPost.IsLocked;
+                    Query.AltDescription = physicalPost.AltDescription;
+                    Query.Zipcode = physicalPost.Zipcode;
+                    Query.Address = physicalPost.Address;
+                    db.SubmitChanges();
+                }
+                return physicalPost;
+            }
+        }
+
+            public Report UpdateReport(Report report)
+            {
+                using (var db = new SolvrContext())
+                {
+                    var Query = (from rep in db.Reports where rep.Id == report.Id select rep).First();
+                    Query.Title = report.Title;
+                    Query.Description = report.Description;
+                    Query.IsResolved = report.IsResolved;
+                    db.SubmitChanges();
+                }
+            return report;
+            }
+        #endregion
     }
 }

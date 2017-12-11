@@ -8,7 +8,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Threading.Tasks;
 using SolvrLibrary;
-using DataAccesLayer.DAL;
 
 namespace SolvrWebClient.Controllers
 {
@@ -41,7 +40,7 @@ namespace SolvrWebClient.Controllers
                     valid  = CheckCredentials(model);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return View();
             } 

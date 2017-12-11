@@ -33,10 +33,28 @@ namespace SolvrLibrary
         [Column()]        
         public int PostId { get; set; }
 
+        [Column()]
+        public bool IsDisabled { get; set; }
+
         [Column(IsDiscriminator = true)]
         public string CommentType { get; set; }
 
         public User User { get; set; }
+
+        public int Points {
+            get
+            {
+                int point = 0;
+                foreach(Vote item in Votes)
+                {
+                    if (item.IsUpvoted)
+                        point++;
+                    else
+                        point--;
+                }
+                return point;
+            }
+        }
 
         public List<Vote> Votes { get; set; }
 

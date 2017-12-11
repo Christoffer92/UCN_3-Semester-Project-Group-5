@@ -10,7 +10,6 @@ namespace DataAccesLayer.DAL
 {
     public class MockDB : ISolvrDB
     {
-
         public MockDB()
         {
             FillTestData(); 
@@ -19,6 +18,15 @@ namespace DataAccesLayer.DAL
         public static void CloseDB()
         {
             MockDBContainer.Instance = null;
+        }
+
+        public bool DatabaseExists()
+        {
+            //Rededunted code
+            if (MockDBContainer.Instance != null)
+                return true;
+            else
+                return false;
         }
 
         public void FillTestData()
@@ -36,9 +44,9 @@ namespace DataAccesLayer.DAL
             {
                 Name = "tree"
             };
-            CreateCategory(categorie1);
-            CreateCategory(categorie2);
-            CreateCategory(category3);
+            InsertCategory(categorie1);
+            InsertCategory(categorie2);
+            InsertCategory(category3);
             #endregion
             #region Posts
             Post post1 = new Post
@@ -71,9 +79,9 @@ namespace DataAccesLayer.DAL
                 UserId = 3,
                 IsDisabled = false
             };
-            CreatePost(post1);
-            CreatePost(post2);
-            CreatePost(post3);
+            InsertPost(post1);
+            InsertPost(post2);
+            InsertPost(post3);
             #endregion
             #region PhysicalPosts
             PhysicalPost physicalPost1 = new PhysicalPost
@@ -114,10 +122,10 @@ namespace DataAccesLayer.DAL
                 AltDescription = "Vivamus in felis eu sapien cursus vestibulum. Proin eu mi. Nulla ac enim.",
                 Zipcode = "705",
                 Address = "lectusvej 456"
-            };   
-            CreatePhysicalPost(physicalPost1);
-            CreatePhysicalPost(physicalPost2);
-            CreatePhysicalPost(physicalPost3);
+            };
+            InsertPost(physicalPost1);
+            InsertPost(physicalPost2);
+            InsertPost(physicalPost3);
             #endregion
             #region Reports
             Report report1 = new Report
@@ -153,9 +161,9 @@ namespace DataAccesLayer.DAL
                 CommentId = 1,
                 PostId = 0
             };
-            CreateReport(report1);
-            CreateReport(report2);
-            CreateReport(report3);
+            InsertReport(report1);
+            InsertReport(report2);
+            InsertReport(report3);
             #endregion
             #region Users        
             User user1 = new User
@@ -185,9 +193,9 @@ namespace DataAccesLayer.DAL
                 IsAdmin = false,
                 DateCreated = new DateTime(2032, 11, 28, 10, 11, 12)
             };
-            CreateUser(user1);
-            CreateUser(user2);
-            CreateUser(user3);
+            InsertUser(user1);
+            InsertUser(user2);
+            InsertUser(user3);
             #endregion
             #region Comments
             Comment comment1 = new Comment
@@ -220,9 +228,9 @@ namespace DataAccesLayer.DAL
                 PostId = 3,
                 CommentType = "Comment"
             };
-            CreateComment(comment1);
-            CreateComment(comment2);
-            CreateComment(comment3);
+            InsertComment(comment1);
+            InsertComment(comment2);
+            InsertComment(comment3);
             #endregion
             #region SolvrComments
             SolvrComment solvrComment1 = new SolvrComment
@@ -252,9 +260,9 @@ namespace DataAccesLayer.DAL
                 TimeAccepted = new DateTime(2029, 04, 16, 22, 28, 53),
                 IsAccepted = false
             };
-            CreateSolvrComment(solvrComment1);
-            CreateSolvrComment(solvrComment2);
-            CreateSolvrComment(solvrComment3);
+            InsertComment(solvrComment1);
+            InsertComment(solvrComment2);
+            InsertComment(solvrComment3);
             #endregion
             #region Vote
             Vote vote1 = new Vote
@@ -275,52 +283,31 @@ namespace DataAccesLayer.DAL
                 UserId = 3,
                 CommentId = 3
             };
-            CreateVote(vote1);
-            CreateVote(vote2);
-            CreateVote(vote3);
+            InsertVote(vote1);
+            InsertVote(vote2);
+            InsertVote(vote3);
             #endregion
         }
 
-        private Category CreateCategory(Category category)
-        {
-            return MockDBContainer.Instance.AddCategory(category);
-        }
-
-        public Post CreatePost(User expectedUser, string expectedPostTitle, string expectedPostDescription, Category expectedCategory, List<string> expectedTagsList)
-        {
-            Post p = new Post();
-            p.User = expectedUser;
-            p.Title = expectedPostTitle;
-            p.Description = expectedPostDescription;
-            p.Category = expectedCategory;
-            p.Tags = expectedTagsList;
-
-            return MockDBContainer.Instance.AddPost(p);
-        }
-
-        public IEnumerable<Category> GetAllCategories()
-        {
-            return MockDBContainer.Instance.GetAllCategories();
-        }
-
-        public Post CreatePost(Post post)
-        {
-            return MockDBContainer.Instance.AddPost(post);
-        }
-
+        #region Get Methods
         public Category GetCategory(int id)
         {
             return MockDBContainer.Instance.GetCategory(id);
         }
 
-        public Category GetCategory(string name)
+        public List<Category> GetCategoryList()
         {
-            return MockDBContainer.Instance.GetCategory(name);
+            return MockDBContainer.Instance.GetAllCategories();
         }
 
-        public PhysicalPost CreatePhysicalPost(PhysicalPost pPost)
+        public Comment GetComment(int id)
         {
-           return MockDBContainer.Instance.AddPhysicalPost(pPost);
+            return MockDBContainer.Instance.GetComment(id);
+        }
+
+        public List<Comment> GetCommentList(int postId)
+        {
+            return MockDBContainer.Instance.GetAllComments(postId);
         }
 
         public Post GetPost(int id)
@@ -328,127 +315,84 @@ namespace DataAccesLayer.DAL
             return MockDBContainer.Instance.GetPost(id);
         }
 
-        public Post GetPost()
+        public List<Post> GetPostList(int offSet, int loadCount)
         {
-            return MockDBContainer.Instance.GetPost();
-        }
-
-        public User GetUser()
-        {
-            throw new NotImplementedException();
+            return MockDBContainer.Instance.GetPostList(offSet, loadCount);
         }
 
         public Report GetReport(int id)
         {
-            throw new NotImplementedException();
+            return MockDBContainer.Instance.GetReport(id);
         }
 
-        public List<Report> GetAllReports()
+        public List<Report> GetReportList(bool notResolved)
         {
-            throw new NotImplementedException();
+            return MockDBContainer.Instance.GetAllReport(notResolved);
+        }
+
+        public User GetUser(string username)
+        {
+            return MockDBContainer.Instance.GetUser(username);
         }
 
         public User GetUser(int id)
         {
-            throw new NotImplementedException();
+            return MockDBContainer.Instance.GetUser(id);
         }
 
-        public IEnumerable<Comment> GetComments(int iD)
+        public List<Vote> GetVoteList(int commentId)
         {
-            throw new NotImplementedException();
+            return MockDBContainer.Instance.GetVoteList(commentId);
         }
+        #endregion
 
-        public Comment CreateComment(Comment c)
+        #region Insert Methods
+        private Vote InsertVote(Vote vote)
         {
-            throw new NotImplementedException();
+            return MockDBContainer.Instance.AddVote(vote);
         }
 
-        public PhysicalPost GetPhysicalPost(int id)
+        private Category InsertCategory(Category categorie)
         {
-            throw new NotImplementedException();
+            return MockDBContainer.Instance.AddCategory(categorie);
         }
 
-        public SolvrComment CreateSolvrComment(SolvrComment sc)
+        public Comment InsertComment(Comment comment)
         {
-            throw new NotImplementedException();
+            return MockDBContainer.Instance.AddComment(comment);
         }
 
-        public Report CreateReport(Report report)
+        public Post InsertPost(Post post)
+        {
+            return MockDBContainer.Instance.AddPost(post);
+        }
+
+        public Report InsertReport(Report report)
         {
             return MockDBContainer.Instance.AddReport(report);
         }
 
-        public void UpdatePost(Post p)
+        public User InsertUser(User user)
         {
-            throw new NotImplementedException();
+            return MockDBContainer.Instance.AddUser(user);
+        }
+        #endregion
+
+        #region Update Methods
+        public Comment UpdateComment(Comment comment)
+        {
+            return MockDBContainer.Instance.UpdateComment(comment);
         }
 
-        public void UpdateSolvrComment(SolvrComment sc)
+        public Post UpdatePost(Post post)
         {
-            throw new NotImplementedException();
+            return MockDBContainer.Instance.UpdatePost(post);
         }
 
-        public T GetComment<T>(int ID)
+        public Report UpdateReport(Report report)
         {
-            throw new NotImplementedException();
+            return MockDBContainer.Instance.UpdateReport(report);
         }
-
-        public void UpdatePhysicalPost(PhysicalPost post)
-        {
-            throw new NotImplementedException();
-        }
-        public IEnumerable<Post> GetPostsByBumpTime(int loadCount)
-        {
-            throw new NotImplementedException();
-        }
-
-        public User GetUser(string Email)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CreateUser(User user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool DatabaseExists()
-        {
-            MockDBContainer mockDBContainer = MockDBContainer.Instance;
-            if (mockDBContainer != null)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public void SetReportToResolved(int reportId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdatePostText(int postId, string txt)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DisablePost(int postId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdatePostTilte(int postId, string text)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Vote CreateVote(Vote vote)
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
     }
-
-    
-
-
 }

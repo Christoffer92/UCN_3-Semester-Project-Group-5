@@ -9,13 +9,37 @@ namespace DataAccesLayer.DAL
 {
     public interface ISolvrDB
     {
-        //    void CreatePhysicalPost(User expectedUser, string expectedTitle, string expectedDescription, Category expectedCategory, List<string> expectedTagsList, string expectedAltDescription, string expectedZipcode, string expectedAddress);
-        //    PhysicalPost GetLastPhysicalPost();
-        //    void CreatePost(User expectedUser, string expectedPostTitle, string expectedPostDescription, Category expectedCategory, List<string> expectedTagsList);
-        //    Post GetLastPost();
-        //    IEnumerable<Category> GetAllCategories();
-        //    void CreatePost(Post post);
-        //    Category GetCategoryById(int id);
+        /// Returns true if the database exists.
+        /// </summary>
+        /// <returns>bool</returns>
+        bool DatabaseExists();
+
+        #region Get Methods
+        /// Returns the user with the specified username.
+        /// </summary>
+        /// <returns>User</returns>
+        User GetUser(string username);
+
+        /// <summary>
+        /// Returns a user with the given id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>User</returns>
+        User GetUser(int id);
+
+        /// <summary>
+        /// Returns a post with the given id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Post</returns>
+        Post GetPost(int id);
+
+        /// <summary>
+        /// Returns a comment, by searching for its id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Comment</returns>
+        Comment GetComment(int id);
 
         /// <summary>
         /// Returns a category, by searching for its id
@@ -24,108 +48,95 @@ namespace DataAccesLayer.DAL
         /// <returns>Category</returns>
         Category GetCategory(int id);
 
-        void SetReportToResolved(int reportId);
-        void UpdatePostText(int postId, string txt);
-
-        /// <summary>
-        /// Returns a category, by searching for its name
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns>Category</returns>
-        Category GetCategory(string name);
-        void DisablePost(int postId);
-        void UpdatePostTilte(int postId, string text);
-
-        /// <summary>
-        /// Creates a Post and inserts it into the database, by giving it a foreign post
-        /// with attributes attached to it
-        /// </summary>
-        /// <param name="post"></param>
-        Post CreatePost(Post post);
-        
-
-        /// <summary>
-        /// Creates a Physical Post and inserts it into the database, by giving it a foreign physical post
-        /// with attributes attached to it
-        /// </summary>
-        /// <param name="pPost"></param>
-        PhysicalPost CreatePhysicalPost(PhysicalPost Post);
-        PhysicalPost GetPhysicalPost(int id);
-
-        /// <summary>
-        /// Returns a post with the given id.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        Post GetPost(int id);
-
         /// <summary>
         /// Returns a report with the given id.
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>Report</returns>
         Report GetReport(int id);
 
         /// <summary>
-        /// Returns a user with the given id.
+        /// Returns a list of posts sorted by bumptime.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        User GetUser(int id);
+        /// <param name="offSet"></param>
+        /// <param name="loadCount"></param>
+        /// <returns>List<Post></returns>
+        List<Post> GetPostList(int offSet, int loadCount);
 
         /// <summary>
-        /// Returns the last post that was inserted into the database.
+        /// Returns a list of comments on the specifed post.
+        /// </summary>
+        /// <param name="postId"></param>
+        /// <returns>List<Post></returns>
+        List<Comment> GetCommentList(int postId);
+
+        /// <summary>
+        /// Returns a list of reports thats resolved or a list of reports thats not resolved.
+        /// </summary>
+        /// <param name="notResolved"></param>
+        /// <returns>List<Report></returns>
+        List<Report> GetReportList(bool notResolved);
+
+        /// <summary>
+        /// Returns a list of all categories.
+        /// </summary>
+        /// <returns>List<Category></returns>
+        List<Category> GetCategoryList();
+
+        /// <summary>
+        /// Returns a list of all votes on specified comment
+        /// </summary>
+        /// <returns>List<Vote></returns>
+        List<Vote> GetVoteList(int commentId);
+        #endregion
+
+        #region Insert Methods
+
+        /// <summary>
+        /// Inserts the specified Post into the Database and returns the post with an updated Id
         /// </summary>
         /// <returns>Post</returns>
-        Post GetPost();
+        Post InsertPost(Post post);
 
-
-        /// Returns the last user that was inserted into the database.
+        /// <summary>
+        /// Inserts the specified User into the Database and returns the user with an updated Id
         /// </summary>
         /// <returns>User</returns>
-        User GetUser();
-
-
-        /// <summary>
-        /// Returns all Categories from the database
-        /// </summary>
-        /// <returns>List of Categories</returns>
-        IEnumerable<Category> GetAllCategories();
+        User InsertUser(User user);
 
         /// <summary>
-        /// Returns all Reports from the database
+        /// Inserts the specified Report into the Database and returns the Report with an updated Id
         /// </summary>
-        /// <returns>List of Reports</returns>
-        List<Report> GetAllReports();
-
+        /// <returns>Report</returns>
+        Report InsertReport(Report report);
 
         /// <summary>
-        /// Creates a Report and inserts it into the database, by giving it a foreign report
-        /// with attributes attached to it
+        /// Inserts the specified Comment into the Database and returns the Comment with an updated Id
         /// </summary>
-        /// <param name="report"></param>
-        Report CreateReport(Report report);
+        /// <returns>Comment</returns>
+        Comment InsertComment(Comment comment);
+        #endregion
+
+        #region Update Methods
 
         /// <summary>
-        /// Creates a Vote and inserts it into the database, by giving it a foreign vote
-        /// with attributes attached to it
+        /// Updates a specified post and returns it.
         /// </summary>
-        /// <param name="vote"></param>
-        Vote CreateVote(Vote vote);
+        /// <param name="Post"></param>
+        Post UpdatePost(Post post);
 
-        //TODO summary and cleanup
-        IEnumerable<Comment> GetComments(int iD);
-        Comment CreateComment(Comment c);
-        SolvrComment CreateSolvrComment(SolvrComment sc);
-        void UpdatePost(Post p);
-        void UpdateSolvrComment(SolvrComment sc);
-        T GetComment<T>(int ID);
-        void UpdatePhysicalPost(PhysicalPost post);
-        IEnumerable<Post> GetPostsByBumpTime(int loadCount);
-        User GetUser(string Email);
+        /// <summary>
+        /// Updates a specified Report and returns it.
+        /// </summary>
+        /// <param name="Report"></param>
+        Report UpdateReport(Report report);
 
-        
+        /// <summary>
+        /// Updates a specified Comment and returns it.
+        /// </summary>
+        /// <param name="Comment"></param>
+        Comment UpdateComment(Comment comment);
+        #endregion
 
-        bool DatabaseExists();
     }
 }

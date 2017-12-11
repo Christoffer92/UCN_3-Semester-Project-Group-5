@@ -48,7 +48,7 @@
     <Compile Include="DAL\MockDBContainer.cs" />
     <Compile Include="DAL\SolvrContext.cs" />
     <Compile Include="DAL\SolvrDB.cs" />
-    <Compile Include="ModelBuilds\ModelBuilder.cs" />
+    <Compile Include="DataAccesController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

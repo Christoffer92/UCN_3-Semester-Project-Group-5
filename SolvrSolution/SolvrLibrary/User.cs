@@ -36,8 +36,11 @@ namespace SolvrLibrary
         [Column()]
         public DateTime DateCreated { get; set; }
 
+        [Column()]
+        public bool IsDisabled { get; set; }
+
         //out comment as it has a real chance to create a circular reference - Anders
         //public List<Post> Posts { get; set; }
-        
+
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SolvrLibrary;
 using System.ServiceModel;
-using DataAccesLayer.DAL;
+using DataAccesLayer;
 
 namespace SolvrServices
 {
@@ -13,56 +13,108 @@ namespace SolvrServices
     [ServiceBehavior]
     public class SolvrService : ISolvrServices//, IDisposable
     {
-        readonly ISolvrDB solvrDB;
-
+        private readonly DataAccesController dbCtr;
 
         public SolvrService(bool useMockDB = false)
         {
-            if (useMockDB)
-                solvrDB = new MockDB();
-            else
-                solvrDB = new SolvrDB();
-        }
-
-        public List<Report> GetAllReports()
-        {
-            return solvrDB.GetAllReports();
-        }
-
-        public Report GetReport(int id)
-        {
-            return solvrDB.GetReport(id);
-        }
-
-        public User GetUser(int id)
-        {
-            return solvrDB.GetUser(id);
+            dbCtr = new DataAccesController(useMockDB);
         }
 
         public bool IsConnectedToDatabase()
         {
-            return solvrDB.DatabaseExists();
+            return dbCtr.DatabaseExists();
         }
 
-        public void SetReportToResolved(int reportId)
+        #region Get Methods
+        public User GetUser(int id, string username)
         {
-            solvrDB.SetReportToResolved(reportId);
+            return dbCtr.GetUser(id, username);
         }
 
-        public void UpdatePostText(int postId, string txt)
+        public Post GetPost(int id, bool withUsers, bool withComments, bool notDisabled)
         {
-            solvrDB.UpdatePostText(postId, txt);
+            return dbCtr.GetPost(id, withUsers, withComments, notDisabled);
         }
 
-        public void DisablePost(int postId)
+        public Comment GetComment(int id, bool withUser, bool withVotes)
         {
-            solvrDB.DisablePost(postId);
+            return dbCtr.GetComment(id, withUser, withVotes);
         }
 
-        public void UpdatePostTitle(int postId, string text)
+        public Category GetCategory(int id)
         {
-            solvrDB.UpdatePostTilte(postId, text);
+            return dbCtr.GetCategory(id);
         }
+
+        public Report GetReport(int id)
+        {
+            return dbCtr.GetReport(id);
+        }
+
+        public List<Post> GetPostList(int offSet, int loadCount, bool withUsers, bool withComments)
+        {
+            return dbCtr.GetPostList(offSet, loadCount, withUsers, withComments);
+        }
+
+        public List<Comment> GetCommentList(int postId, bool withUsers)
+        {
+            return dbCtr.GetCommentList(postId, withUsers);
+        }
+
+        public List<Category> GetCategoryList()
+        {
+            return dbCtr.GetCategoryList();
+        }
+
+        public List<Report> GetReportList(bool notResolved)
+        {
+            return dbCtr.GetReportList(notResolved);
+        }
+
+        public List<Vote> GetVoteList(int commentId)
+        {
+            return dbCtr.GetVoteList(commentId);
+        }
+        #endregion
+
+        #region Create Methods
+        public Post CreatePost(Post post)
+        {
+            return dbCtr.CreatePost(post);
+        }
+
+        public User CreateUser(User user)
+        {
+            return dbCtr.CreateUser(user);
+        }
+
+        public Comment CreateComment(Comment comment)
+        {
+            return dbCtr.CreateComment(comment);
+        }
+
+        public Report CreateReport(Report report)
+        {
+            return dbCtr.CreateReport(report);
+        }
+        #endregion
+
+        #region Update Methods
+        public Comment UpdateComment(Comment comment)
+        {
+            return dbCtr.UpdateComment(comment);
+        }
+
+        public Post UpdatePost(Post post)
+        {
+            return dbCtr.UpdatePost(post);
+        }
+
+        public Report UpdateReport(Report report)
+        {
+            return dbCtr.UpdateReport(report);
+        }
+        #endregion
     }
 }
 

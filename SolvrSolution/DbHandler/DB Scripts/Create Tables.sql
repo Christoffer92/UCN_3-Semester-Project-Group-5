@@ -7,6 +7,7 @@ create table users (
 	username varchar(31),
 	password varchar(50),
 	isAdmin BIT,
+	isDisabled BIT,
 	dateCreated datetime
 );
 
@@ -25,10 +26,8 @@ create table posts (
 	description VARCHAR(1500),
 	bumpTime DATETIME, 
 	dateCreated DATETIME,
-
 	postType VARCHAR(20),
 	isDisabled BIT,
-
 	isLocked BIT,
 	altDescription varchar(1000),
 	zipcode varchar (10),
@@ -45,6 +44,7 @@ create table comments (
 	commentType varchar(20),
 	timeAccepted datetime,
 	isAccepted BIT,
+	IsDisabled BIT,
 	userid int FOREIGN KEY REFERENCES users(id),
 	postid int FOREIGN KEY REFERENCES posts(id)
 );
