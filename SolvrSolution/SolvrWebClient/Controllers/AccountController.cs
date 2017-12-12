@@ -13,17 +13,61 @@ namespace SolvrWebClient.Controllers
 {
     public class AccountController : Controller
     {
-
-        private static RemoteSolvrReference.ISolvrServices DB = new RemoteSolvrReference.SolvrServicesClient();
+        public ISolvrDB DB;
 
         public AccountController()
         {
+            DB = new SolvrDB();
+        }
+
+        public AccountController(ISolvrDB _DB)
+        {
+            DB = _DB;
+        }
+
+        public ActionResult Register()
+        {
+            
+            return View();
+        }
+
+        public ActionResult RegisterUser(RegisterViewModel model)
+        {
+            User user = new User();
+            user.Email = model.Email;
+            user.Name = model.Name;
+            user.Password = model.Password;
+            user.Username = model.Username;
+
+            //bool isRegistered = false;
+
+            try
+            {
+                DB.CreateUser(user);
+
+            }
+            catch (Exception e)
+            {
+                if (e.Message.Contains(model.Username))
+                {
+                    ModelState.AddModelError("Username", "Username already exists");
+                }
+
+                if (e.Message.Contains(model.Email))
+                {
+                    ModelState.AddModelError("Email", "Email already exists");
+                }
+                return View("Register", model);
+            }
+
+            return RedirectToAction("Login");
         }
 
         public ActionResult Index()
         {
             return View("Login");
         }
+
         public ActionResult Login(LoginViewModel model)
         {
             bool valid = false;
@@ -56,7 +100,7 @@ namespace SolvrWebClient.Controllers
             User user = null;
             try
             {
-                user = DB.GetUser(model.);
+                user = DB.GetUser(model.Username);
             }
             catch
             {
@@ -68,7 +112,7 @@ namespace SolvrWebClient.Controllers
             if(user != null && model.Password.Equals(user.Password))
             {
                 Session["Username"] = user.Username;
-                Session["Email"] = user.Email;
+                //Session["Email"] = user.Email;
 
                 return true;
             }
@@ -86,59 +130,6 @@ namespace SolvrWebClient.Controllers
             //return View("Login");
             return RedirectToAction("Index","Home");
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /*
-        // GET: Account
-        public ActionResult Index()
-        {
-            return View();
-        }
-        */
-
-        // TODO Lav UserManager, SignInManager, ect. ændre til korrekte navne
-        /*
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model,string returnUrl)
-        {   
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
-            var user = UserManager.FindByNameAsync(model.Email);
-            if (user != null)
-            {
-                if(!await UserManager.IsEmailConfirmedAsync(user.id))
-                ViewBag.Errormessage = "Email is not registeret";
-                return View("Error");
-            }
-            var result = await SignInManager.PasswordSignIn(model.Email, model.Password, model.RememberMe);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return Index(returnUrl);
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("","Invalid login attempt");
-                    return View(model);
-            }
-                        
-            
-        }
-        */
 
         // GET: Account/Create
         public ActionResult Create()

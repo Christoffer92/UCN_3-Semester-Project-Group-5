@@ -91,6 +91,11 @@ namespace SolvrDesktopClient
             return solvrProxy.GetUser(id);
         }
 
+        public Post UpdatePost(Post post)
+        {
+            return solvrProxy.UpdatePost(post);
+        }
+
         public Report UpdateReport(Report report)
         {
             return solvrProxy.UpdateReport(report);

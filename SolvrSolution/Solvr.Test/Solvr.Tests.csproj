@@ -48,7 +48,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataAccesLayer\ModelBuilderTests.cs" />
+    <Compile Include="DataAccesLayer\DataAccesControllerTests.cs" />
     <Compile Include="DesktopTests\DesktopControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
