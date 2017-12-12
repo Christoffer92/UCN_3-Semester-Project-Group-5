@@ -11,14 +11,10 @@ namespace SolvrWebClient.Controllers
     public class CreatePostController : Controller
     {
         //Overloaded constructors for connecting to either SolvrDB or MockDB
-        ISolvrDB DB;
+        private static RemoteSolvrReference.ISolvrServices DB = new RemoteSolvrReference.SolvrServicesClient();
         public CreatePostController()
         {
-            DB = new SolvrDB();
-        }
-        public CreatePostController(ISolvrDB _DB)
-        {
-            DB = _DB;
+            
         }
 
         //CreatePost:
@@ -43,7 +39,7 @@ namespace SolvrWebClient.Controllers
             }
             //TODO: Connect a user to this method
             //p.User = something goes here
-            p.UserId = DB.GetUser((string)Session["Username"]).Id;
+            p.UserId = DB.GetUser(0, (string)Session["Username"]).Id;
 
             
             return DB.CreatePost(p);
@@ -75,16 +71,18 @@ namespace SolvrWebClient.Controllers
             //TODO: Connect a user to this method
             //p.User = something goes here
 
-            p.UserId = DB.GetUser((string)Session["Username"]).Id;
+            p.UserId = DB.GetUser(0, (string)Session["Username"]).Id;
 
-            return DB.CreatePhysicalPost(p);
+            p = (PhysicalPost)DB.CreatePost(p);
+
+            return p;
         }
 
         //Main View for Create post
         // GET: CreatePost
         public ActionResult Index()
         {
-            ViewBag.DropDownList = new SelectList(DB.GetAllCategories(), "Id", "Name");
+            ViewBag.DropDownList = new SelectList(DB.GetCategoryList(), "Id", "Name");
             return View();
         }
 
@@ -112,7 +110,7 @@ namespace SolvrWebClient.Controllers
         // GET: CreatePost/CreatePhysical
         public ActionResult CreatePhysical()
         {
-            ViewBag.DropDownList = new SelectList(DB.GetAllCategories(), "Id", "Name");
+            ViewBag.DropDownList = new SelectList(DB.GetCategoryList(), "Id", "Name");
             return View();
         }
 
@@ -139,7 +137,7 @@ namespace SolvrWebClient.Controllers
         // GET: CreatePost/Edit/id
         public ActionResult EditPost(int ID)
         {
-            Post post = DB.GetPost(ID);
+            Post post = DB.GetPost(ID, false, false, true);
             PostViewModel viewPost = new PostViewModel();
 
             viewPost.Title = post.Title;
@@ -157,14 +155,14 @@ namespace SolvrWebClient.Controllers
             viewPost.TagsString = tags;
 
             ViewBag.CategoryName = post.Category.Name;
-            ViewBag.DropdownList = new SelectList(DB.GetAllCategories(), "Id", "Name");
+            ViewBag.DropdownList = new SelectList(DB.GetCategoryList(), "Id", "Name");
 
             return View(viewPost);
         }
 
         public ActionResult EditPhysicalPost(int ID)
         {
-            PhysicalPost post = DB.GetPhysicalPost(ID);
+            PhysicalPost post = (PhysicalPost)DB.GetPost(ID, false, false, true);
             PhysicalPostViewModel viewPost = new PhysicalPostViewModel();
 
             viewPost.Title = post.Title;
@@ -186,7 +184,7 @@ namespace SolvrWebClient.Controllers
             viewPost.TagsString = tags;
 
             ViewBag.CategoryName = post.Category.Name;
-            ViewBag.DropdownList = new SelectList(DB.GetAllCategories(), "Id", "Name");
+            ViewBag.DropdownList = new SelectList(DB.GetCategoryList(), "Id", "Name");
 
             return View(viewPost);
         }
@@ -194,7 +192,7 @@ namespace SolvrWebClient.Controllers
         //TODO Cleanup this method
         public ActionResult UpdatePost(PostViewModel model)
         {
-            Post post = DB.GetPost(model.postId);
+            Post post = DB.GetPost(model.postId, false, false, true);
 
             if (!post.Title.Equals(model.Title))
             {
@@ -232,7 +230,7 @@ namespace SolvrWebClient.Controllers
         //TODO Cleanup this method
         public ActionResult UpdatePhysical(PhysicalPostViewModel model)
         {
-            PhysicalPost post = DB.GetPhysicalPost(model.postId);
+            PhysicalPost post = (PhysicalPost)DB.GetPost(model.postId, false, false, true);
 
             if (!post.Title.Equals(model.Title))
             {
@@ -282,7 +280,7 @@ namespace SolvrWebClient.Controllers
 
             post.Tags = tagsList;
 
-            DB.UpdatePhysicalPost(post);
+            DB.UpdatePost(post);
 
             return RedirectToAction("PhysicalIndex", "Post", new { ID = model.postId });
         }

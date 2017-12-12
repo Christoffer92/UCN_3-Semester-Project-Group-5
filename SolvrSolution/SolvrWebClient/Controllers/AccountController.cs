@@ -13,16 +13,11 @@ namespace SolvrWebClient.Controllers
 {
     public class AccountController : Controller
     {
-        public ISolvrDB DB;
+
+        private static RemoteSolvrReference.ISolvrServices DB = new RemoteSolvrReference.SolvrServicesClient();
 
         public AccountController()
         {
-            DB = new SolvrDB();
-        }
-
-        public AccountController(ISolvrDB _DB)
-        {
-            DB = _DB;
         }
 
         public ActionResult Register()
@@ -100,7 +95,7 @@ namespace SolvrWebClient.Controllers
             User user = null;
             try
             {
-                user = DB.GetUser(model.Username);
+                user = DB.GetUser(0, model.Username);
             }
             catch
             {
