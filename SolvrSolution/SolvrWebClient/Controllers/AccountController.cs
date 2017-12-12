@@ -22,7 +22,7 @@ namespace SolvrWebClient.Controllers
 
         public ActionResult Register()
         {
-            
+
             return View();
         }
 
@@ -68,22 +68,22 @@ namespace SolvrWebClient.Controllers
             bool valid = false;
             try
 
-            { 
-                if(ModelState.IsValid)
+            {
+                if (ModelState.IsValid)
                 {
-                    valid  = CheckCredentials(model);
+                    valid = CheckCredentials(model);
                 }
             }
             catch (Exception)
             {
                 return View();
-            } 
+            }
 
             if (valid == true)
             {
                 return RedirectToAction("Index", "Home");
             }
-            else 
+            else
             {
                 return View();
             }
@@ -102,9 +102,9 @@ namespace SolvrWebClient.Controllers
 
                 return false;
             }
-            
+
             // TODO Add Safety (maybe?)
-            if(user != null && model.Password.Equals(user.Password))
+            if (user != null && model.Password.Equals(user.Password))
             {
                 Session["Username"] = user.Username;
                 //Session["Email"] = user.Email;
@@ -118,12 +118,12 @@ namespace SolvrWebClient.Controllers
             }
 
         }
-        
+
         public ActionResult LogOut()
         {
             Session.Abandon();
             //return View("Login");
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Account/Create
@@ -142,7 +142,7 @@ namespace SolvrWebClient.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch       
+            catch
             {
                 return View();
             }

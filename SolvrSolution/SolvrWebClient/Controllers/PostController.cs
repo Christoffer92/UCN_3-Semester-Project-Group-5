@@ -14,9 +14,9 @@ namespace SolvrWebClient.Controllers
 
         public PostController()
         {
-            
+
         }
-        
+
 
         public ActionResult Index(int ID = 0)
         {
@@ -52,11 +52,11 @@ namespace SolvrWebClient.Controllers
                     if (user != null && user.Id == post.UserId)
                         ViewBag.UserIsOwner = true;
                 }
-                catch 
+                catch
                 {
                     // empty catch, because any exceptions here would (hopefully) not affect the program on runtime.
                 }
-                
+
 
                 //sortere efter tid
                 ViewBag.CommentList = DB.GetCommentList(post.Id, true).OrderBy(x => x.DateCreated).ToList();
@@ -69,7 +69,7 @@ namespace SolvrWebClient.Controllers
 
                 return View(model);
             }
-            
+
         }
 
         public ActionResult PhysicalIndex(int ID = 0)
@@ -120,7 +120,8 @@ namespace SolvrWebClient.Controllers
                             break;
                         }
                     }
-                } catch 
+                }
+                catch
                 {
                     ViewBag.UserIsAccepted = false;
                 }
@@ -150,7 +151,7 @@ namespace SolvrWebClient.Controllers
                     {
                         CreateComment(model);
                     }
-                    else if(comment.Equals("Apply"))
+                    else if (comment.Equals("Apply"))
                     {
                         CreateSolvr(model);
                     }
@@ -166,7 +167,7 @@ namespace SolvrWebClient.Controllers
                 //TODO: Print error message
                 return View();
             }
-            
+
             return RedirectToAction("Index", new { ID = model.PostId });
         }
 
@@ -204,7 +205,7 @@ namespace SolvrWebClient.Controllers
             DB.CreateComment(sc);
         }
 
-        public ActionResult ChooseSolvr(int ID=0)
+        public ActionResult ChooseSolvr(int ID = 0)
         {
             SolvrComment sc = (SolvrComment)DB.GetComment(ID, false, false);
 

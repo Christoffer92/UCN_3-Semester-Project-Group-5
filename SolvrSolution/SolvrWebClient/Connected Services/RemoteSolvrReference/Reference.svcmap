@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="5daa5f47-5622-46d9-902a-1f10fbb58f1b" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="0232c06f-d565-47e4-9ce1-b9848fc47eda" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,15 +19,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:2112/" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/WcfHelloService/Service1/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="0138f671-6771-4523-b5bd-5af806bc06c7" SourceId="1" SourceUrl="http://localhost:2112/?xsd=xsd3" />
-    <MetadataFile FileName="SolvrService.wsdl" MetadataType="Wsdl" ID="e8b14f2c-bc9c-4503-a237-6826dec95000" SourceId="1" SourceUrl="http://localhost:2112/?wsdl" />
-    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="d6cf4b84-72f5-48b5-b138-f42a41cfaca8" SourceId="1" SourceUrl="http://localhost:2112/?xsd=xsd0" />
-    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="56de2226-bf18-4bcb-94fa-1fe2eff52c16" SourceId="1" SourceUrl="http://localhost:2112/?disco" />
-    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="2b8f7047-2c26-4bd1-90a8-342f7d0a6999" SourceId="1" SourceUrl="http://localhost:2112/?xsd=xsd1" />
-    <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="75995dc7-b5ab-44a5-942a-c9930a56f7a7" SourceId="1" SourceUrl="http://localhost:2112/?xsd=xsd2" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="dde21b3a-eb67-4a2c-a8fa-089b34a8b2ef" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfHelloService/Service1/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="4bd6b2ed-e8af-4ddd-8e37-9a9937a580b2" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfHelloService/Service1/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="a5caa656-29c6-40fb-8e7a-88d142c55f5b" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfHelloService/Service1/mex" />
+    <MetadataFile FileName="SolvrLibrary.xsd" MetadataType="Schema" ID="3239e209-db5d-4a2e-8f7f-efea766de6fa" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfHelloService/Service1/mex" />
+    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="f0bfcad9-ff5b-4063-9b72-828e4df3ef85" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WcfHelloService/Service1/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

@@ -14,7 +14,7 @@ namespace SolvrWebClient.Controllers
         private static RemoteSolvrReference.ISolvrServices DB = new RemoteSolvrReference.SolvrServicesClient();
         public CreatePostController()
         {
-            
+
         }
 
         //CreatePost:
@@ -34,14 +34,14 @@ namespace SolvrWebClient.Controllers
             {
                 if (!item.Equals("") && !item.Equals("#") && !item.Equals(",") && !item.Equals("."))
                 {
-                   p.Tags.Add(item);
+                    p.Tags.Add(item);
                 }
             }
             //TODO: Connect a user to this method
             //p.User = something goes here
             p.UserId = DB.GetUser(0, (string)Session["Username"]).Id;
 
-            
+
             return DB.CreatePost(p);
         }
 
@@ -131,7 +131,7 @@ namespace SolvrWebClient.Controllers
                 //TODO: Print error message
                 return View();
             }
-            return RedirectToAction("Index", "Post", new {ID = ppost.Id });
+            return RedirectToAction("Index", "Post", new { ID = ppost.Id });
         }
 
         // GET: CreatePost/Edit/id
@@ -224,7 +224,7 @@ namespace SolvrWebClient.Controllers
 
             DB.UpdatePost(post);
 
-            return RedirectToAction("Index", "Post", new {ID = model.postId });
+            return RedirectToAction("Index", "Post", new { ID = model.postId });
         }
 
         //TODO Cleanup this method

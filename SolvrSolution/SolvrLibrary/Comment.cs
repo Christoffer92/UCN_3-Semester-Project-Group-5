@@ -11,6 +11,7 @@ namespace SolvrLibrary
     [Table(Name = "comments")]
     [InheritanceMapping(Code = "Solvr", Type = typeof(SolvrComment))] //expects the Descriminator is a stype of string
     [InheritanceMapping(Code = "Comment", Type = typeof(Comment), IsDefault = true)]
+    [KnownType(typeof(SolvrComment))]
     [DataContract]
     public class Comment
     {

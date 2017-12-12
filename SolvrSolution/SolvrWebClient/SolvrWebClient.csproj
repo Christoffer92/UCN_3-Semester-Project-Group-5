@@ -236,7 +236,19 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\RemoteSolvrReference\item.disco" />
+    <None Include="Connected Services\RemoteSolvrReference\Arrays.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\RemoteSolvrReference\service.wsdl" />
+    <None Include="Connected Services\RemoteSolvrReference\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\RemoteSolvrReference\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\RemoteSolvrReference\SolvrLibrary.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\RemoteSolvrReference\configuration91.svcinfo" />
     <None Include="Connected Services\RemoteSolvrReference\configuration.svcinfo" />
     <None Include="Connected Services\RemoteSolvrReference\Reference.svcmap">
@@ -263,19 +275,6 @@
     <Content Include="Properties\DataSources\SolvrLibrary.Report.datasource" />
     <Content Include="Properties\DataSources\SolvrLibrary.User.datasource" />
     <Content Include="Properties\DataSources\SolvrLibrary.Vote.datasource" />
-    <None Include="Connected Services\RemoteSolvrReference\item.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\RemoteSolvrReference\item1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\RemoteSolvrReference\item2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\RemoteSolvrReference\item3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\RemoteSolvrReference\SolvrService.wsdl" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

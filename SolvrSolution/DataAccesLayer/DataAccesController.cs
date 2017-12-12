@@ -49,6 +49,7 @@ namespace DataAccesLayer
             if (id > 0)
             {
                 post = db.GetPost(id);
+                post.Category = GetCategory(post.CategoryId);
             }
             else
             {
@@ -64,6 +65,8 @@ namespace DataAccesLayer
             {
                 post.Comments = GetCommentList(post.Id);
             }
+
+
             return post;
         }
 
@@ -138,21 +141,18 @@ namespace DataAccesLayer
                     throw new NotImplementedException();
                 }
 
-                if (withUsers)
+                foreach (Post item in posts)
                 {
-                    foreach (Post item in posts)
-                    {
-                        item.User = GetUser(item.UserId);
-                    }
-                }
+                    item.Category = GetCategory(item.CategoryId);
 
-                if (withComments)
-                {
-                    foreach (Post item in posts)
-                    {
+                    if (withUsers)
+                        item.User = GetUser(item.UserId);
+                    
+                    if (withComments)
                         item.Comments = GetCommentList(item.Id);
-                    }
+
                 }
+                
 
                 return posts;
             }

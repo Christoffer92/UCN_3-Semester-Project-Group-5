@@ -12,14 +12,13 @@ namespace SolvrWebClient.Controllers
         private static RemoteSolvrReference.ISolvrServices DB = new RemoteSolvrReference.SolvrServicesClient();
 
         public HomeController()
-        {
-            
+        { 
         }
         
 
         public ActionResult Index(int offSet = 0)
         {
-            List<Post> posts = DB.GetPostList(offSet, 24, false, false).ToList();
+            List<Post> posts = DB.GetPostList(offSet, 24, true, false).ToList();
             ViewBag.PostList = posts;
             
 

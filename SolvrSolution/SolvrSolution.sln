@@ -1,9 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolvrWebClient", "SolvrWebClient\SolvrWebClient.csproj", "{36427826-98CF-49DA-8D00-91BE3C82ECAE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6CCBD207-72D6-41B1-8BE6-7F3093464FF5} = {6CCBD207-72D6-41B1-8BE6-7F3093464FF5}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolvrWebClient.Tests", "SolvrWebClient.Tests\SolvrWebClient.Tests.csproj", "{4BC2426F-A404-47E5-B2A1-AA92D7F77F97}"
 EndProject

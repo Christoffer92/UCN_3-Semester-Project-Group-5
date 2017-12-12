@@ -11,6 +11,7 @@ namespace SolvrLibrary
     [Table(Name = "posts")]
     [InheritanceMapping(Code = "Physical", Type = typeof(PhysicalPost))]
     [InheritanceMapping(Code = "Post", Type = typeof(Post), IsDefault = true)]
+    [KnownType(typeof(PhysicalPost))]
     [DataContract]
     public class Post
     {
