@@ -70,19 +70,21 @@ namespace SolvrDesktopClient
         {
             DesktopController desktopController = new DesktopController();
             Report report = desktopController.GetReport(reportId);
+            Post post = desktopController.GetPost(report.PostId); 
             User user = desktopController.GetUser(report.UserId);
 
-            lblTitle.Text = report.Post.Title;
             lblUsername.Text = user.Username;
-            lblDateTime.Text = report.DateCreated.ToString();
-            txtBoxPost.Text = report.Post.Description;
+            lblTitle.Text = post.Title;
+            lblDateTime.Text = post.DateCreated.ToString();
+            txtBoxPost.Text = post.Description;
         }
 
         private void btnResolve_Click(object sender, EventArgs e)
         {
             DesktopController desktopController = new DesktopController();
             Report report = desktopController.GetReport(reportId);
-            
+            Post post = desktopController.GetPost(report.Id);
+
             if (btnIgnore.BackColor == Color.YellowGreen)
             {
                 //TODO We need to take care of (Samtidigtheds problemet her)
@@ -95,11 +97,12 @@ namespace SolvrDesktopClient
             else if (btnEdit.BackColor == Color.YellowGreen)
             {
                 //TODO We need to take care of (Samtidigtheds problemet her)
+                
                 report.Post.Description = txtBoxPost.Text;
                 report.Post.Title = lblTitle.Text;
                 report.IsResolved = true;
                                 
-                desktopController.UpdatePost(report.Post);
+                desktopController.UpdatePost(post);
                 desktopController.UpdateReport(report);
 
                 forside.Show();

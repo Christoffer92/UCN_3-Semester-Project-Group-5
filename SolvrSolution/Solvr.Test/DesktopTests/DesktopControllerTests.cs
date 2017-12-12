@@ -80,7 +80,7 @@ namespace Solvr.Test.DesktopTests
         }
 
 
-        [DataRow(1)]
+       /* [DataRow(1)]
         [DataRow(653)]
         [DataRow(1000)]
         public void DisablePostTestPositive(int reportId)
@@ -90,7 +90,7 @@ namespace Solvr.Test.DesktopTests
             Post post = desktopController.GetReport(reportId).Post;
 
             //Act
-            desktopController.DisablePost(post.Id);
+            //desktopController.DisablePost(post.Id);
             Post postAfterDisabled = desktopController.GetReport(reportId).Post;
 
             //Assert
@@ -120,7 +120,7 @@ namespace Solvr.Test.DesktopTests
             {
                 AssertAreEqualWithMsg(expectedCounts[0], actuallyCounts[0], "counts[" + i +"]");
             }
-        }
+        }*/
 
         #region AssertAreEqualWithMsg methods
 

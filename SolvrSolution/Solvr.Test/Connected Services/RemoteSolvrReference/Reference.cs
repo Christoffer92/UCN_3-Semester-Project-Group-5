@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SolvrDesktopClient.RemoteSolvrReference {
+namespace Solvr.Test.RemoteSolvrReference {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -125,12 +125,12 @@ namespace SolvrDesktopClient.RemoteSolvrReference {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface ISolvrServicesChannel : SolvrDesktopClient.RemoteSolvrReference.ISolvrServices, System.ServiceModel.IClientChannel {
+    public interface ISolvrServicesChannel : Solvr.Test.RemoteSolvrReference.ISolvrServices, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class SolvrServicesClient : System.ServiceModel.ClientBase<SolvrDesktopClient.RemoteSolvrReference.ISolvrServices>, SolvrDesktopClient.RemoteSolvrReference.ISolvrServices {
+    public partial class SolvrServicesClient : System.ServiceModel.ClientBase<Solvr.Test.RemoteSolvrReference.ISolvrServices>, Solvr.Test.RemoteSolvrReference.ISolvrServices {
         
         public SolvrServicesClient() {
         }

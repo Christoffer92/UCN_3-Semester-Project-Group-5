@@ -19,7 +19,7 @@ namespace SolvrServices
         User GetUser(int id = 0, string username = "");
 
         [OperationContract]
-        Post GetPost(int id, bool withUsers = false, bool withComments = false, bool notDisabled = false);
+        Post GetPost(int id, bool withUsers, bool withComments, bool notDisabled);
 
         [OperationContract]
         Comment GetComment(int id, bool withUser = false, bool withVotes = false);

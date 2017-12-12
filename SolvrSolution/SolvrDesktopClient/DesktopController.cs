@@ -86,9 +86,14 @@ namespace SolvrDesktopClient
             return counts;
         }
 
+        internal Post GetPost(int postId)
+        {
+            return solvrProxy.GetPost(postId, false, false, true);
+        }
+
         public User GetUser(int id)
         {
-            return solvrProxy.GetUser(id);
+            return solvrProxy.GetUser(id, null);
         }
 
         public Post UpdatePost(Post post)

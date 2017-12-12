@@ -2,13 +2,71 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DataAccesLayer;
 using SolvrLibrary;
+using DataAccesLayer.DAL;
 
 namespace Solvr.Test.DataAccesLayer
 {
 
+
+
     [TestClass]
     public class DataAccesControllerTests
     {
+        [TestInitialize]
+        public void SetUp()
+        {
+            MockDB.CloseDB();
+        }
+
+        [TestCleanup]
+        public void TearDown()
+        {
+            MockDB.CloseDB();
+        }
+
+        [TestMethod]
+        [DataRow("JCIDS", "Maecenas pulvinar lobortis est. Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum. Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc.", 2028, 01, 29, 09, 23, 28, 2028, 01, 29, 09, 23, 28, 1, 1)]
+        [DataRow("ICD-9", "Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl. Aenean lectus.", 2031, 10, 08, 17, 46, 54, 2031, 10, 08, 17, 46, 54, 2, 2)]
+        [DataRow("Olfaction", " Duis at velit eu est congue elementum. In hac habitasse platea dictumst.Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante.Nulla justo. Aliquam quis turpis eget elit sodales scelerisque.Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.", 2022, 01, 07, 00, 14, 15, 2022, 01, 07, 00, 14, 15, 3, 3)]
+        public void CreatePostPositive(string expectedTitle, string expectedDescription, int expectedDateCreatedYear,
+                                        int expectedDateCreatedMonth, int expectedDateCreatedDay, int expectedDateCreatedHour,
+                                        int expectedDateCreatedMinutes, int expectedDateCreatedSeconds, int expectedBumpTimeYear,
+                                        int expectedBumpTimeMonth, int expectedBumpTimeDay, int expectedBumpTimeHour,
+                                        int expectedBumpTimeMinute, int expectedBumpTimeSecond, int expectedCategoryId, int expectedUserId)
+        {
+            //Prepare
+            DataAccesController dbCtr = new DataAccesController(true);
+            DateTime expectedDateCreated = new DateTime(expectedDateCreatedYear, expectedDateCreatedMonth, expectedDateCreatedDay, expectedDateCreatedHour, expectedDateCreatedMinutes, expectedDateCreatedSeconds);
+            DateTime expectedBumpTime = new DateTime(expectedBumpTimeYear, expectedBumpTimeMonth, expectedBumpTimeDay, expectedBumpTimeHour, expectedBumpTimeMinute, expectedBumpTimeSecond);
+            Post expectedPost = new Post
+            {
+                Title = expectedTitle,
+                DateCreated = expectedDateCreated,
+                BumpTime = expectedBumpTime,
+                CategoryId = expectedCategoryId,
+                Description = expectedDescription,
+                UserId = expectedUserId
+            };
+
+            //Act
+            Post actualPost = dbCtr.CreatePost(expectedPost);
+            int actualId = actualPost.Id;
+            string actualTitle = actualPost.Title;
+            DateTime actualDateCreated = actualPost.DateCreated;
+            DateTime actualBumpTime = actualPost.BumpTime;
+            int actualCategoryId = actualPost.CategoryId;
+            string actualDescription = actualPost.Description;
+            int actualUserId = actualPost.UserId;
+
+            //Assert
+            AssertAreEqualWithMsg(expectedTitle, actualTitle, "title");
+            AssertAreEqualWithMsg(expectedDateCreated, actualDateCreated, "dateCreated");
+            AssertAreEqualWithMsg(expectedBumpTime, actualBumpTime, "bumpTime");
+            AssertAreEqualWithMsg(expectedCategoryId, actualCategoryId, "categoryId");
+            AssertAreEqualWithMsg(expectedDescription, actualDescription, "description");
+            AssertAreEqualWithMsg(expectedUserId, actualUserId, "userId");
+        }
+
 
         //[TestMethod]
         //[DataRow(1, "philosophy")]
@@ -151,40 +209,7 @@ namespace Solvr.Test.DataAccesLayer
         //}
 
 
-        //[TestMethod]
-        //[DataRow(1, "JCIDS", "Maecenas pulvinar lobortis est. Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum. Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc.", 2028, 01, 29, 09, 23, 28, 2028, 01, 29, 09, 23, 28, 103, 504)]
-        //[DataRow(420, "OAS Gold", "Etiam justo. Etiam pretium iaculis justo. In hac habitasse platea dictumst.", 2021, 07, 25, 02, 47, 33, 2021, 07, 25, 02, 47, 33, 22, 187)]
-        //[DataRow(500, "Zero Waste", "Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.", 2030, 09, 01, 18, 00, 38, 2030, 09, 01, 18, 00, 38, 791, 109)]
-        //public void BuildPostTestPositive(int expectedId, string expectedTitle, string expectedDescription, int expectedDateCreatedYear,
-        //                                  int expectedDateCreatedMonth, int expectedDateCreatedDay, int expectedDateCreatedHour,
-        //                                  int expectedDateCreatedMinutes, int expectedDateCreatedSeconds, int expectedBumpTimeYear,
-        //                                  int expectedBumpTimeMonth, int expectedBumpTimeDay, int expectedBumpTimeHour,
-        //                                  int expectedBumpTimeMinute, int expectedBumpTimeSecond, int expectedCategoryId, int expectedUserId)
-        //{
-        //    //Prepare
-        //    ModelBuilder modelBuilder = new ModelBuilder();
-        //    DateTime expectedDateCreated = new DateTime(expectedDateCreatedYear, expectedDateCreatedMonth, expectedDateCreatedDay, expectedDateCreatedHour, expectedDateCreatedMinutes, expectedDateCreatedSeconds);
-        //    DateTime expectedBumpTime = new DateTime(expectedBumpTimeYear, expectedBumpTimeMonth, expectedBumpTimeDay, expectedBumpTimeHour, expectedBumpTimeMinute, expectedBumpTimeSecond);
 
-        //    //Act
-        //    Post actualPost = modelBuilder.BuildPost<Post>(expectedId);
-        //    int actualId = actualPost.Id;
-        //    string actualTitle = actualPost.Title;
-        //    DateTime actualDateCreated = actualPost.DateCreated;
-        //    DateTime actualBumpTime = actualPost.BumpTime;
-        //    int actualCategoryId = actualPost.CategoryId;
-        //    string actualDescription = actualPost.Description;
-        //    int actualUserId = actualPost.UserId;
-
-        //    //Assert
-        //    AssertAreEqualWithMsg(expectedId, actualId, "id");
-        //    AssertAreEqualWithMsg(expectedTitle, actualTitle, "title");
-        //    AssertAreEqualWithMsg(expectedDateCreated, actualDateCreated, "dateCreated");
-        //    AssertAreEqualWithMsg(expectedBumpTime, actualBumpTime, "bumpTime");
-        //    AssertAreEqualWithMsg(expectedCategoryId, actualCategoryId, "categoryId");
-        //    AssertAreEqualWithMsg(expectedDescription, actualDescription, "description");
-        //    AssertAreEqualWithMsg(expectedUserId, actualUserId, "userId");
-        //}
 
         //[TestMethod]
         ////Testing -1 to id.
@@ -1133,100 +1158,98 @@ namespace Solvr.Test.DataAccesLayer
         //}
 
 
+        #region AssertAreEqualWithMsg methods
 
+        public void AssertAreEqualWithMsg(string expected, string actual, string name)
+        {
+            string msg = "expected " + name + " was: " + expected +
+                         ". Actual " + name + " is: " + actual;
+            Assert.AreEqual(expected, actual, msg);
+        }
 
-        //#region AssertAreEqualWithMsg methods
+        public void AssertAreEqualWithMsg(int expected, int actual, string name)
+        {
+            string msg = "expected " + name + " was: " + expected +
+                         ". Actual " + name + " is: " + actual;
+            Assert.AreEqual(expected, actual, msg);
+        }
 
-        //public void AssertAreEqualWithMsg(string expected, string actual, string name)
-        //{
-        //    string msg = "expected " + name + " was: " + expected +
-        //                 ". Actual " + name + " is: " + actual;
-        //    Assert.AreEqual(expected, actual, msg);
-        //}
+        public void AssertAreEqualWithMsg(bool expected, bool actual, string name)
+        {
+            string msg = "expected " + name + " was: " + expected +
+                         ". Actual " + name + " is: " + actual;
+            Assert.AreEqual(expected, actual, msg);
+        }
+        public void AssertAreEqualWithMsg(DateTime expected, DateTime actual, string name)
+        {
+            int expectedYear = expected.Year;
+            int expectedMonth = expected.Month;
+            int expectedDay = expected.Day;
+            int expectedHour = expected.Hour;
+            int expectedMinute = expected.Minute;
+            int expectedSecond = expected.Second;
 
-        //public void AssertAreEqualWithMsg(int expected, int actual, string name)
-        //{
-        //    string msg = "expected " + name + " was: " + expected +
-        //                 ". Actual " + name + " is: " + actual;
-        //    Assert.AreEqual(expected, actual, msg);
-        //}
+            int actualYear = actual.Year;
+            int actualMonth = actual.Month;
+            int actualDay = actual.Day;
+            int actualHour = actual.Hour;
+            int actualMinute = actual.Minute;
+            int actualSecond = actual.Second;
 
-        //public void AssertAreEqualWithMsg(bool expected, bool actual, string name)
-        //{
-        //    string msg = "expected " + name + " was: " + expected +
-        //                 ". Actual " + name + " is: " + actual;
-        //    Assert.AreEqual(expected, actual, msg);
-        //}
-        //public void AssertAreEqualWithMsg(DateTime expected, DateTime actual, string name)
-        //{
-        //    int expectedYear = expected.Year;
-        //    int expectedMonth = expected.Month;
-        //    int expectedDay = expected.Day;
-        //    int expectedHour = expected.Hour;
-        //    int expectedMinute = expected.Minute;
-        //    int expectedSecond = expected.Second;
+            AssertAreEqualWithMsg(expectedYear, actualYear, "year");
+            AssertAreEqualWithMsg(expectedMonth, actualMonth, "month");
+            AssertAreEqualWithMsg(expectedDay, actualDay, "day");
+            AssertAreEqualWithMsg(expectedHour, actualHour, "hour");
+            AssertAreEqualWithMsg(expectedMinute, actualMinute, "minute");
+            AssertAreEqualWithMsg(expectedSecond, actualSecond, "second");
+        }
+        #endregion
 
-        //    int actualYear = actual.Year;
-        //    int actualMonth = actual.Month;
-        //    int actualDay = actual.Day;
-        //    int actualHour = actual.Hour;
-        //    int actualMinute = actual.Minute;
-        //    int actualSecond = actual.Second;
+        #region AssertAreNotEqualWithMsg methods
+        public void AssertAreNotEqualWithMsg(string expected, string actual, string name)
+        {
+            string msg = "expected " + name + " was: " + expected +
+                         ". Actual " + name + " is: " + actual;
+            Assert.AreNotEqual(expected, actual, msg);
+        }
 
-        //    AssertAreEqualWithMsg(expectedYear, actualYear, "year");
-        //    AssertAreEqualWithMsg(expectedMonth, actualMonth, "month");
-        //    AssertAreEqualWithMsg(expectedDay, actualDay, "day");
-        //    AssertAreEqualWithMsg(expectedHour, actualHour, "hour");
-        //    AssertAreEqualWithMsg(expectedMinute, actualMinute, "minute");
-        //    AssertAreEqualWithMsg(expectedSecond, actualSecond, "second");
-        //}
-        //#endregion
+        public void AssertAreNotEqualWithMsg(int expected, int actual, string name)
+        {
+            string msg = "expected " + name + " was: " + expected +
+                         ". Actual " + name + " is: " + actual;
+            Assert.AreNotEqual(expected, actual, msg);
+        }
 
-        //#region AssertAreNotEqualWithMsg methods
-        //public void AssertAreNotEqualWithMsg(string expected, string actual, string name)
-        //{
-        //    string msg = "expected " + name + " was: " + expected +
-        //                 ". Actual " + name + " is: " + actual;
-        //    Assert.AreNotEqual(expected, actual, msg);
-        //}
+        public void AssertAreNotEqualWithMsg(bool expected, bool actual, string name)
+        {
+            string msg = "expected " + name + " was: " + expected +
+                         ". Actual " + name + " is: " + actual;
+            Assert.AreNotEqual(expected, actual, msg);
+        }
 
-        //public void AssertAreNotEqualWithMsg(int expected, int actual, string name)
-        //{
-        //    string msg = "expected " + name + " was: " + expected +
-        //                 ". Actual " + name + " is: " + actual;
-        //    Assert.AreNotEqual(expected, actual, msg);
-        //}
+        public void AssertAreNotEqualWithMsg(DateTime expected, DateTime actual, string name)
+        {
+            int expectedYear = expected.Year;
+            int expectedMonth = expected.Month;
+            int expectedDay = expected.Day;
+            int expectedHour = expected.Hour;
+            int expectedMinute = expected.Minute;
+            int expectedSecond = expected.Second;
 
-        //public void AssertAreNotEqualWithMsg(bool expected, bool actual, string name)
-        //{
-        //    string msg = "expected " + name + " was: " + expected +
-        //                 ". Actual " + name + " is: " + actual;
-        //    Assert.AreNotEqual(expected, actual, msg);
-        //}
+            int actualYear = actual.Year;
+            int actualMonth = actual.Month;
+            int actualDay = actual.Day;
+            int actualHour = actual.Hour;
+            int actualMinute = actual.Minute;
+            int actualSecond = actual.Second;
 
-        //public void AssertAreNotEqualWithMsg(DateTime expected, DateTime actual, string name)
-        //{
-        //    int expectedYear = expected.Year;
-        //    int expectedMonth = expected.Month;
-        //    int expectedDay = expected.Day;
-        //    int expectedHour = expected.Hour;
-        //    int expectedMinute = expected.Minute;
-        //    int expectedSecond = expected.Second;
-
-        //    int actualYear = actual.Year;
-        //    int actualMonth = actual.Month;
-        //    int actualDay = actual.Day;
-        //    int actualHour = actual.Hour;
-        //    int actualMinute = actual.Minute;
-        //    int actualSecond = actual.Second;
-
-        //    AssertAreNotEqualWithMsg(expectedYear, actualYear, "year");
-        //    AssertAreNotEqualWithMsg(expectedMonth, actualMonth, "month");
-        //    AssertAreNotEqualWithMsg(expectedDay, actualDay, "day");
-        //    AssertAreNotEqualWithMsg(expectedHour, actualHour, "hour");
-        //    AssertAreNotEqualWithMsg(expectedMinute, actualMinute, "minute");
-        //    AssertAreNotEqualWithMsg(expectedSecond, actualSecond, "second");
-        //}
-        //#endregion  
+            AssertAreNotEqualWithMsg(expectedYear, actualYear, "year");
+            AssertAreNotEqualWithMsg(expectedMonth, actualMonth, "month");
+            AssertAreNotEqualWithMsg(expectedDay, actualDay, "day");
+            AssertAreNotEqualWithMsg(expectedHour, actualHour, "hour");
+            AssertAreNotEqualWithMsg(expectedMinute, actualMinute, "minute");
+            AssertAreNotEqualWithMsg(expectedSecond, actualSecond, "second");
+        }
+        #endregion  
     }
 }
