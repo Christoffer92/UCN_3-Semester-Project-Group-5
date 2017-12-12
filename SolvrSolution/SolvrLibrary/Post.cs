@@ -26,47 +26,39 @@ namespace SolvrLibrary
             Tags = new List<string>();
             Comments = new List<Comment>();
         }
-        [DataMember]
+
         [Column(IsPrimaryKey = true, IsDbGenerated = true)]
         [DataMember]
         public int Id { get; set; }
 
-        [DataMember]
         [Column()]
         [DataMember]
         public string Title { get; set; }
 
-        [DataMember]
         [Column()]
         [DataMember]
         public string Description { get; set; }
 
-        [DataMember]
         [Column()]
         [DataMember]
         public DateTime BumpTime { get; set; }
 
-        [DataMember]
         [Column()]
         [DataMember]
         public DateTime DateCreated { get; set; }
 
-        [DataMember]
         [Column()]
         [DataMember]
         public int CategoryId { get; set; }
 
-        [DataMember]
         [Column()]
         [DataMember]
         public int UserId { get; set; }
 
-        [DataMember]
         [Column(IsDiscriminator = true)]
         [DataMember]
         public string PostType;
 
-        [DataMember]
         [Column()]
         [DataMember]
         public bool IsDisabled { get; set; }

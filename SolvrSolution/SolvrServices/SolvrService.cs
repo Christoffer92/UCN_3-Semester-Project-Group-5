@@ -57,18 +57,7 @@ namespace SolvrServices
 
         public List<Post> GetPostList(int offSet, int loadCount, bool withUsers = false, bool withComments = false)
         {
-            List<Post> p = new List<Post>();
-            try
-            {
-                p = dbCtr.GetPostList(offSet, loadCount, withUsers, withComments);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-            
-            return p;
+            return dbCtr.GetPostList(offSet, loadCount, withUsers, withComments);
         }
 
         public List<Comment> GetCommentList(int postId, bool withUsers  = false)
