@@ -239,7 +239,9 @@
     <None Include="Connected Services\RemoteSolvrReference\Arrays.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\RemoteSolvrReference\service.wsdl" />
+    <None Include="Connected Services\RemoteSolvrReference\service.wsdl">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\RemoteSolvrReference\service.xsd">
       <SubType>Designer</SubType>
     </None>
