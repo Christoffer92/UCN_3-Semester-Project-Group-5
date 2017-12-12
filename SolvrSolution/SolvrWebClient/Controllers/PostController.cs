@@ -5,38 +5,34 @@ using System.Web;
 using System.Web.Mvc;
 using SolvrWebClient.Models;
 using SolvrLibrary;
-using DataAccesLayer.DAL;
 
 namespace SolvrWebClient.Controllers
 {
     public class PostController : Controller
     {
-        public ISolvrDB DB;
+        private static RemoteSolvrReference.ISolvrServices DB = new RemoteSolvrReference.SolvrServicesClient();
 
         public PostController()
         {
-            DB = new SolvrDB();
+
         }
-        public PostController(ISolvrDB _DB)
-        {
-            DB = _DB;
-        }
+
 
         public ActionResult Index(int ID = 0)
         {
 
-            if (DB.GetPost(ID).PostType.Equals("Physical"))
+            if (DB.GetPost(ID, false, false, true).PostType.Equals("Physical"))
             {
                 return RedirectToAction("PhysicalIndex", new { ID = ID });
             }
             else
             {
-                Post post = DB.GetPost(ID);
+                Post post = DB.GetPost(ID, true, true, true);
                 ViewBag.Title = post.Title;
                 ViewBag.Description = post.Description;
                 ViewBag.DateCreated = post.DateCreated.ToShortDateString();
                 ViewBag.UserId = post.UserId;
-                ViewBag.Username = DB.GetUser(post.UserId).Username;
+                ViewBag.Username = DB.GetUser(post.UserId, "").Username;
 
                 string tags = "";
 
@@ -51,19 +47,19 @@ namespace SolvrWebClient.Controllers
                 User user = null;
                 try
                 {
-                    user = DB.GetUser((string)Session["Username"]);
+                    user = DB.GetUser(0, (string)Session["Username"]);
 
                     if (user != null && user.Id == post.UserId)
                         ViewBag.UserIsOwner = true;
                 }
-                catch 
+                catch
                 {
                     // empty catch, because any exceptions here would (hopefully) not affect the program on runtime.
                 }
-                
+
 
                 //sortere efter tid
-                ViewBag.CommentList = DB.GetComments(post.Id).OrderBy(x => x.DateCreated).ToList();
+                ViewBag.CommentList = DB.GetCommentList(post.Id, true).OrderBy(x => x.DateCreated).ToList();
 
                 //Usorteret
                 //ViewBag.CommentList = DB.GetComments(ID);
@@ -73,23 +69,23 @@ namespace SolvrWebClient.Controllers
 
                 return View(model);
             }
-            
+
         }
 
         public ActionResult PhysicalIndex(int ID = 0)
         {
 
-            if (DB.GetPost(ID).PostType.Equals("Post"))
+            if (DB.GetPost(ID, false, false, true).PostType.Equals("Post"))
             {
                 return RedirectToAction("Index", new { ID = ID });
             }
             else
             {
-                PhysicalPost ppost = DB.GetPhysicalPost(ID);
+                PhysicalPost ppost = (PhysicalPost)DB.GetPost(ID, true, true, true);
                 ViewBag.Title = ppost.Title;
                 ViewBag.Description = ppost.Description;
                 ViewBag.DateCreated = ppost.DateCreated.ToShortDateString();
-                ViewBag.Username = DB.GetUser(ppost.UserId).Username;
+                ViewBag.Username = DB.GetUser(ppost.UserId, "").Username;
                 ViewBag.UserId = ppost.UserId;
                 ViewBag.AltDescription = ppost.AltDescription;
                 ViewBag.Address = ppost.Address;
@@ -108,14 +104,14 @@ namespace SolvrWebClient.Controllers
                 ViewBag.Tags = tags;
 
                 //sorteret omvendt efter tid
-                IEnumerable<Comment> commentList = DB.GetComments(ppost.Id).OrderByDescending(x => x.DateCreated).ToList();
+                IEnumerable<Comment> commentList = DB.GetCommentList(ppost.Id, true).OrderByDescending(x => x.DateCreated).ToList();
                 ViewBag.CommentList = commentList;
 
                 User user = null;
                 ViewBag.UserIsAccepted = false;
                 try
                 {
-                    user = DB.GetUser((string)Session["Username"]);
+                    user = DB.GetUser(0, (string)Session["Username"]);
                     foreach (SolvrComment item in commentList)
                     {
                         if (item.CommentType.Equals("Solvr") && item.IsAccepted && item.UserId == user.Id)
@@ -124,7 +120,8 @@ namespace SolvrWebClient.Controllers
                             break;
                         }
                     }
-                } catch 
+                }
+                catch
                 {
                     ViewBag.UserIsAccepted = false;
                 }
@@ -154,7 +151,7 @@ namespace SolvrWebClient.Controllers
                     {
                         CreateComment(model);
                     }
-                    else if(comment.Equals("Apply"))
+                    else if (comment.Equals("Apply"))
                     {
                         CreateSolvr(model);
                     }
@@ -170,7 +167,7 @@ namespace SolvrWebClient.Controllers
                 //TODO: Print error message
                 return View();
             }
-            
+
             return RedirectToAction("Index", new { ID = model.PostId });
         }
 
@@ -179,11 +176,17 @@ namespace SolvrWebClient.Controllers
             Comment c = new Comment();
             c.Text = model.Text;
             c.PostId = model.PostId;
+            try
+            {
+                c.User = DB.GetUser(0, (string)Session["Username"]);
+                c.UserId = c.User.Id;
+            }
+            catch (Exception)
+            {
 
-            //TODO: Connect a user to this method
-            //p.User = something goes here
-            c.User = DB.GetUser();
-            c.UserId = c.User.Id;
+                throw new ArgumentNullException();
+            }
+
 
             DB.CreateComment(c);
         }
@@ -196,15 +199,15 @@ namespace SolvrWebClient.Controllers
 
             //TODO: Connect a user to this method
             //p.User = something goes here
-            sc.User = DB.GetUser();
+            sc.User = DB.GetUser(0, (string)Session["Username"]);
             sc.UserId = sc.User.Id;
 
-            DB.CreateSolvrComment(sc);
+            DB.CreateComment(sc);
         }
 
-        public ActionResult ChooseSolvr(int ID=0)
+        public ActionResult ChooseSolvr(int ID = 0)
         {
-            SolvrComment sc = DB.GetComment<SolvrComment>(ID);
+            SolvrComment sc = (SolvrComment)DB.GetComment(ID, false, false);
 
             if (sc.IsAccepted)
             {
@@ -216,20 +219,9 @@ namespace SolvrWebClient.Controllers
                 sc.IsAccepted = true;
             }
 
-            DB.UpdateSolvrComment(sc);
+            DB.UpdateComment(sc);
 
             return RedirectToAction("Index", new { ID = sc.PostId });
         }
-
-        //public ActionResult Index(Post post)
-        //{
-        //    //Post post = DB.GetPost(ID);
-        //    ViewBag.Title = post.Title;
-        //    ViewBag.Description = post.Description;
-        //    ViewBag.DateCreated = post.DateCreated.ToShortDateString();
-        //    ViewBag.UserName = DB.GetUser(post.UserId).Username;
-
-        //    return View();
-        //}
     }
 }

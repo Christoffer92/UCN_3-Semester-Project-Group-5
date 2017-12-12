@@ -13,21 +13,16 @@ namespace SolvrWebClient.Controllers
 {
     public class AccountController : Controller
     {
-        public ISolvrDB DB;
+
+        private static RemoteSolvrReference.ISolvrServices DB = new RemoteSolvrReference.SolvrServicesClient();
 
         public AccountController()
         {
-            DB = new SolvrDB();
-        }
-
-        public AccountController(ISolvrDB _DB)
-        {
-            DB = _DB;
         }
 
         public ActionResult Register()
         {
-            
+
             return View();
         }
 
@@ -73,22 +68,22 @@ namespace SolvrWebClient.Controllers
             bool valid = false;
             try
 
-            { 
-                if(ModelState.IsValid)
+            {
+                if (ModelState.IsValid)
                 {
-                    valid  = CheckCredentials(model);
+                    valid = CheckCredentials(model);
                 }
             }
             catch (Exception)
             {
                 return View();
-            } 
+            }
 
             if (valid == true)
             {
                 return RedirectToAction("Index", "Home");
             }
-            else 
+            else
             {
                 return View();
             }
@@ -100,16 +95,16 @@ namespace SolvrWebClient.Controllers
             User user = null;
             try
             {
-                user = DB.GetUser(model.Username);
+                user = DB.GetUser(0, model.Username);
             }
             catch
             {
 
                 return false;
             }
-            
+
             // TODO Add Safety (maybe?)
-            if(user != null && model.Password.Equals(user.Password))
+            if (user != null && model.Password.Equals(user.Password))
             {
                 Session["Username"] = user.Username;
                 //Session["Email"] = user.Email;
@@ -123,12 +118,12 @@ namespace SolvrWebClient.Controllers
             }
 
         }
-        
+
         public ActionResult LogOut()
         {
             Session.Abandon();
             //return View("Login");
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Account/Create
@@ -147,7 +142,7 @@ namespace SolvrWebClient.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch       
+            catch
             {
                 return View();
             }

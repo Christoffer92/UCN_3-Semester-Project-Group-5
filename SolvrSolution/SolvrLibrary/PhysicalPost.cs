@@ -8,30 +8,24 @@ using System.Threading.Tasks;
 
 namespace SolvrLibrary
 {
-    //[Table(Name = "physicalposts")]
+    [DataContract]
     public class PhysicalPost : Post
     {
-        /*[Column(IsPrimaryKey = true, IsDbGenerated = true)]
-        public int Id { get; set; }*/
-        [DataMember]
+
         [Column()]
+        [DataMember]
         public bool IsLocked { get; set; }
 
-        [DataMember]
         [Column()]
+        [DataMember]
         public string AltDescription { get; set; }
 
-        [DataMember]
         [Column()]
+        [DataMember]
         public string Zipcode { get; set; }
 
-        [DataMember]
         [Column()]
+        [DataMember]
         public string Address { get; set; }
-
-        /*public List<SolvrComment> SolvrComments { get; set; }*/
-
-        /*[Column()]
-        public int PostId { get; set; }*/
     }
 }

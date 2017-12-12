@@ -49,6 +49,7 @@ namespace DataAccesLayer
             if (id > 0)
             {
                 post = db.GetPost(id);
+                post.Category = GetCategory(post.CategoryId);
             }
             else
             {
@@ -64,6 +65,8 @@ namespace DataAccesLayer
             {
                 post.Comments = GetCommentList(post.Id);
             }
+
+
             return post;
         }
 
@@ -126,33 +129,38 @@ namespace DataAccesLayer
         public List<Post> GetPostList(int offSet, int loadCount, bool withUsers = false,
                                       bool withComments = false)
         {
-            List<Post> posts = new List<Post>();
-            if (offSet >= 0 && loadCount > 0)
+            try
             {
-                posts = db.GetPostList(offSet, loadCount);
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
+                List<Post> posts = new List<Post>();
+                if (offSet >= 0 && loadCount > 0)
+                {
+                    posts = db.GetPostList(offSet, loadCount);
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
 
-            if (withUsers)
-            {
                 foreach (Post item in posts)
                 {
-                    item.User = GetUser(item.UserId);
-                }
-            }
+                    item.Category = GetCategory(item.CategoryId);
 
-            if (withComments)
+                    if (withUsers)
+                        item.User = GetUser(item.UserId);
+                    
+                    if (withComments)
+                        item.Comments = GetCommentList(item.Id);
+
+                }
+                
+
+                return posts;
+            }
+            catch (Exception e)
             {
-                foreach (Post item in posts)
-                {
-                    item.Comments = GetCommentList(item.Id);
-                }
+                throw new Exception();
             }
-
-            return posts;
+            
         }
 
         public List<Vote> GetVoteList(int commentId)
