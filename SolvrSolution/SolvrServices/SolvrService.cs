@@ -9,15 +9,14 @@ using DataAccesLayer;
 
 namespace SolvrServices
 {
-    //InstanceContextMode = InstanceContextMode.PerCall
-    [ServiceBehavior]
-    public class SolvrService : ISolvrServices//, IDisposable
+    //[ServiceBehavior]
+    public class SolvrService : ISolvrServices
     {
-        private readonly DataAccesController dbCtr;
+        private readonly DataAccesController dbCtr = new DataAccesController(false);
 
         public SolvrService()
         {
-            dbCtr = new DataAccesController(false);
+           // dbCtr = new DataAccesController(false);
         }
 
         public SolvrService(bool useMockDB = false)
@@ -58,7 +57,18 @@ namespace SolvrServices
 
         public List<Post> GetPostList(int offSet, int loadCount, bool withUsers = false, bool withComments = false)
         {
-            return dbCtr.GetPostList(offSet, loadCount, withUsers, withComments);
+            List<Post> p = new List<Post>();
+            try
+            {
+                p = dbCtr.GetPostList(offSet, loadCount, withUsers, withComments);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
+            return p;
         }
 
         public List<Comment> GetCommentList(int postId, bool withUsers  = false)

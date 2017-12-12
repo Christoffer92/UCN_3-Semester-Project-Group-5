@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Linq.Mapping;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,6 +11,7 @@ namespace SolvrLibrary
     [Table(Name = "posts")]
     [InheritanceMapping(Code = "Physical", Type = typeof(PhysicalPost))]
     [InheritanceMapping(Code = "Post", Type = typeof(Post), IsDefault = true)]
+    [DataContract]
     public class Post
     {
 
@@ -24,38 +26,51 @@ namespace SolvrLibrary
         }
 
         [Column(IsPrimaryKey = true, IsDbGenerated = true)]
+        [DataMember]
         public int Id { get; set; }
 
         [Column()]
+        [DataMember]
         public string Title { get; set; }
 
         [Column()]
+        [DataMember]
         public string Description { get; set; }
 
         [Column()]
+        [DataMember]
         public DateTime BumpTime { get; set; }
 
         [Column()]
+        [DataMember]
         public DateTime DateCreated { get; set; }
 
         [Column()]
+        [DataMember]
         public int CategoryId { get; set; }
 
         [Column()]
+        [DataMember]
         public int UserId { get; set; }
 
         [Column(IsDiscriminator = true)]
+        [DataMember]
         public string PostType;
 
         [Column()]
+        [DataMember]
         public bool IsDisabled { get; set; }
 
+        [DataMember]
         public List<string> Tags { get; set; }
 
+        [DataMember]
         public User User { get; set; }
 
+        [DataMember]
         public Category Category { get; set; }
 
+        [DataMember]
         public List<Comment> Comments { get; set; }
     }
 }

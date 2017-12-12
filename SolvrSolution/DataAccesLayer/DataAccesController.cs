@@ -126,33 +126,41 @@ namespace DataAccesLayer
         public List<Post> GetPostList(int offSet, int loadCount, bool withUsers = false,
                                       bool withComments = false)
         {
-            List<Post> posts = new List<Post>();
-            if (offSet >= 0 && loadCount > 0)
+            try
             {
-                posts = db.GetPostList(offSet, loadCount);
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
-
-            if (withUsers)
-            {
-                foreach (Post item in posts)
+                List<Post> posts = new List<Post>();
+                if (offSet >= 0 && loadCount > 0)
                 {
-                    item.User = GetUser(item.UserId);
+                    posts = db.GetPostList(offSet, loadCount);
                 }
-            }
-
-            if (withComments)
-            {
-                foreach (Post item in posts)
+                else
                 {
-                    item.Comments = GetCommentList(item.Id);
+                    throw new NotImplementedException();
                 }
-            }
 
-            return posts;
+                if (withUsers)
+                {
+                    foreach (Post item in posts)
+                    {
+                        item.User = GetUser(item.UserId);
+                    }
+                }
+
+                if (withComments)
+                {
+                    foreach (Post item in posts)
+                    {
+                        item.Comments = GetCommentList(item.Id);
+                    }
+                }
+
+                return posts;
+            }
+            catch (Exception e)
+            {
+                throw new Exception();
+            }
+            
         }
 
         public List<Vote> GetVoteList(int commentId)

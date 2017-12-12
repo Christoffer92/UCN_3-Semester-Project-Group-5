@@ -19,7 +19,7 @@ namespace SolvrWebClient.Controllers
 
         public ActionResult Index(int offSet = 0)
         {
-            IEnumerable<Post> posts = DB.GetPostList(offSet, 24, false, false);
+            List<Post> posts = DB.GetPostList(offSet, 24, false, false).ToList();
             ViewBag.PostList = posts;
             
 
