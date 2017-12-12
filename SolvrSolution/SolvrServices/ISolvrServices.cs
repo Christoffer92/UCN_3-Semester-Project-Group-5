@@ -16,13 +16,13 @@ namespace SolvrServices
 
         #region Get Methods
         [OperationContract]
-        User GetUser(int id, string username);
+        User GetUser(int id = 0, string username = "");
 
         [OperationContract]
-        Post GetPost(int id, bool withUsers, bool withComments, bool notDisabled);
+        Post GetPost(int id, bool withUsers = false, bool withComments = false, bool notDisabled = false);
 
         [OperationContract]
-        Comment GetComment(int id, bool withUser, bool withVotes);
+        Comment GetComment(int id, bool withUser = false, bool withVotes = false);
 
         [OperationContract]
         Category GetCategory(int id);
@@ -31,16 +31,16 @@ namespace SolvrServices
         Report GetReport(int id);
 
         [OperationContract]
-        List<Post> GetPostList(int offSet, int loadCount, bool withUsers, bool withComments);
+        List<Post> GetPostList(int offSet, int loadCount, bool withUsers = false, bool withComments = false);
 
         [OperationContract]
-        List<Comment> GetCommentList(int postId, bool withUsers);
+        List<Comment> GetCommentList(int postId, bool withUsers = false);
 
         [OperationContract]
         List<Category> GetCategoryList();
 
         [OperationContract]
-        List<Report> GetReportList(bool onlyNotResolved);
+        List<Report> GetReportList(bool onlyNotResolved = false);
 
         [OperationContract]
         List<Vote> GetVoteList(int commentId);

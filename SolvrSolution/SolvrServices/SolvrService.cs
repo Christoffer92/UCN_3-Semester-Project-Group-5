@@ -31,17 +31,17 @@ namespace SolvrServices
         }
 
         #region Get Methods
-        public User GetUser(int id, string username)
+        public User GetUser(int id = 0, string username = "")
         {
             return dbCtr.GetUser(id, username);
         }
 
-        public Post GetPost(int id, bool withUsers, bool withComments, bool notDisabled)
+        public Post GetPost(int id, bool withUsers = false, bool withComments = false, bool notDisabled = true)
         {
             return dbCtr.GetPost(id, withUsers, withComments, notDisabled);
         }
 
-        public Comment GetComment(int id, bool withUser, bool withVotes)
+        public Comment GetComment(int id, bool withUser = false, bool withVotes = false)
         {
             return dbCtr.GetComment(id, withUser, withVotes);
         }
@@ -56,12 +56,12 @@ namespace SolvrServices
             return dbCtr.GetReport(id);
         }
 
-        public List<Post> GetPostList(int offSet, int loadCount, bool withUsers, bool withComments)
+        public List<Post> GetPostList(int offSet, int loadCount, bool withUsers = false, bool withComments = false)
         {
-            return dbCtr.GetPostList(offSet, loadCount, withUsers, withComments);
+            return dbCtr.GetPostList(offSet, loadCount, withUsers = false, withComments = false);
         }
 
-        public List<Comment> GetCommentList(int postId, bool withUsers)
+        public List<Comment> GetCommentList(int postId, bool withUsers  = false)
         {
             return dbCtr.GetCommentList(postId, withUsers);
         }
@@ -71,7 +71,7 @@ namespace SolvrServices
             return dbCtr.GetCategoryList();
         }
 
-        public List<Report> GetReportList(bool onlyNotResolved)
+        public List<Report> GetReportList(bool onlyNotResolved = false)
         {
             return dbCtr.GetReportList(onlyNotResolved);
         }

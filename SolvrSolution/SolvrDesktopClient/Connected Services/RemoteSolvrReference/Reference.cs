@@ -22,7 +22,7 @@ namespace SolvrDesktopClient.RemoteSolvrReference {
         System.Threading.Tasks.Task<bool> IsConnectedToDatabaseAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISolvrServices/GetUser", ReplyAction="http://tempuri.org/ISolvrServices/GetUserResponse")]
-        SolvrLibrary.User GetUser(int id, string username);
+        SolvrLibrary.User GetUser(int id, string username = "");
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISolvrServices/GetUser", ReplyAction="http://tempuri.org/ISolvrServices/GetUserResponse")]
         System.Threading.Tasks.Task<SolvrLibrary.User> GetUserAsync(int id, string username);

@@ -9,7 +9,7 @@ namespace SolvrDesktopClient
 {
     public class DesktopController
     {
-        private static RemoteSolvrReference.ISolvrServices solvrObj = new RemoteSolvrReference.SolvrServicesClient();
+        private static RemoteSolvrReference.ISolvrServices solvrProxy = new RemoteSolvrReference.SolvrServicesClient();
 
         public DesktopController(bool useMockDB = false)
         {
@@ -18,18 +18,18 @@ namespace SolvrDesktopClient
 
         public Report GetReport(int id)
         {
-            return solvrObj.GetReport(id);
+            return solvrProxy.GetReport(id);
         }
 
         public List<Report> GetAllReports(bool onlyNotResolved)
         {
-            return solvrObj.GetReportList(onlyNotResolved).ToList();
+            return solvrProxy.GetReportList(onlyNotResolved).ToList();
         }
 
         public int[] GetReportCounts(bool onlyNotResolved)
         {
             int[] counts = new int[12];
-            List<Report> reports = GetAllReportList(onlyNotResolved);
+            List<Report> reports = GetAllReports(onlyNotResolved);
 
             counts[0] = reports.Count;
             foreach (Report report in reports)
@@ -88,27 +88,17 @@ namespace SolvrDesktopClient
 
         public User GetUser(int id)
         {
-            return proxy.GetUser(id);
+            return solvrProxy.GetUser(id);
         }
 
-        public void SetReportToResolved(int reportId)
+        public Report UpdateReport(Report report)
         {
-            proxy.SetReportToResolved(reportId);
+            return solvrProxy.UpdateReport(report);
         }
 
-        public void UpdatePostText(int reportId, string txt)
+        public bool IsConnectedToDb()
         {
-            proxy.UpdatePostText(reportId, txt);
-        }
-
-        public void DisablePost(int postId)
-        {
-            proxy.DisablePost(postId);
-        }
-
-        public void UpdatePostTitle(int postId, string text)
-        {
-            proxy.UpdatePostTitle(postId, text);
+            return solvrProxy.IsConnectedToDatabase();
         }
     }
 }

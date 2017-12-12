@@ -1,5 +1,4 @@
-﻿using SolvrServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -26,8 +25,8 @@ namespace SolvrDesktopClient
 
         private void timerConnectionStatus_Tick(object sender, EventArgs e)
         {
-            ISolvrServices proxy = new SolvrService();
-            bool isConnected = proxy.IsConnectedToDatabase();
+            DesktopController desktopController = new DesktopController();
+            bool isConnected = desktopController.IsConnectedToDb();
 
             if (isConnected)
             {
@@ -42,7 +41,7 @@ namespace SolvrDesktopClient
         private void timerOverview_Tick(object sender, EventArgs e)
         {
             DesktopController desktopController = new DesktopController();
-            int[] reportCounts = desktopController.GetReportCounts();
+            int[] reportCounts = desktopController.GetReportCounts(false);
 
             //Gets the text from the labels
             lblReportsUnresolvedAmount.Text = reportCounts[0].ToString();
@@ -84,16 +83,13 @@ namespace SolvrDesktopClient
         public void btnRefreshTable_Click(object sender, EventArgs e)
         {
             DesktopController desktopController = new DesktopController();
-            List<Report> reports = desktopController.GetAllReports();
+            List<Report> reports = desktopController.GetAllReports(true);
             
             //Clears and Fills the dataTable with the reports.
             dataTable.Rows.Clear();
             foreach (Report report in reports)
             {
-                if (report.IsResolved == false)
-                {
-                    dataTable.Rows.Add(report.Id, report.Title, report.ReportType, report.DateCreated);
-                }
+                dataTable.Rows.Add(report.Id, report.Title, report.ReportType, report.DateCreated);
             }
 
             //Sorts the data by dateTime.

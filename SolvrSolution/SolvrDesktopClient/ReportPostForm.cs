@@ -86,7 +86,8 @@ namespace SolvrDesktopClient
             if (btnIgnore.BackColor == Color.YellowGreen)
             {
                 //TODO We need to take care of (Samtidigtheds problemet her)
-                desktopController.SetReportToResolved(reportId);
+                report.IsResolved = true;
+                desktopController.UpdateReport(report);
                 forside.Show();
                 forside.btnRefreshTable_Click(null, null);
                 this.Hide();
