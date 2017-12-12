@@ -95,10 +95,13 @@ namespace SolvrDesktopClient
             else if (btnEdit.BackColor == Color.YellowGreen)
             {
                 //TODO We need to take care of (Samtidigtheds problemet her)
-                int postId = desktopController.GetReport(reportId).PostId;
-                desktopController.UpdatePostText(postId, txtBoxPost.Text);
-                desktopController.UpdatePostTitle(postId, lblTitle.Text);
-                desktopController.SetReportToResolved(reportId);
+                report.Post.Description = txtBoxPost.Text;
+                report.Post.Title = lblTitle.Text;
+                report.IsResolved = true;
+                                
+                desktopController.UpdatePost(report.Post);
+                desktopController.UpdateReport(report);
+
                 forside.Show();
                 forside.btnRefreshTable_Click(null, null);
                 this.Hide();
@@ -107,8 +110,9 @@ namespace SolvrDesktopClient
             {
                 //TODO We need to take care of (Samtidigtheds problemet her)
                     int postId = desktopController.GetReport(reportId).PostId;
-                    desktopController.DisablePost(postId);
-                    desktopController.SetReportToResolved(reportId);
+                    report.Post.IsDisabled = true;
+                    report.IsResolved = true;
+                    desktopController.UpdateReport(report);
                     
                     forside.Show();
                     forside.btnRefreshTable_Click(null, null);
