@@ -3,8 +3,8 @@
 create table users (
 	id int identity(1,1)primary key ,
 	name varchar(100),
-	email varchar(100),
-	username varchar(31),
+	email varchar(100) unique,
+	username varchar(50) unique,
 	password varchar(50),
 	isAdmin BIT,
 	isDisabled BIT,

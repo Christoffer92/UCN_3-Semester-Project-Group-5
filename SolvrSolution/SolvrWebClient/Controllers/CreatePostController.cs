@@ -43,8 +43,7 @@ namespace SolvrWebClient.Controllers
             }
             //TODO: Connect a user to this method
             //p.User = something goes here
-            p.User = DB.GetUser();
-            p.UserId = p.User.Id;
+            p.UserId = DB.GetUser((string)Session["Username"]).Id;
 
             
             return DB.CreatePost(p);
@@ -56,12 +55,12 @@ namespace SolvrWebClient.Controllers
         //  Tags:
         //      Adds an array of strings to the tag list by seperating them with the split function
         //      Space, hashtags, commas, and full stop will split the tag string up.
-        public void CreatePhysicalPost(PhysicalPostViewModel model)
+        public PhysicalPost CreatePhysicalPost(PhysicalPostViewModel model)
         {
             PhysicalPost p = new PhysicalPost();
             p.Title = model.Title;
             p.Description = model.Description;
-            p.Category = DB.GetCategory(model.CategoryId);
+            p.CategoryId = model.CategoryId;
 
             foreach (string item in model.TagsString.Split(' ', '#', ',', '.'))
             {
@@ -76,7 +75,9 @@ namespace SolvrWebClient.Controllers
             //TODO: Connect a user to this method
             //p.User = something goes here
 
-            DB.CreatePhysicalPost(p);
+            p.UserId = DB.GetUser((string)Session["Username"]).Id;
+
+            return DB.CreatePhysicalPost(p);
         }
 
         //Main View for Create post
@@ -119,11 +120,12 @@ namespace SolvrWebClient.Controllers
         [HttpPost]
         public ActionResult CreatePhysical(PhysicalPostViewModel model)
         {
+            PhysicalPost ppost = null;
             try
             {
                 if (ModelState.IsValid)
                 {
-                    CreatePhysicalPost(model);
+                    ppost = CreatePhysicalPost(model);
                 }
             }
             catch
@@ -131,7 +133,7 @@ namespace SolvrWebClient.Controllers
                 //TODO: Print error message
                 return View();
             }
-            return RedirectToAction("Index", "Post", model);
+            return RedirectToAction("Index", "Post", new {ID = ppost.Id });
         }
 
         // GET: CreatePost/Edit/id
