@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="DIvvvY8KvaSGgvkGV+vbOD7Byag=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="aovm6sT6gIS0E2effjhlii1W+4Y=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_ISolvrServices">
       <properties>
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="BasicHttpBinding_ISolvrServices" contract="RemoteSolvrReference.ISolvrServices" bindingType="basicHttpBinding" address="http://localhost:8733/Design_Time_Addresses/WcfHelloService/Service1/" bindingConfiguration="BasicHttpBinding_ISolvrServices">
+    <endpoint name="BasicHttpBinding_ISolvrServices" contract="RemoteSolvrReference.ISolvrServices" bindingType="basicHttpBinding" address="http://localhost:2112/Solvr" bindingConfiguration="BasicHttpBinding_ISolvrServices">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://localhost:8733/Design_Time_Addresses/WcfHelloService/Service1/</serializedValue>
+          <serializedValue>http://localhost:2112/Solvr</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

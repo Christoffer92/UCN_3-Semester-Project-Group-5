@@ -37,10 +37,8 @@ namespace SolvrWebClient.Controllers
                     p.Tags.Add(item);
                 }
             }
-            //TODO: Connect a user to this method
-            //p.User = something goes here
-            p.UserId = DB.GetUser(0, (string)Session["Username"]).Id;
 
+            p.UserId = DB.GetUser(0, (string)Session["Username"]).Id;
 
             return DB.CreatePost(p);
         }
@@ -68,8 +66,6 @@ namespace SolvrWebClient.Controllers
             p.AltDescription = model.AltDescription;
             p.Zipcode = model.Zipcode;
             p.Address = model.Address;
-            //TODO: Connect a user to this method
-            //p.User = something goes here
 
             p.UserId = DB.GetUser(0, (string)Session["Username"]).Id;
 
@@ -100,9 +96,7 @@ namespace SolvrWebClient.Controllers
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
-                //TODO: Print error message
-                return View();
+                return View("Error");
             }
             return RedirectToAction("Index", "Post", new { ID = post.Id });
         }
@@ -128,8 +122,7 @@ namespace SolvrWebClient.Controllers
             }
             catch
             {
-                //TODO: Print error message
-                return View();
+                return View("Error");
             }
             return RedirectToAction("Index", "Post", new { ID = ppost.Id });
         }
@@ -146,7 +139,6 @@ namespace SolvrWebClient.Controllers
             viewPost.postId = ID;
             viewPost.CategoryId = post.CategoryId;
 
-            //TODO Tags should be fixed
             string tags = "";
             foreach (string item in post.Tags)
             {
@@ -175,7 +167,6 @@ namespace SolvrWebClient.Controllers
             viewPost.Address = post.Address;
             viewPost.IsLocked = post.IsLocked;
 
-            // TODO Tags should be fixed
             string tags = "";
             foreach (string item in post.Tags)
             {
@@ -189,7 +180,6 @@ namespace SolvrWebClient.Controllers
             return View(viewPost);
         }
 
-        //TODO Cleanup this method
         public ActionResult UpdatePost(PostViewModel model)
         {
             Post post = DB.GetPost(model.postId, false, false, true);
@@ -210,13 +200,17 @@ namespace SolvrWebClient.Controllers
                 post.Category = DB.GetCategory(model.CategoryId);
             }
 
-            //TODO make as an extension method to String
             List<string> tagsList = new List<string>();
-            foreach (string item in model.TagsString.Split(' ', '#', ',', '.'))
+
+
+            if (model.TagsString != null)
             {
-                if (!item.Equals("") && !item.Equals("#") && !item.Equals(",") && !item.Equals("."))
+                foreach (string item in model.TagsString.Split(' ', '#', ',', '.'))
                 {
-                    tagsList.Add(item);
+                    if (!item.Equals("") && !item.Equals("#") && !item.Equals(",") && !item.Equals("."))
+                    {
+                        tagsList.Add(item);
+                    }
                 }
             }
 
@@ -227,7 +221,6 @@ namespace SolvrWebClient.Controllers
             return RedirectToAction("Index", "Post", new { ID = model.postId });
         }
 
-        //TODO Cleanup this method
         public ActionResult UpdatePhysical(PhysicalPostViewModel model)
         {
             PhysicalPost post = (PhysicalPost)DB.GetPost(model.postId, false, false, true);
@@ -268,38 +261,26 @@ namespace SolvrWebClient.Controllers
                 post.IsLocked = model.IsLocked;
             }
 
-            //TODO make as an extension method to String
             List<string> tagsList = new List<string>();
-            foreach (string item in model.TagsString.Split(' ', '#', ',', '.'))
+
+            if (model.TagsString != null)
             {
-                if (!item.Equals("") && !item.Equals("#") && !item.Equals(",") && !item.Equals("."))
+                foreach (string item in model.TagsString.Split(' ', '#', ',', '.'))
                 {
-                    tagsList.Add(item);
+                    if (!item.Equals("") && !item.Equals("#") && !item.Equals(",") && !item.Equals("."))
+                    {
+                        tagsList.Add(item);
+                    }
                 }
+                
             }
 
             post.Tags = tagsList;
+
 
             DB.UpdatePost(post);
 
             return RedirectToAction("PhysicalIndex", "Post", new { ID = model.postId });
         }
-
-
-        //// POST: CreatePost/Edit/id
-        //[HttpPost]
-        //public ActionResult Edit(PostViewModel model)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add update logic here
-
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
     }
 }

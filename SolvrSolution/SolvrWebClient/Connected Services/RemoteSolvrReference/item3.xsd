@@ -1,6 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/SolvrLibrary" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/SolvrLibrary" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://localhost:2112/?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:complexType name="User">
     <xs:sequence>
       <xs:element minOccurs="0" name="DateCreated" type="xs:dateTime" />
@@ -76,6 +76,30 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Vote" nillable="true" type="tns:Vote" />
+  <xs:complexType name="SolvrComment">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Comment">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="IsAccepted" type="xs:boolean" />
+          <xs:element minOccurs="0" name="TimeAccepted" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SolvrComment" nillable="true" type="tns:SolvrComment" />
+  <xs:complexType name="PhysicalPost">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Post">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AltDescription" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="IsLocked" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Zipcode" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PhysicalPost" nillable="true" type="tns:PhysicalPost" />
   <xs:complexType name="Report">
     <xs:sequence>
       <xs:element minOccurs="0" name="Comment" nillable="true" type="tns:Comment" />
