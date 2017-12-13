@@ -47,10 +47,14 @@ namespace SolvrWebClient.Controllers
                 User user = null;
                 try
                 {
-                    user = DB.GetUser(0, (string)Session["Username"]);
+                    if (Session["Username"] != null)
+                    {
+                        user = DB.GetUser(0, (string)Session["Username"]);
 
-                    if (user != null && user.Id == post.UserId)
-                        ViewBag.UserIsOwner = true;
+                        if (user != null && user.Id == post.UserId)
+                            ViewBag.UserIsOwner = true;
+                    }
+                    
                 }
                 catch
                 {
@@ -58,11 +62,9 @@ namespace SolvrWebClient.Controllers
                 }
 
 
-                //sortere efter tid
+                //sortere efter bump tid
                 ViewBag.CommentList = DB.GetCommentList(post.Id, true).OrderBy(x => x.DateCreated).ToList();
 
-                //Usorteret
-                //ViewBag.CommentList = DB.GetComments(ID);
 
                 var model = new CommentViewModel();
                 model.PostId = post.Id;
@@ -92,8 +94,6 @@ namespace SolvrWebClient.Controllers
                 ViewBag.Zipcode = ppost.Zipcode;
                 ViewBag.IsLocked = ppost.IsLocked;
 
-
-                //TODO revamp
                 string tags = "";
 
                 foreach (string item in ppost.Tags)
@@ -111,13 +111,16 @@ namespace SolvrWebClient.Controllers
                 ViewBag.UserIsAccepted = false;
                 try
                 {
-                    user = DB.GetUser(0, (string)Session["Username"]);
-                    foreach (SolvrComment item in commentList)
+                    if (Session["Username"] != null)
                     {
-                        if (item.CommentType.Equals("Solvr") && item.IsAccepted && item.UserId == user.Id)
+                        user = DB.GetUser(0, (string)Session["Username"]);
+                        foreach (SolvrComment item in commentList)
                         {
-                            ViewBag.UserIsAccepted = true;
-                            break;
+                            if (item.CommentType.Equals("Solvr") && item.IsAccepted && item.UserId == user.Id)
+                            {
+                                ViewBag.UserIsAccepted = true;
+                                break;
+                            }
                         }
                     }
                 }
@@ -163,9 +166,7 @@ namespace SolvrWebClient.Controllers
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
-                //TODO: Print error message
-                return View();
+                return View("Error");
             }
 
             return RedirectToAction("Index", new { ID = model.PostId });
@@ -197,8 +198,6 @@ namespace SolvrWebClient.Controllers
             sc.Text = model.Text;
             sc.PostId = model.PostId;
 
-            //TODO: Connect a user to this method
-            //p.User = something goes here
             sc.User = DB.GetUser(0, (string)Session["Username"]);
             sc.UserId = sc.User.Id;
 
