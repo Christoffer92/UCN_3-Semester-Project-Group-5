@@ -7,8 +7,6 @@ using DataAccesLayer.DAL;
 namespace Solvr.Test.DataAccesLayer
 {
 
-
-
     [TestClass]
     public class DataAccesControllerTests
     {

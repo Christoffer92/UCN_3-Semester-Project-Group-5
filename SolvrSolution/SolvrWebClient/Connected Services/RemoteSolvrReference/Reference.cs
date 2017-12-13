@@ -28,12 +28,14 @@ namespace SolvrWebClient.RemoteSolvrReference {
         System.Threading.Tasks.Task<SolvrLibrary.User> GetUserAsync(int id, string username);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISolvrServices/GetPost", ReplyAction="http://tempuri.org/ISolvrServices/GetPostResponse")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SolvrLibrary.PhysicalPost))]
         SolvrLibrary.Post GetPost(int id, bool withUsers, bool withComments, bool notDisabled);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISolvrServices/GetPost", ReplyAction="http://tempuri.org/ISolvrServices/GetPostResponse")]
         System.Threading.Tasks.Task<SolvrLibrary.Post> GetPostAsync(int id, bool withUsers, bool withComments, bool notDisabled);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISolvrServices/GetComment", ReplyAction="http://tempuri.org/ISolvrServices/GetCommentResponse")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SolvrLibrary.SolvrComment))]
         SolvrLibrary.Comment GetComment(int id, bool withUser, bool withVotes);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISolvrServices/GetComment", ReplyAction="http://tempuri.org/ISolvrServices/GetCommentResponse")]
@@ -46,6 +48,8 @@ namespace SolvrWebClient.RemoteSolvrReference {
         System.Threading.Tasks.Task<SolvrLibrary.Category> GetCategoryAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISolvrServices/GetReport", ReplyAction="http://tempuri.org/ISolvrServices/GetReportResponse")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SolvrLibrary.SolvrComment))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SolvrLibrary.PhysicalPost))]
         SolvrLibrary.Report GetReport(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISolvrServices/GetReport", ReplyAction="http://tempuri.org/ISolvrServices/GetReportResponse")]
@@ -88,36 +92,44 @@ namespace SolvrWebClient.RemoteSolvrReference {
         System.Threading.Tasks.Task<SolvrLibrary.User> CreateUserAsync(SolvrLibrary.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISolvrServices/CreatePost", ReplyAction="http://tempuri.org/ISolvrServices/CreatePostResponse")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SolvrLibrary.PhysicalPost))]
         SolvrLibrary.Post CreatePost(SolvrLibrary.Post post);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISolvrServices/CreatePost", ReplyAction="http://tempuri.org/ISolvrServices/CreatePostResponse")]
         System.Threading.Tasks.Task<SolvrLibrary.Post> CreatePostAsync(SolvrLibrary.Post post);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISolvrServices/CreateComment", ReplyAction="http://tempuri.org/ISolvrServices/CreateCommentResponse")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SolvrLibrary.SolvrComment))]
         SolvrLibrary.Comment CreateComment(SolvrLibrary.Comment comment);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISolvrServices/CreateComment", ReplyAction="http://tempuri.org/ISolvrServices/CreateCommentResponse")]
         System.Threading.Tasks.Task<SolvrLibrary.Comment> CreateCommentAsync(SolvrLibrary.Comment comment);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISolvrServices/CreateReport", ReplyAction="http://tempuri.org/ISolvrServices/CreateReportResponse")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SolvrLibrary.SolvrComment))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SolvrLibrary.PhysicalPost))]
         SolvrLibrary.Report CreateReport(SolvrLibrary.Report report);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISolvrServices/CreateReport", ReplyAction="http://tempuri.org/ISolvrServices/CreateReportResponse")]
         System.Threading.Tasks.Task<SolvrLibrary.Report> CreateReportAsync(SolvrLibrary.Report report);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISolvrServices/UpdatePost", ReplyAction="http://tempuri.org/ISolvrServices/UpdatePostResponse")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SolvrLibrary.PhysicalPost))]
         SolvrLibrary.Post UpdatePost(SolvrLibrary.Post post);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISolvrServices/UpdatePost", ReplyAction="http://tempuri.org/ISolvrServices/UpdatePostResponse")]
         System.Threading.Tasks.Task<SolvrLibrary.Post> UpdatePostAsync(SolvrLibrary.Post post);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISolvrServices/UpdateComment", ReplyAction="http://tempuri.org/ISolvrServices/UpdateCommentResponse")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SolvrLibrary.SolvrComment))]
         SolvrLibrary.Comment UpdateComment(SolvrLibrary.Comment comment);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISolvrServices/UpdateComment", ReplyAction="http://tempuri.org/ISolvrServices/UpdateCommentResponse")]
         System.Threading.Tasks.Task<SolvrLibrary.Comment> UpdateCommentAsync(SolvrLibrary.Comment comment);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISolvrServices/UpdateReport", ReplyAction="http://tempuri.org/ISolvrServices/UpdateReportResponse")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SolvrLibrary.SolvrComment))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SolvrLibrary.PhysicalPost))]
         SolvrLibrary.Report UpdateReport(SolvrLibrary.Report report);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISolvrServices/UpdateReport", ReplyAction="http://tempuri.org/ISolvrServices/UpdateReportResponse")]
