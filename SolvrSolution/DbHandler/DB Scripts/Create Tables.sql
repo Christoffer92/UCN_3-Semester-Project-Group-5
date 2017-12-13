@@ -3,8 +3,8 @@
 create table users (
 	id int identity(1,1)primary key ,
 	name varchar(100),
-	email varchar(100),
-	username varchar(31),
+	email varchar(100) unique,
+	username varchar(50) unique,
 	password varchar(50),
 	isAdmin BIT,
 	dateCreated datetime
@@ -27,6 +27,7 @@ create table posts (
 	dateCreated DATETIME,
 
 	postType VARCHAR(20),
+	isDisabled BIT,
 
 	isLocked BIT,
 	altDescription varchar(1000),
@@ -61,6 +62,7 @@ create table reports (
 	description varchar(2000),
 	dateCreated datetime,
 	reporttype VARCHAR(15),
+	isResolved BIT,
 	userid int FOREIGN KEY REFERENCES users(id),
 	postid int FOREIGN KEY REFERENCES posts(id),
 	commentid int FOREIGN KEY REFERENCES comments(id)

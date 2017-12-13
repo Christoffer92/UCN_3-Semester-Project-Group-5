@@ -34,7 +34,7 @@
                             </div>
                         </div>
                     }
-                    else{ 
+                    else {
                         <div class="home-main-content">
                             <div>
                                 @Html.Label("", item.Title)
@@ -57,7 +57,15 @@
                 </div>
             }
             @*Den her knap linker til posteringen*@
-            <input type="button" name="View post" value="Load more Pages" class="standard-Btn-border btn standard-Btn-Colour" onclick="location.href='@Url.Action("Index", "Home", new { loadCount = ViewBag.LoadCount + 24 })'"/>
+            @if (ViewBag.LoadCount >= 24)
+            {
+                <input type="button" name="View post" value="Go back one page" class="standard-Btn-border btn standard-Btn-Colour" onclick="location.href='@Url.Action("Index", "Home", new { loadCount = ViewBag.LoadCount - 24 })'" />
+            }
+            @Html.Label("","Showing posts from nr " + (int)ViewBag.LoadCount + " to nr " + (int)(ViewBag.LoadCount+ ViewBag.PostList.Count))
+            @if (ViewBag.PostList.Count == 24)
+            {
+                <input type="button" name="View post" value="Load more Pages" class="standard-Btn-border btn standard-Btn-Colour" onclick="location.href='@Url.Action("Index", "Home", new { loadCount = ViewBag.LoadCount + 24 })'"/>
+            }
         </div>
     </div>
   </body>

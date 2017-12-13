@@ -86,7 +86,17 @@ namespace SolvrLibrary
             throw new NotImplementedException();
         }
 
-        public User GetUser(int userId)
+        public Report GetReport(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Report> GetAllReports()
+        {
+            throw new NotImplementedException();
+        }
+
+        public User GetUser(int id)
         {
             throw new NotImplementedException();
         }
@@ -136,6 +146,11 @@ namespace SolvrLibrary
         }
 
         public User GetUser(string Email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateUser(User user)
         {
             throw new NotImplementedException();
         }

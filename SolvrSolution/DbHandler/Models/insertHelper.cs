@@ -135,10 +135,12 @@ namespace DbHandler.Models
             {
                 Title = subStrings[0],
                 Description = subStrings[1],
-                DateCreated = SubstringToDateTime(subStrings[2]),
-                UserId = Int32.Parse(subStrings[3]),
-                CommentId = Int32.Parse(subStrings[4]),
-                PostId = Int32.Parse(subStrings[5])
+                ReportType = subStrings[2],
+                IsResolved = StringToBoolean(subStrings[3]),
+                DateCreated = SubstringToDateTime(subStrings[4]),
+                UserId = Int32.Parse(subStrings[5]),
+                CommentId = Int32.Parse(subStrings[6]),
+                PostId = Int32.Parse(subStrings[7])
             };
 
             return (T)(object)report;
@@ -259,7 +261,8 @@ namespace DbHandler.Models
                 BumpTime = SubstringToDateTime(subStrings[2]),
                 DateCreated = SubstringToDateTime(subStrings[3]),
                 CategoryId = Int32.Parse(subStrings[4]),
-                UserId = Int32.Parse(subStrings[5])
+                UserId = Int32.Parse(subStrings[5]),
+                IsDisabled = false
             };
 
             return (T)(object)post;
