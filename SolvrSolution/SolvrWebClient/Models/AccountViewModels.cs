@@ -51,7 +51,8 @@ namespace SolvrWebClient.Models
 
         [DataType(DataType.Password)]
         [AllowHtml]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        //Compare attribute is ambigues between two "ComponentModel.Dataannotations" and "Web.MVC"
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         [Display(Name = "Confirm password")]
         public string ConfirmPassword { get; set; }
     }
