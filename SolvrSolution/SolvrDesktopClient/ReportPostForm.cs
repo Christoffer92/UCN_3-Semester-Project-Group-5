@@ -98,8 +98,8 @@ namespace SolvrDesktopClient
             {
                 //TODO We need to take care of (Samtidigtheds problemet her)
                 
-                report.Post.Description = txtBoxPost.Text;
-                report.Post.Title = lblTitle.Text;
+                post.Description = txtBoxPost.Text;
+                post.Title = lblTitle.Text;
                 report.IsResolved = true;
                                 
                 desktopController.UpdatePost(post);
@@ -113,8 +113,9 @@ namespace SolvrDesktopClient
             {
                 //TODO We need to take care of (Samtidigtheds problemet her)
                     int postId = desktopController.GetReport(reportId).PostId;
-                    report.Post.IsDisabled = true;
+                    post.IsDisabled = true;
                     report.IsResolved = true;
+                    desktopController.UpdatePost(post);
                     desktopController.UpdateReport(report);
                     
                     forside.Show();
