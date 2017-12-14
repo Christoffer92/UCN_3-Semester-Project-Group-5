@@ -18,6 +18,9 @@ namespace SolvrLibrary
             DateCreated = DateTime.Now;
             IsResolved = false;
             ReportType = "";
+            CommentId = 1;
+            PostId = 1;
+            UserId = 1;
         }
 
         [DataMember]

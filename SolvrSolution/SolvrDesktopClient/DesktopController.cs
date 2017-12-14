@@ -31,16 +31,17 @@ namespace SolvrDesktopClient
             int[] counts = new int[12];
             List<Report> reports = GetAllReports(onlyNotResolved);
 
-            counts[0] = reports.Count;
+            counts[2] = reports.Count;
+
             foreach (Report report in reports)
             {
                 switch (report.IsResolved)
                 {
                     case true:
-                        counts[1]++;
+                        counts[0]++;
                         break;
                     case false:
-                        counts[2]++;
+                        counts[1]++;
                         break;
                     default:
                         break;

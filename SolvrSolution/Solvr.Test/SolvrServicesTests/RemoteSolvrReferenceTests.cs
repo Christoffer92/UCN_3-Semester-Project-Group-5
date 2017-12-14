@@ -2,6 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DataAccesLayer.DAL;
 using SolvrLibrary;
+using System.ServiceModel;
+using SolvrServices;
 
 namespace Solvr.Test.SolvrServicesTests
 {
@@ -9,6 +11,19 @@ namespace Solvr.Test.SolvrServicesTests
     public class RemoteSolvrReferenceTests
     {
         private static RemoteSolvrReference.ISolvrServices solvrProxy = new RemoteSolvrReference.SolvrServicesClient();
+        //private static Uri baseAddress = new Uri("http://localhost:2112/Solvr");
+
+        //[ClassInitialize]
+        //public void ClassSetUp() {
+        //    ServiceHost serviceHost = new ServiceHost(typeof(SolvrService), baseAddress);
+        //    serviceHost.Open();
+        //}
+
+        //[ClassCleanup]
+        //public void ClassTearDown()
+        //{
+        //    serviceHost.Close();
+        //}
 
         [TestInitialize]
         public void SetUp()
@@ -42,7 +57,7 @@ namespace Solvr.Test.SolvrServicesTests
         [DataRow(1, "Print On Demand", "Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit.", 2025, 09, 26, 11, 56, 51, 2025, 09, 26, 11, 56, 51, 451, 535, false, "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.Proin risus.Praesent lectus.Vestibulum quam sapien, varius ut, blandit non, interdum in, ante.Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio.Curabitur convallis.Duis consequat dui nec nisi volutpat eleifend.", "555", "atvej 15")]
         [DataRow(2, "Furnishings", "Donec vitae nisi. Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus. Curabitur at ipsum ac tellus semper interdum.", 2034, 07, 25, 20, 25, 57, 2034, 07, 25, 20, 25, 57, 48, 351, false, "Integer a nibh. In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet. Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo.", "2170", "malesuadavej 328")]
         [DataRow(3, "Sports Coaching", "Aenean lectus.", 2028, 01, 02, 08, 56, 40, 2028, 01, 02, 08, 56, 40, 658, 875, true, "Etiam vel augue.Vestibulum rutrum rutrum neque.", "8401", "accumsanvej 80")]
-        public void BuildPhysicalPostTestPositive(int expectedId, string expectedTitle, string expectedDescription,
+        public void GetPhysicalPostTestPositive(int expectedId, string expectedTitle, string expectedDescription,
                                                   int expectedBumpTimeYear, int expectedBumpTimeMonth, int expectedBumpTimeDay,
                                                   int expectedBumpTimeHour, int expectedBumpTimeMinute, int expectedBumpTimeSecond,
                                                   int expectedDateCreatedYear, int expectedDateCreatedMonth, int expectedDateCreatedDay,

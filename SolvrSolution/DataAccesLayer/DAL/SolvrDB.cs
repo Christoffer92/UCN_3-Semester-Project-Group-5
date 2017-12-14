@@ -104,7 +104,7 @@ namespace DataAccesLayer.DAL
 
             using (var db = new SolvrContext())
             {
-                var Query = from post in db.Posts.OrderByDescending(b => b.BumpTime).Skip(offSet).Take(loadCount) select post;
+                var Query = from post in db.Posts.OrderByDescending(b => b.BumpTime).Skip(offSet).Take(loadCount) where post.IsDisabled == false select post;
                 foreach (Post item in Query)
                 {
                     postList.Add(item);

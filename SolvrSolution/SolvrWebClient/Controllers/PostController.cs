@@ -272,14 +272,17 @@ namespace SolvrWebClient.Controllers
                 {
                     case "Post":
                         rep.ReportType = "post";
+                        rep.PostId = model.PostId;
                         break;
 
                     case "Comment":
                         rep.ReportType = "comment";
+                        rep.CommentId = model.CommentId;
                         break;
 
                     case "User":
                         rep.ReportType = "user";
+                        rep.UserId = model.UserId;
                         break;
 
                     default:
@@ -293,7 +296,7 @@ namespace SolvrWebClient.Controllers
 
                 throw;
             }
-            return View("Home");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

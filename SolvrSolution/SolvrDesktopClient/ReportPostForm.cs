@@ -83,7 +83,7 @@ namespace SolvrDesktopClient
         {
             DesktopController desktopController = new DesktopController();
             Report report = desktopController.GetReport(reportId);
-            Post post = desktopController.GetPost(report.Id);
+            Post post = desktopController.GetPost(report.PostId);
 
             if (btnIgnore.BackColor == Color.YellowGreen)
             {
@@ -97,9 +97,8 @@ namespace SolvrDesktopClient
             else if (btnEdit.BackColor == Color.YellowGreen)
             {
                 //TODO We need to take care of (Samtidigtheds problemet her)
-                
                 post.Description = txtBoxPost.Text;
-                post.Title = lblTitle.Text;
+                post.Title = txtBoxTitle.Text;
                 report.IsResolved = true;
                                 
                 desktopController.UpdatePost(post);
@@ -135,7 +134,6 @@ namespace SolvrDesktopClient
             txtBoxTitle.Text = lblTitle.Text;
             txtBoxTitle.Show();
             txtBoxTitle.Enabled = true;
-            txtBoxTitle.KeyDown += TxtBoxTitle_KeyDown;
             }
             else
             {
@@ -143,14 +141,6 @@ namespace SolvrDesktopClient
                 txtBoxTitle.Enabled = false;
                 lblTitle.Text = txtBoxTitle.Text;
                 lblTitle.Show();
-            }
-        }
-
-        private void TxtBoxTitle_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                lblTitle.Text = txtBoxTitle.Text;
             }
         }
     }
