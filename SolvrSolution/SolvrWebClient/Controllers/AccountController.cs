@@ -13,21 +13,13 @@ namespace SolvrWebClient.Controllers
 {
     public class AccountController : Controller
     {
-        public ISolvrDB DB;
 
-        public AccountController()
-        {
-            DB = new SolvrDB();
-        }
+        private static RemoteSolvrReference.ISolvrServices DB = new RemoteSolvrReference.SolvrServicesClient();
 
-        public AccountController(ISolvrDB _DB)
-        {
-            DB = _DB;
-        }
+        public AccountController() { }
 
         public ActionResult Register()
         {
-            
             return View();
         }
 
@@ -60,7 +52,7 @@ namespace SolvrWebClient.Controllers
                 return View("Register", model);
             }
 
-            return RedirectToAction("Login");
+            return View("Login");
         }
 
         public ActionResult Index()
@@ -73,22 +65,22 @@ namespace SolvrWebClient.Controllers
             bool valid = false;
             try
 
-            { 
-                if(ModelState.IsValid)
+            {
+                if (ModelState.IsValid)
                 {
-                    valid  = CheckCredentials(model);
+                    valid = CheckCredentials(model);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return View();
-            } 
+            }
 
             if (valid == true)
             {
                 return RedirectToAction("Index", "Home");
             }
-            else 
+            else
             {
                 return View();
             }
@@ -100,102 +92,31 @@ namespace SolvrWebClient.Controllers
             User user = null;
             try
             {
-                user = DB.GetUser(model.Username);
+                user = DB.GetUser(0, model.Username);
             }
             catch
             {
-
                 return false;
             }
-            
-            // TODO Add Safety (maybe?)
-            if(user != null && model.Password.Equals(user.Password))
+
+            if (user != null && model.Password.Equals(user.Password))
             {
                 Session["Username"] = user.Username;
-                //Session["Email"] = user.Email;
 
                 return true;
             }
             else
             {
-
                 return false;
             }
 
         }
-        
+
         public ActionResult LogOut()
         {
             Session.Abandon();
             //return View("Login");
-            return RedirectToAction("Index","Home");
-        }
-
-        // GET: Account/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Account/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch       
-            {
-                return View();
-            }
-        }
-
-        // GET: Account/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Account/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Account/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Account/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Index", "Home");
         }
     }
-
 }

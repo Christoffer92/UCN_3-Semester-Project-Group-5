@@ -70,23 +70,26 @@ namespace SolvrDesktopClient
         {
             DesktopController desktopController = new DesktopController();
             Report report = desktopController.GetReport(reportId);
+            Post post = desktopController.GetPost(report.PostId); 
             User user = desktopController.GetUser(report.UserId);
 
-            lblTitle.Text = report.Post.Title;
             lblUsername.Text = user.Username;
-            lblDateTime.Text = report.DateCreated.ToString();
-            txtBoxPost.Text = report.Post.Description;
+            lblTitle.Text = post.Title;
+            lblDateTime.Text = post.DateCreated.ToString();
+            txtBoxPost.Text = post.Description;
         }
 
         private void btnResolve_Click(object sender, EventArgs e)
         {
             DesktopController desktopController = new DesktopController();
             Report report = desktopController.GetReport(reportId);
-            
+            Post post = desktopController.GetPost(report.PostId);
+
             if (btnIgnore.BackColor == Color.YellowGreen)
             {
                 //TODO We need to take care of (Samtidigtheds problemet her)
-                desktopController.SetReportToResolved(reportId);
+                report.IsResolved = true;
+                desktopController.UpdateReport(report);
                 forside.Show();
                 forside.btnRefreshTable_Click(null, null);
                 this.Hide();
@@ -94,10 +97,13 @@ namespace SolvrDesktopClient
             else if (btnEdit.BackColor == Color.YellowGreen)
             {
                 //TODO We need to take care of (Samtidigtheds problemet her)
-                int postId = desktopController.GetReport(reportId).PostId;
-                desktopController.UpdatePostText(postId, txtBoxPost.Text);
-                desktopController.UpdatePostTitle(postId, lblTitle.Text);
-                desktopController.SetReportToResolved(reportId);
+                post.Description = txtBoxPost.Text;
+                post.Title = txtBoxTitle.Text;
+                report.IsResolved = true;
+                                
+                desktopController.UpdatePost(post);
+                desktopController.UpdateReport(report);
+
                 forside.Show();
                 forside.btnRefreshTable_Click(null, null);
                 this.Hide();
@@ -106,8 +112,10 @@ namespace SolvrDesktopClient
             {
                 //TODO We need to take care of (Samtidigtheds problemet her)
                     int postId = desktopController.GetReport(reportId).PostId;
-                    desktopController.DisablePost(postId);
-                    desktopController.SetReportToResolved(reportId);
+                    post.IsDisabled = true;
+                    report.IsResolved = true;
+                    desktopController.UpdatePost(post);
+                    desktopController.UpdateReport(report);
                     
                     forside.Show();
                     forside.btnRefreshTable_Click(null, null);
@@ -126,7 +134,6 @@ namespace SolvrDesktopClient
             txtBoxTitle.Text = lblTitle.Text;
             txtBoxTitle.Show();
             txtBoxTitle.Enabled = true;
-            txtBoxTitle.KeyDown += TxtBoxTitle_KeyDown;
             }
             else
             {
@@ -134,14 +141,6 @@ namespace SolvrDesktopClient
                 txtBoxTitle.Enabled = false;
                 lblTitle.Text = txtBoxTitle.Text;
                 lblTitle.Show();
-            }
-        }
-
-        private void TxtBoxTitle_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                lblTitle.Text = txtBoxTitle.Text;
             }
         }
     }

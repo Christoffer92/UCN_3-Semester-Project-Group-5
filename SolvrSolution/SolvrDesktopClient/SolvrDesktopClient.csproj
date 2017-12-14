@@ -34,6 +34,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,6 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connected Services\RemoteSolvrReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="DesktopController.cs" />
     <Compile Include="Forside.cs">
       <SubType>Form</SubType>
@@ -85,6 +92,19 @@
     <EmbeddedResource Include="ReportPostForm.resx">
       <DependentUpon>ReportPostForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Connected Services\RemoteSolvrReference\item.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\RemoteSolvrReference\item1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\RemoteSolvrReference\item2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\RemoteSolvrReference\item3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\RemoteSolvrReference\SolvrService.wsdl" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -94,6 +114,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="SolvrLibrary.Category.datasource" />
+    <None Include="SolvrLibrary.Comment.datasource" />
+    <None Include="SolvrLibrary.Post.datasource" />
+    <None Include="SolvrLibrary.Report.datasource" />
+    <None Include="SolvrLibrary.User.datasource" />
+    <None Include="SolvrLibrary.Vote.datasource" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -103,10 +129,6 @@
       <Project>{7A512B96-B646-4E04-B9F5-6C9658209C1B}</Project>
       <Name>SolvrLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SolvrServices\SolvrServices.csproj">
-      <Project>{6ccbd207-72d6-41b1-8be6-7f3093464ff5}</Project>
-      <Name>SolvrServices</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Images\Logo.png" />
@@ -115,7 +137,17 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Connected Services\RemoteSolvrReference\item.disco" />
+    <None Include="Connected Services\RemoteSolvrReference\configuration91.svcinfo" />
+    <None Include="Connected Services\RemoteSolvrReference\configuration.svcinfo" />
+    <None Include="Connected Services\RemoteSolvrReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Images\profile_placeholder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\RemoteSolvrReference\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -8,13 +8,19 @@ using System.Threading.Tasks;
 
 namespace SolvrLibrary
 {
-    [DataContract]
+    
     [Table(Name = "reports")]
+    [DataContract]
     public class Report
     {
         public Report()
         {
             DateCreated = DateTime.Now;
+            IsResolved = false;
+            ReportType = "";
+            CommentId = 1;
+            PostId = 1;
+            UserId = 1;
         }
 
         [DataMember]

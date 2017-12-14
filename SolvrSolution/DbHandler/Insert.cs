@@ -20,10 +20,5 @@ namespace DbHandler
             Models.InsertHelper<Vote>.InsertObjectsIntoDB();
             Models.InsertHelper<Report>.InsertObjectsIntoDB();
         }
-
-        public void InserSimpleData()
-        {
-            Models.SimpleInsert.InsertDataIntoDB();
-        }
     }
 }

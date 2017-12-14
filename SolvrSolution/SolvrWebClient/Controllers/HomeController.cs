@@ -9,22 +9,31 @@ namespace SolvrWebClient.Controllers
 {
     public class HomeController : Controller
     {
-        public ISolvrDB DB;
+        private static RemoteSolvrReference.ISolvrServices DB = new RemoteSolvrReference.SolvrServicesClient();
 
         public HomeController()
-        {
-            DB = new SolvrDB();
+        { 
         }
-        public HomeController(ISolvrDB _DB)
-        {
-            DB = _DB;
-        }
+        
 
-        public ActionResult Index(int loadCount = 0)
-        {
-            IEnumerable<Post> posts = DB.GetPostsByBumpTime(loadCount);
+        public ActionResult Index(int offSet = 0)
+        {              
+            List<Post> posts = DB.GetPostList(offSet, 24, true, false).ToList();
             ViewBag.PostList = posts;
-            ViewBag.LoadCount = loadCount;
+            
+
+            if (posts.Count() == 0)
+            {
+                return View("Error");
+            }
+            else if (offSet < 0)
+            {
+                ViewBag.offSet = 0;
+            }
+            else
+            {
+                ViewBag.offSet = offSet;
+            }
 
             return View();
         }

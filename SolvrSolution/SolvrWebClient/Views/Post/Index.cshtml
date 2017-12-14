@@ -23,11 +23,11 @@
             {
                 if (ViewBag.UserIsOwner)
                 {
-                    <input type="button" name="Report Post" value="Edit" style="margin-right: 15px" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("EditPost", "CreatePost", new { ID = Model.PostId })'" />
+                    <input type="button" name="Edit Post" value="Edit" style="margin-right: 15px" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("EditPost", "CreatePost", new { ID = Model.PostId })'" />
                 }
                 else
                 {
-                    <input type="button" name="Report Post" value="Report" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("NotImplementedYet", "Home")'" />
+                    <input type="button" name="Report Post" value="Report" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("Report", "Post", new {ID = Model.PostId, type = "Post"})'" />
                 }
             }
         </div>
@@ -49,6 +49,8 @@
                 @Html.TextAreaFor(m => m.Text, 4, 0, new { @class = "standard-TextArea-Size", placeholder = "Write a comment here..." })
             </div>
             <div class="post-BtnFloat">
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+
                 @if (Session["Username"] != null)
                 {
                     <input type="submit" name="Post Comment" value="Post Comment" class="standard-Btn-Colour standard-Btn-border btn" />
@@ -85,7 +87,7 @@
             <div class="post-BtnFloat" style="margin-right: 5%">
                 @if (Session["Username"] != null && !Session["Username"].Equals(item.User.Username))
                 {
-                    <input type="submit" name="Report Comment" value="Report" class="standard-Btn-Colour standard-Btn-border btn" />
+                    <input type="button" name="Report Comment" value="Report" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("Report", "Post", new {ID = item.Id, type = "Comment"})'" />
                 }
             </div>
             @Html.Label("", (item.DateCreated.ToShortTimeString() + " " + item.DateCreated.ToShortDateString()), new { @class = "post-DateLabel" })
@@ -94,6 +96,9 @@
         </div>
     }
 </body>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
 
 
 
