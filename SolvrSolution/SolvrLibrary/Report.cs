@@ -16,6 +16,8 @@ namespace SolvrLibrary
         public Report()
         {
             DateCreated = DateTime.Now;
+            IsResolved = false;
+            ReportType = "";
         }
 
         [DataMember]

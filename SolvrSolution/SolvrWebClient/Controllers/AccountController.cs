@@ -52,7 +52,7 @@ namespace SolvrWebClient.Controllers
                 return View("Register", model);
             }
 
-            return RedirectToAction("Login");
+            return View("Login");
         }
 
         public ActionResult Index()

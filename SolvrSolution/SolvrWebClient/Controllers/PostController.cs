@@ -62,7 +62,7 @@ namespace SolvrWebClient.Controllers
                 }
 
 
-                //sortere efter bump tid
+                //sortere efter tid
                 ViewBag.CommentList = DB.GetCommentList(post.Id, true).OrderBy(x => x.DateCreated).ToList();
 
 
@@ -221,6 +221,79 @@ namespace SolvrWebClient.Controllers
             DB.UpdateComment(sc);
 
             return RedirectToAction("Index", new { ID = sc.PostId });
+        }
+
+        public ActionResult Report(int ID = 0, string type = "", string username = "")
+        {
+            ReportViewModel model = new ReportViewModel();
+
+            try
+            {
+                if ((ID > 0 || !username.Equals("")) && !type.Equals(""))
+                {
+                    switch (type)
+                    {
+                        case "Post":
+                            model.PostId = DB.GetPost(ID, false, false, false).Id;
+                            break;
+
+                        case "Comment":
+                            model.CommentId = DB.GetComment(ID, false, false).Id;
+                            break;
+
+                        case "User":
+                            model.UserId = DB.GetUser(0, username).Id;
+                            break;
+
+                        default:
+                            throw new ArgumentException();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return View("Error");
+            }
+
+            model.ReportType = type;
+
+            return View(model);
+        }
+
+        public ActionResult SubmitReport(ReportViewModel model)
+        {
+            Report rep = new Report();
+            rep.Title = model.Title;
+            rep.Description = model.Description;
+
+            try
+            {
+                switch (model.ReportType)
+                {
+                    case "Post":
+                        rep.ReportType = "post";
+                        break;
+
+                    case "Comment":
+                        rep.ReportType = "comment";
+                        break;
+
+                    case "User":
+                        rep.ReportType = "user";
+                        break;
+
+                    default:
+                        throw new ArgumentException();
+                }
+
+                DB.CreateReport(rep);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return View("Home");
         }
     }
 }
