@@ -18,8 +18,6 @@
             @Html.TextArea("DescriptionArea", (string)ViewBag.Description, 10, 0, new { @readonly = "readonly", @class = "standard-TextArea-Size" })
         </div>
         <div class="post-BtnFloat">
-            @{/* TODO: Only Post owner can choose to edit and view this */}
-            @{/* TODO: EditPhysicalPost i controller skal laves */}
             @if (Session["Username"] != null)
             {
                 if (ViewBag.UserIsOwner)
@@ -28,7 +26,7 @@
                 }
                 else
                 {
-                    <input type="button" name="Report Post" value="Report" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("NotImplementedYet", "Home")'" />
+                    <input type="button" name="Report Post" value="Report" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("Report", "Post", new {ID = Model.PostId, type = "Post"})'" />
                 }
             }
         </div>
@@ -38,7 +36,6 @@
         <br />
     </div>
 
-    @{/* TODO: Only user who  owns the post and is chosen as a solvr can view this */}
     @if (Session["Username"] != null && (ViewBag.UserIsAccepted || ViewBag.UserIsOwner))
     {
         @* View the secret description here *@
@@ -69,13 +66,15 @@
     {
         <div class="post-Box-MakeComment-Standard">
             <div>
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
                 <br />
                 @Html.HiddenFor(m => m.PostId)
                 @Html.TextAreaFor(m => m.Text, 4, 0, new { @class = "standard-TextArea-Size", placeholder = "Write a comment here..." })
             </div>
             <div class="post-BtnFloat">
-                @{/* TODO: Only user who doesnt own the post can choose to apply */}
-                
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+
                 @if (Session["Username"] != null)
                 {
                     if (!ViewBag.IsLocked && !ViewBag.UserIsOwner)
@@ -152,7 +151,7 @@
                 <div class="post-BtnFloat" style="margin-right: 5%">
                     @if (Session["Username"] != null && !Session["Username"].Equals(item.User.Username))
                     {
-                        <input type="submit" name="Report Comment" value="Report" class="standard-Btn-Colour standard-Btn-border btn" />
+                        <input type="button" name="Report Comment" value="Report" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("Report", "Post", new {ID = item.Id, type = "Comment"})'" />
                     }
                 </div>
                 @Html.Label("", (item.DateCreated.ToShortTimeString() + " " + item.DateCreated.ToShortDateString()), new { @class = "post-DateLabel" })
@@ -162,7 +161,7 @@
         }
         else
         {
-            /* TODO: Choose og remove skal kun være visibel når den anden er skjult */
+            /*  Choose og remove skal kun være visibel når den anden er skjult */
             @*If sætningen indeholder den ikke valgte bruger*@
             if (item is SolvrLibrary.SolvrComment solvr && !solvr.IsAccepted)
             {
@@ -178,11 +177,12 @@
 
                         @if (Session["Username"] != null && !Session["Username"].Equals(item.User.Username))
                         {
-                            <input type="submit" name="Report Comment" value="Report" class="standard-Btn-Colour standard-Btn-border btn" />
+                            <input type="button" name="Report Comment" value="Report" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("Report", "Post", new {ID = item.Id, type = "Comment"})'" />
+
 
                             if (ViewBag.UserIsOwner)
                             {
-                                /* TODO: Only Post owner can choose this */
+                                /* Only Post owner can choose this */
 
                                 <input type="submit" name="Choose Solvr" value="Choose" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("ChooseSolvr", "Post", new { ID = item.Id })'" />
                             }
@@ -206,7 +206,8 @@
                     <div class="post-BtnFloat" style="margin-right: 5%">
                         @if (Session["Username"] != null && !Session["Username"].Equals(item.User.Username))
                         {
-                            <input type="submit" name="Report Comment" value="Report" class="standard-Btn-Colour standard-Btn-border btn" />
+                            <input type="button" name="Report Comment" value="Report" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("Report", "Post", new {ID = item.Id, type = "Comment"})'" />
+
 
                             if (ViewBag.UserIsOwner)
                             {
@@ -222,3 +223,6 @@
         }
     }
 </body>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

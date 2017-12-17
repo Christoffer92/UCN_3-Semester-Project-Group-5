@@ -1,0 +1,30 @@
+﻿@model SolvrWebClient.Models.ReportViewModel
+
+<h2>Create Rport</h2>
+
+<div class="createPost-Box-ViewPost-Standard">
+    @using (Html.BeginForm("SubmitReport", "Post", FormMethod.Post))
+    {
+        <div>
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <b>Titel:</b><br />
+            @Html.TextBoxFor(m => m.Title)
+            <br />
+        </div>
+        <div>
+            <b>Description:</b><br />
+            @Html.TextAreaFor(m => m.Description, 10, 0, new { @class = "standard-TextArea-Size" })
+        </div>
+        <div class="createPost-BtnFloat">
+            @Html.HiddenFor(m => m.PostId)
+            @Html.HiddenFor(m => m.CommentId)
+            @Html.HiddenFor(m => m.UserId)
+            @Html.HiddenFor(m => m.ReportType)
+            <input type="submit" name="CreateReport" value="Submit Report" class="standard-Btn-Colour standard-Btn-border btn" />
+        </div><br />
+    }
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

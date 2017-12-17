@@ -45,7 +45,6 @@
   <ItemGroup>
     <Compile Include="Insert.cs" />
     <Compile Include="Models\InsertHelper.cs" />
-    <Compile Include="Models\SimpleInsert.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

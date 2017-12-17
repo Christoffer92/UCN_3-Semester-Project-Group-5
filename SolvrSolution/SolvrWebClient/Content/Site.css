@@ -309,3 +309,35 @@ img.post-CommentAvatar {
     padding: 10px;
     height: auto;
 }
+/*--------------------------------------------------------------------------------------------------------*/
+/*--------------------------------All .contact and .about classes are here--------------------------------*/
+/*--------------------------------------------------------------------------------------------------------*/
+/*------------------------------------*/
+/*--------All Box models here---------*/
+/*------------------------------------*/
+/*The box view for viewing a contact*/
+.contact-Box-ViewStaff-Standard {
+    display: table;
+    margin-bottom: 20px;
+    table-layout: fixed;
+    width: 100%;
+    padding: 5px;
+}
+/*All info in contact will be divided into table cells and aligned in the middle vertically*/
+.contact-Box-ViewStaff-Standard div {
+    vertical-align: middle;
+    display: table-cell;
+    padding: 5px;
+    border: none;
+    width: 150px;
+}
+/*------------------------------------*/
+/*----All img classes and ids here----*/
+/*------------------------------------*/
+img.SizeOfPortrait {
+    object-fit: cover;
+    height: 150px;
+    width: 150px;
+    padding: 5px;
+    border: outset;
+}

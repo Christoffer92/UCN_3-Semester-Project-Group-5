@@ -6,6 +6,8 @@
     @using (Html.BeginForm("UpdatePost", "CreatePost", FormMethod.Post))
     {
         <div>
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
             <b>Titel:</b><br />
             @* TODO: Insert Titel logic *@
             @ViewBag.Title
@@ -31,4 +33,7 @@
         </div><br />
     }
 </div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
 

@@ -6,6 +6,8 @@
     @using (Html.BeginForm("UpdatePhysical", "CreatePost", FormMethod.Post))
     {
         <div>
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
             <b>Locking:</b><br />
             @Html.CheckBoxFor(m => m.IsLocked)
             <p>Check this box to lock the post, preventing any more users from applying.</p>
@@ -47,3 +49,6 @@
         </div><br />
     }
 </div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

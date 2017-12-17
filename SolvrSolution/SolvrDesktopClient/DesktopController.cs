@@ -1,5 +1,4 @@
-﻿using SolvrServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,37 +9,39 @@ namespace SolvrDesktopClient
 {
     public class DesktopController
     {
-        private ISolvrServices proxy;
-        public DesktopController()
+        private static RemoteSolvrReference.ISolvrServices solvrProxy = new RemoteSolvrReference.SolvrServicesClient();
+
+        public DesktopController(bool useMockDB = false)
         {
-            proxy = new SolvrService();
+            //TODO ...use the mockDB bool somehow.
         }
 
         public Report GetReport(int id)
         {
-            return proxy.GetReport(id);
+            return solvrProxy.GetReport(id);
         }
 
-        public List<Report> GetAllReports()
+        public List<Report> GetAllReports(bool onlyNotResolved)
         {
-            return proxy.GetAllReports();
+            return solvrProxy.GetReportList(onlyNotResolved).ToList();
         }
 
-        public int[] GetReportCounts()
+        public int[] GetReportCounts(bool onlyNotResolved)
         {
             int[] counts = new int[12];
-            List<Report> reports = GetAllReports();
+            List<Report> reports = GetAllReports(onlyNotResolved);
 
-            counts[0] = reports.Count;
+            counts[2] = reports.Count;
+
             foreach (Report report in reports)
             {
                 switch (report.IsResolved)
                 {
                     case true:
-                        counts[1]++;
+                        counts[0]++;
                         break;
                     case false:
-                        counts[2]++;
+                        counts[1]++;
                         break;
                     default:
                         break;
@@ -86,29 +87,29 @@ namespace SolvrDesktopClient
             return counts;
         }
 
+        internal Post GetPost(int postId)
+        {
+            return solvrProxy.GetPost(postId, false, false, true);
+        }
+
         public User GetUser(int id)
         {
-            return proxy.GetUser(id);
+            return solvrProxy.GetUser(id, null);
         }
 
-        public void SetReportToResolved(int reportId)
+        public Post UpdatePost(Post post)
         {
-            proxy.SetReportToResolved(reportId);
+            return solvrProxy.UpdatePost(post);
         }
 
-        public void UpdatePostText(int reportId, string txt)
+        public Report UpdateReport(Report report)
         {
-            proxy.UpdatePostText(reportId, txt);
+            return solvrProxy.UpdateReport(report);
         }
 
-        public void DisablePost(int postId)
+        public bool IsConnectedToDb()
         {
-            proxy.DisablePost(postId);
-        }
-
-        public void UpdatePostTitle(int postId, string text)
-        {
-            proxy.UpdatePostTitle(postId, text);
+            return solvrProxy.IsConnectedToDatabase();
         }
     }
 }

@@ -5,55 +5,120 @@ using System.Text;
 using System.Threading.Tasks;
 using SolvrLibrary;
 using System.ServiceModel;
-using DataAccesLayer.DAL;
+using DataAccesLayer;
 
 namespace SolvrServices
 {
-    //InstanceContextMode = InstanceContextMode.PerCall
-    [ServiceBehavior]
-    public class SolvrService : ISolvrServices//, IDisposable
+    //[ServiceBehavior]
+    public class SolvrService : ISolvrServices
     {
-        readonly SolvrDB solvrDB = new SolvrDB();
+        private readonly DataAccesController dbCtr = new DataAccesController(false);
 
-        public List<Report> GetAllReports()
+        public SolvrService()
         {
-            return solvrDB.GetAllReports();
+           // dbCtr = new DataAccesController(false);
         }
 
-        public Report GetReport(int id)
+        public SolvrService(bool useMockDB = false)
         {
-            return solvrDB.GetReport(id);
-        }
-
-        public User GetUser(int id)
-        {
-            return solvrDB.GetUser(id);
+            dbCtr = new DataAccesController(useMockDB);
         }
 
         public bool IsConnectedToDatabase()
         {
-            return solvrDB.DatabaseExists();
+            return dbCtr.DatabaseExists();
         }
 
-        public void SetReportToResolved(int reportId)
+        #region Get Methods
+        public User GetUser(int id = 0, string username = "")
         {
-            solvrDB.SetReportToResolved(reportId);
+            return dbCtr.GetUser(id, username);
         }
 
-        public void UpdatePostText(int postId, string txt)
+        public Post GetPost(int id, bool withUsers = false, bool withComments = false, bool notDisabled = true)
         {
-            solvrDB.UpdatePostText(postId, txt);
+            return dbCtr.GetPost(id, withUsers, withComments, notDisabled);
         }
 
-        public void DisablePost(int postId)
+        public Comment GetComment(int id, bool withUser = false, bool withVotes = false)
         {
-            solvrDB.DisablePost(postId);
+            return dbCtr.GetComment(id, withUser, withVotes);
         }
 
-        public void UpdatePostTitle(int postId, string text)
+        public Category GetCategory(int id)
         {
-            solvrDB.UpdatePostTilte(postId, text);
+            return dbCtr.GetCategory(id);
         }
+
+        public Report GetReport(int id)
+        {
+            return dbCtr.GetReport(id);
+        }
+
+        public List<Post> GetPostList(int offSet, int loadCount, bool withUsers = false, bool withComments = false)
+        {
+            return dbCtr.GetPostList(offSet, loadCount, withUsers, withComments);
+        }
+
+        public List<Comment> GetCommentList(int postId, bool withUsers  = false)
+        {
+            return dbCtr.GetCommentList(postId, withUsers);
+        }
+
+        public List<Category> GetCategoryList()
+        {
+            return dbCtr.GetCategoryList();
+        }
+
+        public List<Report> GetReportList(bool onlyNotResolved = false)
+        {
+            return dbCtr.GetReportList(onlyNotResolved);
+        }
+
+        public List<Vote> GetVoteList(int commentId)
+        {
+            return dbCtr.GetVoteList(commentId);
+        }
+        #endregion
+
+        #region Create Methods
+        public Post CreatePost(Post post)
+        {
+            return dbCtr.CreatePost(post);
+        }
+
+        public User CreateUser(User user)
+        {
+            return dbCtr.CreateUser(user);
+        }
+
+        public Comment CreateComment(Comment comment)
+        {
+            return dbCtr.CreateComment(comment);
+        }
+
+        public Report CreateReport(Report report)
+        {
+            return dbCtr.CreateReport(report);
+        }
+        #endregion
+
+        #region Update Methods
+        public Comment UpdateComment(Comment comment)
+        {
+            return dbCtr.UpdateComment(comment);
+        }
+
+        public Post UpdatePost(Post post)
+        {
+            return dbCtr.UpdatePost(post);
+        }
+
+        public Report UpdateReport(Report report)
+        {
+            return dbCtr.UpdateReport(report);
+        }
+        #endregion
     }
 }
 

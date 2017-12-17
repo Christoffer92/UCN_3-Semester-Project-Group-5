@@ -77,6 +77,8 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel" />
     <Reference Include="System.IdentityModel.Services" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -213,6 +215,11 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Connected Services\RemoteSolvrReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CreatePostController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -223,15 +230,27 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CreatePostViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PostViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Connected Services\RemoteSolvrReference\item.disco" />
+    <None Include="Connected Services\RemoteSolvrReference\configuration91.svcinfo" />
+    <None Include="Connected Services\RemoteSolvrReference\configuration.svcinfo" />
+    <None Include="Connected Services\RemoteSolvrReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\AndersGert.jpg" />
+    <Content Include="Content\Images\Christoffer.jpg" />
+    <Content Include="Content\Images\DanielGL.jpg" />
+    <Content Include="Content\Images\DanielSJ.jpg" />
+    <Content Include="Content\Images\David.jpg" />
     <Content Include="Content\Images\downvote.png" />
+    <Content Include="Content\Images\TimMikkelsen.jpg" />
     <Content Include="Content\Images\upvote-downvote.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -243,6 +262,25 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Properties\DataSources\SolvrLibrary.Category.datasource" />
+    <Content Include="Properties\DataSources\SolvrLibrary.Comment.datasource" />
+    <Content Include="Properties\DataSources\SolvrLibrary.Post.datasource" />
+    <Content Include="Properties\DataSources\SolvrLibrary.Report.datasource" />
+    <Content Include="Properties\DataSources\SolvrLibrary.User.datasource" />
+    <Content Include="Properties\DataSources\SolvrLibrary.Vote.datasource" />
+    <None Include="Connected Services\RemoteSolvrReference\item.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\RemoteSolvrReference\item1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\RemoteSolvrReference\item2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\RemoteSolvrReference\item3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\RemoteSolvrReference\SolvrService.wsdl" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -282,9 +320,11 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Post\Report.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Report\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -302,14 +342,16 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DataAccesLayer\DataAccesLayer.csproj">
-      <Project>{2e3b225a-aad6-4d73-a4f6-c76db17e9638}</Project>
-      <Name>DataAccesLayer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SolvrLibrary\SolvrLibrary.csproj">
       <Project>{7a512b96-b646-4e04-b9f5-6c9658209c1b}</Project>
       <Name>SolvrLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\RemoteSolvrReference\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

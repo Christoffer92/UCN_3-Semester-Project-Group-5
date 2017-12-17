@@ -11,6 +11,8 @@
 @using (Html.BeginForm("CreatePhysical", "CreatePost", FormMethod.Post))
 {
     <div>
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+
         <b>Titel:</b><br />
         @Html.TextBoxFor(m => m.Title)<br />
         <b>Category:</b><br />
@@ -40,4 +42,7 @@
     <div class="createPost-BtnFloat">
         <input type="submit" name="Create" value="Create" class="standard-Btn-Colour standard-Btn-border btn" />
     </div><br />
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }

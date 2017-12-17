@@ -46,23 +46,82 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataAccesLayer\ModelBuilderTests.cs" />
+    <Compile Include="Connected Services\RemoteSolvrReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccesLayerTests\DataAccesControllerTests.cs" />
+    <Compile Include="DesktopTests\DesktopControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SolvrServicesTests\RemoteSolvrReferenceTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Connected Services\RemoteSolvrReference\item.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\RemoteSolvrReference\item1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\RemoteSolvrReference\item2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\RemoteSolvrReference\item3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\RemoteSolvrReference\SolvrService.wsdl" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\SolvrLibrary.Category.datasource" />
+    <None Include="Properties\DataSources\SolvrLibrary.Comment.datasource" />
+    <None Include="Properties\DataSources\SolvrLibrary.Post.datasource" />
+    <None Include="Properties\DataSources\SolvrLibrary.Report.datasource" />
+    <None Include="Properties\DataSources\SolvrLibrary.User.datasource" />
+    <None Include="Properties\DataSources\SolvrLibrary.Vote.datasource" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccesLayer\DataAccesLayer.csproj">
       <Project>{2E3B225A-AAD6-4D73-A4F6-C76DB17E9638}</Project>
       <Name>DataAccesLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SolvrDesktopClient\SolvrDesktopClient.csproj">
+      <Project>{81291A43-3210-4048-955D-0CB1C4DEFA39}</Project>
+      <Name>SolvrDesktopClient</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SolvrLibrary\SolvrLibrary.csproj">
       <Project>{7A512B96-B646-4E04-B9F5-6C9658209C1B}</Project>
       <Name>SolvrLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SolvrServices\SolvrServices.csproj">
+      <Project>{6CCBD207-72D6-41B1-8BE6-7F3093464FF5}</Project>
+      <Name>SolvrServices</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\RemoteSolvrReference\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\RemoteSolvrReference\item.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\RemoteSolvrReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\RemoteSolvrReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\RemoteSolvrReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
