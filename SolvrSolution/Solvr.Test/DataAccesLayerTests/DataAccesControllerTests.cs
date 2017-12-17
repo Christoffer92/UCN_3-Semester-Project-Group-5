@@ -66,67 +66,42 @@ namespace Solvr.Test.DataAccesLayer
         }
 
 
-        //[TestMethod]
-        //[DataRow(1, "philosophy")]
-        //[DataRow(2, "reduction")]
-        //[DataRow(3, "tree")]
-        //public void BuildCategoryTestPositive(int expectedId, string expectedName)
-        //{
+        [TestMethod]
+        [DataRow(1, "john", "john@mail.com", "john123", "lol123")]
+        [DataRow(2, "niels", "niels@mail.com", "niels123", "lel123")]
+        [DataRow(3, "stamme", "stamme@mail.com", "stamme123" ,"xd123")]
+        public void CreateUserTestPositive(int expectedId, string expectedName, string expectedEmail, string expectedUserName, string expectedPassword)
+        {
         //    Prepare
-        //    DataAccesController dbCtr = new DataAccesController(true);
-        //    Category expectedCategory = new Category()
-        //    {
-        //        Id = expectedId,
-        //        Name = expectedName
-        //    };
+            DataAccesController dbCtr = new DataAccesController(true);
+            User expectedUser = new User()
+            {
+                Id = expectedId,
+                Name = expectedName,
+                Email = expectedEmail,
+                Username = expectedUserName,
+                Password = expectedPassword
 
-        //    Act
-        //    Category actualCategory = dbCtr.CreateCategory(expectedId);
-        //    string actualName = actualCategory.Name;
-        //    int actualId = actualCategory.Id;
+            };
+
+            //    Act
+           User actualUser = dbCtr.CreateUser(expectedUser);
+            string actualName = actualUser.Name;
+            int actualId = actualUser.Id;
+            string actualEmail = actualUser.Email;
+            string actualUserName = actualUser.Username;
+            string actualPassword = actualUser.Password;
 
         //    Assert
-        //    AssertAreEqualWithMsg(expectedName, actualName, "name");
-        //    AssertAreEqualWithMsg(expectedId, actualId, "id");
-        //}
+            AssertAreEqualWithMsg(expectedName, actualName, "name");
+            AssertAreEqualWithMsg(expectedId, actualId, "id");
+            AssertAreEqualWithMsg(expectedEmail, actualEmail, "email");
+            AssertAreEqualWithMsg(expectedUserName, actualUserName, "username");
+            AssertAreEqualWithMsg(expectedPassword, actualPassword, "password");
 
-        //[TestMethod]
-        ////Testing id -1
-        //[DataRow(0, "philosophy ")]
-        ////Testing title, right one is "soup".
-        //[DataRow(736, "soup£")]
-        ////Testing +1 to id.
-        //[DataRow(1001, "test")]
-        //public void BuildCategoryTestNegative(int expectedId, string expectedName)
-        //{
-        //    //Prepare
-        //    ModelBuilder modelBuilder = new ModelBuilder();
+        }
 
-        //    //Act
-        //    try
-        //    {
-        //        modelBuilder.BuildCategory(expectedId);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        Assert.AreEqual(true, true);
-        //        return;
-        //    }
-
-        //    Category actualCategory = modelBuilder.BuildCategory(expectedId);
-
-        //    string actualName = actualCategory.Name;
-        //    int actualId = actualCategory.Id;
-
-        //    //Assert
-        //    AssertAreNotEqualWithMsg(expectedName, actualName, "name");
-
-        //    if (expectedId != 736)
-        //    {
-        //        AssertAreNotEqualWithMsg(expectedId, actualId, "id");
-        //    }
-        //}
-
+        
         //[TestMethod]
         //[DataRow(1, "Berte Chason", "bchason0@theglobeandmail.com", "ehinrichsen0", "uvLWXF", false, 2028, 06, 30, 15, 07, 52)]
         //[DataRow(573, "Leona Crock", "lcrockfw@altervista.org", "gupstellfw", "GA27D5lL", false, 2033, 05, 16, 19, 25, 39)]
@@ -159,53 +134,7 @@ namespace Solvr.Test.DataAccesLayer
         //    AssertAreEqualWithMsg(expectedPassword, actualPassword, "password");
         //}
 
-        //[TestMethod]
-        ////Testing +1 to id.
-        //[DataRow(2, "Berte Chason", "bchason0@theglobeandmail.com", "ehinrichsen0", "uvLWXF", false, 2028, 06, 30, 15, 07, 52)]
-        ////Testing -1 to id.
-        //[DataRow(0, "Berte Chason", "bchason0@theglobeandmail.com", "ehinrichsen0", "uvLWXF", false, 2028, 06, 30, 15, 07, 52)]
-        ////Testing +1 to all values, except id. Also changed the strings and flipped the bool.
-        //[DataRow(573, "Leona Croc", "Lcrockfw@altervista.org", "Gupstellfw", "gA27D5lL", true, 2034, 06, 17, 20, 26, 40)]
-        ////Testing -1 to all values, except id. Also changed the strings and flipped the bool.
-        //[DataRow(573, "Leona Croc", "Lcrockfw@altervista.org", "Gupstellfw", "gA27D5lL", true, 2032, 04, 15, 18, 24, 38)]
-        ////Testing +1 to id.
-        //[DataRow(1001, "Brigitta Munt", "bmuntrr@cmu.edu", "bguagerr", "L22rm38Aoxn0", false, 2034, 09, 29, 06, 31, 09)]
-        ////Testing -1 to id.
-        //[DataRow(999, "Brigitta Munt", "bmuntrr@cmu.edu", "bguagerr", "L22rm38Aoxn0", false, 2034, 09, 29, 06, 31, 09)]
-        //public void BuildUserTestNegative(int expectedId, string expectedName, string expectedEmail, string expectedUsername,
-        //                                 string expectedPassword, Boolean expectedIsAdmin, int expectedYear, int expectedMonth,
-        //                                 int expectedDay, int expectedHour, int expectedMinutes, int expectedSeconds)
-        //{
-        //    //Prepare
-        //    ModelBuilder modelBuilder = new ModelBuilder();
-        //    DateTime expectedDateCreated = new DateTime(expectedYear, expectedMonth, expectedDay, expectedHour, expectedMinutes, expectedSeconds);
-        //    User actualUser;
-        //    //Act
-        //    try
-        //    {
-        //        actualUser = modelBuilder.BuildUser(expectedId);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        Assert.IsTrue(true);
-        //        return;
-        //    }
-        //    int actualId = actualUser.Id;
-        //    DateTime actualDateCreated = actualUser.DateCreated;
-        //    string actualEmail = actualUser.Email;
-        //    Boolean actualIsAdmin = actualUser.IsAdmin;
-        //    string actualName = actualUser.Name;
-        //    string actualUsername = actualUser.Username;
-        //    string actualPassword = actualUser.Password;
-
-        //    //Assert
-        //    AssertAreNotEqualWithMsg(expectedDateCreated, actualDateCreated, "datedCreated");
-        //    AssertAreNotEqualWithMsg(expectedEmail, actualEmail, "email");
-        //    AssertAreNotEqualWithMsg(expectedName, actualName, "name");
-        //    AssertAreNotEqualWithMsg(expectedUsername, actualUsername, "username");
-        //    AssertAreNotEqualWithMsg(expectedPassword, actualPassword, "password");
-        //}
-
+        
 
 
 
