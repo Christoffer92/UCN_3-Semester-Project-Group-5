@@ -4,7 +4,7 @@ Solvr is an Ask/Answer website, where users with everyday issues, can post their
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
 
@@ -31,7 +31,8 @@ A step by step series of examples that tells you what you need to do, in order t
 1. Start up Visual Studio 2017 in Administrator mode and SQL Management Studio.
 ```
 ```
-2.  Within the project DbHandler --> DB Script lies the script "Create Tables.sql". Double Click and execute the script (Ctrl + shift + E)
+2.  Within the project DbHandler --> DB Script lies the script "Create Tables.sql". 
+Double Click and execute the script (Ctrl + shift + E)
 ```
 ```
 3. Right click on DbHandler and press "Set as StartUp Project", and the Run the program.
@@ -46,7 +47,9 @@ A step by step series of examples that tells you what you need to do, in order t
 5. Under Common Properties --> StartUp Project select 'Multiple Start Up Projects'. 
 ```
 ```
-6. First choose SolvrServiceConsoleApp and select 'Start'. Secondly, while still highlighting SolrServiceConsoleApp, Click on the up arrow on the right hand side, untill the project lies on top
+6. First choose SolvrServiceConsoleApp and select 'Start'. 
+Secondly, while still highlighting SolrServiceConsoleApp, 
+Click on the up arrow on the right hand side, untill the project lies on top
 ```
 ```
 7. Hereafter set SolvrDesktopClient and SolvrWebClient to 'Start without debugging'and click 'Ok'.
