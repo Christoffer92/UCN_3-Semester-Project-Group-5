@@ -14,59 +14,57 @@ What things you need to install the software and how to install them
 Without Kraka (Only Local Database)
 * Visual Studio 2017 [https://www.visualstudio.com/downloads/]
 * SQL Management Studio [https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms]
-* IIS [https://www.iis.net/downloads]
+* IIS [https://www.iis.net/downloads] (Should be activated through windows)
 ```
 ```
 With Kraka but no web server
 * Solvr.exe for the desktop clients (Admins only)
 * Visual Studio 2017 [https://www.visualstudio.com/downloads/]
-* IIS [https://www.iis.net/downloads]
-```
-```
-With Kraka with web server
-* Solvr.exe for the desktop clients (Admins only)
-* www.Solvr.com
+* IIS [https://www.iis.net/downloads] (Should be activated through windows)
 ```
 
-### Installing
+### Setup
 
-A step by step series of examples that tell you what you need, to get a development enviroment running
-
-```
-1. Give the example
-```
-
-And repeat
+A step by step series of examples that tells you what you need to do, in order to run the desktop/web client locally. 
 
 ```
-2. until finished
+1. Start up Visual Studio 2017 in Administrator mode and SQL Management Studio.
+```
+```
+2.  Within the project DbHandler --> DB Script lies the script "Create Tables.sql". Double Click and execute the script (Ctrl + shift + E)
+```
+```
+3. Right click on DbHandler and press "Set as StartUp Project", and the Run the program.
+```
+```
+4. After all the test data has been inserted, close the command console.
+```
+```
+5. Right click on the solution 'SolvrSolution', within the Solution explorer, and select Properties.
+```
+```
+5. Under Common Properties --> StartUp Project select 'Multiple Start Up Projects'. 
+```
+```
+6. First choose SolvrServiceConsoleApp and select 'Start'. Secondly, while still highlighting SolrServiceConsoleApp, Click on the up arrow on the right hand side, untill the project lies on top
+```
+```
+7. Hereafter set SolvrDesktopClient and SolvrWebClient to 'Start without debugging'and click 'Ok'.
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+Now the program can run by clicking Ctrl + F5.
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
+In order to run the tests, follow these steps.
 ```
-Give an example
+1. Open Visual studio in Administrator mode.
 ```
-
-### And coding style tests
-
-Explain what these tests test and why
-
 ```
-Give an example
+2. On the top bar click Test --> Windows --> Test Explorer and then 'Run All' tests.
 ```
+NB! If no tests show up, make sure that MSTest.TestAdapter and MSTest.TestFramework are installed in the NuGet Package manager.
 
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Built With
 
