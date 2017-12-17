@@ -70,17 +70,19 @@ Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Visual Studio Enterprise 2017](https://www.microsoft.com/) - The framework used
+* [Visual Studio Enterprise 2017](https://www.microsoft.com/) - The Framework used
+* [SQL Management Studio](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms) - The DB builder used
+* [Internet Information Services](https://www.iis.net/downloads) - The Internet Service used
 * [GitHub](https://github.com/) - Change Management
 * [Trello](https://trello.com/) - SCRUM board
 
 ## Authors
 
-* **Anders Gert Birkbak Nielsen** - Student* - [Sruffen](https://github.com/Sruffen)
-* **Christoffer Lund Sørensen** - Student* - [Christoffer92](https://github.com/Christoffer92)
-* **Daniel Grønhøj Lindgreen** - Student* - [Nycheia](https://github.com/Nycheia)
-* **Daniel Søgaard Jakobsen** - Student* - [Darkuun](https://github.com/Darkuun)
-* **David Christopher Hutchinson** - Student* - [Manadin](https://github.com/Manadin)
+* **Anders Gert Birkbak Nielsen** - *Student* - [Sruffen](https://github.com/Sruffen)
+* **Christoffer Lund Sørensen** - *Student* - [Christoffer92](https://github.com/Christoffer92)
+* **Daniel Grønhøj Lindgreen** - *Student* - [Nycheia](https://github.com/Nycheia)
+* **Daniel Søgaard Jakobsen** - *Student* - [Darkuun](https://github.com/Darkuun)
+* **David Christopher Hutchinson** - *Student* - [Manadin](https://github.com/Manadin)
 * **Tim Mikkelsen** - *Student* - [Timx0915](https://github.com/Timx0915)
 
 See also the list of [contributors] https://github.com/Christoffer92/UCN_3-Semester-Project-Group-5/graphs/contributors who participated in this project.
