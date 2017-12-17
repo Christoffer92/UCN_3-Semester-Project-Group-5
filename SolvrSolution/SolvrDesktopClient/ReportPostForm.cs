@@ -15,6 +15,7 @@ namespace SolvrDesktopClient
     {
         private FormForside forside;
         private int reportId;
+        private Post tempPost = null;
 
         public ReportPostForm(FormForside forside, int reportId)
         {
@@ -70,24 +71,26 @@ namespace SolvrDesktopClient
         {
             DesktopController desktopController = new DesktopController();
             Report report = desktopController.GetReport(reportId);
-            Post post = desktopController.GetPost(report.PostId); 
+            //Post post = desktopController.GetPost(report.PostId); 
+            tempPost = desktopController.GetPost(report.PostId);
             User user = desktopController.GetUser(report.UserId);
 
             lblUsername.Text = user.Username;
-            lblTitle.Text = post.Title;
-            lblDateTime.Text = post.DateCreated.ToString();
-            txtBoxPost.Text = post.Description;
+            lblTitle.Text = tempPost.Title;
+            lblDateTime.Text = tempPost.DateCreated.ToString();
+            txtBoxPost.Text = tempPost.Description;
         }
 
         private void btnResolve_Click(object sender, EventArgs e)
         {
             DesktopController desktopController = new DesktopController();
             Report report = desktopController.GetReport(reportId);
-            Post post = desktopController.GetPost(report.PostId);
+            //Post post = desktopController.GetPost(report.PostId);
+            Post post = tempPost;
 
             if (btnIgnore.BackColor == Color.YellowGreen)
             {
-                //TODO We need to take care of (Samtidigtheds problemet her)
+                //TODO We need to take care of (Samtidigtheds problemet her)??
                 report.IsResolved = true;
                 desktopController.UpdateReport(report);
                 forside.Show();
@@ -110,7 +113,7 @@ namespace SolvrDesktopClient
             }
             else if (btnDelete.BackColor == Color.YellowGreen)
             {
-                //TODO We need to take care of (Samtidigtheds problemet her)
+                //TODO We need to take care of (Samtidigtheds problemet her)??
                     int postId = desktopController.GetReport(reportId).PostId;
                     post.IsDisabled = true;
                     report.IsResolved = true;
@@ -125,6 +128,7 @@ namespace SolvrDesktopClient
             {
                 MessageBox.Show("Please select one of the three options or click Cancel.");
             }
+            tempPost = null;
         }
 
         private void lblTitleEditable(bool isEditable)

@@ -135,6 +135,7 @@ namespace SolvrWebClient.Controllers
 
             viewPost.Title = post.Title;
             viewPost.Description = post.Description;
+            viewPost.LastEdited = post.LastEdited;
 
             viewPost.postId = ID;
             viewPost.CategoryId = post.CategoryId;
@@ -159,6 +160,7 @@ namespace SolvrWebClient.Controllers
 
             viewPost.Title = post.Title;
             viewPost.Description = post.Description;
+            viewPost.LastEdited = post.LastEdited;
 
             viewPost.postId = ID;
             viewPost.CategoryId = post.CategoryId;
@@ -184,21 +186,12 @@ namespace SolvrWebClient.Controllers
         {
             Post post = DB.GetPost(model.postId, false, false, true);
 
-            if (!post.Title.Equals(model.Title))
-            {
-                post.Title = model.Title;
-            }
+            post.Title = model.Title;
+            post.Description = model.Description;
+            post.LastEdited = model.LastEdited;
 
-            if (!post.Description.Equals(model.Description))
-            {
-                post.Description = model.Description;
-            }
-
-            if (post.CategoryId != model.CategoryId)
-            {
-                post.CategoryId = model.CategoryId;
-                post.Category = DB.GetCategory(model.CategoryId);
-            }
+            post.CategoryId = model.CategoryId;
+            post.Category = DB.GetCategory(model.CategoryId);
 
             List<string> tagsList = new List<string>();
 
@@ -216,7 +209,15 @@ namespace SolvrWebClient.Controllers
 
             post.Tags = tagsList;
 
-            DB.UpdatePost(post);
+            try
+            {
+                DB.UpdatePost(post);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
 
             return RedirectToAction("Index", "Post", new { ID = model.postId });
         }
@@ -225,41 +226,16 @@ namespace SolvrWebClient.Controllers
         {
             PhysicalPost post = (PhysicalPost)DB.GetPost(model.postId, false, false, true);
 
-            if (!post.Title.Equals(model.Title))
-            {
-                post.Title = model.Title;
-            }
+            post.Title = model.Title;
+            post.Description = model.Description;
 
-            if (!post.Description.Equals(model.Description))
-            {
-                post.Description = model.Description;
-            }
+            post.CategoryId = model.CategoryId;
+            post.Category = DB.GetCategory(model.CategoryId);
 
-            if (post.CategoryId != model.CategoryId)
-            {
-                post.CategoryId = model.CategoryId;
-                post.Category = DB.GetCategory(model.CategoryId);
-            }
-
-            if (!post.AltDescription.Equals(model.AltDescription))
-            {
-                post.AltDescription = model.AltDescription;
-            }
-
-            if (!post.Zipcode.Equals(model.Zipcode))
-            {
-                post.Zipcode = model.Zipcode;
-            }
-
-            if (!post.Address.Equals(model.Address))
-            {
-                post.Address = model.Address;
-            }
-
-            if (post.IsLocked != model.IsLocked)
-            {
-                post.IsLocked = model.IsLocked;
-            }
+            post.AltDescription = model.AltDescription;
+            post.Zipcode = model.Zipcode;
+            post.Address = model.Address;
+            post.IsLocked = model.IsLocked;
 
             List<string> tagsList = new List<string>();
 
@@ -276,7 +252,7 @@ namespace SolvrWebClient.Controllers
             }
 
             post.Tags = tagsList;
-
+            post.LastEdited = model.LastEdited;
 
             DB.UpdatePost(post);
 

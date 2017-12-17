@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SolvrLibrary;
+using System.ServiceModel;
 
 namespace DataAccesLayer.DAL
 {
@@ -203,82 +204,135 @@ namespace DataAccesLayer.DAL
         #region Update methods
         public Comment UpdateComment(Comment comment)
         {
-            if (comment.CommentType.Equals("Comment"))
+            try
             {
-                using (var db = new SolvrContext())
+                if (comment.CommentType.Equals("Comment"))
                 {
-                    var Query = (from comm in db.Comments where comm.Id == comment.Id select comm).First();
-                    Query.Text = comment.Text;
-                    Query.IsDisabled = comment.IsDisabled;
-                    db.SubmitChanges();
+                    using (var db = new SolvrContext())
+                    {
+                        var Query = (from comm in db.Comments where comm.Id == comment.Id && comm.LastEdited == comment.LastEdited select comm).First();
+                        Query.Text = comment.Text;
+                        Query.IsDisabled = comment.IsDisabled;
+                        Query.LastEdited = DateTime.Now;
+                        db.SubmitChanges();
+                    }
+                    return comment;
                 }
-                return comment;
+                else
+                {
+                    SolvrComment solvrComment = (SolvrComment)comment;
+                    using (var db = new SolvrContext())
+                    {
+                        var Query = (from solvrComm in db.Comments.OfType<SolvrComment>() where solvrComm.Id == comment.Id && solvrComm.LastEdited == comment.LastEdited select solvrComm).First();
+                        Query.IsAccepted = solvrComment.IsAccepted;
+                        Query.TimeAccepted = solvrComment.TimeAccepted;
+                        Query.Text = solvrComment.Text;
+                        Query.IsDisabled = solvrComment.IsDisabled;
+                        Query.LastEdited = DateTime.Now;
+                        db.SubmitChanges();
+                    }
+                    return solvrComment;
+                }
             }
-            else
+            catch (Exception e)
             {
-                SolvrComment solvrComment = (SolvrComment)comment;
+                //if an exception occurs this checks if there even is a comment with the ID, if there is then ít has been changed from another place.
                 using (var db = new SolvrContext())
                 {
-                    var Query = (from solvrComm in db.Comments.OfType<SolvrComment>() where solvrComm.Id == comment.Id select solvrComm).First();
-                    Query.IsAccepted = solvrComment.IsAccepted;
-                    Query.TimeAccepted = solvrComment.TimeAccepted;
-                    Query.Text = solvrComment.Text;
-                    Query.IsDisabled = solvrComment.IsDisabled;
-                    db.SubmitChanges();
+                    var Query = from comm in db.Comments where comm.Id == comment.Id select comm;
+
+                    if (Query.Count() == 0)
+                    {
+                        //Concurrency error
+                        throw new NotImplementedException();
+                    }
+                    else
+                    {
+                        //Standard error
+                        throw new NotImplementedException();
+                    }
                 }
-                return solvrComment;
             }
         }
 
         public Post UpdatePost(Post post)
         {
-            if (post.PostType.Equals("Post"))
+            try
             {
-                using (var db = new SolvrContext())
+                if (post.PostType.Equals("Post"))
                 {
-                    var Query = (from pos in db.Posts where pos.Id == post.Id select pos).First();
-                    Query.Title = post.Title;
-                    Query.Description = post.Description;
-                    Query.BumpTime = post.BumpTime;
-                    Query.CategoryId = post.CategoryId;
-                    Query.IsDisabled = post.IsDisabled;
-                    db.SubmitChanges();
+                    using (var db = new SolvrContext())
+                    {
+                        var Query = (from pos in db.Posts where pos.Id == post.Id && pos.LastEdited == post.LastEdited select pos).First();
+                        Query.Title = post.Title;
+                        Query.Description = post.Description;
+                        Query.BumpTime = post.BumpTime;
+                        Query.CategoryId = post.CategoryId;
+                        Query.IsDisabled = post.IsDisabled;
+                        //Somewhere in MVC, miliseconds gets erased, so here it is just removed entirely.
+                        DateTime dt = DateTime.Now;
+                        Query.LastEdited = dt.AddMilliseconds(-dt.Millisecond);
+                        db.SubmitChanges();
+                    }
+                    return post;
                 }
-                return post;
+                else
+                {
+                    PhysicalPost physicalPost = (PhysicalPost)post;
+                    using (var db = new SolvrContext())
+                    {
+                        var Query = (from physPost in db.Posts.OfType<PhysicalPost>() where physPost.Id == physicalPost.Id && physPost.LastEdited == post.LastEdited select physPost).First();
+                        Query.Title = physicalPost.Title;
+                        Query.Description = physicalPost.Description;
+                        Query.BumpTime = physicalPost.BumpTime;
+                        Query.CategoryId = physicalPost.CategoryId;
+                        Query.IsDisabled = physicalPost.IsDisabled;
+                        Query.IsLocked = physicalPost.IsLocked;
+                        Query.AltDescription = physicalPost.AltDescription;
+                        Query.Zipcode = physicalPost.Zipcode;
+                        Query.Address = physicalPost.Address;
+                        //Somewhere in MVC, miliseconds gets erased, so here it is just removed entirely.
+                        DateTime dt = DateTime.Now;
+                        Query.LastEdited = dt.AddMilliseconds(-dt.Millisecond);
+                        db.SubmitChanges();
+                    }
+                    return physicalPost;
+                }
             }
-            else
+            catch (Exception)
             {
-                PhysicalPost physicalPost = (PhysicalPost)post;
+                //if an exception occurs this checks if there even is a comment with the ID, if there is then ít has been changed from another place.
                 using (var db = new SolvrContext())
                 {
-                    var Query = (from physPost in db.Posts.OfType<PhysicalPost>() where physPost.Id == physicalPost.Id select physPost).First();
-                    Query.Title = physicalPost.Title;
-                    Query.Description = physicalPost.Description;
-                    Query.BumpTime = physicalPost.BumpTime;
-                    Query.CategoryId = physicalPost.CategoryId;
-                    Query.IsDisabled = physicalPost.IsDisabled;
-                    Query.IsLocked = physicalPost.IsLocked;
-                    Query.AltDescription = physicalPost.AltDescription;
-                    Query.Zipcode = physicalPost.Zipcode;
-                    Query.Address = physicalPost.Address;
-                    db.SubmitChanges();
+
+                    var Query = from pos in db.Posts where pos.Id == post.Id select pos;
+
+                    //Query is a form of collection so we can check how many objects that is returned.
+                    if (Query.Count() > 0)
+                    {
+                        //Concurrency error
+                        throw new FaultException("");
+                    }
                 }
-                return physicalPost;
+
+                //Standard error
+                throw new NotImplementedException();
             }
         }
 
-            public Report UpdateReport(Report report)
+        public Report UpdateReport(Report report)
+        {
+            using (var db = new SolvrContext())
             {
-                using (var db = new SolvrContext())
-                {
-                    var Query = (from rep in db.Reports where rep.Id == report.Id select rep).First();
-                    Query.Title = report.Title;
-                    Query.Description = report.Description;
-                    Query.IsResolved = report.IsResolved;
-                    db.SubmitChanges();
-                }
-            return report;
+                var Query = (from rep in db.Reports where rep.Id == report.Id select rep).First();
+                Query.Title = report.Title;
+                Query.Description = report.Description;
+                Query.IsResolved = report.IsResolved;
+                db.SubmitChanges();
             }
+
+            return report;
+        }
         #endregion
     }
 }

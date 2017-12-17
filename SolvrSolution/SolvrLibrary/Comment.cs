@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SolvrLibrary
 {
     [Table(Name = "comments")]
-    [InheritanceMapping(Code = "Solvr", Type = typeof(SolvrComment))] //expects the Descriminator is a stype of string
+    [InheritanceMapping(Code = "Solvr", Type = typeof(SolvrComment))]
     [InheritanceMapping(Code = "Comment", Type = typeof(Comment), IsDefault = true)]
     [KnownType(typeof(SolvrComment))]
     [DataContract]
@@ -19,6 +19,9 @@ namespace SolvrLibrary
         {
             DateCreated = DateTime.Now;
             Votes = new List<Vote>();
+            //Somewhere in MVC, miliseconds gets erased, so here it is just removed entirely.
+            DateTime dt = DateTime.Now;
+            LastEdited = dt.AddMilliseconds(-dt.Millisecond);
         }
 
         [Column(IsPrimaryKey = true, IsDbGenerated = true)]
@@ -48,6 +51,10 @@ namespace SolvrLibrary
         [Column(IsDiscriminator = true)]
         [DataMember]
         public string CommentType { get; set; }
+
+        [Column()]
+        [DataMember]
+        public DateTime LastEdited { get; set; }
 
         [DataMember]
         public User User { get; set; }

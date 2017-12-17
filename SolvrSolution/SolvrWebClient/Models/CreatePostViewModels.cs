@@ -29,6 +29,8 @@ namespace SolvrWebClient.Models
         public string TagsString { get; set; }
 
         public int postId { get; set; }
+
+        public DateTime LastEdited { get; set; }
     }
 
     public class PhysicalPostViewModel
@@ -67,5 +69,7 @@ namespace SolvrWebClient.Models
         public int postId { get; set; }
 
         public bool IsLocked { get; set; }
+
+        public DateTime LastEdited { get; set; }
     }
 }
