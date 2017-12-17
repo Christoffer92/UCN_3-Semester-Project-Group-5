@@ -13,9 +13,16 @@ namespace DataAccesLayer.DAL
     {
         public bool DatabaseExists()
         {
-            using (var db = new SolvrContext())
+            try
             {
-                return db.DatabaseExists();
+                using (var db = new SolvrContext())
+                {
+                    return db.DatabaseExists();
+                }
+            }
+            catch (Exception)
+            {
+                throw new FaultException("0919 - 25 - No connection to the Database.");
             }
         }
 
@@ -23,18 +30,31 @@ namespace DataAccesLayer.DAL
 
         public Category GetCategory(int id)
         {
-            //from post in DB.Posts orderby post.BumpTime descending select post).Skip(loadCount).Take(24
-            using (var db = new SolvrContext())
+            try
             {
-                return (from category in db.Categories where category.Id == id select category).First();               
+                using (var db = new SolvrContext())
+                {
+                    return (from category in db.Categories where category.Id == id select category).First();
+                }
+            }
+            catch (Exception)
+            {
+                throw new FaultException("0918 - 42 - No category exists with the given ID");
             }
         }
 
         public Comment GetComment(int id)
         {
-            using (var db = new SolvrContext())
+            try
             {
-                return (from comment in db.Comments where comment.Id == id select comment).First();
+                using (var db = new SolvrContext())
+                {
+                    return (from comment in db.Comments where comment.Id == id select comment).First();
+                }
+            }
+            catch (Exception)
+            {
+                throw new FaultException("0918 - 57 - No comment exists with the given ID");
             }
         }
     
@@ -55,10 +75,18 @@ namespace DataAccesLayer.DAL
         }
         public User GetUser(string username)
         {
-            using (var db = new SolvrContext())
+            try
             {
-                return (from user in db.Users where user.Username == username select user).First();
+                using (var db = new SolvrContext())
+                {
+                    return (from user in db.Users where user.Username == username select user).First();
+                }
             }
+            catch (Exception)
+            {
+                throw new FaultException("0918 - 87 - No user exists with the given ID");
+            }
+
         }
         public User GetUser(int id)
         {
@@ -191,12 +219,20 @@ namespace DataAccesLayer.DAL
 
         public User InsertUser(User user)
         {
-            using (var db = new SolvrContext())
+            try
             {
-                db.Users.InsertOnSubmit(user);
-                db.SubmitChanges();
+                using (var db = new SolvrContext())
+                {
+                    db.Users.InsertOnSubmit(user);
+                    db.SubmitChanges();
+                }
+                return user;
             }
-            return user;
+            catch (Exception e)
+            {
+                throw new FaultException(e.Message);
+            }
+            
         }
 
         #endregion
@@ -299,24 +335,28 @@ namespace DataAccesLayer.DAL
                     return physicalPost;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 //if an exception occurs this checks if there even is a comment with the ID, if there is then ít has been changed from another place.
                 using (var db = new SolvrContext())
                 {
-
+                    //another query to see if a post with the postId actually exists
                     var Query = from pos in db.Posts where pos.Id == post.Id select pos;
 
                     //Query is a form of collection so we can check how many objects that is returned.
                     if (Query.Count() > 0)
                     {
                         //Concurrency error
-                        throw new FaultException("");
+                        throw new FaultException("0917 - 316 - Edit timer Mismatch");
+                    }
+                    else
+                    {
+                        throw new FaultException("0918 - 320 - A post with the ID doesnt exists");
                     }
                 }
 
                 //Standard error
-                throw new NotImplementedException();
+                throw new FaultException("0916 - 327 - Something went wrong");
             }
         }
 

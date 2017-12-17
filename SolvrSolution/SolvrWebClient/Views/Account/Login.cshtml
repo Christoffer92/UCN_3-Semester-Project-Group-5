@@ -10,7 +10,7 @@
     <div class="col-md-8">
         <section id="loginForm">
             @*ReturnURL er noget fra den forrige login metode*@
-            @using (Html.BeginForm("Login", "Account", @*new { ReturnUrl = ViewBag.ReturnUrl },*@ FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @*Ved ikke om antiforgerytoken skal være her*@
                 @Html.AntiForgeryToken()
@@ -33,15 +33,6 @@
                         @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                @*Her kan man lave en remember me checkbox*@
-                @*<div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
-                        </div>
-                    </div>
-                </div>*@
                 @*Her er knappen til at logge ind med*@
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
@@ -52,21 +43,7 @@
                 <p>
                     @Html.ActionLink("Register as a new user", "Register")
                 </p>
-                @* Enable this once you have account confirmation enabled for password reset functionality
-                    <p>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>*@
             }
         </section>
     </div>
-    @*Hvis man har lyst kan man tilføje en facebook login her også "ExternalLogin"*@
-    @*<div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
-    </div>*@
 </div>
-@*Ved intet om det her*@
-@*@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}*@

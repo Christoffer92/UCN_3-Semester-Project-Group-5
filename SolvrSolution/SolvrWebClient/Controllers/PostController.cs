@@ -12,11 +12,6 @@ namespace SolvrWebClient.Controllers
     {
         private static RemoteSolvrReference.ISolvrServices DB = new RemoteSolvrReference.SolvrServicesClient();
 
-        public PostController()
-        {
-
-        }
-
 
         public ActionResult Index(int ID = 0)
         {
@@ -142,7 +137,6 @@ namespace SolvrWebClient.Controllers
                 return View(model);
             }
         }
-
 
         public ActionResult PostComment(CommentViewModel model, string comment = "Post Comment")
         {

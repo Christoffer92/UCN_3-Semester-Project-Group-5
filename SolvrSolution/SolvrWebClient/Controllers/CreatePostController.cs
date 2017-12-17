@@ -3,6 +3,7 @@ using SolvrWebClient.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Web;
 using System.Web.Mvc;
 
@@ -10,12 +11,7 @@ namespace SolvrWebClient.Controllers
 {
     public class CreatePostController : Controller
     {
-        //Overloaded constructors for connecting to either SolvrDB or MockDB
         private static RemoteSolvrReference.ISolvrServices DB = new RemoteSolvrReference.SolvrServicesClient();
-        public CreatePostController()
-        {
-
-        }
 
         //CreatePost:
         //  Create a post with the following attributes from PostViewModel model.
@@ -38,9 +34,16 @@ namespace SolvrWebClient.Controllers
                 }
             }
 
-            p.UserId = DB.GetUser(0, (string)Session["Username"]).Id;
+            try
+            {
+                p.UserId = DB.GetUser(0, (string)Session["Username"]).Id;
+                return DB.CreatePost(p);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
 
-            return DB.CreatePost(p);
         }
 
         //CreatePhysicalPost:
@@ -67,19 +70,36 @@ namespace SolvrWebClient.Controllers
             p.Zipcode = model.Zipcode;
             p.Address = model.Address;
 
-            p.UserId = DB.GetUser(0, (string)Session["Username"]).Id;
+            try
+            {
+                p.UserId = DB.GetUser(0, (string)Session["Username"]).Id;
 
-            p = (PhysicalPost)DB.CreatePost(p);
+                p = (PhysicalPost)DB.CreatePost(p);
 
-            return p;
+                return p;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            
         }
 
         //Main View for Create post
         // GET: CreatePost
         public ActionResult Index()
         {
-            ViewBag.DropDownList = new SelectList(DB.GetCategoryList(), "Id", "Name");
-            return View();
+            try
+            {
+                ViewBag.DropDownList = new SelectList(DB.GetCategoryList(), "Id", "Name");
+
+                return View();
+            }
+            catch (Exception)
+            {
+                return View("Error");
+            }
+            
         }
 
         // POST: CreatePost/Create
@@ -104,8 +124,15 @@ namespace SolvrWebClient.Controllers
         // GET: CreatePost/CreatePhysical
         public ActionResult CreatePhysical()
         {
-            ViewBag.DropDownList = new SelectList(DB.GetCategoryList(), "Id", "Name");
-            return View();
+            try
+            {
+                ViewBag.DropDownList = new SelectList(DB.GetCategoryList(), "Id", "Name");
+                return View();
+            }
+            catch (Exception)
+            {
+                return View("Error");
+            }
         }
 
         // POST: CreatePost/CreatePhysical
@@ -128,9 +155,27 @@ namespace SolvrWebClient.Controllers
         }
 
         // GET: CreatePost/Edit/id
-        public ActionResult EditPost(int ID)
+        public ActionResult EditPost(int ID, string errorMsg = "")
         {
-            Post post = DB.GetPost(ID, false, false, true);
+
+            if (!errorMsg.Equals(""))
+            {
+                ModelState.AddModelError("", errorMsg);
+            }
+
+            Post post = null;
+            try
+            {
+                post = DB.GetPost(ID, false, false, true);
+                ViewBag.CategoryName = post.Category.Name;
+                ViewBag.DropdownList = new SelectList(DB.GetCategoryList(), "Id", "Name");
+
+            }
+            catch (Exception)
+            {
+                return View("Error");
+            }
+            
             PostViewModel viewPost = new PostViewModel();
 
             viewPost.Title = post.Title;
@@ -147,15 +192,25 @@ namespace SolvrWebClient.Controllers
             }
             viewPost.TagsString = tags;
 
-            ViewBag.CategoryName = post.Category.Name;
-            ViewBag.DropdownList = new SelectList(DB.GetCategoryList(), "Id", "Name");
-
+            
             return View(viewPost);
         }
 
         public ActionResult EditPhysicalPost(int ID)
         {
-            PhysicalPost post = (PhysicalPost)DB.GetPost(ID, false, false, true);
+            PhysicalPost post = null;
+            try
+            {
+                post = (PhysicalPost)DB.GetPost(ID, false, false, true);
+
+                ViewBag.CategoryName = post.Category.Name;
+                ViewBag.DropdownList = new SelectList(DB.GetCategoryList(), "Id", "Name");
+            }
+            catch (Exception)
+            {
+                return View("Error");
+            }
+
             PhysicalPostViewModel viewPost = new PhysicalPostViewModel();
 
             viewPost.Title = post.Title;
@@ -175,24 +230,30 @@ namespace SolvrWebClient.Controllers
                 tags = tags + " " + item;
             }
             viewPost.TagsString = tags;
-
-            ViewBag.CategoryName = post.Category.Name;
-            ViewBag.DropdownList = new SelectList(DB.GetCategoryList(), "Id", "Name");
-
+            
             return View(viewPost);
         }
 
         public ActionResult UpdatePost(PostViewModel model)
         {
-            Post post = DB.GetPost(model.postId, false, false, true);
+            Post post = null;
+            try
+            {
+                post = DB.GetPost(model.postId, false, false, true);
+                post.CategoryId = model.CategoryId;
+                post.Category = DB.GetCategory(model.CategoryId);
+
+            }
+            catch (Exception)
+            {
+                return View("Error");
+            }
 
             post.Title = model.Title;
             post.Description = model.Description;
             post.LastEdited = model.LastEdited;
 
-            post.CategoryId = model.CategoryId;
-            post.Category = DB.GetCategory(model.CategoryId);
-
+            
             List<string> tagsList = new List<string>();
 
 
@@ -213,10 +274,22 @@ namespace SolvrWebClient.Controllers
             {
                 DB.UpdatePost(post);
             }
-            catch (Exception)
+            catch (FaultException e)
             {
-
-                throw;
+                if (e.Message.Contains("0917"))
+                {
+                    return RedirectToAction("EditPost", "CreatePost", new { ID = model.postId, errorMsg = "Post have been edited by an admin, please re-read your post before editing it." });
+                }
+                else
+                {
+                    ViewBag.ErrorMsg = e.Message;
+                    return View("Error");
+                }
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorMsg = e.Message;
+                return View("Error");
             }
 
             return RedirectToAction("Index", "Post", new { ID = model.postId });
@@ -224,14 +297,23 @@ namespace SolvrWebClient.Controllers
 
         public ActionResult UpdatePhysical(PhysicalPostViewModel model)
         {
-            PhysicalPost post = (PhysicalPost)DB.GetPost(model.postId, false, false, true);
+            PhysicalPost post = null;
+            try
+            {
+                post = (PhysicalPost)DB.GetPost(model.postId, false, false, true);
+                post.CategoryId = model.CategoryId;
+                post.Category = DB.GetCategory(model.CategoryId);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
 
             post.Title = model.Title;
             post.Description = model.Description;
-
-            post.CategoryId = model.CategoryId;
-            post.Category = DB.GetCategory(model.CategoryId);
-
+            
             post.AltDescription = model.AltDescription;
             post.Zipcode = model.Zipcode;
             post.Address = model.Address;
@@ -254,7 +336,15 @@ namespace SolvrWebClient.Controllers
             post.Tags = tagsList;
             post.LastEdited = model.LastEdited;
 
-            DB.UpdatePost(post);
+            try
+            {
+                DB.UpdatePost(post);
+
+            }
+            //håndter Samtidighed.
+            catch (Exception)
+            {
+                return View("Error");            }
 
             return RedirectToAction("PhysicalIndex", "Post", new { ID = model.postId });
         }
