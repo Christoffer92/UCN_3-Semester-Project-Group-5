@@ -86,7 +86,6 @@ namespace SolvrWebClient.Controllers
         }
 
         //Main View for Create post
-        // GET: CreatePost
         public ActionResult Index()
         {
             try
@@ -102,8 +101,6 @@ namespace SolvrWebClient.Controllers
             
         }
 
-        // POST: CreatePost/Create
-        [HttpPost]
         public ActionResult Create(PostViewModel model)
         {
             Post post = null;
@@ -121,7 +118,6 @@ namespace SolvrWebClient.Controllers
             return RedirectToAction("Index", "Post", new { ID = post.Id });
         }
 
-        // GET: CreatePost/CreatePhysical
         public ActionResult CreatePhysical()
         {
             try
@@ -234,6 +230,7 @@ namespace SolvrWebClient.Controllers
             return View(viewPost);
         }
 
+        [HttpPost]
         public ActionResult UpdatePost(PostViewModel model)
         {
             Post post = null;
@@ -295,6 +292,7 @@ namespace SolvrWebClient.Controllers
             return RedirectToAction("Index", "Post", new { ID = model.postId });
         }
 
+        [HttpPost]
         public ActionResult UpdatePhysical(PhysicalPostViewModel model)
         {
             PhysicalPost post = null;
@@ -341,10 +339,23 @@ namespace SolvrWebClient.Controllers
                 DB.UpdatePost(post);
 
             }
-            //håndter Samtidighed.
-            catch (Exception)
+            catch (FaultException e)
             {
-                return View("Error");            }
+                if (e.Message.Contains("0917"))
+                {
+                    return RedirectToAction("EditPost", "CreatePost", new { ID = model.postId, errorMsg = "Post have been edited by an admin, please re-read your post before editing it." });
+                }
+                else
+                {
+                    ViewBag.ErrorMsg = e.Message;
+                    return View("Error");
+                }
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorMsg = e.Message;
+                return View("Error");
+            }
 
             return RedirectToAction("PhysicalIndex", "Post", new { ID = model.postId });
         }
