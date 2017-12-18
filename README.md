@@ -14,7 +14,7 @@ Solvr is an Ask/Answer website, where users with everyday issues, can post their
 3. Cannot resolve Reports on Comments and Users, only Posts.
 ```
 ```
-4. Peronsal profile settings
+4. Personal profile settings
 ```
 ```
 5. Admin profile settings
