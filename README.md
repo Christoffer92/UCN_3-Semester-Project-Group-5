@@ -101,6 +101,20 @@ In order to run the tests, follow these steps.
 ```
 NB! If no tests show up, make sure that MSTest.TestAdapter and MSTest.TestFramework are installed in the NuGet Package manager.
 
+## Error Codes 
+
+```
+0916: Standard error
+```
+```
+0917: Concurrency
+```
+```
+0918: ID Argument error
+```
+```
+0919: DB Connection error
+```
 
 ## Built With
 
