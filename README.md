@@ -2,6 +2,39 @@
 
 Solvr is an Ask/Answer website, where users with everyday issues, can post their problems on a forum and receive help. 
 
+## Features not implemented yet
+
+```
+1. Search feature, located on home page
+```
+```
+2. Bump feature for posts
+```
+```
+3. Cannot resolve Reports on Comments and Users, only Posts.
+```
+```
+4. Peronsal profile settings
+```
+```
+5. Admin profile settings
+```
+```
+5. Login for Admins, only a .exe file for now.
+```
+```
+6. Convert basicHTTP to wsHTTP binding
+```
+```
+7. Tooltips
+```
+```
+8. Activity history
+```
+```
+9. Upvote/Downvote system
+```
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
@@ -68,6 +101,20 @@ In order to run the tests, follow these steps.
 ```
 NB! If no tests show up, make sure that MSTest.TestAdapter and MSTest.TestFramework are installed in the NuGet Package manager.
 
+## Error Codes 
+
+```
+0916: Standard error
+```
+```
+0917: Concurrency
+```
+```
+0918: ID Argument error
+```
+```
+0919: DB Connection error
+```
 
 ## Built With
 
