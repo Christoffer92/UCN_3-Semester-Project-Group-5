@@ -25,6 +25,9 @@ namespace SolvrLibrary
             DateCreated = DateTime.Now;
             Tags = new List<string>();
             Comments = new List<Comment>();
+            //Somewhere in MVC, miliseconds gets erased, so here it is just removed entirely.
+            DateTime dt = DateTime.Now;
+            LastEdited = dt.AddMilliseconds(-dt.Millisecond);
         }
 
         [Column(IsPrimaryKey = true, IsDbGenerated = true)]
@@ -63,6 +66,10 @@ namespace SolvrLibrary
         [DataMember]
         public bool IsDisabled { get; set; }
 
+        [Column()]
+        [DataMember]
+        public DateTime LastEdited { get; set; }
+
         [DataMember]
         public List<string> Tags { get; set; }
 
@@ -74,5 +81,7 @@ namespace SolvrLibrary
 
         [DataMember]
         public List<Comment> Comments { get; set; }
+
+        
     }
 }

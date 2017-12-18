@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,6 +16,7 @@ namespace SolvrDesktopClient
     {
         private FormForside forside;
         private int reportId;
+        private Post tempPost = null;
 
         public ReportPostForm(FormForside forside, int reportId)
         {
@@ -70,61 +72,90 @@ namespace SolvrDesktopClient
         {
             DesktopController desktopController = new DesktopController();
             Report report = desktopController.GetReport(reportId);
-            Post post = desktopController.GetPost(report.PostId); 
+            //Post post = desktopController.GetPost(report.PostId); 
+            tempPost = desktopController.GetPost(report.PostId);
             User user = desktopController.GetUser(report.UserId);
 
             lblUsername.Text = user.Username;
-            lblTitle.Text = post.Title;
-            lblDateTime.Text = post.DateCreated.ToString();
-            txtBoxPost.Text = post.Description;
+            lblTitle.Text = tempPost.Title;
+            txtBoxTitle.Text = lblTitle.Text;
+            lblDateTime.Text = tempPost.DateCreated.ToString();
+            txtBoxPost.Text = tempPost.Description;
         }
 
         private void btnResolve_Click(object sender, EventArgs e)
         {
             DesktopController desktopController = new DesktopController();
             Report report = desktopController.GetReport(reportId);
-            Post post = desktopController.GetPost(report.PostId);
+            //Post post = desktopController.GetPost(report.PostId);
+            Post post = tempPost;
+            try
+            {
+                if (btnIgnore.BackColor == Color.YellowGreen)
+                {
+                    //TODO We need to take care of (Samtidigtheds problemet her)??
+                    report.IsResolved = true;
+                    desktopController.UpdateReport(report);
+                    forside.Show();
+                    forside.btnRefreshTable_Click(null, null);
+                    this.Hide();
+                }
+                else if (btnEdit.BackColor == Color.YellowGreen)
+                {
+                    //TODO We need to take care of (Samtidigtheds problemet her)
+                    post.Description = txtBoxPost.Text;
+                    post.Title = txtBoxTitle.Text;
+                    report.IsResolved = true;
 
-            if (btnIgnore.BackColor == Color.YellowGreen)
-            {
-                //TODO We need to take care of (Samtidigtheds problemet her)
-                report.IsResolved = true;
-                desktopController.UpdateReport(report);
-                forside.Show();
-                forside.btnRefreshTable_Click(null, null);
-                this.Hide();
-            }
-            else if (btnEdit.BackColor == Color.YellowGreen)
-            {
-                //TODO We need to take care of (Samtidigtheds problemet her)
-                post.Description = txtBoxPost.Text;
-                post.Title = txtBoxTitle.Text;
-                report.IsResolved = true;
-                                
-                desktopController.UpdatePost(post);
-                desktopController.UpdateReport(report);
+                    desktopController.UpdatePost(post);
+                    desktopController.UpdateReport(report);
 
-                forside.Show();
-                forside.btnRefreshTable_Click(null, null);
-                this.Hide();
-            }
-            else if (btnDelete.BackColor == Color.YellowGreen)
-            {
-                //TODO We need to take care of (Samtidigtheds problemet her)
+                    forside.Show();
+                    forside.btnRefreshTable_Click(null, null);
+                    this.Hide();
+                }
+                else if (btnDelete.BackColor == Color.YellowGreen)
+                {
+                    //TODO We need to take care of (Samtidigtheds problemet her)??
                     int postId = desktopController.GetReport(reportId).PostId;
                     post.IsDisabled = true;
                     report.IsResolved = true;
                     desktopController.UpdatePost(post);
                     desktopController.UpdateReport(report);
-                    
+
                     forside.Show();
                     forside.btnRefreshTable_Click(null, null);
                     this.Hide();
+                }
+                else
+                {
+                    MessageBox.Show("Please select one of the three options or click Cancel.");
+                }
+                tempPost = null;
+
             }
-            else
+            catch (FaultException ex)
             {
-                MessageBox.Show("Please select one of the three options or click Cancel.");
+
+                if (ex.Message.Contains("0917"))
+                {
+                    //concurrency handling
+                    MessageBox.Show("The post has been edited by another admin or the owner, please re-read before resolving.", "The post was edited.", MessageBoxButtons.OK);
+                    LoadPost();
+                }
+                else
+                {
+                    MessageBox.Show("Something went wrong. /nError: " + ex.Message, "An error has occured.", MessageBoxButtons.OK);
+                    LoadPost();
+                }
+
             }
+            catch (Exception)
+            {
+                MessageBox.Show("Something went wrong. /n Unidentified Error", "An error has occured.", MessageBoxButtons.OK);
+                LoadPost(); ;
+            }
+
         }
 
         private void lblTitleEditable(bool isEditable)

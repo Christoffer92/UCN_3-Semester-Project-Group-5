@@ -23,7 +23,7 @@
             {
                 if (ViewBag.UserIsOwner)
                 {
-                    <input type="button" name="Edit Post" value="Edit" style="margin-right: 15px" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("EditPost", "CreatePost", new { ID = Model.PostId })'" />
+                    <input type="button" name="Edit Post" value="Edit" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("EditPost", "CreatePost", new { ID = Model.PostId })'" />
                 }
                 else
                 {

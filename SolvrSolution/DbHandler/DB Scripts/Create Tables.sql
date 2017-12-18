@@ -26,6 +26,7 @@ create table posts (
 	description VARCHAR(1500),
 	bumpTime DATETIME, 
 	dateCreated DATETIME,
+	lastEdited datetime,
 	postType VARCHAR(20),
 	isDisabled BIT,
 	isLocked BIT,
@@ -43,8 +44,9 @@ create table comments (
 	text varchar(1500),
 	commentType varchar(20),
 	timeAccepted datetime,
+	isDisabled BIT,
 	isAccepted BIT,
-	IsDisabled BIT,
+	lastEdited datetime,
 	userid int FOREIGN KEY REFERENCES users(id),
 	postid int FOREIGN KEY REFERENCES posts(id)
 );

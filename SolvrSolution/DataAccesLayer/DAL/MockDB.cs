@@ -12,7 +12,7 @@ namespace DataAccesLayer.DAL
     {
         public MockDB()
         {
-            FillTestData(); 
+            FillTestData();
         }
 
         public static void CloseDB()
@@ -75,8 +75,8 @@ namespace DataAccesLayer.DAL
                 Description = " Duis at velit eu est congue elementum. In hac habitasse platea dictumst.Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante.Nulla justo. Aliquam quis turpis eget elit sodales scelerisque.Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.",
                 DateCreated = new DateTime(2022, 01, 07, 00, 14, 15),
                 BumpTime = new DateTime(2022, 01, 07, 00, 14, 15),
-                CategoryId = 3,
-                UserId = 3,
+                CategoryId = 2,
+                UserId = 2,
                 IsDisabled = false
             };
             InsertPost(post1);
@@ -103,8 +103,8 @@ namespace DataAccesLayer.DAL
                 Description = "Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam vel augue.Vestibulum rutrum rutrum neque. Aenean auctor gravida sem. Praesent id massa id nisl venenatis lacinia.Aenean sit amet justo. Morbi ut odio.Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.",
                 BumpTime = new DateTime(2031, 07, 24, 12, 03, 12),
                 DateCreated = new DateTime(2031, 07, 24, 12, 03, 12),
-                CategoryId = 1,
-                UserId = 1,
+                CategoryId = 2,
+                UserId = 2,
                 IsLocked = false,
                 AltDescription = "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis. Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor.Morbi vel lectus in quam fringilla rhoncus.Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis.",
                 Zipcode = "704",
@@ -116,8 +116,8 @@ namespace DataAccesLayer.DAL
                 Description = "Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus. Phasellus in felis.Donec semper sapien a libero.Nam dui. Proin leo odio, porttitor id, consequat in, consequat ut, nulla.Sed accumsan felis.",
                 BumpTime = new DateTime(2018, 02, 23, 17, 58, 50),
                 DateCreated = new DateTime(2018, 02, 23, 17, 58, 50),
-                CategoryId = 3,
-                UserId = 3,
+                CategoryId = 2,
+                UserId = 2,
                 IsLocked = false,
                 AltDescription = "Vivamus in felis eu sapien cursus vestibulum. Proin eu mi. Nulla ac enim.",
                 Zipcode = "705",
@@ -202,11 +202,11 @@ namespace DataAccesLayer.DAL
             {
                 DateCreated = new DateTime(2036, 11, 09, 11, 21, 23),
                 Text = "Donec quis orci eget orci vehicula condimentum. Curabitur in libero ut massa volutpat convallis.",
-                UserId = 714,
+                UserId = 1,
                 User = user1,
                 Votes = new List<Vote>(),
                 PostId = 1,
-                CommentType = "Comment"  
+                CommentType = "Comment"
             };
             Comment comment2 = new Comment
             {
@@ -222,10 +222,10 @@ namespace DataAccesLayer.DAL
             {
                 DateCreated = new DateTime(2024, 06, 26, 14, 25, 13),
                 Text = "Mauris lacinia sapien quis libero.Nullam sit amet turpis elementum ligula vehicula consequat.Morbi a ipsum.Integer a nibh.In quis justo.Maecenas rhoncus aliquam lacus.Morbi quis tortor id nulla ultrices aliquet.Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo.Pellentesque viverra pede ac diam.Cras pellentesque volutpat dui.Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc.",
-                UserId = 3,
+                UserId = 2,
                 User = user3,
                 Votes = new List<Vote>(),
-                PostId = 3,
+                PostId = 2,
                 CommentType = "Comment"
             };
             InsertComment(comment1);
@@ -239,6 +239,7 @@ namespace DataAccesLayer.DAL
                 Text = "Proin eu mi. Nulla ac enim.In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy.Integer non velit.Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.",
                 UserId = 1,
                 PostId = 4,
+                CommentType = "Solvr",
                 TimeAccepted = new DateTime(2019, 06, 15, 15, 02, 42),
                 IsAccepted = false,
             };
@@ -248,6 +249,7 @@ namespace DataAccesLayer.DAL
                 Text = "Phasellus in felis. Donec semper sapien a libero. Nam dui. Proin leo odio, porttitor id, consequat in, consequat ut, nulla.Sed accumsan felis.Ut at dolor quis odio consequat varius.Integer ac leo.Pellentesque ultrices mattis odio. Donec vitae nisi.Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla.Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.Curabitur at ipsum ac tellus semper interdum.",
                 UserId = 2,
                 PostId = 5,
+                CommentType = "Solvr",
                 TimeAccepted = new DateTime(2028, 09, 12, 01, 12, 42),
                 IsAccepted = true
             };
@@ -256,7 +258,8 @@ namespace DataAccesLayer.DAL
                 DateCreated = new DateTime(2025, 02, 06, 17, 46, 02),
                 Text = "Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo.Pellentesque viverra pede ac diam.Cras pellentesque volutpat dui. Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc.Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam.Suspendisse potenti. Nullam porttitor lacus at turpis.Donec posuere metus vitae ipsum.Aliquam non mauris.Morbi non lectus.Aliquam sit amet diam in magna bibendum imperdiet.",
                 UserId = 2,
-                PostId = 6,
+                PostId = 5,
+                CommentType = "Solvr",
                 TimeAccepted = new DateTime(2029, 04, 16, 22, 28, 53),
                 IsAccepted = false
             };
@@ -269,19 +272,19 @@ namespace DataAccesLayer.DAL
             {
                 IsUpvoted = false,
                 UserId = 1,
-                CommentId = 1 
+                CommentId = 1
             };
             Vote vote2 = new Vote
             {
                 IsUpvoted = false,
                 UserId = 2,
-                CommentId = 2 
+                CommentId = 2
             };
             Vote vote3 = new Vote
             {
                 IsUpvoted = true,
-                UserId = 3,
-                CommentId = 3
+                UserId = 2,
+                CommentId = 2
             };
             InsertVote(vote1);
             InsertVote(vote2);

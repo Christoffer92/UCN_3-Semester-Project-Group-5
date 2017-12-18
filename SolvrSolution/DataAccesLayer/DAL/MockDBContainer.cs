@@ -175,7 +175,7 @@ namespace DataAccesLayer.DAL
             foreach (Comment item in Comments)
             {
                 if (item.Id == id)
-                    return comment;
+                    comment = item;
             }
             return comment;
         }
@@ -197,9 +197,12 @@ namespace DataAccesLayer.DAL
         {
             List<Comment> commentList = new List<Comment>();
 
-            foreach(var item in Comments)
+            foreach (var item in Comments)
             {
-                commentList.Add(item);
+                if (item.PostId == postId)
+                {
+                    commentList.Add(item);
+                }
             }
 
             return commentList;
@@ -223,7 +226,7 @@ namespace DataAccesLayer.DAL
             foreach (Report item in Reports)
             {
                 if (item.Id == id)
-                    return report;
+                    report = item;
             }
             return report;
         }
@@ -275,10 +278,11 @@ namespace DataAccesLayer.DAL
 
         internal List<Vote> GetVoteList(int commentId)
         {
-            List<Vote> voteList = null;
+            List<Vote> voteList = new List<Vote>();
             foreach (var item in Votes)
             {
-                voteList.Add(item);
+                if (item.CommentId == commentId)
+                    voteList.Add(item);
             }
             return voteList;
         }

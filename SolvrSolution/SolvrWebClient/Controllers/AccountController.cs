@@ -64,7 +64,6 @@ namespace SolvrWebClient.Controllers
         {
             bool valid = false;
             try
-
             {
                 if (ModelState.IsValid)
                 {
@@ -73,7 +72,7 @@ namespace SolvrWebClient.Controllers
             }
             catch (Exception)
             {
-                return View();
+                return View("Error");
             }
 
             if (valid == true)
@@ -82,6 +81,7 @@ namespace SolvrWebClient.Controllers
             }
             else
             {
+                ModelState.AddModelError("", "Invalid Username or Password");
                 return View();
             }
         }
