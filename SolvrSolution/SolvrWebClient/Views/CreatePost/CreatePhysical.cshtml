@@ -1,0 +1,48 @@
+﻿@model SolvrWebClient.Models.PhysicalPostViewModel
+
+@{
+    ViewBag.Title = "Create a physical post";
+}
+<h2>@ViewBag.Title</h2>
+
+<div class="createPost-BtnFloat">
+    <input type="button" class="standard-Btn-Colour standard-Btn-border btn" name="CreatePhysical" value="Create regular post" onclick="location.href='@Url.Action("Index", "CreatePost")'" />
+</div>
+@using (Html.BeginForm("CreatePhysical", "CreatePost", FormMethod.Post))
+{
+    <div>
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+
+        <b>Titel:</b><br />
+        @Html.TextBoxFor(m => m.Title)<br />
+        <b>Category:</b><br />
+        @Html.DropDownListFor(m => m.CategoryId, (IEnumerable<SelectListItem>)ViewBag.DropDownList, "Select Category")
+    </div>
+    <div>
+        <b>Description:</b><br />
+        @Html.TextAreaFor(m => m.Description, 10, 0, new { @class = "standard-TextArea-Size" })
+    </div>
+    <div>
+        <b>Secret Description:</b><br />
+        @Html.TextAreaFor(m => m.AltDescription, 10, 0, new { @class = "standard-TextArea-Size" })
+    </div>
+    <div>
+        <b>Zipcode:</b><br />
+        @Html.TextBoxFor(m => m.Zipcode)<br />
+    </div>
+    <div>
+        <b>Address:</b><br />
+        @Html.TextBoxFor(m => m.Address)<br />
+    </div>
+    <div>
+        <b>Tags:</b><br />
+        @Html.TextAreaFor(m => m.TagsString, 1, 0, new { @class = "standard-TextArea-Size" })
+    </div>
+    <br />
+    <div class="createPost-BtnFloat">
+        <input type="submit" name="Create" value="Create" class="standard-Btn-Colour standard-Btn-border btn" />
+    </div><br />
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

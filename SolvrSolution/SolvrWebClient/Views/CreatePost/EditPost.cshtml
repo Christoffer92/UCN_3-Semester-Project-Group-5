@@ -1,0 +1,36 @@
+﻿@model SolvrWebClient.Models.PostViewModel
+
+<h2>Edit Post</h2>
+
+<div class="createPost-Box-ViewPost-Standard">
+    @using (Html.BeginForm("UpdatePost", "CreatePost", FormMethod.Post))
+    {
+        <div>
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <b>Titel:</b><br />
+            @ViewBag.Title
+            @Html.TextBoxFor(m => m.Title)
+            <br />
+            <b>Category:</b><br />
+            @Html.DropDownListFor(m => m.CategoryId, (IEnumerable<SelectListItem>)ViewBag.DropDownList, (string)ViewBag.CategoryName)
+        </div>
+        <div>
+            <b>Description:</b><br />
+            @Html.TextAreaFor(m => m.Description, 10, 0, new { @class = "standard-TextArea-Size" })
+        </div>
+        <div>
+            <b>Tags:</b><br />
+            @Html.TextBoxFor(m => m.TagsString)
+        </div><br />
+        <div class="createPost-BtnFloat">
+            @Html.HiddenFor(m => m.postId)
+            @Html.HiddenFor(m => m.LastEdited)
+            <input type="submit" name="EditPost" value="Save changes" class="standard-Btn-Colour standard-Btn-border btn" />
+        </div><br />
+    }
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

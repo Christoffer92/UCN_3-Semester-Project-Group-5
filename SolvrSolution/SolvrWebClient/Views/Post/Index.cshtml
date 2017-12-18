@@ -1,0 +1,106 @@
+﻿@model SolvrWebClient.Models.CommentViewModel
+
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/Site.css" rel="stylesheet" />
+<head>
+</head>
+<body>
+
+    <h2>@ViewBag.Title</h2>
+
+    @* View the post here *@
+    <div class="post-Box-ViewPost-Standard">
+        <div>
+            <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
+            @Html.Label("", (string)ViewBag.UserName, new { @readonly = "readonly" })
+        </div>
+        <div>
+            @Html.TextArea("DescriptionArea", (string)ViewBag.Description, 10, 0, new { @readonly = "readonly", @class = "standard-TextArea-Size" })
+        </div>
+        <div class="post-BtnFloat">
+            @{/* TODO: Only Post owner can choose to edit and view this */}
+            @if (Session["Username"] != null)
+            {
+                if (ViewBag.UserIsOwner)
+                {
+                    <input type="button" name="Edit Post" value="Edit" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("EditPost", "CreatePost", new { ID = Model.PostId })'" />
+                }
+                else
+                {
+                    <input type="button" name="Report Post" value="Report" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("Report", "Post", new {ID = Model.PostId, type = "Post"})'" />
+                }
+            }
+        </div>
+        <div>
+            @Html.Label("", (string)ViewBag.DateCreated, new { @class = "post-DateLabel" })
+        </div>
+        <br />
+    </div>
+
+    <hr />
+
+    @* Make a comment here *@
+    @using (Html.BeginForm("PostComment", "Post", FormMethod.Post))
+    {
+        <div class="post-Box-MakeComment-Standard">
+            <div>
+                <br />
+                @Html.HiddenFor(m => m.PostId)
+                @Html.TextAreaFor(m => m.Text, 4, 0, new { @class = "standard-TextArea-Size", placeholder = "Write a comment here..." })
+            </div>
+            <div class="post-BtnFloat">
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+
+                @if (Session["Username"] != null)
+                {
+                    <input type="submit" name="Post Comment" value="Post Comment" class="standard-Btn-Colour standard-Btn-border btn" />
+                }
+                else
+                {
+                    <input type="button" name="Placeholder Button" value="Log in to comment" class="standard-Btn-Colour standard-Btn-border btn" />
+                }
+
+            </div>
+            <br />
+        </div>
+    }
+
+    <hr />
+
+    @* View the comments here *@
+    <h2>Comments</h2>
+    @foreach (SolvrLibrary.Comment item in ViewBag.CommentList)
+    {
+        <div class="post-Box-ViewComment-Standard">
+            <div>
+                <img src="~/Content/Images/994192_1.jpg" class="post-CommentAvatar" />
+                @Html.Label("", item.User.Username)
+            </div>
+            <div class="post-VoteFloat">
+                <img src="~/Content/Images/upvote-downvote.png" class="post-Vote" />
+                @Html.Label("", "0", new { @class = "post-VoteLabel" })
+                <img src="~/Content/Images/downvote.png" class="post-Vote" />
+            </div>
+            <div class="post-CommentBox-TextArea">
+                @Html.TextArea("ViewCommentArea", item.Text, 5, 0, new { @readonly = "readonly", @class = "post-TextArea-View" })
+            </div>
+            <div class="post-BtnFloat" style="margin-right: 5%">
+                @if (Session["Username"] != null && !Session["Username"].Equals(item.User.Username))
+                {
+                    <input type="button" name="Report Comment" value="Report" class="standard-Btn-Colour standard-Btn-border btn" onclick="location.href='@Url.Action("Report", "Post", new {ID = item.Id, type = "Comment"})'" />
+                }
+            </div>
+            @Html.Label("", (item.DateCreated.ToShortTimeString() + " " + item.DateCreated.ToShortDateString()), new { @class = "post-DateLabel" })
+            <br />
+            <br />
+        </div>
+    }
+</body>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+
+
