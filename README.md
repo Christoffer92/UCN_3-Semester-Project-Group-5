@@ -2,39 +2,6 @@
 
 Solvr is an Ask/Answer website, where users with everyday issues, can post their problems on a forum and receive help. 
 
-## Features not implemented yet
-
-```
-1. Search feature, located on home page
-```
-```
-2. Bump feature for posts
-```
-```
-3. Cannot resolve Reports on Comments and Users, only Posts.
-```
-```
-4. Personal profile settings
-```
-```
-5. Admin profile settings
-```
-```
-5. Login for Admins, only a .exe file for now.
-```
-```
-6. Convert basicHTTP to wsHTTP binding
-```
-```
-7. Tooltips
-```
-```
-8. Activity history
-```
-```
-9. Upvote/Downvote system
-```
-
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
@@ -101,6 +68,39 @@ In order to run the tests, follow these steps.
 ```
 NB! If no tests show up, make sure that MSTest.TestAdapter and MSTest.TestFramework are installed in the NuGet Package manager.
 
+## Features not implemented yet
+
+```
+1. Search feature, located on home page
+```
+```
+2. Bump feature for posts
+```
+```
+3. Cannot resolve Reports on Comments and Users, only Posts.
+```
+```
+4. Personal profile settings
+```
+```
+5. Admin profile settings
+```
+```
+5. Login for Admins, only a .exe file for now.
+```
+```
+6. Convert basicHTTP to wsHTTP binding
+```
+```
+7. Tooltips
+```
+```
+8. Activity history
+```
+```
+9. Upvote/Downvote system
+```
+
 ## Error Codes 
 
 ```
@@ -126,17 +126,17 @@ NB! If no tests show up, make sure that MSTest.TestAdapter and MSTest.TestFramew
 
 ## Authors
 
-* **Anders Gert Birkbak Nielsen** - *Student* - [Sruffen](https://github.com/Sruffen)
-* **Christoffer Lund Sørensen** - *Student* - [Christoffer92](https://github.com/Christoffer92)
-* **Daniel Grønhøj Lindgreen** - *Student* - [Nycheia](https://github.com/Nycheia)
-* **Daniel Søgaard Jakobsen** - *Student* - [Darkuun](https://github.com/Darkuun)
-* **David Christopher Hutchinson** - *Student* - [Manadin](https://github.com/Manadin)
-* **Tim Mikkelsen** - *Student* - [Timx0915](https://github.com/Timx0915)
+* **Anders Gert Birkbak Nielsen**    *Student* - [Sruffen](https://github.com/Sruffen)
+* **Christoffer Lund Sørensen**      *Student* - [Christoffer92](https://github.com/Christoffer92)
+* **Daniel Grønhøj Lindgreen**       *Student* - [Nycheia](https://github.com/Nycheia)
+* **Daniel Søgaard Jakobsen**        *Student* - [Darkuun](https://github.com/Darkuun)
+* **David Christopher Hutchinson**   *Student* - [Manadin](https://github.com/Manadin)
+* **Tim Mikkelsen**                  *Student* - [Timx0915](https://github.com/Timx0915)
 
 See also the list of [contributors] https://github.com/Christoffer92/UCN_3-Semester-Project-Group-5/graphs/contributors who participated in this project.
 
 ## Acknowledgments
 
-* Mogens Holm Iversen
 * Michael Holm Andersen
+* Mogens Holm Iversen
 * Rasmus Christiansen Knap
