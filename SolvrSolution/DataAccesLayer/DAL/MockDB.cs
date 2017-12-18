@@ -75,8 +75,8 @@ namespace DataAccesLayer.DAL
                 Description = " Duis at velit eu est congue elementum. In hac habitasse platea dictumst.Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante.Nulla justo. Aliquam quis turpis eget elit sodales scelerisque.Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.",
                 DateCreated = new DateTime(2022, 01, 07, 00, 14, 15),
                 BumpTime = new DateTime(2022, 01, 07, 00, 14, 15),
-                CategoryId = 3,
-                UserId = 3,
+                CategoryId = 2,
+                UserId = 2,
                 IsDisabled = false
             };
             InsertPost(post1);
@@ -116,8 +116,8 @@ namespace DataAccesLayer.DAL
                 Description = "Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus. Phasellus in felis.Donec semper sapien a libero.Nam dui. Proin leo odio, porttitor id, consequat in, consequat ut, nulla.Sed accumsan felis.",
                 BumpTime = new DateTime(2018, 02, 23, 17, 58, 50),
                 DateCreated = new DateTime(2018, 02, 23, 17, 58, 50),
-                CategoryId = 3,
-                UserId = 3,
+                CategoryId = 2,
+                UserId = 2,
                 IsLocked = false,
                 AltDescription = "Vivamus in felis eu sapien cursus vestibulum. Proin eu mi. Nulla ac enim.",
                 Zipcode = "705",
