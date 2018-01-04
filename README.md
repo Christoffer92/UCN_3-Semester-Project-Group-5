@@ -3,6 +3,9 @@
 Solvr is an Ask/Answer website, where users with everyday issues, can post their problems on a forum and receive help. 
 
 ## Getting Started
+NOTE: This branch is what was turned in at the end of the project. See the ReadMe for changes.
+The newest version can be found at: https://github.com/Christoffer92/UCN_3-Semester-Project-Group-5.git 
+  
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
