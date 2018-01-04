@@ -11,7 +11,7 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them
 
 ```
-Without Kraka (Only Local Database)
+Without Kraka (Only Local Database) 
 * Visual Studio 2017 [https://www.visualstudio.com/downloads/]
 * SQL Management Studio [https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms]
 * IIS [https://www.iis.net/downloads] (Should be activated through windows)
