@@ -11,24 +11,48 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them
 
 ```
-Without Kraka (Only Local Database) 
-* Visual Studio 2017 [https://www.visualstudio.com/downloads/]
-* SQL Management Studio [https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms]
-* IIS [https://www.iis.net/downloads] (Should be activated through windows)
-```
-```
-With Kraka but no web server
+With Kraka but no web server (This is the preffered method)
 * Solvr.exe for the desktop clients (Admins only)
 * Visual Studio 2017 [https://www.visualstudio.com/downloads/]
 * IIS [https://www.iis.net/downloads] (Should be activated through windows)
 ```
+```
+Without Kraka (Only Local Database, but it is outdated)
+* Visual Studio 2017 [https://www.visualstudio.com/downloads/]
+* SQL Management Studio [https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms]
+* IIS [https://www.iis.net/downloads] (Should be activated through windows)
+```
 
 ### Setup
-
-A step by step series of examples that tells you what you need to do, in order to run the desktop/web client locally. 
+A step by step series of examples that tells you what you need to do, in order to run the desktop/web client with a remote database.
 
 ```
 1. Start up Visual Studio 2017 in Administrator mode and SQL Management Studio.
+```
+```
+5. Right click on the solution 'SolvrSolution', within the Solution explorer, and select Properties.
+```
+```
+5. Under Common Properties --> StartUp Project select 'Multiple Start Up Projects'. 
+```
+```
+6. First choose SolvrServiceConsoleApp and select 'Start'. 
+Secondly, while still highlighting SolrServiceConsoleApp, 
+Click on the up arrow on the right hand side, untill the project lies on top
+```
+```
+7. Hereafter set SolvrDesktopClient and SolvrWebClient to 'Start without debugging'and click 'Ok'.
+```
+```
+7. Run the code in debug mode. The WCF Service wont start otherwise.
+```
+
+
+(Outdated)
+A step by step series of examples that tells you what you need to do, in order to run the desktop/web client locally. 
+
+```
+1. Start up Visual Studio 2017 in Administrator mode.
 ```
 ```
 2.  Within the project DbHandler --> DB Script lies the script "Create Tables.sql". 
