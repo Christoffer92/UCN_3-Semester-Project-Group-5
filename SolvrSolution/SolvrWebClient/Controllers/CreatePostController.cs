@@ -26,6 +26,11 @@ namespace SolvrWebClient.Controllers
             p.CategoryId = model.CategoryId;
             p.Description = model.Description;
 
+            if (model.TagsString == null)
+            {
+                model.TagsString = "";
+            }
+
             foreach (string item in model.TagsString.Split(' ', '#', ',', '.'))
             {
                 if (!item.Equals("") && !item.Equals("#") && !item.Equals(",") && !item.Equals("."))
@@ -58,6 +63,11 @@ namespace SolvrWebClient.Controllers
             p.Title = model.Title;
             p.Description = model.Description;
             p.CategoryId = model.CategoryId;
+
+            if (model.TagsString == null)
+            {
+                model.TagsString = "";
+            }
 
             foreach (string item in model.TagsString.Split(' ', '#', ',', '.'))
             {

@@ -10,15 +10,26 @@ namespace DataAccesLayer.DAL
 {
     public class SolvrContext : DataContext
     {
-        //General Connection String. Kan ikke være Const pga. Enviroment.MachineName.
-        private static string ConnectionString = @"Data Source=" + Environment.MachineName + @"\SQLEXPRESS;"
-        + "Initial Catalog=SolvrDb;"
-        + "Integrated Security=True;"
-        + "Connect Timeout=30;"
-        + "Encrypt=False;"
-        + "TrustServerCertificate=True;"
-        + "ApplicationIntent=ReadWrite;"
-        + "MultiSubnetFailover=False";
+        ////General Connection String. Kan ikke være Const pga. Enviroment.MachineName.
+        //private static string ConnectionString = @"Data Source=" + Environment.MachineName + @"\SQLEXPRESS;"
+        //+ "Initial Catalog=SolvrDb;"
+        //+ "Integrated Security=True;"
+        //+ "Connect Timeout=30;"
+        //+ "Encrypt=False;"
+        //+ "TrustServerCertificate=True;"
+        //+ "ApplicationIntent=ReadWrite;"
+        //+ "MultiSubnetFailover=False";
+
+        private const string ConnectionString = @"Data Source=kraka.ucn.dk;" + 
+        "Initial Catalog = dmab0916_1061694; " +
+        "Integrated Security = False; " +
+        "User ID = DMAB0916_1061694; " +
+        "Password=Password1!;" +
+        "Connect Timeout = 30; " +
+        "Encrypt=False;" +
+        "TrustServerCertificate=True;" +
+        "ApplicationIntent=ReadWrite;" +
+        "MultiSubnetFailover=False";
 
         //Here are the tables for the project. These tables are in the database.
         public Table<Post> Posts;// { get; private set; }
