@@ -117,7 +117,7 @@ namespace DataAccesLayer.DAL
 
             using (var db = new SolvrContext())
             {
-                var Query = from comment in db.Comments where comment.PostId == postId select comment;
+                var Query = from comment in db.Comments.OrderByDescending(d => d.DateCreated) where comment.PostId == postId select comment;
                 foreach (Comment item in Query)
                 {
                     commentList.Add(item);
