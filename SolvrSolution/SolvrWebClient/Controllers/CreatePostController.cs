@@ -151,7 +151,7 @@ namespace SolvrWebClient.Controllers
         }
 
         // GET: CreatePost/Edit/id
-        public ActionResult EditPost(int ID, string errorMsg = "")
+        public ActionResult EditPost(int ID, DateTime lastEdited, string errorMsg = "")
         {
 
             if (!errorMsg.Equals(""))
@@ -176,7 +176,7 @@ namespace SolvrWebClient.Controllers
 
             viewPost.Title = post.Title;
             viewPost.Description = post.Description;
-            viewPost.LastEdited = post.LastEdited;
+            viewPost.LastEdited = lastEdited;
 
             viewPost.postId = ID;
             viewPost.CategoryId = post.CategoryId;
@@ -192,7 +192,7 @@ namespace SolvrWebClient.Controllers
             return View(viewPost);
         }
 
-        public ActionResult EditPhysicalPost(int ID)
+        public ActionResult EditPhysicalPost(int ID, DateTime lastEdited)
         {
             PhysicalPost post = null;
             try
@@ -211,7 +211,7 @@ namespace SolvrWebClient.Controllers
 
             viewPost.Title = post.Title;
             viewPost.Description = post.Description;
-            viewPost.LastEdited = post.LastEdited;
+            viewPost.LastEdited = lastEdited;
 
             viewPost.postId = ID;
             viewPost.CategoryId = post.CategoryId;

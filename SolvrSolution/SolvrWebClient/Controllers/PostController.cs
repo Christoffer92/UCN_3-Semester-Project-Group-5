@@ -28,6 +28,7 @@ namespace SolvrWebClient.Controllers
                 ViewBag.DateCreated = post.DateCreated.ToShortDateString();
                 ViewBag.UserId = post.UserId;
                 ViewBag.Username = DB.GetUser(post.UserId, "").Username;
+                ViewBag.LastEdited = post.LastEdited;
 
                 string tags = "";
 
@@ -88,6 +89,7 @@ namespace SolvrWebClient.Controllers
                 ViewBag.Address = ppost.Address;
                 ViewBag.Zipcode = ppost.Zipcode;
                 ViewBag.IsLocked = ppost.IsLocked;
+                ViewBag.LastEdited = ppost.LastEdited;
 
                 string tags = "";
 
