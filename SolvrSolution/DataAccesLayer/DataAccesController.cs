@@ -150,9 +150,7 @@ namespace DataAccesLayer
                     item.Comments = GetCommentList(item.Id);
 
             }
-                
-
-                return posts;
+            return posts;
             
         }
 
@@ -302,6 +300,104 @@ namespace DataAccesLayer
 
             return report;
         }
+        #endregion
+
+        #region Async Methods
+
+        public async Task<Category> GetCategoryAsync(int id)
+        {
+            Category category = null;
+
+            if (id > 0)
+            {
+                category = await db.GetCategoryAsync(id);
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
+
+            return category;
+        }
+
+        public async Task<List<Post>> GetPostListAsync(int offSet, int loadCount, bool withUsers = false,
+                                      bool withComments = false)
+        {
+            List<Post> posts = new List<Post>();
+            if (offSet >= 0 && loadCount > 0)
+            {
+                posts = await db.GetPostListAsync(offSet, loadCount);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+
+            foreach (Post item in posts)
+            {
+                item.Category = await GetCategoryAsync(item.CategoryId);
+
+                if (withUsers)
+                    item.User = await GetUserAsync(item.UserId);
+
+                if (withComments)
+                    item.Comments = await GetCommentListAsync(item.Id);
+                
+            }
+
+            return posts;
+        }
+
+        public async Task<User> GetUserAsync(int id = 0, string username = "")
+        {
+            User user = null;
+
+            if (id > 0)
+            {
+                user = await db.GetUserAsync(id);
+            }
+            else if (!username.Equals(""))
+            {
+                user = await db.GetUserAsync(username);
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
+
+            return user;
+        }
+
+        /// <summary>
+        /// Returns a list of comments, if postId is set it will returns its comments, and the same for userId.
+        /// Note! If you want to get the comments of a user you need to send arguments postId to 0 and userId
+        /// to the user.
+        /// </summary>
+        /// <param name="postId"></param>
+        /// <param name="userId"></param>
+        public async Task<List<Comment>> GetCommentListAsync(int postId = 0, bool withUsers = false)
+        {
+            List<Comment> comments = new List<Comment>();
+            if (postId > 0)
+            {
+                comments = await db.GetCommentListAsync(postId);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+
+            if (withUsers)
+            {
+                foreach (Comment item in comments)
+                {
+                    item.User = GetUser(item.UserId);
+                }
+            }
+
+            return comments;
+        }
+
         #endregion
     }
 }

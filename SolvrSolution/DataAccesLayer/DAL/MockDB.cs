@@ -396,6 +396,37 @@ namespace DataAccesLayer.DAL
         {
             return MockDBContainer.Instance.UpdateReport(report);
         }
+
+        #endregion
+
+        #region Async methods
+
+        public async Task<List<Post>> GetPostListAsync(int offSet, int loadCount)
+        {
+            return MockDBContainer.Instance.GetPostList(offSet, loadCount);
+
+        }
+
+        public async Task<Category> GetCategoryAsync(int id)
+        {
+            return MockDBContainer.Instance.GetCategory(id);
+        }
+
+        public async Task<User> GetUserAsync(int id)
+        {
+            return MockDBContainer.Instance.GetUser(id);
+        }
+
+        public async Task<User> GetUserAsync(string username)
+        {
+            return MockDBContainer.Instance.GetUser(username);
+        }
+
+        public async Task<List<Comment>> GetCommentListAsync(int postId)
+        {
+            return MockDBContainer.Instance.GetAllComments(postId);
+        }
+
         #endregion
     }
 }

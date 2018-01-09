@@ -119,6 +119,16 @@ namespace SolvrServices
             return dbCtr.UpdateReport(report);
         }
         #endregion
+
+        #region Async Methods
+
+        public async Task<List<Post>> GetPostListAsync(int offSet, int loadCount, bool withUsers = false, bool withComments = false)
+        {
+            List<Post> res = await dbCtr.GetPostListAsync(offSet, loadCount, withUsers, withComments);
+            return res;
+        }
+
+        #endregion
     }
 }
 

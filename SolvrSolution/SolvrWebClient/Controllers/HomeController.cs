@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SolvrLibrary;
+using System.Threading.Tasks;
 
 namespace SolvrWebClient.Controllers
 {
@@ -16,9 +17,9 @@ namespace SolvrWebClient.Controllers
         }
         
 
-        public ActionResult Index(int offSet = 0)
-        {              
-            List<Post> posts = DB.GetPostList(offSet, 24, true, false).ToList();
+        public async Task<ActionResult> Index(int offSet = 0)
+        {
+            List<Post> posts = (await DB.GetPostListAsync(offSet, 24, true, false)).ToList();
             ViewBag.PostList = posts;
             
 

@@ -88,6 +88,7 @@ namespace DataAccesLayer.DAL
             }
 
         }
+
         public User GetUser(int id)
         {
             using (var db = new SolvrContext())
@@ -111,6 +112,7 @@ namespace DataAccesLayer.DAL
 
             return categoryList;
         }
+
         public List<Comment> GetCommentList(int postId)
         {
             List<Comment> commentList = new List<Comment>();
@@ -373,6 +375,94 @@ namespace DataAccesLayer.DAL
 
             return report;
         }
+        #endregion
+
+        #region Async Methods
+
+        public async Task<List<Post>> GetPostListAsync(int offSet, int loadCount)
+        {
+            List<Post> postList = new List<Post>();
+
+            using (var db = new SolvrContext())
+            {
+                var Query =(from post in db.Posts.OrderByDescending(b => b.BumpTime).Skip(offSet).Take(loadCount) where post.IsDisabled == false select post);
+
+                postList.AddRange(Query);
+
+                /*foreach (Post item in Query)
+                {
+                    postList.Add(item);
+                }*/
+            }
+
+            return postList;
+        }
+
+        public async Task<Category> GetCategoryAsync(int id)
+        {
+            try
+            {
+                using (var db = new SolvrContext())
+                {
+                    return (from category in db.Categories where category.Id == id select category).First();
+                }
+            }
+            catch (Exception)
+            {
+                throw new FaultException("0918 - 42 - No category exists with the given ID");
+            }
+        }
+
+        public async Task<Post> GetPostAsync(int id)
+        {
+            using (var db = new SolvrContext())
+            {
+                return (from post in db.Posts where post.Id == id select post).First();
+            }
+        }
+
+        public async Task<User> GetUserAsync(int id)
+        {
+            using (var db = new SolvrContext())
+            {
+                return (from user in db.Users where user.Id == id select user).First();
+            }
+        }
+
+        public async Task<User> GetUserAsync(string username)
+        {
+            try
+            {
+                using (var db = new SolvrContext())
+                {
+                    return (from user in db.Users where user.Username == username select user).First();
+                }
+            }
+            catch (Exception)
+            {
+                throw new FaultException("0918 - 87 - No user exists with the given ID");
+            }
+
+        }
+
+        public async Task<List<Comment>> GetCommentListAsync(int postId)
+        {
+            List<Comment> commentList = new List<Comment>();
+
+            using (var db = new SolvrContext())
+            {
+                var Query = from comment in db.Comments.OrderByDescending(d => d.DateCreated) where comment.PostId == postId select comment;
+                commentList.AddRange(Query);
+                
+                /*foreach (Comment item in Query)
+                {
+                    commentList.Add(item);
+                }*/
+            }
+
+            return commentList;
+        }
+
         #endregion
     }
 }

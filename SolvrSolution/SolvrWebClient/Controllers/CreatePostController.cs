@@ -11,6 +11,8 @@ namespace SolvrWebClient.Controllers
 {
     public class CreatePostController : Controller
     {
+        private  DateTime tempDate = new DateTime(2017, 01, 01);
+
         private static RemoteSolvrReference.ISolvrServices DB = new RemoteSolvrReference.SolvrServicesClient();
 
         //CreatePost:
@@ -160,7 +162,6 @@ namespace SolvrWebClient.Controllers
             return RedirectToAction("Index", "Post", new { ID = ppost.Id });
         }
 
-        // GET: CreatePost/Edit/id
         public ActionResult EditPost(int ID, string errorMsg = "")
         {
 
