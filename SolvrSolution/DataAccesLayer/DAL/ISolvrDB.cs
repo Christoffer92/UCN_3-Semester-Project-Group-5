@@ -15,6 +15,7 @@ namespace DataAccesLayer.DAL
         bool DatabaseExists();
 
         #region Get Methods
+
         /// Returns the user with the specified username.
         /// </summary>
         /// <returns>User</returns>
@@ -138,5 +139,41 @@ namespace DataAccesLayer.DAL
         Comment UpdateComment(Comment comment);
         #endregion
 
+        #region Async Methods
+
+        /// <summary>
+        /// Returns a list of posts sorted by bumptime.
+        /// </summary>
+        /// <param name="offSet"></param>
+        /// <param name="loadCount"></param>
+        /// <returns>List<Post></returns>
+        Task<List<Post>> GetPostListAsync(int offSet, int loadCount);
+
+        /// <summary>
+        /// Returns a category, by searching for its id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Category</returns>
+        Task<Category> GetCategoryAsync(int id);
+
+        /// <summary>
+        /// Returns a user with the given id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>User</returns>
+        Task<User> GetUserAsync(int id);
+
+        /// Returns the user with the specified username.
+        /// </summary>
+        /// <returns>User</returns>
+        Task<User> GetUserAsync(string username);
+
+        /// <summary>
+        /// Returns a list of comments on the specifed post.
+        /// </summary>
+        /// <param name="postId"></param>
+        /// <returns>List<Post></returns>
+        Task<List<Comment>> GetCommentListAsync(int postId);
+        #endregion
     }
 }

@@ -11,6 +11,8 @@ namespace SolvrWebClient.Controllers
 {
     public class CreatePostController : Controller
     {
+        private  DateTime tempDate = new DateTime(2017, 01, 01);
+
         private static RemoteSolvrReference.ISolvrServices DB = new RemoteSolvrReference.SolvrServicesClient();
 
         //CreatePost:
@@ -160,8 +162,7 @@ namespace SolvrWebClient.Controllers
             return RedirectToAction("Index", "Post", new { ID = ppost.Id });
         }
 
-        // GET: CreatePost/Edit/id
-        public ActionResult EditPost(int ID, DateTime lastEdited, string errorMsg = "")
+        public ActionResult EditPost(int ID, string errorMsg = "")
         {
 
             if (!errorMsg.Equals(""))
@@ -186,7 +187,7 @@ namespace SolvrWebClient.Controllers
 
             viewPost.Title = post.Title;
             viewPost.Description = post.Description;
-            viewPost.LastEdited = lastEdited;
+            viewPost.LastEdited = post.LastEdited;
 
             viewPost.postId = ID;
             viewPost.CategoryId = post.CategoryId;
@@ -202,7 +203,7 @@ namespace SolvrWebClient.Controllers
             return View(viewPost);
         }
 
-        public ActionResult EditPhysicalPost(int ID, DateTime lastEdited)
+        public ActionResult EditPhysicalPost(int ID)
         {
             PhysicalPost post = null;
             try
@@ -221,7 +222,7 @@ namespace SolvrWebClient.Controllers
 
             viewPost.Title = post.Title;
             viewPost.Description = post.Description;
-            viewPost.LastEdited = lastEdited;
+            viewPost.LastEdited = post.LastEdited;
 
             viewPost.postId = ID;
             viewPost.CategoryId = post.CategoryId;
