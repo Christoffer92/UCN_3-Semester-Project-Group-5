@@ -9,6 +9,15 @@ The newest version can be found at: https://github.com/Christoffer92/UCN_3-Semes
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
+### Change Log
+What has been added to the development branch, since 18/12 - 2017
+
+```
+* Added asynchronous code to getPostList method in SolverServices
+* Fixed some bugs with creating posts.
+* Fixed a bug with some concurrency when an admin and a user edits the same post.
+```
+
 ### Prerequisites
 
 What things you need to install the software and how to install them
