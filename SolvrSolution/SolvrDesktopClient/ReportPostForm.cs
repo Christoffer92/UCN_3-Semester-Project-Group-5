@@ -72,9 +72,8 @@ namespace SolvrDesktopClient
         {
             DesktopController desktopController = new DesktopController();
             Report report = desktopController.GetReport(reportId);
-            //Post post = desktopController.GetPost(report.PostId); 
             tempPost = desktopController.GetPost(report.PostId);
-            User user = desktopController.GetUser(report.UserId);
+            User user = desktopController.GetUser(tempPost.UserId);
 
             lblUsername.Text = user.Username;
             lblTitle.Text = tempPost.Title;
@@ -93,7 +92,6 @@ namespace SolvrDesktopClient
             {
                 if (btnIgnore.BackColor == Color.YellowGreen)
                 {
-                    //TODO We need to take care of (Samtidigtheds problemet her)??
                     report.IsResolved = true;
                     desktopController.UpdateReport(report);
                     forside.Show();
@@ -102,7 +100,6 @@ namespace SolvrDesktopClient
                 }
                 else if (btnEdit.BackColor == Color.YellowGreen)
                 {
-                    //TODO We need to take care of (Samtidigtheds problemet her)
                     post.Description = txtBoxPost.Text;
                     post.Title = txtBoxTitle.Text;
                     report.IsResolved = true;
@@ -116,7 +113,6 @@ namespace SolvrDesktopClient
                 }
                 else if (btnDelete.BackColor == Color.YellowGreen)
                 {
-                    //TODO We need to take care of (Samtidigtheds problemet her)??
                     int postId = desktopController.GetReport(reportId).PostId;
                     post.IsDisabled = true;
                     report.IsResolved = true;
